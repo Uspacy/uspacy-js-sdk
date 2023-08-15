@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { I2FaEnable } from '../../models/2fa';
+import { I2FaStatus } from '../../models/2fa';
 import { IResponseWithMessage, IResponseWithPagination } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
 import { IUser, UserRole } from '../../models/user';
@@ -139,7 +139,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	getPortalSettingsByUserId(id: string) {
+	getPortalSettings(id: string) {
 		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/:id/settings`, {
 			urlParams: { id },
 		});
@@ -150,7 +150,7 @@ export class UsersService {
 	 * @param settings
 	 * @returns user portal settings
 	 */
-	updatePortalSettingsByUserId(id: string, settings: IPortalSettings) {
+	updatePortalSettings(id: string, settings: IPortalSettings) {
 		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/:id/settings`, settings, {
 			urlParams: { id },
 		});
@@ -161,8 +161,8 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	get2FaStatusByUserId(id: string) {
-		return this.httpClient.client.get<{ enabled: boolean }>(`${this.namespace}/:id/twofa_status`, {
+	get2FaStatus(id: string) {
+		return this.httpClient.client.get<I2FaStatus>(`${this.namespace}/:id/twofa_status`, {
 			urlParams: { id },
 		});
 	}
@@ -172,34 +172,10 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	disable2FaByUserId(id: string) {
+	disable2Fa(id: string) {
 		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/:id/twofa_disable`, {
 			urlParams: { id },
 		});
-	}
-
-	/**
-	 * Get 2fa
-	 * @returns user portal settings
-	 */
-	getSelf2FaStatus() {
-		return this.httpClient.client.get<{ enabled: boolean }>(`${this.namespace}/me/twofa_status`);
-	}
-
-	/**
-	 * Enable 2fa
-	 * @returns user portal settings
-	 */
-	enableSelf2Fa() {
-		return this.httpClient.client.patch<I2FaEnable>(`${this.namespace}/me/twofa_enable`);
-	}
-
-	/**
-	 * Disable 2fa
-	 * @returns user portal settings
-	 */
-	disableSelf2Fa() {
-		return this.httpClient.client.patch<IResponseWithMessage>(`${this.namespace}/me/twofa_disable`);
 	}
 
 	/**
@@ -235,42 +211,5 @@ export class UsersService {
 				ids,
 			},
 		});
-	}
-
-	/**
-	 * Get self profile
-	 * @returns user profile data
-	 */
-	getProfile() {
-		return this.httpClient.client.get<IUser>(`${this.namespace}/me/`);
-	}
-
-	/**
-	 * Update selft portal setting
-	 * @param settings
-	 * @returns user portal settings
-	 */
-	updateUserPortalSettings(id: string, settings: IPortalSettings) {
-		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/:id/settings`, settings, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * update portal ettings by user id
-	 * @param settings
-	 * @returns user portal settings
-	 */
-	getSelfPortalSettings() {
-		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/me/settings`);
-	}
-
-	/**
-	 * update portal ettings by user id
-	 * @param settings
-	 * @returns user portal settings
-	 */
-	updateSelfPortalSettings(settings: IPortalSettings) {
-		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/me/settings`, settings);
 	}
 }
