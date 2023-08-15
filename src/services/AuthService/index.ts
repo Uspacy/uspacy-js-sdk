@@ -11,6 +11,7 @@ import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
+import { IResponseWithMessage } from '../../models/response';
 
 /**
  * Auth service
@@ -130,10 +131,7 @@ export class AuthService {
 	 * @param domain portal name
 	 */
 	checkPortalByDomain(domain: string) {
-		return this.httpClient.client.get<{
-			status: true;
-			message: 'success';
-		}>(`${this.namespace}/portals/`, { params: { domain } });
+		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/portals/`, { params: { domain } });
 	}
 
 	/**

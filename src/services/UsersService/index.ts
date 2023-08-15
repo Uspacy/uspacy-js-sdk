@@ -1,69 +1,49 @@
+import { AxiosResponse } from 'axios';
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { I2FaEnable } from '../../models/2fa';
+import { IResponseWithMessage, IResponseWithPagination } from '../../models/response';
+import { IPortalSettings } from '../../models/settings';
 import { IUser, UserRole } from '../../models/user';
+import { ISearchUsersDto } from './dto/search-users.dto';
+import { IUpdateUserDto } from './dto/update-user.dto';
+import { IUploadAvatar } from './dto/upload-avatar.dto';
 
 /**
  * Users service
  */
 @injectable()
-export class UsersSevice {
-	private namespace = '/company/v1';
+export class UsersService {
+	private namespace = '/company/v1/users';
 
-	private routeAceessName = {
-		BaseURL: `${this.namespace}/users/`,
-		getUsersURL: (): string => `${this.routeAceessName.BaseURL}/`,
-		userByIDURL: (id: string): string => `${this.routeAceessName.BaseURL}/${id}`,
-		userDeactivateURL: (id: string): string => `${this.routeAceessName.userByIDURL(id)}/deactivate/`,
-		userActivateURL: (id: string): string => `${this.routeAceessName.userByIDURL(id)}/activate/`,
-		userUpdateRolesURL: (id: string): string => `${this.routeAceessName.userByIDURL(id)}/updateRoles/`,
-		userUpdatePositionURL: (id: string): string => `${this.routeAceessName.userByIDURL(id)}/updatePosition/`,
-		userUpdatePasswordURL: (id: string): string => `${this.routeAceessName.userByIDURL(id)}/changePassword/`,
-		getSelfProfileURL: (): string => `${this.routeAceessName.getUsersURL()}/me/`,
-		updateSelfPasswordURL: (): string => `${this.routeAceessName.getSelfProfileURL()}changePassword/`,
-		forgotPasswordURL: (): string => `${this.routeAceessName.getUsersURL()}/forgotPassword/`,
-		resetPasswordURL: (): string => `${this.routeAceessName.getUsersURL()}/resetPassword/`,
-		searchURL: (email: string, firstName: string, lastName: string): string =>
-			`${this.routeAceessName.getUsersURL()}/search/?email=${email}&firstName=${firstName}&LastName=${lastName}/`,
-		avatarUploadURL: (): string => `${this.routeAceessName.getUsersURL()}/uploadAvatar/`,
-		checkEmailURL: (email: string): string => `${this.routeAceessName.getUsersURL()}/checkEmail/?email=${email}`,
-		getListUsersByFilterURL: (): string => `${this.routeAceessName.getUsersURL()}/getUsersByField/`,
-	};
-
-	/**
-	 * @param config http client
-	 */
 	constructor(private httpClient: HttpClient) {}
 
 	/**
 	 * Get users list
 	 * @param page page number
 	 * @param list elements count
+	 * @param show get list of with unactive users (available only for admin or owner)
 	 * @returns Array users entity
 	 */
-	getUsers(page: number, list: number) {
-		return this.httpClient.client.get<IUser[]>(`${this.routeAceessName.getUsersURL()}`, {
+	getUsers(page?: number, list?: number, show?: 'all'): Promise<AxiosResponse<IResponseWithPagination<IUser>>>;
+	getUsers(page?: number, list?: 'all', show?: 'all'): Promise<AxiosResponse<IUser[]>>;
+	getUsers(page?: number, list?: number | 'all', show?: 'all') {
+		if (list === 'all') {
+			return this.httpClient.client.get<IUser[]>(this.namespace, {
+				params: {
+					page,
+					list,
+					show,
+				},
+			});
+		}
+		return this.httpClient.client.get<IResponseWithPagination<IUser>>(this.namespace, {
 			params: {
 				page,
 				list,
+				show,
 			},
-		});
-	}
-
-	/**
-	 * Sign up user by firstName, lastName, email, password.
-	 * @param email user email
-	 * @param password user password
-	 * @param firstName	user firstName
-	 * @param lastName user lastName
-	 * @returns created user
-	 */
-	createUser(email: string, password: string, firstName: string, lastName: string) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.getUsersURL()}`, {
-			email,
-			password,
-			firstName,
-			lastName,
 		});
 	}
 
@@ -73,7 +53,11 @@ export class UsersSevice {
 	 * @returns user entity
 	 */
 	getUserById(id: string) {
-		return this.httpClient.client.get<IUser>(`${this.routeAceessName.userByIDURL(id)}`);
+		return this.httpClient.client.get<IUser>(`${this.namespace}/:id`, {
+			urlParams: {
+				id,
+			},
+		});
 	}
 
 	/**
@@ -83,8 +67,12 @@ export class UsersSevice {
 	 * @returns updated user
 	 */
 
-	updateUser(id: string, config: updateUser) {
-		return this.httpClient.client.patch<IUser>(`${this.routeAceessName.userByIDURL(id)}`, config);
+	updateUser(id: string, body: IUpdateUserDto) {
+		return this.httpClient.client.patch<IUser>(`${this.namespace}/:id`, body, {
+			urlParams: {
+				id,
+			},
+		});
 	}
 
 	/**
@@ -93,7 +81,11 @@ export class UsersSevice {
 	 * @returns user data with active: false
 	 */
 	deactivateUser(id: string) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.userDeactivateURL(id)}`);
+		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/deactivate`, {
+			urlParams: {
+				id,
+			},
+		});
 	}
 
 	/**
@@ -102,7 +94,11 @@ export class UsersSevice {
 	 * @returns user data with active: true
 	 */
 	activateUser(id: string) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.userActivateURL(id)}`);
+		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/activate`, {
+			urlParams: {
+				id,
+			},
+		});
 	}
 
 	/**
@@ -111,7 +107,13 @@ export class UsersSevice {
 	 * @returns user data with new roles
 	 */
 	updateRoles(id: string, roles: UserRole[]) {
-		return this.httpClient.client.patch<IUser>(`${this.routeAceessName.userUpdateRolesURL(id)}`, { roles });
+		return this.httpClient.client.patch<IUser>(
+			`${this.namespace}/:id/update_roles`,
+			{ roles },
+			{
+				urlParams: { id },
+			},
+		);
 	}
 
 	/**
@@ -120,21 +122,118 @@ export class UsersSevice {
 	 * @param position user position
 	 * @returns user data with new position
 	 */
-	updatePosition(id: string, position: updatePosition) {
-		return this.httpClient.client.patch<IUser>(`${this.routeAceessName.userUpdatePositionURL(id)}`, {
-			position,
+	updatePosition(id: string, position: string) {
+		return this.httpClient.client.patch<IUser>(
+			`${this.namespace}/:id/update_position`,
+			{
+				position,
+			},
+			{
+				urlParams: { id },
+			},
+		);
+	}
+
+	/**
+	 * get portal ettings by user id
+	 * @param id user id
+	 * @returns user portal settings
+	 */
+	getPortalSettingsByUserId(id: string) {
+		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/:id/settings`, {
+			urlParams: { id },
 		});
 	}
 
 	/**
-	 * Update user password by id
-	 * @param id user id
-	 * @param password user password
-	 * @returns
+	 * update portal ettings by user id
+	 * @param settings
+	 * @returns user portal settings
 	 */
-	updatePassword(id: string, password: string) {
-		return this.httpClient.client.patch<IUser>(`${this.routeAceessName.userUpdatePasswordURL(id)}`, {
-			password,
+	updatePortalSettingsByUserId(id: string, settings: IPortalSettings) {
+		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/:id/settings`, settings, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Get 2fa status by user id
+	 * @param id user id
+	 * @returns user portal settings
+	 */
+	get2FaStatusByUserId(id: string) {
+		return this.httpClient.client.get<{ enabled: boolean }>(`${this.namespace}/:id/twofa_status`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * disable 2fa by user id
+	 * @param id user id
+	 * @returns user portal settings
+	 */
+	disable2FaByUserId(id: string) {
+		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/:id/twofa_disable`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Get 2fa
+	 * @returns user portal settings
+	 */
+	getSelf2FaStatus() {
+		return this.httpClient.client.get<{ enabled: boolean }>(`${this.namespace}/me/twofa_status`);
+	}
+
+	/**
+	 * Enable 2fa
+	 * @returns user portal settings
+	 */
+	enableSelf2Fa() {
+		return this.httpClient.client.patch<I2FaEnable>(`${this.namespace}/me/twofa_enable`);
+	}
+
+	/**
+	 * Disable 2fa
+	 * @returns user portal settings
+	 */
+	disableSelf2Fa() {
+		return this.httpClient.client.patch<IResponseWithMessage>(`${this.namespace}/me/twofa_disable`);
+	}
+
+	/**
+	 * Search users
+	 * @returns user portal settings
+	 */
+	search(body: ISearchUsersDto) {
+		return this.httpClient.client.get<IResponseWithPagination<IUser>>(`${this.namespace}/search/`, {
+			params: {
+				...body,
+			},
+		});
+	}
+
+	/**
+	 * Upload avatar
+	 * @returns user portal settings
+	 */
+	uploadAvatar(body: IUploadAvatar) {
+		const formData = new FormData();
+		formData.append('avatar', body.file ? body.file : '""');
+		if (body.userId) formData.append('userId', body.userId);
+		return this.httpClient.client.post<IUser>(`${this.namespace}/upload_avatar/`, formData);
+	}
+
+	/**
+	 * Upload avatar
+	 * @returns user portal settings
+	 */
+	getUsersByIds(ids: Pick<IUser, 'id'>[]) {
+		return this.httpClient.client.get<IResponseWithPagination<IUser>>(`${this.namespace}/upload_avatar/`, {
+			params: {
+				ids,
+			},
 		});
 	}
 
@@ -142,95 +241,36 @@ export class UsersSevice {
 	 * Get self profile
 	 * @returns user profile data
 	 */
-	getSelfProfile() {
-		return this.httpClient.client.get<IUser>(`${this.routeAceessName.getSelfProfileURL()}`);
+	getProfile() {
+		return this.httpClient.client.get<IUser>(`${this.namespace}/me/`);
 	}
 
 	/**
-	 * Update self password.
-	 * @param oldPassword user old password
-	 * @param newPassword user new password
-	 * @returns
+	 * Update selft portal setting
+	 * @param settings
+	 * @returns user portal settings
 	 */
-	updateSelfPassword(password: string, oldPassword: string, newPassword: string) {
-		return this.httpClient.client.patch<IUser>(`${this.routeAceessName.updateSelfPasswordURL()}`, {
-			oldPassword,
-			newPassword,
-			password,
+	updateUserPortalSettings(id: string, settings: IPortalSettings) {
+		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/:id/settings`, settings, {
+			urlParams: { id },
 		});
 	}
 
 	/**
-	 * Reset password
-	 * @param email user email
-	 * @returns
+	 * update portal ettings by user id
+	 * @param settings
+	 * @returns user portal settings
 	 */
-	forgotPassword(email: string) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.forgotPasswordURL()}`, {
-			email,
-		});
+	getSelfPortalSettings() {
+		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/me/settings`);
 	}
 
 	/**
-	 * Reset password.
-	 * @param email user email
-	 * @param password user password
-	 * @param token auth token
-	 * @returns
+	 * update portal ettings by user id
+	 * @param settings
+	 * @returns user portal settings
 	 */
-	resetPassword(email: string, password: string, token: string) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.resetPasswordURL()}`, {
-			email,
-			password,
-			token,
-		});
-	}
-
-	/**
-	 * Search
-	 * @param email user email
-	 * @param firstName user firstName
-	 * @param lastName user lastName
-	 * @returns
-	 */
-	search(email: string, firstName: string, lastName: string) {
-		return this.httpClient.client.get<IUser>(`${this.routeAceessName.searchURL(email, firstName, lastName)}`);
-	}
-
-	/**
-	 * Avatar upload
-	 * @param avatar
-	 * @returns
-	 */
-	avatarUpload(avatar: number) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.avatarUploadURL()}`, {
-			avatar,
-		});
-	}
-
-	/**
-	 * Check email
-	 * @param email
-	 * @returns
-	 */
-	checkEmail(email: string) {
-		return this.httpClient.client.get<getEmailExist>(`${this.routeAceessName.checkEmailURL(email)}`);
-	}
-
-	/**
-	 * Getting a list of users by filter
-	 * @param ids
-	 * @returns
-	 */
-	getListUsersByFilter(ids: string[]) {
-		return this.httpClient.client.post<IUser>(`${this.routeAceessName.getListUsersByFilterURL()}`, { ids });
+	updateSelfPortalSettings(settings: IPortalSettings) {
+		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/me/settings`, settings);
 	}
 }
-
-interface getEmailExist {
-	status: boolean;
-	message: string;
-}
-
-type updateUser = Omit<IUser, 'id' | 'active' | 'position' | 'roles'>;
-type updatePosition = Pick<IUser, 'position'>;
