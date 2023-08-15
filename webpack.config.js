@@ -1,0 +1,88 @@
+require('dotenv').config();
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const PATHS = {
+	source: path.resolve(__dirname, 'src'),
+	demo: path.resolve(__dirname, 'src', 'demo'),
+};
+
+module.exports = (_, argv) => {
+	const isDev = argv.mode === 'development';
+	const isDemo = process.env.NODE_ENV === 'demo';
+	return {
+		entry: {
+			main: path.resolve(PATHS.source, 'index.ts'),
+			demo: path.resolve(PATHS.demo, 'index.ts'),
+		},
+		output: {
+			filename: 'static/[name].js',
+			path: path.resolve(__dirname, 'lib'),
+			libraryTarget: isDemo ? undefined : 'commonjs2',
+		},
+		module: {
+			rules: [
+				{
+					test: /\.ts$/,
+					loader: 'ts-loader',
+				},
+			],
+		},
+		resolve: {
+			extensions: ['.tsx', '.ts', '.js', '.jsx'],
+			alias: {
+				tsyringe: require.resolve('tsyringe/dist/esm2015/index.js'),
+			},
+		},
+		externals: isDemo
+			? []
+			: [
+					nodeExternals({
+						allowlist: ['reflect-metadata', 'tsyringe'],
+					}),
+			  ],
+		devtool: 'source-map',
+		devServer: {
+			static: path.join(__dirname, 'lib'),
+			compress: true,
+			port: 4000,
+			devMiddleware: {
+				writeToDisk: true,
+			},
+			proxy: {
+				'/': {
+					target: process.env.PROXY_URL,
+					secure: false,
+					changeOrigin: true,
+					bypass: function (req) {
+						if (req.url.startsWith('/static')) {
+							return req.url;
+						}
+					},
+				},
+			},
+		},
+		plugins: [
+			new Dotenv(),
+			...(isDev
+				? [
+						new ESLintPlugin({
+							files: ['./src'],
+							extensions: ['tsx', 'ts', 'jsx', 'js'],
+							overrideConfigFile: path.resolve(__dirname, '.eslintrc.js'),
+						}),
+				  ]
+				: []),
+			...(isDemo
+				? [
+						new HtmlWebpackPlugin({
+							template: path.resolve(PATHS.demo, 'index.html'),
+						}),
+				  ]
+				: []),
+		],
+	};
+};

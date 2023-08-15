@@ -1,0 +1,76 @@
+{
+  "name": "@uspacy/sdk",
+  "version": "0.0.2-aplha.1",
+  "repository": "git@github.com:Uspacy/js-sdk.git",
+  "keywords": [],
+  "author": "Stas Raranetskyi",
+  "license": "ISC",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "axios": "^1.4.0",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^3.1.2",
+    "localforage": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.3",
+    "@types/node": "20.5.0",
+    "@typescript-eslint/eslint-plugin": "6.4.0",
+    "@typescript-eslint/parser": "6.4.0",
+    "buffer": "^6.0.3",
+    "cross-env": "^7.0.3",
+    "date-fns": "2.30.0",
+    "dotenv": "^16.3.1",
+    "dotenv-webpack": "^8.0.1",
+    "eslint": "8.47.0",
+    "eslint-config-google": "0.14.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-import-resolver-typescript": "3.6.0",
+    "eslint-plugin-import": "2.28.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-simple-import-sort": "10.0.0",
+    "eslint-webpack-plugin": "4.0.1",
+    "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.0",
+    "prettier": "3.0.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-loader": "^9.4.4",
+    "tsyringe": "^4.8.0",
+    "typedoc": "^0.24.8",
+    "typescript": "5.1.6",
+    "webpack": "5.88.2",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "4.15.1",
+    "webpack-node-externals": "3.0.0"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "prebuild": "rimraf lib",
+    "build:docs": "typedoc",
+    "start:dev": "webpack serve --mode development",
+    "start:demo": "cross-env NODE_ENV=demo webpack serve --mode development",
+    "build": "webpack --mode production --progress",
+    "test": "jest",
+    "test:ci": "cross-env CI=true yarn test",
+    "eslint": "eslint --max-warnings=0",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "eslint:fix": "yarn eslint -- --fix",
+    "prepare": "husky install"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
