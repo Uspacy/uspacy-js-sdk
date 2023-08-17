@@ -52,7 +52,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user entity
 	 */
-	getUserById(id: string) {
+	getUserById(id: number) {
 		return this.httpClient.client.get<IUser>(`${this.namespace}/:id`, {
 			urlParams: {
 				id,

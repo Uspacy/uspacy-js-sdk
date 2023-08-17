@@ -1,7 +1,10 @@
+import axios from 'axios';
 import decode from 'jwt-decode';
 import { injectable, registry } from 'tsyringe';
 
-import { IJwt } from '../../models/jwt';
+import { IJwt, IResponseJwt } from '../../models/jwt';
+import { ConfigService } from '../ConfigService';
+import { SessionService } from '../SessionService';
 import { StorageService } from '../StorageService';
 
 /**
@@ -15,7 +18,11 @@ import { StorageService } from '../StorageService';
 	},
 ])
 export class TokensService {
-	constructor(private storageService: StorageService) {}
+	constructor(
+		private storageService: StorageService,
+		private sessionService: SessionService,
+		private configService: ConfigService,
+	) {}
 
 	setToken(token: string) {
 		return this.storageService.table.setItem('token', token);
@@ -53,7 +60,32 @@ export class TokensService {
 		});
 	}
 
-	async isExpiredToken() {
+	refreshToken(): Promise<IResponseJwt> {
+		return new Promise(async (resolve, reject) => {
+			if (!this.sessionService.isSetRememberSession()) return reject(new Error(''));
+			try {
+				const token = await this.getRefreshToken();
+				const result = await axios.post<IResponseJwt>(
+					'/auth/v1/auth/refresh_token',
+					{},
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+						// credentials: 'omit',
+						baseURL: this.configService.config?.httpClientConfig?.baseURL,
+					},
+				);
+				await this.setToken(result.data.jwt);
+				await this.setRefreshToken(result.data.refreshToken);
+				resolve(result.data);
+			} catch (err) {
+				reject(err);
+			}
+		});
+	}
+
+	async isExpired() {
 		try {
 			const jwt = await this.decodeToken();
 			return jwt.exp < Math.floor(Date.now() / 1000);
@@ -66,13 +98,17 @@ export class TokensService {
 		try {
 			const data = await this.decodeToken(t);
 			return data.domain;
-		} catch (_) {}
+		} catch (_) {
+			return undefined;
+		}
 	}
 
 	async getUserRoles(t?: string) {
 		try {
 			const data = await this.decodeToken(t);
 			return data.roles;
-		} catch (_) {}
+		} catch (_) {
+			return undefined;
+		}
 	}
 }

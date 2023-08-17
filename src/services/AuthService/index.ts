@@ -3,15 +3,15 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { SessionService } from '../../core/SessionService';
 import { TokensService } from '../../core/TokensService';
-import { ReponseJwt } from '../../models/jwt';
+import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
+import { IResponseWithMessage } from '../../models/response';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { IResponseWithMessage } from '../../models/response';
 
 /**
  * Auth service
@@ -31,7 +31,7 @@ export class AuthService {
 	 */
 	async login({ email, password, code, remember }: ILoginDto) {
 		try {
-			const result = await this.httpClient.client.post<ReponseJwt>(`${this.namespace}/auth/sign_in/`, {
+			const result = await this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/sign_in/`, {
 				email,
 				password,
 				code,
@@ -54,7 +54,7 @@ export class AuthService {
 	 * @returns new jwt tokens
 	 */
 	confirmEmail(body: { email: string; token: string }) {
-		return this.httpClient.client.post<ReponseJwt>(`${this.namespace}/auth/confirm_email/`, body);
+		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/confirm_email/`, body);
 	}
 
 	/**
@@ -63,7 +63,7 @@ export class AuthService {
 	 * @returns new jwt tokens
 	 */
 	refreshToken(refreshToken: string) {
-		return this.httpClient.client.post<ReponseJwt>(`${this.namespace}/auth/refresh_token/`, null, {
+		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/refresh_token/`, null, {
 			headers: {
 				Authorization: `Bearer ${refreshToken}`,
 			},
@@ -75,7 +75,7 @@ export class AuthService {
 	 * @returns jwt tokens
 	 */
 	register(body: IRegisterDto) {
-		return this.httpClient.client.post<ReponseJwt>(`${this.namespace}/auth/register/`, body);
+		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/register/`, body);
 	}
 
 	/**
@@ -83,7 +83,7 @@ export class AuthService {
 	 * @returns jwt tokens
 	 */
 	signUp(body: ISignUpDto) {
-		return this.httpClient.client.post<ReponseJwt>(`${this.namespace}/users/`, body);
+		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/users/`, body);
 	}
 
 	/**

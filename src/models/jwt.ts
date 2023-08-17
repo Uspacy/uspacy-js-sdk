@@ -24,7 +24,7 @@ export interface IJwt {
 /**
  * Jwt data
  */
-export interface ReponseJwt {
+export interface IResponseJwt {
 	jwt: string;
 	refreshToken: string;
 	/**

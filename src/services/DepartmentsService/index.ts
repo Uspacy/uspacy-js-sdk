@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IDepartment } from '../../models/department';
@@ -9,6 +10,7 @@ import { IUpdateDepartmentDto } from './dto/update-department.dto';
 /**
  * Departments service
  */
+@injectable()
 export class DepartmentsService {
 	private namespace = 'company/v1/departments';
 	constructor(private httpClient: HttpClient) {}

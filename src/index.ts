@@ -1,1 +1,30 @@
-export * from './core';
+import 'reflect-metadata';
+
+import { container, singleton } from 'tsyringe';
+
+import { ConfigService, IConfig } from './core/ConfigService';
+import { HttpClient } from './core/HttpClient';
+import { SessionService } from './core/SessionService';
+import { TokensService } from './core/TokensService';
+import { AuthService } from './services/AuthService';
+import { DepartmentsService } from './services/DepartmentsService';
+import { ProfileService } from './services/ProfileService';
+import { UsersService } from './services/UsersService';
+
+@singleton()
+export class Uspacy {
+	constructor(
+		public readonly httpClient: HttpClient,
+		public readonly authService: AuthService,
+		public readonly tokensService: TokensService,
+		public readonly sessionService: SessionService,
+		public readonly usersService: UsersService,
+		public readonly departmentsService: DepartmentsService,
+		public readonly profileService: ProfileService,
+	) {}
+
+	static createInstance(config?: IConfig) {
+		container.register(ConfigService, { useValue: new ConfigService(config) });
+		return container.resolve(this);
+	}
+}
