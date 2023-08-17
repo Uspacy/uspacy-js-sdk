@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version: ${{ matrix.node-version }}
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: https://npm.pkg.github.com
           scope: 'uspacy'
       - name: Check and Publish to GitHub Package Registry
         run: |
