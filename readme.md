@@ -9,10 +9,7 @@ npm install --save @uspacy/sdk
 ```javascript
 import Uspacy from '@uspacy/sdk';
 
-const uspacyClient = Uspacy({
-	apiUrl: 'https://company_name.uspacy.com.ua',
-});
+const uspacyClient = Uspacy.createInstance();
 
-uspacyClient.auth.login('root@gmail.com', '123456');
-
+uspacyClient.authService.login({ email: 'email@gmail.com', password: '12345678' });
 ```

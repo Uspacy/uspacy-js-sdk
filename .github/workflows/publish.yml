@@ -19,11 +19,9 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version: ${{ matrix.node-version }}
-          registry-url: https://npm.pkg.github.com
-          scope: 'uspacy'
       - name: Check and Publish to GitHub Package Registry
         run: |
           yarn install
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}

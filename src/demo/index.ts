@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Uspacy } from '../index';
+import Uspacy from '../index';
 const uspacy = Uspacy.createInstance();
 
 (async () => {

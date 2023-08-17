@@ -12,7 +12,7 @@ import { ProfileService } from './services/ProfileService';
 import { UsersService } from './services/UsersService';
 
 @singleton()
-export class Uspacy {
+class Uspacy {
 	constructor(
 		public readonly httpClient: HttpClient,
 		public readonly authService: AuthService,
@@ -28,3 +28,5 @@ export class Uspacy {
 		return container.resolve(this);
 	}
 }
+
+export default Uspacy;

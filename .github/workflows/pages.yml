@@ -16,6 +16,8 @@ jobs:
         run: |
           yarn install
           yarn build:docs
+        env:
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
