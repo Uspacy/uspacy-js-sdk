@@ -1,6 +1,5 @@
 require('dotenv').config();
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -36,13 +35,6 @@ module.exports = (_, argv) => {
 				tsyringe: require.resolve('tsyringe/dist/esm2015/index.js'),
 			},
 		},
-		externals: isDemo
-			? []
-			: [
-					nodeExternals({
-						allowlist: ['reflect-metadata', 'tsyringe'],
-					}),
-			  ],
 		devtool: 'source-map',
 		devServer: {
 			static: path.join(__dirname, 'lib'),
