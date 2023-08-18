@@ -8,6 +8,7 @@ import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AuthService } from './services/AuthService';
 import { DepartmentsService } from './services/DepartmentsService';
+import { InvatesService } from './services/InvatesService';
 import { ProfileService } from './services/ProfileService';
 import { UsersService } from './services/UsersService';
 
@@ -21,6 +22,7 @@ class Uspacy {
 		public readonly usersService: UsersService,
 		public readonly departmentsService: DepartmentsService,
 		public readonly profileService: ProfileService,
+		public readonly invatesService: InvatesService,
 	) {}
 
 	static createInstance(config?: IConfig) {

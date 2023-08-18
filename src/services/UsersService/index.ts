@@ -212,4 +212,14 @@ export class UsersService {
 			},
 		});
 	}
+
+	/**
+	 * check if user has role
+	 * @param userRoles user roles
+	 * @param roles roles to check
+	 * @returns boolean
+	 */
+	hasRole(userRoles: UserRole[], roles: UserRole[]): boolean {
+		return userRoles?.some((userRole) => roles?.some((role) => role === userRole)) || false;
+	}
 }
