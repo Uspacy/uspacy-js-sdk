@@ -3,5 +3,5 @@ export interface ICreateDepartmentDto {
 	description: string;
 	headId: string;
 	parentDepartmentId: string;
-	userIds: string[];
+	usersIds: string[];
 }
