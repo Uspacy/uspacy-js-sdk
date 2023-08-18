@@ -13,13 +13,12 @@ const PATHS = {
 module.exports = (_, argv) => {
 	const isDev = argv.mode === 'development';
 	const isDemo = process.env.NODE_ENV === 'demo';
+	const entry = isDemo ? path.resolve(PATHS.demo, 'index.ts') : path.resolve(PATHS.source, 'index.ts');
+	const filename = isDemo ? 'static/[name].js' : '[name].js';
 	return {
-		entry: {
-			main: path.resolve(PATHS.source, 'index.ts'),
-			demo: path.resolve(PATHS.demo, 'index.ts'),
-		},
+		entry,
 		output: {
-			filename: 'static/[name].js',
+			filename,
 			path: path.resolve(__dirname, 'lib'),
 			libraryTarget: isDemo ? undefined : 'commonjs2',
 		},

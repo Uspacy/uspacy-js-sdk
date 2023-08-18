@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "Stas Raranetskyi",
   "license": "ISC",
-  "main": "./lib/index.js",
+  "main": "./lib/main.js",
   "private": false,
   "files": [
     "lib"
