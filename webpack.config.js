@@ -3,7 +3,6 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const PATHS = {
 	source: path.resolve(__dirname, 'src'),
@@ -13,10 +12,12 @@ const PATHS = {
 module.exports = (_, argv) => {
 	const isDev = argv.mode === 'development';
 	const isDemo = process.env.NODE_ENV === 'demo';
-	const entry = isDemo ? path.resolve(PATHS.demo, 'index.ts') : path.resolve(PATHS.source, 'index.ts');
+	const index = isDemo ? path.resolve(PATHS.demo, 'index.ts') : path.resolve(PATHS.source, 'index.ts');
 	const filename = isDemo ? 'static/[name].js' : '[name].js';
 	return {
-		entry,
+		entry: {
+			index,
+		},
 		output: {
 			filename,
 			path: path.resolve(__dirname, 'lib'),
@@ -38,7 +39,6 @@ module.exports = (_, argv) => {
 			alias: {
 				tsyringe: require.resolve('tsyringe/dist/esm2015/index.js'),
 			},
-			plugins: [new TsconfigPathsPlugin()],
 		},
 		devtool: 'source-map',
 		devServer: {

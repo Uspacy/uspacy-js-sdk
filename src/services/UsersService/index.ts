@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { HttpClient } from 'core/HttpClient';
-import { I2FaStatus } from 'models/2fa';
-import { IResponseWithMessage, IResponseWithPagination } from 'models/response';
-import { IPortalSettings } from 'models/settings';
-import { IUser, UserRole } from 'models/user';
 import { injectable } from 'tsyringe';
 
+import { HttpClient } from '../../core/HttpClient';
+import { I2FaStatus } from '../../models/2fa';
+import { IResponseWithMessage, IResponseWithPagination } from '../../models/response';
+import { IPortalSettings } from '../../models/settings';
+import { IUser, UserRole } from '../../models/user';
 import { ISearchUsersDto } from './dto/search-users.dto';
 import { IUpdateUserDto } from './dto/update-user.dto';
 import { IUploadAvatar } from './dto/upload-avatar.dto';
@@ -52,7 +52,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user entity
 	 */
-	getUserById(id: number) {
+	getUserById(id: IUser['id']) {
 		return this.httpClient.client.get<IUser>(`${this.namespace}/:id`, {
 			urlParams: {
 				id,
@@ -67,7 +67,7 @@ export class UsersService {
 	 * @returns updated user
 	 */
 
-	updateUser(id: string, body: IUpdateUserDto) {
+	updateUser(id: IUser['id'], body: IUpdateUserDto) {
 		return this.httpClient.client.patch<IUser>(`${this.namespace}/:id`, body, {
 			urlParams: {
 				id,
@@ -80,7 +80,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user data with active: false
 	 */
-	deactivateUser(id: string) {
+	deactivateUser(id: IUser['id']) {
 		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/deactivate`, {
 			urlParams: {
 				id,
@@ -93,7 +93,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user data with active: true
 	 */
-	activateUser(id: string) {
+	activateUser(id: IUser['id']) {
 		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/activate`, {
 			urlParams: {
 				id,
@@ -106,7 +106,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user data with new roles
 	 */
-	updateRoles(id: string, roles: UserRole[]) {
+	updateRoles(id: IUser['id'], roles: UserRole[]) {
 		return this.httpClient.client.patch<IUser>(
 			`${this.namespace}/:id/update_roles`,
 			{ roles },
@@ -122,7 +122,7 @@ export class UsersService {
 	 * @param position user position
 	 * @returns user data with new position
 	 */
-	updatePosition(id: string, position: string) {
+	updatePosition(id: IUser['id'], position: string) {
 		return this.httpClient.client.patch<IUser>(
 			`${this.namespace}/:id/update_position`,
 			{
@@ -139,7 +139,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	getPortalSettings(id: string) {
+	getPortalSettings(id: IUser['id']) {
 		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/:id/settings`, {
 			urlParams: { id },
 		});
@@ -150,7 +150,7 @@ export class UsersService {
 	 * @param settings
 	 * @returns user portal settings
 	 */
-	updatePortalSettings(id: string, settings: IPortalSettings) {
+	updatePortalSettings(id: IUser['id'], settings: IPortalSettings) {
 		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/:id/settings`, settings, {
 			urlParams: { id },
 		});
@@ -161,7 +161,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	get2FaStatus(id: string) {
+	get2FaStatus(id: IUser['id']) {
 		return this.httpClient.client.get<I2FaStatus>(`${this.namespace}/:id/twofa_status`, {
 			urlParams: { id },
 		});
@@ -172,7 +172,7 @@ export class UsersService {
 	 * @param id user id
 	 * @returns user portal settings
 	 */
-	disable2Fa(id: string) {
+	disable2Fa(id: IUser['id']) {
 		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/:id/twofa_disable`, {
 			urlParams: { id },
 		});

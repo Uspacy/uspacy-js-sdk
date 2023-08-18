@@ -27,7 +27,6 @@ export type UserRole = MainRoles | string;
 export interface IUser {
 	id: number;
 	authUserId: number;
-	extendedId: string;
 	firstName: string;
 	lastName: string;
 	patronymic: string;

@@ -1,12 +1,12 @@
-import { HttpClient } from 'core/HttpClient';
-import { SessionService } from 'core/SessionService';
-import { TokensService } from 'core/TokensService';
-import { IResponseJwt } from 'models/jwt';
-import { IPortal } from 'models/portal';
-import { IResponseWithMessage } from 'models/response';
-import { IUser } from 'models/user';
 import { injectable } from 'tsyringe';
 
+import { HttpClient } from '../../core/HttpClient';
+import { SessionService } from '../../core/SessionService';
+import { TokensService } from '../../core/TokensService';
+import { IResponseJwt } from '../../models/jwt';
+import { IPortal } from '../../models/portal';
+import { IResponseWithMessage } from '../../models/response';
+import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';

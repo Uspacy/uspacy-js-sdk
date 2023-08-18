@@ -70,7 +70,7 @@ export class DepartmentsService {
 	 * @param body department data
 	 * @returns updated department data
 	 */
-	updateDepartment(id: number, body: IUpdateDepartmentDto) {
+	updateDepartment(id: IDepartment['id'], body: IUpdateDepartmentDto) {
 		return this.httpClient.client.patch<IDepartment>(`${this.namespace}/:id/`, body, {
 			urlParams: { id },
 		});
@@ -104,7 +104,7 @@ export class DepartmentsService {
 	 * @param users users ids
 	 * @returns
 	 */
-	addUsersToDepartment(id: string, users: number[]) {
+	addUsersToDepartment(id: string, users: IDepartment['usersIds']) {
 		return this.httpClient.client.patch<IDepartment>(`${this.namespace}/:id/addUsers/`, users, { urlParams: { id } });
 	}
 
@@ -114,7 +114,7 @@ export class DepartmentsService {
 	 * @param users users ids
 	 * @returns
 	 */
-	deleteUsersFromDepartment(id: string, users: number[]) {
+	deleteUsersFromDepartment(id: string, users: IDepartment['usersIds']) {
 		return this.httpClient.client.patch<IDepartment>(`${this.namespace}/:id/deleteUsers/`, users, { urlParams: { id } });
 	}
 }

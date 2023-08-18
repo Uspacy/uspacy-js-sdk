@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { ConfigService } from 'core/ConfigService';
-import { SessionService } from 'core/SessionService';
-import { StorageService } from 'core/StorageService';
 import decode from 'jwt-decode';
-import { IJwt, IResponseJwt } from 'models/jwt';
 import { injectable, registry } from 'tsyringe';
+
+import { IJwt, IResponseJwt } from '../../models/jwt';
+import { ConfigService } from '../ConfigService';
+import { SessionService } from '../SessionService';
+import { StorageService } from '../StorageService';
 
 /**
  * Http client

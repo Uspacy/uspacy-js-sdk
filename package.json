@@ -6,7 +6,8 @@
   "keywords": [],
   "author": "Stas Raranetskyi",
   "license": "ISC",
-  "main": "./lib/main.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "private": false,
   "files": [
     "lib"
@@ -41,7 +42,6 @@
     "prettier": "3.0.1",
     "reflect-metadata": "^0.1.13",
     "ts-loader": "^9.4.4",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "tsyringe": "^4.8.0",
     "typedoc": "^0.24.8",
     "typescript": "5.1.6",

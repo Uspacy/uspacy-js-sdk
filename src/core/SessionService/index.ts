@@ -1,6 +1,7 @@
-import { ConfigService } from 'core/ConfigService';
 import cookie from 'js-cookie';
 import { injectable } from 'tsyringe';
+
+import { ConfigService } from '../ConfigService';
 
 /**
  * Session service
