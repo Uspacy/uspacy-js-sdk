@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
+import { HttpClient } from 'core/HttpClient';
+import { I2FaStatus } from 'models/2fa';
+import { IResponseWithMessage, IResponseWithPagination } from 'models/response';
+import { IPortalSettings } from 'models/settings';
+import { IUser, UserRole } from 'models/user';
 import { injectable } from 'tsyringe';
 
-import { HttpClient } from '../../core/HttpClient';
-import { I2FaStatus } from '../../models/2fa';
-import { IResponseWithMessage, IResponseWithPagination } from '../../models/response';
-import { IPortalSettings } from '../../models/settings';
-import { IUser, UserRole } from '../../models/user';
 import { ISearchUsersDto } from './dto/search-users.dto';
 import { IUpdateUserDto } from './dto/update-user.dto';
 import { IUploadAvatar } from './dto/upload-avatar.dto';

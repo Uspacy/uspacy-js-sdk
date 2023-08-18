@@ -1,15 +1,14 @@
 import 'reflect-metadata';
 
+import { ConfigService, IConfig } from 'core/ConfigService';
+import { HttpClient } from 'core/HttpClient';
+import { SessionService } from 'core/SessionService';
+import { TokensService } from 'core/TokensService';
+import { AuthService } from 'services/AuthService';
+import { DepartmentsService } from 'services/DepartmentsService';
+import { ProfileService } from 'services/ProfileService';
+import { UsersService } from 'services/UsersService';
 import { container, singleton } from 'tsyringe';
-
-import { ConfigService, IConfig } from './core/ConfigService';
-import { HttpClient } from './core/HttpClient';
-import { SessionService } from './core/SessionService';
-import { TokensService } from './core/TokensService';
-import { AuthService } from './services/AuthService';
-import { DepartmentsService } from './services/DepartmentsService';
-import { ProfileService } from './services/ProfileService';
-import { UsersService } from './services/UsersService';
 
 @singleton()
 class Uspacy {

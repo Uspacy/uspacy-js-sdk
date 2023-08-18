@@ -1,9 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
+import { ConfigService } from 'core/ConfigService';
+import { SessionService } from 'core/SessionService';
+import { TokensService } from 'core/TokensService';
 import { injectable } from 'tsyringe';
-
-import { ConfigService } from '../ConfigService';
-import { SessionService } from '../SessionService';
-import { TokensService } from '../TokensService';
 
 declare module 'axios' {
 	interface AxiosRequestConfig {

@@ -3,6 +3,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const PATHS = {
 	source: path.resolve(__dirname, 'src'),
@@ -26,6 +27,9 @@ module.exports = (_, argv) => {
 				{
 					test: /\.ts$/,
 					loader: 'ts-loader',
+					options: {
+						transpileOnly: false,
+					},
 				},
 			],
 		},
@@ -34,6 +38,7 @@ module.exports = (_, argv) => {
 			alias: {
 				tsyringe: require.resolve('tsyringe/dist/esm2015/index.js'),
 			},
+			plugins: [new TsconfigPathsPlugin()],
 		},
 		devtool: 'source-map',
 		devServer: {

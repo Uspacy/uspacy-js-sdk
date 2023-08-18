@@ -1,10 +1,9 @@
+import { HttpClient } from 'core/HttpClient';
+import { I2FaEnable, I2FaStatus } from 'models/2fa';
+import { IResponseWithMessage } from 'models/response';
+import { IPortalSettings } from 'models/settings';
+import { IUser } from 'models/user';
 import { injectable } from 'tsyringe';
-
-import { HttpClient } from '../../core/HttpClient';
-import { I2FaEnable, I2FaStatus } from '../../models/2fa';
-import { IResponseWithMessage } from '../../models/response';
-import { IPortalSettings } from '../../models/settings';
-import { IUser } from '../../models/user';
 
 /**
  * Users service
