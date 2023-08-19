@@ -26,11 +26,9 @@ module.exports = (_, argv) => {
 		module: {
 			rules: [
 				{
-					test: /\.ts$/,
+					test: /\.tsx?$/,
 					loader: 'ts-loader',
-					options: {
-						transpileOnly: false,
-					},
+					exclude: /node_modules/,
 				},
 			],
 		},

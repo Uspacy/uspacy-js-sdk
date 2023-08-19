@@ -56,6 +56,8 @@
     "start:dev": "webpack serve --mode development",
     "start:demo": "cross-env NODE_ENV=demo webpack serve --mode development",
     "build": "webpack --mode production --progress",
+    "postbuild": "yarn emitDeclarations",
+    "emitDeclarations": "tsc src/models/*.ts --outDir ./lib/models",
     "test": "jest",
     "test:ci": "cross-env CI=true yarn test",
     "eslint": "eslint --max-warnings=0",

@@ -33,4 +33,3 @@ class Uspacy {
 
 export default Uspacy;
 export const uspacySdk = Uspacy.createInstance();
-export * from './models';
