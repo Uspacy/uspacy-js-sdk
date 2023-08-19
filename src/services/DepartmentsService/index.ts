@@ -12,7 +12,7 @@ import { IUpdateDepartmentDto } from './dto/update-department.dto';
  */
 @injectable()
 export class DepartmentsService {
-	private namespace = 'company/v1/departments';
+	private namespace = '/company/v1/departments';
 	constructor(private httpClient: HttpClient) {}
 
 	/**
