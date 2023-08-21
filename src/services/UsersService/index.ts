@@ -81,11 +81,15 @@ export class UsersService {
 	 * @returns user data with active: false
 	 */
 	deactivateUser(id: IUser['id']) {
-		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/deactivate`, {
-			urlParams: {
-				id,
+		return this.httpClient.client.post<IUser>(
+			`${this.namespace}/:id/deactivate`,
+			{},
+			{
+				urlParams: {
+					id,
+				},
 			},
-		});
+		);
 	}
 
 	/**
@@ -94,11 +98,15 @@ export class UsersService {
 	 * @returns user data with active: true
 	 */
 	activateUser(id: IUser['id']) {
-		return this.httpClient.client.post<IUser>(`${this.namespace}/:id/activate`, {
-			urlParams: {
-				id,
+		return this.httpClient.client.post<IUser>(
+			`${this.namespace}/:id/activate`,
+			{},
+			{
+				urlParams: {
+					id,
+				},
 			},
-		});
+		);
 	}
 
 	/**
