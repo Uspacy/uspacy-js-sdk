@@ -1,8 +1,8 @@
 {
   "name": "@uspacy/sdk",
   "version": "0.0.1",
-  "repository": "git@github.com:Uspacy/js-sdk.git",
-  "homepage": "https://uspacy.github.io/js-sdk",
+  "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
+  "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
   "author": "Stas Raranetskyi",
   "license": "ISC",
