@@ -75,11 +75,7 @@ export class FilesService {
 	}
 }
 
-export enum EntityType {
-	comment = 'comment',
-	post = 'post',
-	task = 'task',
-}
+export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact';
 
 export interface FileInfoDto {
 	id: number;

@@ -7,6 +7,7 @@ import { HttpClient } from './core/HttpClient';
 import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AuthService } from './services/AuthService';
+import { CommentsService } from './services/CommentsService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { InvatesService } from './services/InvatesService';
 import { ProfileService } from './services/ProfileService';
@@ -23,6 +24,7 @@ class Uspacy {
 		public readonly departmentsService: DepartmentsService,
 		public readonly profileService: ProfileService,
 		public readonly invatesService: InvatesService,
+		public readonly commentsService: CommentsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
