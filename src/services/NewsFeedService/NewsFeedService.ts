@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { EntryType } from 'perf_hooks';
 
-import { Comment } from '../CommentsService';
+import { IComment } from '../../models/comment';
 
 /**
  * NewsFeed service
@@ -87,7 +87,7 @@ export interface Post {
 	authorId: string;
 	files?: FileInfoDto[];
 	date?: number;
-	comments?: Comment[];
+	comments?: IComment[];
 }
 
 interface FileInfoDto {

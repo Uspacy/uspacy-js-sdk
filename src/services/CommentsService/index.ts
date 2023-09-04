@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IComment } from '../../models/comment';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { EntityType } from '../FilesService';
 
 /**
@@ -19,7 +19,7 @@ export class CommentsService {
 	 * @returns list of comments
 	 */
 	getComments(entityType: EntityType[], entityId: number, list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IComment[]>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IComment[]>>(this.namespace, {
 			params: {
 				entityType,
 				entityId,

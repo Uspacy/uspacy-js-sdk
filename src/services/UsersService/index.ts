@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { I2FaStatus } from '../../models/2fa';
-import { IResponseWithMessage, IResponseWithPagination } from '../../models/response';
+import { IResponseWithMessage, IResponseWithMeta } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
 import { IUser, UserRole } from '../../models/user';
 import { ISearchUsersDto } from './dto/search-users.dto';
@@ -26,7 +26,7 @@ export class UsersService {
 	 * @param show get list of with unactive users (available only for admin or owner)
 	 * @returns Array users entity
 	 */
-	getUsers(page?: number, list?: number, show?: 'all'): Promise<AxiosResponse<IResponseWithPagination<IUser>>>;
+	getUsers(page?: number, list?: number, show?: 'all'): Promise<AxiosResponse<IResponseWithMeta<IUser>>>;
 	getUsers(page?: number, list?: 'all', show?: 'all'): Promise<AxiosResponse<IUser[]>>;
 	getUsers(page?: number, list?: number | 'all', show?: 'all') {
 		if (list === 'all') {
@@ -38,7 +38,7 @@ export class UsersService {
 				},
 			});
 		}
-		return this.httpClient.client.get<IResponseWithPagination<IUser>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IUser>>(this.namespace, {
 			params: {
 				page,
 				list,
@@ -191,7 +191,7 @@ export class UsersService {
 	 * @returns user portal settings
 	 */
 	search(body: ISearchUsersDto) {
-		return this.httpClient.client.get<IResponseWithPagination<IUser>>(`${this.namespace}/search/`, {
+		return this.httpClient.client.get<IResponseWithMeta<IUser>>(`${this.namespace}/search/`, {
 			params: {
 				...body,
 			},
@@ -214,7 +214,7 @@ export class UsersService {
 	 * @returns user portal settings
 	 */
 	getUsersByIds(ids: Pick<IUser, 'id'>[]) {
-		return this.httpClient.client.get<IResponseWithPagination<IUser>>(`${this.namespace}/upload_avatar/`, {
+		return this.httpClient.client.get<IResponseWithMeta<IUser>>(`${this.namespace}/upload_avatar/`, {
 			params: {
 				ids,
 			},

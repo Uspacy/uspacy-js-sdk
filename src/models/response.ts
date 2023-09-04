@@ -1,10 +1,12 @@
-export interface IResponseWithPagination<D> {
+export interface IResponseWithMeta<D> {
 	data: D[];
-	meta: {
-		total: number;
-		page: number;
-		list: number;
-	};
+	meta: IMeta;
+}
+
+export interface IMeta {
+	total: number;
+	page: number;
+	list: number;
 }
 
 export interface IResponseWithMessage {
