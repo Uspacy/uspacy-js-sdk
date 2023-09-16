@@ -24,7 +24,7 @@ export class TasksService {
 		if (withoutResponsible) {
 			return this.httpClient.client.get(this.namespace, { params: { ...params, responsible_id: '' }, signal });
 		}
-		return this.httpClient.client.get<ITasks>(this.namespace, { params, signal });
+		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, { params, signal });
 	}
 
 	/**
@@ -34,7 +34,7 @@ export class TasksService {
 	 * @returns Array regular tasks entity
 	 */
 	getRegularTasksWithFilters(params, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<ITasks>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});

@@ -2,14 +2,6 @@ import { IComment } from './comment';
 import { IFile } from './files';
 import { ITaskTimerList } from './timer';
 
-export interface IComments {
-	data: IComment[];
-}
-
-export interface IFiles {
-	data: IFile[];
-}
-
 export interface ITask {
 	id: string;
 	parentId: null | number;
@@ -64,7 +56,7 @@ export interface ITask {
 	};
 }
 
-interface IMeta {
+export interface IMeta {
 	currentPage: number;
 	from: number;
 	lastPage: number;
