@@ -5,7 +5,7 @@ import { IResponseWithPagination } from '../../models/response';
 import { IStages } from '../../models/tasks-stages';
 
 /**
- * Tasks service
+ * Tasks stages service
  */
 @injectable()
 export class TasksStagesService {
