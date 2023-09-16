@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { EntryType } from 'perf_hooks';
 
-import { Comment } from '../CommentsService';
+// import { Comment } from '../CommentsService';
 
 /**
  * NewsFeed service

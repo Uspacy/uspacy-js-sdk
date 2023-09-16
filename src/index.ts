@@ -11,6 +11,7 @@ import { CommentsService } from './services/CommentsService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { InvatesService } from './services/InvatesService';
 import { ProfileService } from './services/ProfileService';
+import { TasksService } from './services/TasksService';
 import { UsersService } from './services/UsersService';
 
 @singleton()
@@ -25,6 +26,7 @@ class Uspacy {
 		public readonly profileService: ProfileService,
 		public readonly invatesService: InvatesService,
 		public readonly commentsService: CommentsService,
+		public readonly tasksService: TasksService,
 	) {}
 
 	static createInstance(config?: IConfig) {
