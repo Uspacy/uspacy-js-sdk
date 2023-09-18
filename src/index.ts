@@ -8,6 +8,7 @@ import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AuthService } from './services/AuthService';
 import { CommentsService } from './services/CommentsService';
+import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
@@ -35,6 +36,7 @@ class Uspacy {
 		public readonly tasksTimerService: TasksTimerService,
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
+		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
