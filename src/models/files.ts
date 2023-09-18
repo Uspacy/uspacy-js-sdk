@@ -1,3 +1,10 @@
+export interface IFilesSize {
+	data: {
+		size: number;
+		limit: number;
+	};
+}
+
 export interface IFile {
 	id: number;
 	entityId: number;
@@ -7,4 +14,8 @@ export interface IFile {
 	size: number;
 	uploadId: string;
 	url: string;
+}
+
+export interface IFiles {
+	data: IFile[];
 }

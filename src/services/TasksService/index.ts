@@ -20,11 +20,12 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array tasks entity
 	 */
-	getTasksWithFilters(params, withoutResponsible: boolean, signal: AbortSignal) {
-		if (withoutResponsible) {
-			return this.httpClient.client.get(this.namespace, { params: { ...params, responsible_id: '' }, signal });
-		}
-		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, { params, signal });
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	getTasksWithFilters(params: any, withoutResponsible: boolean, signal: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
+			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
+			signal,
+		});
 	}
 
 	/**
@@ -33,7 +34,8 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array regular tasks entity
 	 */
-	getRegularTasksWithFilters(params, withoutResponsible: boolean, signal: AbortSignal) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	getRegularTasksWithFilters(params: any, withoutResponsible: boolean, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
@@ -145,12 +147,13 @@ export class TasksService {
 	 * @param id task id
 	 * @returns task id
 	 */
-	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: string, withoutResponsible?: boolean) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
 		if (all) {
 			return this.httpClient.client.post<ITask>(
 				`${this.namespace}/mass_deletion/`,
 				{ taskIds, exceptIds, all },
-				{ params: { params, ...(withoutResponsible && { responsible_id: '' }) } },
+				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
 			);
 		}
 		return this.httpClient.client.post<ITask>(`${this.namespace}/mass_deletion/`, { taskIds, exceptIds, all });
@@ -162,7 +165,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	startTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/start`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/start`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -173,7 +176,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	pauseTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/pause`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/stop`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -184,7 +187,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	watchTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/watch`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/watch`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -195,7 +198,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	unwatchTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/unwatch`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/unwatch`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -206,7 +209,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	completeTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/ready`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/ready`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -217,7 +220,7 @@ export class TasksService {
 	 * @returns task entity
 	 */
 	restartTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/restart`, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/restart`, undefined, {
 			urlParams: { id },
 		});
 	}
