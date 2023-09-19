@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -6,12 +7,14 @@ import { TokensService } from '../../core/TokensService';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
+import { ICoupon, IIntent, IInvoiceData, IInvoices, IRatesList, ISubscription } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
+import { IIntentPayload, ISubscriptionsIndividual, ISubscriptionsLegal } from './dto/subscription.dto';
 
 /**
  * Auth service
@@ -139,5 +142,84 @@ export class AuthService {
 	 */
 	createPortal(body: ICreatePortalDto) {
 		return this.httpClient.client.post<IPortal>(`${this.namespace}/portals/`, body);
+	}
+
+	/**
+	 * Get invoices list
+	 * @param limit invoices limit
+	 * @returns Array with invoices entities
+	 */
+	getInvoices(limit: number) {
+		return this.httpClient.client.get<IInvoices>(`${this.namespace}/invoices/`, { params: { limit } });
+	}
+
+	/**
+	 * Get invoice pdf link
+	 * @param id invoice id
+	 * @returns Download link
+	 */
+	getInvoicesPdf(id: string) {
+		return this.httpClient.client.get<{ download_url: string }>(`${this.namespace}/invoices/:id/pdf/`, { urlParams: { id } });
+	}
+
+	/**
+	 * Get rates list
+	 * @returns Array rates entity
+	 */
+	getRatesList() {
+		return this.httpClient.client.get<IRatesList>(`${this.namespace}/rates/`);
+	}
+
+	/**
+	 * Get current subscription
+	 * @returns Object subscription entity
+	 */
+	getSubscription() {
+		return this.httpClient.client.get<ISubscription>(`${this.namespace}/subscriptions/`);
+	}
+
+	/**
+	 * Get coupon
+	 * @returns Object coupon entity
+	 */
+	getCoupon(couponCode: string) {
+		return this.httpClient.client.get<ICoupon>(`${this.namespace}/coupons/`, { params: { couponCode: encodeURIComponent(couponCode) } });
+	}
+
+	/**
+	 * Set subscription individual
+	 * @returns Object invoice entity
+	 */
+	subscriptionInvdividual(body: ISubscriptionsIndividual) {
+		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/individual`, { body });
+	}
+
+	/**
+	 * Set subscription legal
+	 * @returns Object invoice entity
+	 */
+	subscriptionLegal(body: ISubscriptionsLegal) {
+		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/legal`, { body });
+	}
+
+	/**
+	 * Activate demo tariff
+	 */
+	activateDemo() {
+		return this.httpClient.client.post(`${this.namespace}/subscriptions/demo`);
+	}
+
+	/**
+	 * Create payment intent for card payment in EU, COM, BR, PL
+	 */
+	createPaymentIntent(body: IIntentPayload) {
+		return this.httpClient.client.post<IIntent>(`${this.namespace}/chargebee/payment_intent`, { body });
+	}
+
+	/**
+	 * Disable subscriptions renewal
+	 */
+	disableSubscriptionsRenewal(auto_debit: boolean) {
+		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/disable_renewal`, { body: { auto_debit } });
 	}
 }
