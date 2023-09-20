@@ -18,7 +18,7 @@ export class TasksTimerService {
 	 * @returns Object timer entity
 	 */
 	getTimerRealtime() {
-		return this.httpClient.client.get<ITimerRealTime>(this.namespace);
+		return this.httpClient.client.get<ITimerRealTime>(`${this.namespace}/realtime`);
 	}
 
 	/**

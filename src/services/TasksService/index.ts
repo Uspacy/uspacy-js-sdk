@@ -75,7 +75,7 @@ export class TasksService {
 	 * @param id task id
 	 * @returns task entity
 	 */
-	getTask(id: ITask['id']) {
+	getTask(id: string) {
 		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
 			urlParams: { id },
 		});
@@ -86,7 +86,7 @@ export class TasksService {
 	 * @param id template id
 	 * @returns template entity
 	 */
-	getTemplate(id: ITask['id']) {
+	getTemplate(id: string) {
 		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
 			urlParams: { id },
 		});
@@ -97,7 +97,7 @@ export class TasksService {
 	 * @param id parentTask id
 	 * @returns parentTask entity
 	 */
-	getParentTask(id: ITask['id']) {
+	getParentTask(id: string) {
 		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
 			urlParams: { id },
 		});

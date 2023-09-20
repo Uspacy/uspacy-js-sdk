@@ -9,7 +9,7 @@ import { IResponseWithPagination } from '../../models/response';
  */
 @injectable()
 export class FilesService {
-	private namespace = '/files/v1/files';
+	private namespace = '/files/v1';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class FilesService {
 	 * @returns Array files entity
 	 */
 	getFiles(entityId: string, entityType: string) {
-		return this.httpClient.client.get<IResponseWithPagination<IFiles>>(this.namespace, { params: { entityId, entityType } });
+		return this.httpClient.client.get<IResponseWithPagination<IFiles>>(`${this.namespace}/files/`, { params: { entityId, entityType } });
 	}
 
 	/**

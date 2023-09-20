@@ -1,10 +1,10 @@
-export interface IErrorsAxiosResponse {
-	response: {
-		status?: number;
-		data?: {
-			errors?: {
-				text?: string[];
-			};
-		};
+import { AxiosError } from 'axios';
+
+export interface IErrorDataInterface {
+	errors: {
+		text: string[];
 	};
+	status: boolean;
 }
+
+export interface IErrorsAxiosResponse extends AxiosError<IErrorDataInterface> {}

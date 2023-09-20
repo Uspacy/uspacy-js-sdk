@@ -10,6 +10,7 @@ import { IResponseWithMessage } from '../../models/response';
 import { ICoupon, IIntent, IInvoiceData, IInvoices, IRatesList, ISubscription } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
+import { IDowngradePayload } from './dto/downgrade.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
@@ -183,7 +184,7 @@ export class AuthService {
 	 * @returns Object coupon entity
 	 */
 	getCoupon(couponCode: string) {
-		return this.httpClient.client.get<ICoupon>(`${this.namespace}/coupons/`, { params: { couponCode: encodeURIComponent(couponCode) } });
+		return this.httpClient.client.get<ICoupon>(`${this.namespace}/coupons/${couponCode}`);
 	}
 
 	/**
@@ -191,7 +192,7 @@ export class AuthService {
 	 * @returns Object invoice entity
 	 */
 	subscriptionInvdividual(body: ISubscriptionsIndividual) {
-		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/individual`, { body });
+		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/individual`, body);
 	}
 
 	/**
@@ -199,7 +200,7 @@ export class AuthService {
 	 * @returns Object invoice entity
 	 */
 	subscriptionLegal(body: ISubscriptionsLegal) {
-		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/legal`, { body });
+		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/legal`, body);
 	}
 
 	/**
@@ -213,13 +214,20 @@ export class AuthService {
 	 * Create payment intent for card payment in EU, COM, BR, PL
 	 */
 	createPaymentIntent(body: IIntentPayload) {
-		return this.httpClient.client.post<IIntent>(`${this.namespace}/chargebee/payment_intent`, { body });
+		return this.httpClient.client.post<IIntent>(`${this.namespace}/chargebee/payment_intent`, body);
 	}
 
 	/**
 	 * Disable subscriptions renewal
 	 */
 	disableSubscriptionsRenewal(auto_debit: boolean) {
-		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/disable_renewal`, { body: { auto_debit } });
+		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/disable_renewal`, auto_debit);
+	}
+
+	/**
+	 * Downgrade tariff
+	 */
+	downgrade(body: IDowngradePayload) {
+		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/downgrade`, body);
 	}
 }

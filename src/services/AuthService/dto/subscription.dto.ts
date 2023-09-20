@@ -20,6 +20,7 @@ export interface ISubscriptionsIndividual {
 	processing?: boolean;
 	url?: string;
 	data?: string;
+	tariff_extension?: boolean;
 }
 
 export interface ISubscriptionsLegal {
@@ -47,6 +48,7 @@ export interface ISubscriptionsLegal {
 	token?: string;
 	coupon?: string[];
 	tax_id?: string;
+	tariff_extension?: boolean;
 }
 
 export interface IIntentPayload {

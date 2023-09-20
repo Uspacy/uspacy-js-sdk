@@ -14,10 +14,12 @@ import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
 import { InvatesService } from './services/InvatesService';
 import { ProfileService } from './services/ProfileService';
+import { RolesService } from './services/RolesService';
 import { TasksService } from './services/TasksService';
 import { TasksStagesService } from './services/TasksStagesService';
 import { TasksTimerService } from './services/TasksTimerService';
 import { UsersService } from './services/UsersService';
+import { WebhooksService } from './services/WebhooksService';
 
 @singleton()
 class Uspacy {
@@ -37,6 +39,8 @@ class Uspacy {
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
 		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
+		public readonly webhooksService: WebhooksService,
+		public readonly rolesService: RolesService,
 	) {}
 
 	static createInstance(config?: IConfig) {
