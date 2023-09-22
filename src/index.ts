@@ -9,6 +9,7 @@ import { TokensService } from './core/TokensService';
 import { AuthService } from './services/AuthService';
 import { CommentsService } from './services/CommentsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
+import { CrmEntitiesService } from './services/CrmEntitiesService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
@@ -41,6 +42,7 @@ class Uspacy {
 		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
 		public readonly webhooksService: WebhooksService,
 		public readonly rolesService: RolesService,
+		public readonly crmEntitiesService: CrmEntitiesService,
 	) {}
 
 	static createInstance(config?: IConfig) {
