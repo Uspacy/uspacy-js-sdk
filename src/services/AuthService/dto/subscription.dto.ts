@@ -57,3 +57,15 @@ export interface IIntentPayload {
 	currency: string;
 	payment_method: string;
 }
+
+export interface ICreatingIntentPayload {
+	amount: number;
+	currency: string;
+	payment_method: string;
+}
+
+export interface ICreateUsingPaymentIntent {
+	gatewayAccountId: string;
+	gwToken: string;
+	paymentMethodType: 'card' | 'bank_transfer';
+}
