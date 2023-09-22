@@ -1,5 +1,5 @@
 export interface ISubscriptionsIndividual {
-	phone: string;
+	phone?: string;
 	email: string;
 	first_name: string;
 	last_name?: string;
@@ -20,6 +20,7 @@ export interface ISubscriptionsIndividual {
 	processing?: boolean;
 	url?: string;
 	data?: string;
+	tax_id?: string;
 	tariff_extension?: boolean;
 }
 
