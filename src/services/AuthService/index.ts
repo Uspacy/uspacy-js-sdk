@@ -15,7 +15,7 @@ import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { IIntentPayload, ISubscriptionsIndividual, ISubscriptionsLegal } from './dto/subscription.dto';
+import { ICreateUsingPaymentIntent, IIntentPayload, ISubscriptionsIndividual, ISubscriptionsLegal } from './dto/subscription.dto';
 
 /**
  * Auth service
@@ -215,6 +215,13 @@ export class AuthService {
 	 */
 	createPaymentIntent(body: IIntentPayload) {
 		return this.httpClient.client.post<IIntent>(`${this.namespace}/chargebee/payment_intent`, body);
+	}
+
+	/**
+	 * Create using payment intent for card payment in EU, COM, BR, PL
+	 */
+	createUsingPaymentIntent(body: ICreateUsingPaymentIntent) {
+		return this.httpClient.client.post(`${this.namespace}/chargebee/create_using_payment_intent`, body);
 	}
 
 	/**
