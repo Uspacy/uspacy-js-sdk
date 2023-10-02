@@ -104,10 +104,10 @@ export interface IFilterRegularTasks {
 }
 
 export interface ITasksParams {
-	status?: string;
-	priority?: string;
-	setter_id?: string;
-	responsible_id?: string;
+	status?: string[];
+	priority?: string[];
+	setter_id?: number[];
+	responsible_id?: number[];
 	accomplices?: number[];
 	auditors?: number[];
 	deadline?: number[][];
@@ -116,4 +116,5 @@ export interface ITasksParams {
 	groupId?: number;
 	page?: number;
 	list?: number;
+	template?: 1;
 }
