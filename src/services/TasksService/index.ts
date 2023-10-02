@@ -144,7 +144,11 @@ export class TasksService {
 
 	/**
 	 * Mass deletion tasks
-	 * @param id task id
+	 * @param taskIds tasks ids
+	 * @param exceptIds exception tasks ids
+	 * @param all boolean flag for params
+	 * @param params params for filters
+	 * @param withoutResponsible boolean flag for filters
 	 * @returns task id
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -212,6 +216,27 @@ export class TasksService {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/ready`, undefined, {
 			urlParams: { id },
 		});
+	}
+
+	/**
+	 * Mass completion tasks
+	 * @param taskIds tasks ids
+	 * @param exceptIds exception tasks ids
+	 * @param all boolean flag for params
+	 * @param params params for filters
+	 * @param withoutResponsible boolean flag for filters
+	 * @returns task id
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	massCompletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
+		if (all) {
+			return this.httpClient.client.post<ITask>(
+				`${this.namespace}/mass_ready/`,
+				{ taskIds, exceptIds, all },
+				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
+			);
+		}
+		return this.httpClient.client.post<ITask>(`${this.namespace}/mass_ready/`, { taskIds, exceptIds, all });
 	}
 
 	/**

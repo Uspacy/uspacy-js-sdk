@@ -35,6 +35,7 @@ export interface ITask {
 	template?: boolean;
 	templateId?: number;
 	scheduler?: {
+		activationLimit?: boolean;
 		taskId?: number;
 		active?: boolean;
 		period?: 'day' | 'week' | 'month' | 'year';
