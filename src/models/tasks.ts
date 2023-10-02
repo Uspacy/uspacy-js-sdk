@@ -73,31 +73,20 @@ export interface ITasks {
 }
 
 export interface IFilterTasks {
-	status: string;
-	priority: string;
-	setter_id: string;
-	responsible_id: string;
-	accomplices: number[];
-	auditors: number[];
-	deadline: number;
-	q: string;
-	groupId: number;
+	total: number;
 	page: number;
-	list: number;
-}
-
-export interface ITasksParams {
-	status?: string;
-	priority?: string;
-	setter_id?: string;
-	responsible_id?: string;
+	perPage: number;
+	status?: string[];
+	priority?: string[];
+	time_label?: string[];
+	certainDateOrPeriod?: number[];
+	createdBy?: number[];
+	responsible?: number[];
 	accomplices?: number[];
 	auditors?: number[];
-	deadline?: number;
-	q?: string;
-	groupId?: number;
-	page?: number;
-	list?: number;
+	deadline?: number[][];
+	openCalendar?: boolean;
+	search?: string;
 }
 
 export interface IFilterRegularTasks {
@@ -112,4 +101,19 @@ export interface IFilterRegularTasks {
 	auditors?: number[];
 	openCalendar?: boolean;
 	search?: string;
+}
+
+export interface ITasksParams {
+	status?: string;
+	priority?: string;
+	setter_id?: string;
+	responsible_id?: string;
+	accomplices?: number[];
+	auditors?: number[];
+	deadline?: number[][];
+	search?: string;
+	q?: string;
+	groupId?: number;
+	page?: number;
+	list?: number;
 }
