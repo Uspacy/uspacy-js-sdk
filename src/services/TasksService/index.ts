@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IResponseWithPagination } from '../../models/response';
-import { ITask, ITasks } from '../../models/tasks';
+import { ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITaskValues } from './dto/create-update-task.dto';
 
 /**
@@ -20,8 +20,7 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array tasks entity
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getTasksWithFilters(params: any, withoutResponsible: boolean, signal: AbortSignal) {
+	getTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
@@ -34,8 +33,7 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array regular tasks entity
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getRegularTasksWithFilters(params: any, withoutResponsible: boolean, signal: AbortSignal) {
+	getRegularTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
@@ -151,8 +149,7 @@ export class TasksService {
 	 * @param withoutResponsible boolean flag for filters
 	 * @returns task id
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
+	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: ITasksParams, withoutResponsible?: boolean) {
 		if (all) {
 			return this.httpClient.client.post(
 				`${this.namespace}/mass_deletion/`,
@@ -227,8 +224,7 @@ export class TasksService {
 	 * @param withoutResponsible boolean flag for filters
 	 * @returns task id
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	massCompletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
+	massCompletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: ITasksParams, withoutResponsible?: boolean) {
 		if (all) {
 			return this.httpClient.client.post(
 				`${this.namespace}/mass_ready/`,
