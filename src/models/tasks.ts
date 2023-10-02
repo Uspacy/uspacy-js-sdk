@@ -35,6 +35,7 @@ export interface ITask {
 	template?: boolean;
 	templateId?: number;
 	scheduler?: {
+		activationLimit?: boolean;
 		taskId?: number;
 		active?: boolean;
 		period?: 'day' | 'week' | 'month' | 'year';
@@ -100,4 +101,19 @@ export interface IFilterRegularTasks {
 	auditors?: number[];
 	openCalendar?: boolean;
 	search?: string;
+}
+
+export interface ITasksParams {
+	status?: string;
+	priority?: string;
+	setter_id?: string;
+	responsible_id?: string;
+	accomplices?: number[];
+	auditors?: number[];
+	deadline?: number[][];
+	search?: string;
+	q?: string;
+	groupId?: number;
+	page?: number;
+	list?: number;
 }
