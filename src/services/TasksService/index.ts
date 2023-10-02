@@ -154,13 +154,13 @@ export class TasksService {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
 		if (all) {
-			return this.httpClient.client.post<ITask>(
+			return this.httpClient.client.post(
 				`${this.namespace}/mass_deletion/`,
 				{ taskIds, exceptIds, all },
 				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
 			);
 		}
-		return this.httpClient.client.post<ITask>(`${this.namespace}/mass_deletion/`, { taskIds, exceptIds, all });
+		return this.httpClient.client.post(`${this.namespace}/mass_deletion/`, { taskIds, exceptIds, all });
 	}
 
 	/**
@@ -230,13 +230,13 @@ export class TasksService {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	massCompletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: any, withoutResponsible?: boolean) {
 		if (all) {
-			return this.httpClient.client.post<ITask>(
+			return this.httpClient.client.post(
 				`${this.namespace}/mass_ready/`,
 				{ taskIds, exceptIds, all },
 				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
 			);
 		}
-		return this.httpClient.client.post<ITask>(`${this.namespace}/mass_ready/`, { taskIds, exceptIds, all });
+		return this.httpClient.client.post(`${this.namespace}/mass_ready/`, { taskIds, exceptIds, all });
 	}
 
 	/**
