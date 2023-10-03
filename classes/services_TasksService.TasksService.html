@@ -51,6 +51,7 @@
 <a href="services_TasksService.TasksService.html#getTemplate" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Template</span></a>
 <a href="services_TasksService.TasksService.html#massCompletionTasks" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Completion<wbr/>Tasks</span></a>
 <a href="services_TasksService.TasksService.html#massDeletionTasks" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Deletion<wbr/>Tasks</span></a>
+<a href="services_TasksService.TasksService.html#massEditingTasks" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Editing<wbr/>Tasks</span></a>
 <a href="services_TasksService.TasksService.html#pauseTask" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>pause<wbr/>Task</span></a>
 <a href="services_TasksService.TasksService.html#restartTask" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>restart<wbr/>Task</span></a>
 <a href="services_TasksService.TasksService.html#startTask" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>start<wbr/>Task</span></a>
@@ -130,8 +131,7 @@
 <div class="tsd-comment tsd-typography"><p>task id</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_tasks.ITask.html" class="tsd-signature-type tsd-kind-interface">ITask</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>task id</p>
-
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_tasks.ITask.html" class="tsd-signature-type tsd-kind-interface">ITask</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getParentTask" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Parent<wbr/>Task</span><a href="#getParentTask" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
@@ -305,8 +305,7 @@
 <div class="tsd-comment tsd-typography"><p>boolean flag for filters</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>task id</p>
-
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="massDeletionTasks" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>mass<wbr/>Deletion<wbr/>Tasks</span><a href="#massDeletionTasks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
@@ -343,8 +342,54 @@
 <div class="tsd-comment tsd-typography"><p>boolean flag for filters</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>task id</p>
-
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="massEditingTasks" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>mass<wbr/>Editing<wbr/>Tasks</span><a href="#massEditingTasks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="massEditingTasks.massEditingTasks-1"><span class="tsd-kind-call-signature">mass<wbr/>Editing<wbr/>Tasks</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">taskIds</span>, <span class="tsd-kind-parameter">exceptIds</span>, <span class="tsd-kind-parameter">all</span>, <span class="tsd-kind-parameter">params</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">withoutResponsible</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">payload</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">settings</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#massEditingTasks.massEditingTasks-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Mass editing tasks</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">taskIds</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>tasks ids</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">exceptIds</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>exception tasks ids</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">all</span>: <span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography"><p>boolean flag for params</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">params</span>: <a href="../interfaces/models_tasks.ITasksParams.html" class="tsd-signature-type tsd-kind-interface">ITasksParams</a></h5>
+<div class="tsd-comment tsd-typography"><p>params for filters</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">withoutResponsible</span>: <span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography"><p>boolean flag for filters</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">payload</span>: <a href="../interfaces/services_TasksService_dto_mass_actions_dto.IMassEditingFieldsPayload.html" class="tsd-signature-type tsd-kind-interface">IMassEditingFieldsPayload</a></h5>
+<div class="tsd-comment tsd-typography"><p>mass editing values</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">settings</span>: <a href="../interfaces/services_TasksService_dto_mass_actions_dto.IMassEditingFieldsPayload.html" class="tsd-signature-type tsd-kind-interface">IMassEditingFieldsPayload</a></h5>
+<div class="tsd-comment tsd-typography"><p>mass editing field settings</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="pauseTask" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pause<wbr/>Task</span><a href="#pauseTask" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
@@ -509,6 +554,7 @@
 <li><a href="#getTemplate" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Template</span></a></li>
 <li><a href="#massCompletionTasks" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Completion<wbr/>Tasks</span></a></li>
 <li><a href="#massDeletionTasks" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Deletion<wbr/>Tasks</span></a></li>
+<li><a href="#massEditingTasks" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Editing<wbr/>Tasks</span></a></li>
 <li><a href="#pauseTask" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>pause<wbr/>Task</span></a></li>
 <li><a href="#restartTask" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>restart<wbr/>Task</span></a></li>
 <li><a href="#startTask" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>start<wbr/>Task</span></a></li>
