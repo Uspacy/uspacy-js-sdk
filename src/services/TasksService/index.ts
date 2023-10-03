@@ -4,6 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IResponseWithPagination } from '../../models/response';
 import { ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITaskValues } from './dto/create-update-task.dto';
+import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
 /**
  * Tasks service
@@ -132,9 +133,37 @@ export class TasksService {
 	}
 
 	/**
+	 * Mass editing tasks
+	 * @param taskIds tasks ids
+	 * @param exceptIds exception tasks ids
+	 * @param all boolean flag for params
+	 * @param params params for filters
+	 * @param withoutResponsible boolean flag for filters
+	 * @param payload mass editing values
+	 * @param settings mass editing field settings
+	 */
+	massEditingTasks(
+		taskIds: string[],
+		exceptIds: number[],
+		all: boolean,
+		params?: ITasksParams,
+		withoutResponsible?: boolean,
+		payload?: IMassEditingFieldsPayload,
+		settings?: IMassEditingFieldsPayload,
+	) {
+		if (all) {
+			return this.httpClient.client.post(
+				`${this.namespace}/mass_edit/`,
+				{ taskIds, exceptIds, all, payload, settings },
+				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
+			);
+		}
+		return this.httpClient.client.post(`${this.namespace}/mass_edit/`, { taskIds, exceptIds, all });
+	}
+
+	/**
 	 * Delete task
 	 * @param id task id
-	 * @returns task id
 	 */
 	deleteTask(id: string) {
 		return this.httpClient.client.delete<ITask>(`${this.namespace}/:id/`, { urlParams: { id } });
@@ -147,7 +176,6 @@ export class TasksService {
 	 * @param all boolean flag for params
 	 * @param params params for filters
 	 * @param withoutResponsible boolean flag for filters
-	 * @returns task id
 	 */
 	massDeletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: ITasksParams, withoutResponsible?: boolean) {
 		if (all) {
@@ -222,7 +250,6 @@ export class TasksService {
 	 * @param all boolean flag for params
 	 * @param params params for filters
 	 * @param withoutResponsible boolean flag for filters
-	 * @returns task id
 	 */
 	massCompletionTasks(taskIds: string[], exceptIds: number[], all: boolean, params?: ITasksParams, withoutResponsible?: boolean) {
 		if (all) {
