@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { IFields } from '../../models/field';
 import { IResponseWithPagination } from '../../models/response';
 import { ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITaskValues } from './dto/create-update-task.dto';
@@ -271,5 +272,13 @@ export class TasksService {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/restart`, undefined, {
 			urlParams: { id },
 		});
+	}
+
+	/**
+	 * Get tasks fields
+	 * @returns tasks fields
+	 */
+	getTasksField() {
+		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
 	}
 }
