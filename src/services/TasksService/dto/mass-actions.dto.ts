@@ -16,4 +16,5 @@ export interface IMassActions {
 	payload?: IMassEditingFieldsPayload;
 	settings?: IMassEditingFieldsPayload;
 	profile?: IUser;
+	admin?: boolean;
 }
