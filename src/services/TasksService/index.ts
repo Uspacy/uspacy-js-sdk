@@ -159,7 +159,7 @@ export class TasksService {
 				{ params: { ...params, ...(withoutResponsible && { responsible_id: '' }) } },
 			);
 		}
-		return this.httpClient.client.post(`${this.namespace}/mass_edit/`, { taskIds, exceptIds, all });
+		return this.httpClient.client.post(`${this.namespace}/mass_edit/`, { taskIds, exceptIds, all, payload, settings });
 	}
 
 	/**
