@@ -16,6 +16,7 @@ interface IMeta {
 	perPage: number;
 	page: number;
 	list: number;
+	lastPage: number;
 }
 
 export interface IGroups {
