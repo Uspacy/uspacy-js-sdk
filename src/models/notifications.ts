@@ -1,15 +1,3 @@
-import { IUser } from './user';
-
-export interface INotification {
-	id: string;
-	title: string;
-	subTitle: string;
-	date: string;
-	link?: string;
-	read?: boolean;
-	author?: IUser;
-}
-
 export enum NotificationAction {
 	CREATE = 'create',
 	UPDATE = 'update',

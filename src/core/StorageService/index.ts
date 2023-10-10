@@ -2,7 +2,7 @@ import { createInstance } from 'localforage';
 import { injectable } from 'tsyringe';
 
 /**
- * Http client
+ * Storage service
  */
 injectable();
 export class StorageService {
