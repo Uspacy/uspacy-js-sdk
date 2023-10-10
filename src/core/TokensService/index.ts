@@ -1,6 +1,6 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
-import { injectable, registry } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 import { IJwt, IResponseJwt } from '../../models/jwt';
 import { ConfigService } from '../ConfigService';
@@ -11,15 +11,9 @@ import { StorageService } from '../StorageService';
  * Http client
  */
 @injectable()
-@registry([
-	{
-		token: StorageService,
-		useValue: new StorageService('tokens'),
-	},
-])
 export class TokensService {
+	private storageService: StorageService = new StorageService('tokens');
 	constructor(
-		private storageService: StorageService,
 		private sessionService: SessionService,
 		private configService: ConfigService,
 	) {}

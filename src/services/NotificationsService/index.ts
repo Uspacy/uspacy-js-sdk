@@ -1,4 +1,4 @@
-import { injectable, registry } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { StorageService } from '../../core/StorageService';
@@ -8,19 +8,11 @@ import { INotificationMessage } from '../../models/notifications';
  * Webhooks service
  */
 @injectable()
-@registry([
-	{
-		token: StorageService,
-		useValue: new StorageService('notifications'),
-	},
-])
 export class NotificationsService {
 	private namespace = '/notifications/v1/notifications';
+	public storageService: StorageService = new StorageService('notifications');
 
-	constructor(
-		private httpClient: HttpClient,
-		public storageService: StorageService,
-	) {}
+	constructor(private httpClient: HttpClient) {}
 
 	/**
 	 * Get notifications
