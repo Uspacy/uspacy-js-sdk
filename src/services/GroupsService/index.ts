@@ -1,7 +1,8 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IGroup, IGroups } from '../../models/groups';
+import { IGroup } from '../../models/groups';
+import { IResponseWithPagination } from '../../models/response';
 import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
 
 /**
@@ -31,13 +32,8 @@ export class GroupsService {
 	 * @param search group search query
 	 * @returns Groups entities array
 	 */
-	getGroups(page?: number, list?: number, userId?: number, search?: string) {
-		return this.httpClient.client.get<IGroups>(
-			`${this.namespace}/?${userId ? `my_groups=${userId}` : ''}${page ? `&page=${page}` : ''}&list=${list || '12'}${
-				search ? `&q=${search}` : ''
-			}`,
-			{ urlParams: { page, list, userId, search } },
-		);
+	getGroups(page?: string, list?: string, userId?: string, search?: string) {
+		return this.httpClient.client.get<IResponseWithPagination<IGroup[]>>(`${this.namespace}`, { params: { page, list, userId, search } });
 	}
 
 	/**
@@ -161,6 +157,6 @@ export class GroupsService {
 	 * @param userId user id
 	 */
 	checkIfUserSendJoinRequest(groupId: string, userId: number) {
-		return this.httpClient.client.get(`${this.namespacev1}/join/${groupId}/request/${userId}`, { urlParams: { groupId, userId } });
+		return this.httpClient.client.get(`${this.namespacev1}/join/:groupId/request/:userId`, { urlParams: { groupId, userId } });
 	}
 }

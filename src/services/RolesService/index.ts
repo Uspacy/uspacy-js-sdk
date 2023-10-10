@@ -56,6 +56,6 @@ export class RolesService {
 	 * Delete role entity
 	 */
 	deleteRole(id: string) {
-		return this.httpClient.client.post(`${this.namespace}/roles/:id`, { urlParams: { id } });
+		return this.httpClient.client.delete(`${this.namespace}/roles/:id`, { urlParams: { id } });
 	}
 }
