@@ -4,6 +4,8 @@ export interface IResponseWithPagination<D> {
 		total: number;
 		page: number;
 		list: number;
+		lastPage?: number;
+		perPage?: number;
 	};
 }
 
