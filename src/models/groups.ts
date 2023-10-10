@@ -10,15 +10,3 @@ export interface IGroup {
 	moderatorsIds: string[];
 	usersIds: string[];
 }
-
-interface IMeta {
-	total: number;
-	perPage: number;
-	page: number;
-	list: number;
-}
-
-export interface IGroups {
-	data: IGroup[];
-	meta: IMeta;
-}
