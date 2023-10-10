@@ -32,7 +32,7 @@ export class GroupsService {
 	 * @param search group search query
 	 * @returns Groups entities array
 	 */
-	getGroups(page?: string, list?: string, userId?: string, search?: string) {
+	getGroups(page?: number, list?: number, userId?: number, search?: string) {
 		return this.httpClient.client.get<IResponseWithPagination<IGroup[]>>(`${this.namespace}`, { params: { page, list, userId, search } });
 	}
 
