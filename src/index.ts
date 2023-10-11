@@ -49,6 +49,7 @@ class Uspacy {
 
 	static createInstance(config?: IConfig) {
 		container.register(ConfigService, { useValue: new ConfigService(config) });
+
 		return container.resolve(this);
 	}
 }
