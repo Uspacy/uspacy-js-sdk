@@ -13,6 +13,28 @@ export class CommentsService {
 
 	constructor(private httpClient: HttpClient) {}
 
+	private getURIParams = {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		makeURIParams: (query: { [key: string]: any } = {}): string => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const data: any[] = Object.entries(query);
+			return data
+				.reduce((acc, el) => {
+					if (typeof el[1] === 'boolean' || el[1]) {
+						if (Array.isArray(el[1])) {
+							el[1].forEach((value) => {
+								acc.push([`${el[0]}[]`, value].join('='));
+							});
+						} else {
+							acc.push(el.join('='));
+						}
+					}
+					return acc;
+				}, [])
+				.join('&');
+		},
+	};
+
 	/**
 	 * Get comments
 	 * @returns list of comments
@@ -60,8 +82,8 @@ export class CommentsService {
 	 * @param message message
 	 * @returns
 	 */
-	updateComment(id: number, message: string) {
-		return this.httpClient.client.patch<IComment>(`${this.namespace}/:id/`, { message }, { urlParams: { id } });
+	updateComment(id: number, message: string, entityType?: string, entityId?: number) {
+		return this.httpClient.client.patch<IComment>(`${this.namespace}/:id/`, { message, entityType, entityId, id }, { urlParams: { id } });
 	}
 
 	/**
@@ -80,5 +102,26 @@ export class CommentsService {
 	 */
 	deleteCommentsByEntity(entityType: number, entityId: EntityType) {
 		return this.httpClient.client.delete(`${this.namespace}/`, { params: { entityType, entityId } });
+	}
+
+	/**
+	 * Get comments
+	 * @returns list of comments
+	 */
+	getCommentsByArray(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+		return this.httpClient.client.get<IResponseWithPagination<IComment>>(
+			`${this.getURIParams.makeURIParams({ entityIds, entityType, list, childList, nextId, lastId })}`,
+		);
+	}
+
+	/**
+	 * Fetch comment by id with params
+	 * @param id comment id
+	 * @returns
+	 */
+	getCommentWithParams(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+		return this.httpClient.client.get<IResponseWithPagination<IComment>>(
+			`${this.getURIParams.makeURIParams({ entityId, entityType, list, childList, nextId, lastId })}`,
+		);
 	}
 }

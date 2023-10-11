@@ -1,6 +1,6 @@
 export interface IResponseWithPagination<D> {
 	data: D[];
-	meta: {
+	meta?: {
 		total: number;
 		page: number;
 		list: number;
