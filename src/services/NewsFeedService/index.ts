@@ -11,16 +11,6 @@ import { FileInfoDto, Post, RecipientsPost } from './dto/cteate-update-posts.dto
 export class NewsFeedService {
 	private namespace = '/newsfeed/v1/posts';
 
-	private routeAceessName = {
-		BaseURL: `${this.namespace}`,
-		getPostsURL: (page: number, list: number, groupId?: number): string =>
-			`${this.routeAceessName.BaseURL}/?page=${page}&list=${list}&${groupId ? groupId : ''}/`,
-		createPostURL: (): string => `${this.routeAceessName.BaseURL}/`,
-		updatePostURL: (id: string): string => `${this.routeAceessName.BaseURL}/${id}/`,
-		deletePostURL: (id: string): string => `${this.routeAceessName.BaseURL}/${id}/`,
-		getPostById: (id: number): string => `${this.routeAceessName.BaseURL}/${id}/`,
-	};
-
 	/**
 	 * @param config http client
 	 */
@@ -34,7 +24,7 @@ export class NewsFeedService {
 	 * @returns post list
 	 */
 	getPosts(page: number, list?: number, groupId?: number) {
-		return this.httpClient.get<IResponseWithPagination<Post>>(`${this.routeAceessName.getPostsURL(page, list, groupId)}`);
+		return this.httpClient.get<IResponseWithPagination<Post>>(`${this.namespace}`, { params: { page, list, groupId } });
 	}
 
 	/**
@@ -43,7 +33,7 @@ export class NewsFeedService {
 	 * @returns post
 	 */
 	getPost(id: number) {
-		return this.httpClient.get<Post>(`${this.routeAceessName.getPostById}`, { urlParams: { id } });
+		return this.httpClient.get<Post>(`${this.namespace}/:id/`, { urlParams: { id } });
 	}
 
 	/**
@@ -68,7 +58,7 @@ export class NewsFeedService {
 		groupId?: number,
 		notify?: INotify,
 	) {
-		return this.httpClient.post<Post>(`${this.routeAceessName.createPostURL}`, {
+		return this.httpClient.post<Post>(`${this.namespace}`, {
 			title,
 			message,
 			files,
@@ -105,7 +95,7 @@ export class NewsFeedService {
 		notify?: INotify,
 	) {
 		return (
-			this.httpClient.patch<Post>(`${this.routeAceessName.updatePostURL(id)}`),
+			this.httpClient.patch<Post>(`${this.namespace}/:id`),
 			{
 				title,
 				message,
@@ -115,7 +105,8 @@ export class NewsFeedService {
 				authorMood,
 				groupId,
 				notify,
-			}
+			},
+			{ urlParams: { id } }
 		);
 	}
 
@@ -125,6 +116,6 @@ export class NewsFeedService {
 	 * @returns
 	 */
 	deletePost(id: string, notify?: INotify) {
-		return this.httpClient.delete<Post>(`${this.routeAceessName.deletePostURL(id)}`, { data: { notify } });
+		return this.httpClient.delete<Post>(`${this.namespace}/:id`, { data: { notify }, urlParams: { id } });
 	}
 }
