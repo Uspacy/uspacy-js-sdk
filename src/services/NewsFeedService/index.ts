@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 
-import { EmotionType } from '../../models/newsfeed';
+import { EmotionType, IPost } from '../../models/newsfeed';
 import { INotify } from '../../models/notify';
 import { IResponseWithPagination } from '../../models/response';
-import { FileInfoDto, Post, RecipientsPost } from './dto/cteate-update-posts.dto';
+import { FileInfoDto, RecipientsPost } from './dto/cteate-update-posts.dto';
 
 /**
  * NewsFeed service
@@ -24,7 +24,7 @@ export class NewsFeedService {
 	 * @returns post list
 	 */
 	getPosts(page: number, list?: number, groupId?: number) {
-		return this.httpClient.get<IResponseWithPagination<Post>>(`${this.namespace}`, { params: { page, list, groupId } });
+		return this.httpClient.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, groupId } });
 	}
 
 	/**
@@ -33,7 +33,7 @@ export class NewsFeedService {
 	 * @returns post
 	 */
 	getPost(id: number) {
-		return this.httpClient.get<Post>(`${this.namespace}/:id/`, { urlParams: { id } });
+		return this.httpClient.get<IPost>(`${this.namespace}/:id/`, { urlParams: { id } });
 	}
 
 	/**
@@ -58,7 +58,7 @@ export class NewsFeedService {
 		groupId?: number,
 		notify?: INotify,
 	) {
-		return this.httpClient.post<Post>(`${this.namespace}`, {
+		return this.httpClient.post<IPost>(`${this.namespace}`, {
 			title,
 			message,
 			files,
@@ -95,7 +95,7 @@ export class NewsFeedService {
 		notify?: INotify,
 	) {
 		return (
-			this.httpClient.patch<Post>(`${this.namespace}/:id`),
+			this.httpClient.patch<IPost>(`${this.namespace}/:id`),
 			{
 				title,
 				message,
@@ -116,6 +116,6 @@ export class NewsFeedService {
 	 * @returns
 	 */
 	deletePost(id: string, notify?: INotify) {
-		return this.httpClient.delete<Post>(`${this.namespace}/:id`, { data: { notify }, urlParams: { id } });
+		return this.httpClient.delete<IPost>(`${this.namespace}/:id`, { data: { notify }, urlParams: { id } });
 	}
 }

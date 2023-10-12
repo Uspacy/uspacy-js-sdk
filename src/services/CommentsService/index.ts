@@ -86,7 +86,7 @@ export class CommentsService {
 	 * Get comments
 	 * @returns list of comments
 	 */
-	getCommentsByArray(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+	getCommentsByEntityIds(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
 		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
 			params: { entityIds, entityType, list, childList, nextId, lastId },
 		});
@@ -97,7 +97,7 @@ export class CommentsService {
 	 * @param id comment id
 	 * @returns
 	 */
-	getCommentWithParams(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+	getCommentByEntityId(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
 		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
 			params: { entityId, entityType, list, childList, nextId, lastId },
 		});
