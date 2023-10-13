@@ -7,6 +7,7 @@ export interface IFilterField {
 }
 
 export interface IFilterPreset {
+	id: number;
 	title: string;
 	filters: IFilterTasks | IFilterRegularTasks;
 	pinned: boolean;
