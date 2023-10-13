@@ -1,5 +1,6 @@
-import { AxiosInstance } from 'axios';
+import { injectable } from 'tsyringe';
 
+import { HttpClient } from '../../core/HttpClient';
 import { EmotionType, IPost } from '../../models/newsfeed';
 import { INotify } from '../../models/notify';
 import { IResponseWithPagination } from '../../models/response';
@@ -8,13 +9,14 @@ import { FileInfoDto, RecipientsPost } from './dto/cteate-update-posts.dto';
 /**
  * NewsFeed service
  */
+@injectable()
 export class NewsFeedService {
 	private namespace = '/newsfeed/v1/posts';
 
 	/**
 	 * @param config http client
 	 */
-	constructor(private httpClient: AxiosInstance) {}
+	constructor(private httpClient: HttpClient) {}
 
 	/**
 	 * Get posts list
@@ -24,7 +26,7 @@ export class NewsFeedService {
 	 * @returns post list
 	 */
 	getPosts(page: number, list?: number, groupId?: number) {
-		return this.httpClient.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, groupId } });
+		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, groupId } });
 	}
 
 	/**
@@ -33,7 +35,7 @@ export class NewsFeedService {
 	 * @returns post
 	 */
 	getPost(id: number) {
-		return this.httpClient.get<IPost>(`${this.namespace}/:id/`, { urlParams: { id } });
+		return this.httpClient.client.get<IPost>(`${this.namespace}/:id/`, { urlParams: { id } });
 	}
 
 	/**
@@ -58,7 +60,7 @@ export class NewsFeedService {
 		groupId?: number,
 		notify?: INotify,
 	) {
-		return this.httpClient.post<IPost>(`${this.namespace}`, {
+		return this.httpClient.client.post<IPost>(`${this.namespace}`, {
 			title,
 			message,
 			files,
@@ -95,7 +97,7 @@ export class NewsFeedService {
 		notify?: INotify,
 	) {
 		return (
-			this.httpClient.patch<IPost>(`${this.namespace}/:id`),
+			this.httpClient.client.patch<IPost>(`${this.namespace}/:id`),
 			{
 				title,
 				message,
@@ -116,6 +118,6 @@ export class NewsFeedService {
 	 * @returns
 	 */
 	deletePost(id: string, notify?: INotify) {
-		return this.httpClient.delete<IPost>(`${this.namespace}/:id`, { data: { notify }, urlParams: { id } });
+		return this.httpClient.client.delete<IPost>(`${this.namespace}/:id`, { data: { notify }, urlParams: { id } });
 	}
 }
