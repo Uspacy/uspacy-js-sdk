@@ -60,8 +60,8 @@ export class CommentsService {
 	 * @param message message
 	 * @returns
 	 */
-	updateComment(id: number, message: string) {
-		return this.httpClient.client.patch<IComment>(`${this.namespace}/:id/`, { message }, { urlParams: { id } });
+	updateComment(id: number, message: string, entityType?: string, entityId?: number) {
+		return this.httpClient.client.patch<IComment>(`${this.namespace}/:id/`, { message, entityType, entityId, id }, { urlParams: { id } });
 	}
 
 	/**
@@ -80,5 +80,26 @@ export class CommentsService {
 	 */
 	deleteCommentsByEntity(entityType: number, entityId: EntityType) {
 		return this.httpClient.client.delete(`${this.namespace}/`, { params: { entityType, entityId } });
+	}
+
+	/**
+	 * Get comments
+	 * @returns list of comments
+	 */
+	getCommentsByEntityIds(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
+			params: { entityIds, entityType, list, childList, nextId, lastId },
+		});
+	}
+
+	/**
+	 * Fetch comment by id with params
+	 * @param id comment id
+	 * @returns
+	 */
+	getCommentByEntityId(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
+		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
+			params: { entityId, entityType, list, childList, nextId, lastId },
+		});
 	}
 }
