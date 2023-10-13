@@ -1,4 +1,5 @@
 export interface ISubscriptionsIndividual {
+	payment_intent?: string;
 	phone?: string;
 	email: string;
 	first_name: string;
@@ -25,6 +26,7 @@ export interface ISubscriptionsIndividual {
 }
 
 export interface ISubscriptionsLegal {
+	payment_intent?: string;
 	firstName?: string;
 	lastName?: string;
 	email?: string;
