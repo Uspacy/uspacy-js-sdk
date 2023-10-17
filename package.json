@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -60,8 +60,8 @@
     "start:demo": "cross-env NODE_ENV=demo webpack serve --mode development",
     "build": "webpack --mode production --progress",
     "postbuild": "yarn emitDeclarations",
-    "emitDeclarations": "tsc src/models/*.ts --outDir ./lib",
-    "emitDeclarations:watch": "tsc-watch src/models/*.ts --outDir ./lib",
+    "emitDeclarations": "tsc --project ./tsconfig.declarations.json",
+    "emitDeclarations:watch": "yarn emitDeclarations -- --watch",
     "test": "jest",
     "test:ci": "cross-env CI=true yarn test",
     "eslint": "eslint --max-warnings=0",
