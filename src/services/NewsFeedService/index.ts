@@ -2,10 +2,10 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { EmotionType, IPost } from '../../models/newsfeed';
+import { IPost } from '../../models/newsfeed';
 import { INotify } from '../../models/notify';
 import { IResponseWithPagination } from '../../models/response';
-import { FileInfoDto, RecipientsPost } from './dto/cteate-update-posts.dto';
+import { createUpdatePostDto } from './dto/cteate-update-posts.dto';
 
 /**
  * NewsFeed service
@@ -51,26 +51,8 @@ export class NewsFeedService {
 	 * @param notify Notify
 	 * @returns
 	 */
-	createPost(
-		title: string,
-		message: string,
-		files?: FileInfoDto[],
-		recipients?: RecipientsPost,
-		file_ids?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
-		notify?: INotify,
-	) {
-		return this.httpClient.client.post<IPost>(`${this.namespace}`, {
-			title,
-			message,
-			files,
-			recipients,
-			file_ids,
-			authorMood,
-			groupId,
-			notify,
-		});
+	createPost(body: createUpdatePostDto) {
+		return this.httpClient.client.post<IPost>(`${this.namespace}`, body);
 	}
 
 	/**
@@ -86,31 +68,8 @@ export class NewsFeedService {
 	 * @param notify Notify
 	 * @returns
 	 */
-	updatePost(
-		id: string,
-		title: string,
-		message: string,
-		files?: FileInfoDto[],
-		recipients?: RecipientsPost,
-		file_ids?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
-		notify?: INotify,
-	) {
-		return (
-			this.httpClient.client.patch<IPost>(`${this.namespace}/:id`),
-			{
-				title,
-				message,
-				files,
-				recipients,
-				file_ids,
-				authorMood,
-				groupId,
-				notify,
-			},
-			{ urlParams: { id } }
-		);
+	updatePost(id: string, body: createUpdatePostDto) {
+		return this.httpClient.client.patch<IPost>(`${this.namespace}/:id`, body, { urlParams: { id } });
 	}
 
 	/**
