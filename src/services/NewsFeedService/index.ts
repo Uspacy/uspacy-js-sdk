@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -22,11 +23,11 @@ export class NewsFeedService {
 	 * Get posts list
 	 * @param page current page
 	 * @param list how many items should be per page
-	 * @param groupId group id
+	 * @param group_id group id
 	 * @returns post list
 	 */
-	getPosts(page: number, list?: number, groupId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, groupId } });
+	getPosts(page: number, list?: number, group_id?: number) {
+		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, group_id } });
 	}
 
 	/**
