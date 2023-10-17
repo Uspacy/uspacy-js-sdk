@@ -57,8 +57,8 @@ export class NewsFeedService {
 		files?: FileInfoDto[],
 		recipients?: RecipientsPost,
 		file_ids?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
+		author_mood?: EmotionType | '',
+		group_id?: number,
 		notify?: INotify,
 	) {
 		return this.httpClient.client.post<IPost>(`${this.namespace}`, {
@@ -67,8 +67,8 @@ export class NewsFeedService {
 			files,
 			recipients,
 			file_ids,
-			authorMood,
-			groupId,
+			author_mood,
+			group_id,
 			notify,
 		});
 	}
@@ -93,23 +93,23 @@ export class NewsFeedService {
 		files?: FileInfoDto[],
 		recipients?: RecipientsPost,
 		file_ids?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
+		author_mood?: EmotionType | '',
+		group_id?: number,
 		notify?: INotify,
 	) {
-		return (
-			this.httpClient.client.patch<IPost>(`${this.namespace}/:id`),
+		return this.httpClient.client.patch<IPost>(
+			`${this.namespace}/:id`,
 			{
 				title,
 				message,
 				files,
 				recipients,
 				file_ids,
-				authorMood,
-				groupId,
+				author_mood,
+				group_id,
 				notify,
 			},
-			{ urlParams: { id } }
+			{ urlParams: { id } },
 		);
 	}
 
