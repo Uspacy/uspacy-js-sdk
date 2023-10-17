@@ -27,7 +27,7 @@ export interface RecipientsPost {
 
 export interface createUpdatePostDto {
 	title: string;
-	message: string;
+	message?: string;
 	files?: FileInfoDto[];
 	recipients?: RecipientsPost;
 	file_ids?: number[];

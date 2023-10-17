@@ -52,7 +52,7 @@ export class NewsFeedService {
 	 * @returns
 	 */
 	createPost(body: createUpdatePostDto) {
-		return this.httpClient.client.post<IPost>(`${this.namespace}`, { body });
+		return this.httpClient.client.post<IPost>(`${this.namespace}`, body);
 	}
 
 	/**
@@ -69,7 +69,7 @@ export class NewsFeedService {
 	 * @returns
 	 */
 	updatePost(id: string, body: createUpdatePostDto) {
-		return this.httpClient.client.patch<IPost>(`${this.namespace}/:id`, { body }, { urlParams: { id } });
+		return this.httpClient.client.patch<IPost>(`${this.namespace}/:id`, body, { urlParams: { id } });
 	}
 
 	/**
