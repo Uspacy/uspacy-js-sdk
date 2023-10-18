@@ -26,7 +26,7 @@ export class NewsFeedService {
 	 * @param group_id group id
 	 * @returns post list
 	 */
-	getPosts(page: number, list?: number, group_id?: number) {
+	getPosts(page: number, list?: number, group_id?: number | string) {
 		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, group_id } });
 	}
 
