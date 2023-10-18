@@ -158,11 +158,11 @@ export class MigrationsService {
 	 * @param system system name
 	 */
 	getSystemProgress(system: string) {
-		return this.httpClient.client.get<ISystemStatus>(`${this.importNamespace}/progress${system}`, {
+		return this.httpClient.client.get<ISystemStatus>(`${this.importNamespace}/progress`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			urlParams: { system },
+			params: { system },
 		});
 	}
 
