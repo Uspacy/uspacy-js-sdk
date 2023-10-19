@@ -171,11 +171,11 @@ export class MigrationsService {
 	 * @param system system name
 	 */
 	stopImport(system: string) {
-		return this.httpClient.client.get(`${this.importNamespace}/stop?:system`, {
+		return this.httpClient.client.get(`${this.importNamespace}/stop`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			urlParams: { system },
+			params: { system },
 		});
 	}
 }

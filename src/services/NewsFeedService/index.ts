@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { EmotionType, IPost } from '../../models/newsfeed';
+import { IPost } from '../../models/newsfeed';
 import { INotify } from '../../models/notify';
 import { IResponseWithPagination } from '../../models/response';
-import { FileInfoDto, RecipientsPost } from './dto/cteate-update-posts.dto';
+import { createUpdatePostDto } from './dto/cteate-update-posts.dto';
 
 /**
  * NewsFeed service
@@ -22,11 +23,11 @@ export class NewsFeedService {
 	 * Get posts list
 	 * @param page current page
 	 * @param list how many items should be per page
-	 * @param groupId group id
+	 * @param group_id group id
 	 * @returns post list
 	 */
-	getPosts(page: number, list?: number, groupId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, groupId } });
+	getPosts(page: number, list?: number, group_id?: number | string) {
+		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, group_id } });
 	}
 
 	/**
@@ -50,26 +51,8 @@ export class NewsFeedService {
 	 * @param notify Notify
 	 * @returns
 	 */
-	createPost(
-		title: string,
-		message: string,
-		files?: FileInfoDto[],
-		recipients?: RecipientsPost,
-		fileIds?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
-		notify?: INotify,
-	) {
-		return this.httpClient.client.post<IPost>(`${this.namespace}`, {
-			title,
-			message,
-			files,
-			recipients,
-			fileIds,
-			authorMood,
-			groupId,
-			notify,
-		});
+	createPost(body: createUpdatePostDto) {
+		return this.httpClient.client.post<IPost>(`${this.namespace}`, body);
 	}
 
 	/**
@@ -85,31 +68,8 @@ export class NewsFeedService {
 	 * @param notify Notify
 	 * @returns
 	 */
-	updatePost(
-		id: string,
-		title: string,
-		message: string,
-		files?: FileInfoDto[],
-		recipients?: RecipientsPost,
-		fileIds?: number[],
-		authorMood?: EmotionType | '',
-		groupId?: number,
-		notify?: INotify,
-	) {
-		return (
-			this.httpClient.client.patch<IPost>(`${this.namespace}/:id`),
-			{
-				title,
-				message,
-				files,
-				recipients,
-				fileIds,
-				authorMood,
-				groupId,
-				notify,
-			},
-			{ urlParams: { id } }
-		);
+	updatePost(id: string, body: createUpdatePostDto) {
+		return this.httpClient.client.patch<IPost>(`${this.namespace}/:id`, body, { urlParams: { id } });
 	}
 
 	/**
