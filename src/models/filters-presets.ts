@@ -4,6 +4,7 @@ export interface IFilterField {
 	id: number;
 	title: string;
 	checked: boolean;
+	fast: boolean;
 }
 
 export interface IFilterPreset {

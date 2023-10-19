@@ -73,9 +73,9 @@ export interface ITasks {
 }
 
 export interface IFilterTasks {
-	total: number;
-	page: number;
-	perPage: number;
+	total?: number;
+	page?: number;
+	perPage?: number;
 	status?: string[];
 	priority?: string[];
 	time_label?: string[];
@@ -90,15 +90,18 @@ export interface IFilterTasks {
 }
 
 export interface IFilterRegularTasks {
-	total: number;
-	page: number;
-	perPage: number;
+	total?: number;
+	page?: number;
+	perPage?: number;
 	status?: string[];
 	priority?: string[];
+	time_label?: string[];
+	certainDateOrPeriod?: number[];
 	createdBy?: number[];
 	responsible?: number[];
 	accomplices?: number[];
 	auditors?: number[];
+	deadline?: number[][];
 	openCalendar?: boolean;
 	search?: string;
 }
