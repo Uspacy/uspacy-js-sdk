@@ -14,6 +14,7 @@ import { DepartmentsService } from './services/DepartmentsService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
 import { InvatesService } from './services/InvatesService';
+import { MigrationsService } from './services/MigrationsService';
 import { NewsFeedService } from './services/NewsFeedService';
 import { NotificationsService } from './services/NotificationsService';
 import { ProfileService } from './services/ProfileService';
@@ -47,6 +48,7 @@ class Uspacy {
 		public readonly crmEntitiesService: CrmEntitiesService,
 		public readonly notificationsService: NotificationsService,
 		public readonly newsFeedService: NewsFeedService,
+		public readonly migrationsService: MigrationsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
