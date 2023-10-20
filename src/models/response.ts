@@ -7,6 +7,8 @@ export interface IMeta {
 	total: number;
 	page: number;
 	list: number;
+	lastPage?: number;
+	perPage?: number;
 }
 
 export interface IResponseWithMessage {
