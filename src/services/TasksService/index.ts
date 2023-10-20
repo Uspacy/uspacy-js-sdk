@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IFields } from '../../models/field';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITaskValues } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
@@ -23,7 +23,7 @@ export class TasksService {
 	 * @returns Array tasks entity
 	 */
 	getTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -36,7 +36,7 @@ export class TasksService {
 	 * @returns Array regular tasks entity
 	 */
 	getRegularTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -52,7 +52,7 @@ export class TasksService {
 	 */
 	getSubtasks(id: string, page: number, list: number, isTemplate: boolean) {
 		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
+			return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
 				params: {
 					template_id: id,
 					page,
@@ -61,7 +61,7 @@ export class TasksService {
 			});
 		}
 
-		return this.httpClient.client.get<IResponseWithPagination<ITasks>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
 			params: {
 				parent_id: id,
 				page,

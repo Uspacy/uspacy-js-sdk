@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IGroup } from '../../models/groups';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
 
 /**
@@ -33,7 +33,7 @@ export class GroupsService {
 	 * @returns Groups entities array
 	 */
 	getGroups(page?: number, list?: number, userId?: number, q?: string) {
-		return this.httpClient.client.get<IResponseWithPagination<IGroup>>(`${this.namespace}`, { params: { page, list, userId, q } });
+		return this.httpClient.client.get<IResponseWithMeta<IGroup>>(`${this.namespace}`, { params: { page, list, userId, q } });
 	}
 
 	/**

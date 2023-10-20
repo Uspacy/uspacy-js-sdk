@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IPost } from '../../models/newsfeed';
 import { INotify } from '../../models/notify';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { createUpdatePostDto } from './dto/cteate-update-posts.dto';
 
 /**
@@ -27,7 +27,7 @@ export class NewsFeedService {
 	 * @returns post list
 	 */
 	getPosts(page: number, list?: number, group_id?: number | string) {
-		return this.httpClient.client.get<IResponseWithPagination<IPost>>(`${this.namespace}`, { params: { page, list, group_id } });
+		return this.httpClient.client.get<IResponseWithMeta<IPost>>(`${this.namespace}`, { params: { page, list, group_id } });
 	}
 
 	/**
