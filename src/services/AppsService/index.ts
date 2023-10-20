@@ -14,7 +14,7 @@ export class AppsService {
 
 	/**
 	 * Get apps
-	 * @param page
+	 * @param page page number
 	 * @param list
 	 */
 	async getApps(page: number, lang: string, list?: number) {
@@ -23,6 +23,19 @@ export class AppsService {
 				page,
 				list,
 			},
+			headers: {
+				'Accept-Language': lang,
+			},
+		});
+	}
+
+	/**
+	 * Get app by id
+	 * @param id app id
+	 */
+	async getApp(id: number, lang: string) {
+		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
+			params: { id },
 			headers: {
 				'Accept-Language': lang,
 			},
