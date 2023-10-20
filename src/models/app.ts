@@ -14,5 +14,5 @@ export interface IApp {
 	price: null | boolean | number;
 	developer_name: string;
 	developer_link: string;
-	callback_url: string;
+	integration_token: string;
 }
