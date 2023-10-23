@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IDepartment } from '../../models/department';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { ICreateDepartmentDto } from './dto/create-department.dto';
 import { IUpdateDepartmentDto } from './dto/update-department.dto';
 
@@ -22,7 +22,7 @@ export class DepartmentsService {
 	 * @param show get list of with unactive departments (available only for admin or owner)
 	 * @returns Array departments
 	 */
-	getDepartments(page?: number, list?: number, show?: 'all'): Promise<AxiosResponse<IResponseWithPagination<IDepartment>>>;
+	getDepartments(page?: number, list?: number, show?: 'all'): Promise<AxiosResponse<IResponseWithMeta<IDepartment>>>;
 	getDepartments(page?: number, list?: 'all', show?: 'all'): Promise<AxiosResponse<IDepartment[]>>;
 	getDepartments(page?: number, list?: number | 'all', show?: 'all') {
 		if (list === 'all') {
@@ -34,7 +34,7 @@ export class DepartmentsService {
 				},
 			});
 		}
-		return this.httpClient.client.get<IResponseWithPagination<IDepartment>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IDepartment>>(this.namespace, {
 			params: {
 				page,
 				list,

@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IFiles, IFilesSize } from '../../models/files';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 
 /**
  * Files service
@@ -18,7 +18,7 @@ export class FilesService {
 	 * @returns Array files entity
 	 */
 	getFiles(entityId: string, entityType: string) {
-		return this.httpClient.client.get<IResponseWithPagination<IFiles>>(`${this.namespace}/files/`, { params: { entityId, entityType } });
+		return this.httpClient.client.get<IResponseWithMeta<IFiles>>(`${this.namespace}/files/`, { params: { entityId, entityType } });
 	}
 
 	/**

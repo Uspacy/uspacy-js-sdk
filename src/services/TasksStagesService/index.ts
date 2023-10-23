@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 import { IStages } from '../../models/tasks-stages';
 
 /**
@@ -18,7 +18,7 @@ export class TasksStagesService {
 	 * @returns Array tasks kanban stages entity
 	 */
 	getTasksStages() {
-		return this.httpClient.client.get<IResponseWithPagination<IStages>>(this.namespace);
+		return this.httpClient.client.get<IResponseWithMeta<IStages>>(this.namespace);
 	}
 
 	/**
@@ -27,7 +27,7 @@ export class TasksStagesService {
 	 * @param stageId stage or column id
 	 */
 	moveTask(cardId: string, stageId: string) {
-		return this.httpClient.client.post<IResponseWithPagination<IStages>>(
+		return this.httpClient.client.post<IResponseWithMeta<IStages>>(
 			`${this.namespace}/:id/moveTask`,
 			{ id: cardId },
 			{

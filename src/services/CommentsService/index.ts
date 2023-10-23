@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { EntityType, IComment } from '../../models/comment';
-import { IResponseWithPagination } from '../../models/response';
+import { IResponseWithMeta } from '../../models/response';
 
 /**
  * Comments service
@@ -18,7 +18,7 @@ export class CommentsService {
 	 * @returns list of comments
 	 */
 	getComments(entityType: EntityType, entityId: number, list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IComment[]>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IComment[]>>(this.namespace, {
 			params: {
 				entityType,
 				entityId,
@@ -87,7 +87,7 @@ export class CommentsService {
 	 * @returns list of comments
 	 */
 	getCommentsByEntityIds(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
+		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/`, {
 			params: { entityIds, entityType, list, childList, nextId, lastId },
 		});
 	}
@@ -98,7 +98,7 @@ export class CommentsService {
 	 * @returns
 	 */
 	getCommentByEntityId(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithPagination<IComment>>(`${this.namespace}/`, {
+		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/`, {
 			params: { entityId, entityType, list, childList, nextId, lastId },
 		});
 	}
