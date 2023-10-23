@@ -1,4 +1,4 @@
-import { IFilterRegularTasks, IFilterTasks } from './tasks';
+import { IFilterTasks } from './tasks';
 
 export interface IFilterField {
 	id: number;
@@ -10,7 +10,7 @@ export interface IFilterField {
 export interface IFilterPreset {
 	id: number;
 	title: string;
-	filters: IFilterTasks | IFilterRegularTasks;
+	filters: IFilterTasks;
 	pinned: boolean;
 	filterFields: IFilterField[];
 }

@@ -85,6 +85,7 @@ export interface IFilterTasks {
 	accomplices?: number[];
 	auditors?: number[];
 	deadline?: number[][];
+	period?: string[][];
 	accept_request?: boolean[];
 	closed_by?: number[];
 	openCalendar?: boolean;
@@ -106,5 +107,6 @@ export interface ITasksParams {
 	closed_by?: number[];
 	page?: number;
 	list?: number;
-	template?: 1;
+	template?: number;
+	use_search?: boolean;
 }
