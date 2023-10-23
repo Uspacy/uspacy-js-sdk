@@ -12,5 +12,6 @@ export interface IFilterPreset {
 	title: string;
 	filters: IFilterTasks;
 	pinned: boolean;
+	default: boolean;
 	filterFields: IFilterField[];
 }
