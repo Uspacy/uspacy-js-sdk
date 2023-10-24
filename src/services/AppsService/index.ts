@@ -34,8 +34,8 @@ export class AppsService {
 	 * @param id app id
 	 */
 	async getApp(id: number, lang: string) {
-		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
-			params: { id },
+		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(`${this.namespace}/:id/`, {
+			urlParams: { id },
 			headers: {
 				'Accept-Language': lang,
 			},
