@@ -110,7 +110,6 @@ export interface ITasksParams {
 	deadline?: number[][];
 	search?: string;
 	q?: string;
-	groupId?: number;
 	accept_result?: boolean[];
 	time_tracking?: boolean[];
 	closed_by?: number[];
