@@ -17,8 +17,13 @@ export class WebhooksService {
 	 * Get webhooks list
 	 * @returns Array webhooks entity
 	 */
-	getWebhooks() {
-		return this.httpClient.client.get<IWebhooksResponse>(this.namespace);
+	getWebhooks(page: number, list?: number) {
+		return this.httpClient.client.get<IWebhooksResponse>(this.namespace, {
+			params: {
+				page,
+				list,
+			},
+		});
 	}
 
 	/**
