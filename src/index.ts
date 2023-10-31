@@ -15,7 +15,7 @@ import { DepartmentsService } from './services/DepartmentsService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
 import { InvatesService } from './services/InvatesService';
-import { MessangerService } from './services/MessangerService';
+import { MessengerService } from './services/MessengerService';
 import { MigrationsService } from './services/MigrationsService';
 import { NewsFeedService } from './services/NewsFeedService';
 import { NotificationsService } from './services/NotificationsService';
@@ -52,7 +52,7 @@ class Uspacy {
 		public readonly notificationsService: NotificationsService,
 		public readonly newsFeedService: NewsFeedService,
 		public readonly migrationsService: MigrationsService,
-		public readonly messangerService: MessangerService,
+		public readonly messengerService: MessengerService,
 	) {}
 
 	static createInstance(config?: IConfig) {

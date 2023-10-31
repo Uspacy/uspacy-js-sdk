@@ -1,13 +1,13 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { FetchMessagesRequest, GoToMessageRequest, IChat } from '../../models/messanger';
+import { FetchMessagesRequest, GoToMessageRequest, IChat } from '../../models/messenger';
 
 /**
- * Messanger service
+ * Messenger service
  */
 @injectable()
-export class MessangerService {
+export class MessengerService {
 	private namespace = '/messenger/v1';
 	constructor(private readonly httpClient: HttpClient) {}
 
