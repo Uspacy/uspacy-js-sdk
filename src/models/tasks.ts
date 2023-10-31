@@ -78,18 +78,26 @@ export interface IFilterTasks {
 	perPage?: number;
 	status?: string[];
 	priority?: string[];
-	time_label?: string[];
+	time_label_deadline?: string[];
+	time_label_closed_date?: string[];
+	time_label_created_date?: string[];
 	certainDateOrPeriod?: number[];
 	createdBy?: number[];
 	responsible?: number[];
-	accomplices?: number[];
-	auditors?: number[];
+	accomplices_ids?: number[];
+	auditors_ids?: number[];
 	deadline?: number[][];
 	period?: string[][];
-	accept_request?: boolean[];
+	accept_result?: boolean[];
+	time_tracking?: boolean[];
 	closed_by?: number[];
+	closed_date?: number[][];
+	created_date?: number[][];
+	group_id?: number[];
+	parent_id?: number[];
 	openCalendar?: boolean;
 	search?: string;
+	boolean_operator?: string;
 }
 
 export interface ITasksParams {
@@ -97,16 +105,21 @@ export interface ITasksParams {
 	priority?: string[];
 	setter_id?: number[];
 	responsible_id?: number[];
-	accomplices?: number[];
-	auditors?: number[];
+	accomplices_ids?: number[];
+	auditors_ids?: number[];
 	deadline?: number[][];
 	search?: string;
 	q?: string;
-	groupId?: number;
-	accept_request?: boolean[];
+	accept_result?: boolean[];
+	time_tracking?: boolean[];
 	closed_by?: number[];
+	closed_date?: number[][];
+	created_date?: number[][];
+	group_id?: number[];
+	parent_id?: number[];
 	page?: number;
 	list?: number;
-	template?: number;
+	template?: boolean;
+	boolean_operator?: string;
 	use_search?: boolean;
 }
