@@ -15,7 +15,7 @@ export class MessangerService {
 	 * Get chats
 	 * @returns list of chats
 	 */
-	async getChats(type?: 'EXTERNAL') {
+	async getChats({ type }: { type?: 'EXTERNAL' }) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
 			params: { type },
 		});
