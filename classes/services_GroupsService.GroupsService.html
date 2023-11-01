@@ -47,6 +47,7 @@
 <a href="services_GroupsService.GroupsService.html#deleteGroup" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Group</span></a>
 <a href="services_GroupsService.GroupsService.html#editGroup" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>edit<wbr/>Group</span></a>
 <a href="services_GroupsService.GroupsService.html#getGroup" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Group</span></a>
+<a href="services_GroupsService.GroupsService.html#getGroupForTask" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Group<wbr/>For<wbr/>Task</span></a>
 <a href="services_GroupsService.GroupsService.html#getGroups" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Groups</span></a>
 <a href="services_GroupsService.GroupsService.html#getUsersRequestedForJoing" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Users<wbr/>Requested<wbr/>For<wbr/>Joing</span></a>
 <a href="services_GroupsService.GroupsService.html#inviteUsersInGroup" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>invite<wbr/>Users<wbr/>In<wbr/>Group</span></a>
@@ -176,7 +177,25 @@
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="getGroup.getGroup-1"><span class="tsd-kind-call-signature">get<wbr/>Group</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_groups.IGroup.html" class="tsd-signature-type tsd-kind-interface">IGroup</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getGroup.getGroup-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Get stages list</p>
+<div class="tsd-comment tsd-typography"><p>Get group item</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">id</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>group id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_groups.IGroup.html" class="tsd-signature-type tsd-kind-interface">IGroup</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Group entity</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getGroupForTask" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Group<wbr/>For<wbr/>Task</span><a href="#getGroupForTask" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getGroupForTask.getGroupForTask-1"><span class="tsd-kind-call-signature">get<wbr/>Group<wbr/>For<wbr/>Task</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_groups.IGroup.html" class="tsd-signature-type tsd-kind-interface">IGroup</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getGroupForTask.getGroupForTask-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get group for task item</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -377,6 +396,7 @@
 <li><a href="#deleteGroup" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Group</span></a></li>
 <li><a href="#editGroup" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>edit<wbr/>Group</span></a></li>
 <li><a href="#getGroup" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Group</span></a></li>
+<li><a href="#getGroupForTask" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Group<wbr/>For<wbr/>Task</span></a></li>
 <li><a href="#getGroups" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Groups</span></a></li>
 <li><a href="#getUsersRequestedForJoing" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Users<wbr/>Requested<wbr/>For<wbr/>Joing</span></a></li>
 <li><a href="#inviteUsersInGroup" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>invite<wbr/>Users<wbr/>In<wbr/>Group</span></a></li>
