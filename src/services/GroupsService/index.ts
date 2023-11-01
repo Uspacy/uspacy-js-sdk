@@ -16,11 +16,22 @@ export class GroupsService {
 	constructor(private httpClient: HttpClient) {}
 
 	/**
-	 * Get stages list
+	 * Get group item
 	 * @param id group id
 	 * @returns Group entity
 	 */
 	getGroup(id: string) {
+		return this.httpClient.client.get<IGroup>(`${this.namespace}/:id/`, { urlParams: { id } });
+	}
+
+	/**
+	 * Get group for task item
+	 * @param id group id
+	 * @returns Group entity
+	 */
+
+	// ! I added this method because our logic changed after integrating the new store and the old logic affects the new one
+	getGroupForTask(id: string) {
 		return this.httpClient.client.get<IGroup>(`${this.namespace}/:id/`, { urlParams: { id } });
 	}
 
