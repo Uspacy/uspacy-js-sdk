@@ -10,7 +10,6 @@ declare module 'axios' {
 		urlParams?: Record<string, string | number>;
 	}
 }
-
 /**
  * Http client service
  */
@@ -50,7 +49,10 @@ export class HttpClient {
 		});
 
 		this.client.interceptors.response.use(
-			(res) => res,
+			(res) => {
+				HttpClient.busy = false;
+				return res;
+			},
 			async (err) => {
 				const originalConfig = err.config;
 				if (err.response.status === 401 && !originalConfig._retry) {
@@ -99,29 +101,24 @@ export class HttpClient {
 		}
 	}
 
-	private async checkBusyRecursively(tryCheckCount: number, resolve: (value: boolean) => void, reject: () => void) {
-		try {
-			switch (true) {
-				case !HttpClient.busy:
-					return resolve(true);
-				case tryCheckCount >= 3:
-					return reject();
-				default: {
-					setTimeout(() => {
-						tryCheckCount++;
-						this.checkBusyRecursively(tryCheckCount, resolve, reject);
-					}, tryCheckCount * 500);
-				}
+	private async checkBusyRecursively(tryCheckCount: number, resolve: (value: boolean) => void, reject: (e: Error) => void) {
+		switch (true) {
+			case !HttpClient.busy:
+				return resolve(true);
+			case tryCheckCount >= 3:
+				return reject(new Error('timeout'));
+			default: {
+				setTimeout(() => {
+					tryCheckCount++;
+					this.checkBusyRecursively(tryCheckCount, resolve, reject);
+				}, tryCheckCount * 500);
 			}
-		} catch (err) {
-			reject();
 		}
 	}
 
 	private whenWillIdle() {
 		return new Promise((resolve, reject) => {
-			const tryCheckCount = 0;
-			this.checkBusyRecursively(tryCheckCount, resolve, reject);
+			this.checkBusyRecursively(0, resolve, reject);
 		});
 	}
 }
