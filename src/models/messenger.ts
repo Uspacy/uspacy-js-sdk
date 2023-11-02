@@ -54,6 +54,7 @@ export interface IMessage {
 	refrenceId?: string;
 	attachedFiles?: IFile[];
 	readBy: number[];
+	isFirstUnread?: boolean;
 	showTime?: boolean;
 	mentioned: number[];
 	externalLine?: IExternalLine | string;

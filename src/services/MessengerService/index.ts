@@ -31,7 +31,7 @@ export class MessengerService {
 	 */
 	async getMessages({ chatId, limit, lastTimestamp, firstTimestamp }: FetchMessagesRequest) {
 		return this.httpClient.client.get(`${this.namespace}/messages/`, {
-			params: { chatId, limit, lastTimestamp, firstTimestamp },
+			params: { chatId, limit, lastTimestamp, firstTimestamp, unreadFirst: true },
 		});
 	}
 
