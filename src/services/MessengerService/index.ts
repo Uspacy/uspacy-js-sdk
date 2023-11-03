@@ -54,4 +54,12 @@ export class MessengerService {
 			params: { chatId },
 		});
 	}
+
+	/**
+	 * readAllMessages
+	 * @param chatId chat id
+	 */
+	async readAllMessages(chatId: IChat['id']) {
+		return this.httpClient.client.post(`${this.namespace}/messages/readAll/`, { chatId });
+	}
 }
