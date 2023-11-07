@@ -81,7 +81,9 @@ export interface IFilterTasks {
 	time_label_deadline?: string[];
 	time_label_closed_date?: string[];
 	time_label_created_date?: string[];
-	certainDateOrPeriod?: number[];
+	certainDateOrPeriod_deadline?: number[];
+	certainDateOrPeriod_closed_date?: number[];
+	certainDateOrPeriod_created_date?: number[];
 	createdBy?: number[];
 	responsible?: number[];
 	accomplices_ids?: number[];
