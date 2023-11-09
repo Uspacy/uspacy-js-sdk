@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -75,8 +76,9 @@ export class TasksService {
 	 * @param id task id
 	 * @returns task entity
 	 */
-	getTask(id: string) {
+	getTask(id: string, crm_entity_list?: boolean) {
 		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
+			...(crm_entity_list && { params: { crm_entity_list } }),
 			urlParams: { id },
 		});
 	}
