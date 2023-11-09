@@ -136,6 +136,7 @@ export type FetchMessagesRequest = {
 	firstTimestamp?: number;
 	push?: boolean;
 	dir?: 'next' | 'prev';
+	unreadFirst?: boolean;
 };
 
 export type GoToMessageRequest = {
