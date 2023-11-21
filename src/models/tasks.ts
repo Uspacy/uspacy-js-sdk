@@ -55,6 +55,12 @@ export interface ITask {
 		createdAt?: string;
 		updatedAt?: string;
 	};
+	crmEntities?: {
+		[key: string]: {
+			id: number;
+			title: string;
+		}[];
+	};
 }
 
 export interface IMeta {
@@ -81,6 +87,7 @@ export interface IFilterTasks {
 	time_label_deadline?: string[];
 	time_label_closed_date?: string[];
 	time_label_created_date?: string[];
+	certainDateOrPeriod?: number[];
 	certainDateOrPeriod_deadline?: number[];
 	certainDateOrPeriod_closed_date?: number[];
 	certainDateOrPeriod_created_date?: number[];

@@ -41,4 +41,10 @@ export interface ITaskValues {
 		iteration?: number;
 		timezoneOffset?: number;
 	};
+	crmEntities?: {
+		[key: string]: {
+			id: number;
+			title: string;
+		}[];
+	};
 }
