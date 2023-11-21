@@ -126,6 +126,7 @@ export interface IMessagesGroup {
 export enum EMessengerType {
 	INTERNAL_CHAT = 'internalChat',
 	EXTERNAL_LINES = 'externalLines',
+	MAIL = 'mail',
 }
 
 export type FetchMessagesRequest = {
