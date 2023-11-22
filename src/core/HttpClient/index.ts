@@ -17,6 +17,7 @@ declare module 'axios' {
 export class HttpClient {
 	client: AxiosInstance;
 	static busy = false;
+	static maxRetryCheckBusy = 5;
 	constructor(
 		private tokenService: TokensService,
 		private configService: ConfigService,
@@ -83,29 +84,33 @@ export class HttpClient {
 	}
 
 	private async resolveBusy() {
-		if (HttpClient.busy) {
-			await this.whenWillIdle();
-		} else {
-			HttpClient.busy = true;
-		}
-		if (await this.tokenService.isExpired()) {
-			try {
-				await this.tokenService.refreshToken();
-			} catch (_error) {
-				Promise.reject(_error);
-			} finally {
-				HttpClient.busy = false;
+		return new Promise(async (resolve, reject) => {
+			if (HttpClient.busy) {
+				return resolve(await this.whenWillIdle());
+			} else {
+				HttpClient.busy = true;
 			}
-		} else {
-			HttpClient.busy = false;
-		}
+			if (await this.tokenService.isExpired()) {
+				try {
+					await this.tokenService.refreshToken();
+					HttpClient.busy = false;
+					resolve(true);
+				} catch (_error) {
+					HttpClient.busy = false;
+					reject(_error);
+				}
+			} else {
+				HttpClient.busy = false;
+				resolve(true);
+			}
+		});
 	}
 
 	private async checkBusyRecursively(tryCheckCount: number, resolve: (value: boolean) => void, reject: (e: Error) => void) {
 		switch (true) {
 			case !HttpClient.busy:
 				return resolve(true);
-			case tryCheckCount >= 3:
+			case tryCheckCount >= HttpClient.maxRetryCheckBusy:
 				return reject(new Error('timeout'));
 			default: {
 				setTimeout(() => {

@@ -12,6 +12,7 @@ import { CommentsService } from './services/CommentsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { CrmEntitiesService } from './services/CrmEntitiesService';
 import { DepartmentsService } from './services/DepartmentsService';
+import { EmailService } from './services/EmailService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
 import { InvatesService } from './services/InvatesService';
@@ -53,6 +54,7 @@ class Uspacy {
 		public readonly newsFeedService: NewsFeedService,
 		public readonly migrationsService: MigrationsService,
 		public readonly messengerService: MessengerService,
+		public readonly emailService: EmailService,
 	) {}
 
 	static createInstance(config?: IConfig) {

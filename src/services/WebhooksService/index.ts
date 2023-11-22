@@ -71,6 +71,6 @@ export class WebhooksService {
 	 * @param ids ids array
 	 */
 	deleteSelectedWebhooks(ids: number[]) {
-		return this.httpClient.client.delete<number[]>(this.namespace, { data: ids });
+		return this.httpClient.client.delete<number[]>(this.namespace, { data: { ids } });
 	}
 }

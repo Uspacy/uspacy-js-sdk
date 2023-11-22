@@ -126,6 +126,7 @@ export interface IMessagesGroup {
 export enum EMessengerType {
 	INTERNAL_CHAT = 'internalChat',
 	EXTERNAL_LINES = 'externalLines',
+	MAIL = 'mail',
 }
 
 export type FetchMessagesRequest = {
@@ -136,6 +137,7 @@ export type FetchMessagesRequest = {
 	firstTimestamp?: number;
 	push?: boolean;
 	dir?: 'next' | 'prev';
+	unreadFirst?: boolean;
 };
 
 export type GoToMessageRequest = {
