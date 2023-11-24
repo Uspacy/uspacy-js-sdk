@@ -15,10 +15,11 @@ export class TasksStagesService {
 
 	/**
 	 * Get stages list
+	 * @param groupId groupId param for filtering kanban stages
 	 * @returns Array tasks kanban stages entity
 	 */
-	getTasksStages() {
-		return this.httpClient.client.get<IResponseWithMeta<IStages>>(this.namespace);
+	getTasksStages(groupId: number) {
+		return this.httpClient.client.get<IResponseWithMeta<IStages>>(this.namespace, { ...(groupId && { params: { groupId } }) });
 	}
 
 	/**
