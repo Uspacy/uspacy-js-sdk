@@ -10,6 +10,12 @@ export interface IRequisite {
 		list: [];
 		values: {};
 	};
+	region: {
+		id: number;
+		code: string;
+		name: string;
+		image: number;
+	};
 	is_basic: boolean;
 	name: string;
 	id: number;
