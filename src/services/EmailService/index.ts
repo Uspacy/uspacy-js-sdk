@@ -27,7 +27,7 @@ export class EmailService {
 	 * @returns Array with email letters list entity by folder
 	 */
 	getEmailLetters(id: number, page: number, list: number) {
-		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/by-folder/:id`, {
+		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/by_folder/:id`, {
 			urlParams: { id },
 			params: { page, list },
 		});
@@ -47,7 +47,7 @@ export class EmailService {
 	 * @returns create email letter entity
 	 */
 	createEmailLetter(data: ICreateLetterPayload, id: number) {
-		return this.httpClient.client.post<ILetter>(`${this.namespace}/letters/by-folder/:id`, data, { urlParams: { id } });
+		return this.httpClient.client.post<ILetter>(`${this.namespace}/letters/by_folder/:id`, data, { urlParams: { id } });
 	}
 
 	/**
