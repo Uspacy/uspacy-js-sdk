@@ -5,11 +5,13 @@ export interface IFolder {
 	path: string;
 	delimitter: string;
 	message_count: number;
-	is_trash: number;
-	is_spam: number;
-	is_draft: number;
-	is_junk: number;
-	is_sent: number;
+	is_inbox: boolean;
+	is_trash: boolean;
+	is_spam: boolean;
+	is_draft: boolean;
+	is_junk: boolean;
+	is_sent: boolean;
+	is_root: boolean;
 	has_children: number;
 	pivot: {
 		letter_id: number;
@@ -50,6 +52,28 @@ export interface ILetter {
 	attachments: IAttachments[];
 }
 
+export interface IEmailBox {
+	id: number;
+	portal_name: string;
+	added_by: number;
+	imap_host: string;
+	imap_port: string;
+	email: string;
+	password: string;
+	name: string;
+	sender_name: string;
+	access_level: string;
+	last_message_id: number;
+	tariff: number;
+	has_file: boolean;
+	last_synced_at: string;
+	status: string;
+	created_at: string;
+	updated_at: string;
+	sync_freq: number;
+	sync_folders?: IFolder[];
+}
+
 export interface IFolders {
 	data: IFolder[];
 }
@@ -64,4 +88,8 @@ export interface ILetters {
 		to: number;
 		total: number;
 	};
+}
+
+export interface IEmailBoxes {
+	data: IEmailBox[];
 }
