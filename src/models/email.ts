@@ -93,3 +93,9 @@ export interface ILetters {
 export interface IEmailBoxes {
 	data: IEmailBox[];
 }
+
+export interface IEmailFilters {
+	page: number;
+	list: number;
+	folderId: number;
+}
