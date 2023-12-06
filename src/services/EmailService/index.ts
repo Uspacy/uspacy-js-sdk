@@ -1,8 +1,9 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IFolders, ILetter, ILetters } from '../../models/email';
+import { IEmailBox, IEmailBoxes, IFolders, ILetter, ILetters } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
+import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
 
 /**
@@ -13,6 +14,50 @@ export class EmailService {
 	private namespace = '/email/v1';
 
 	constructor(private httpClient: HttpClient) {}
+
+	/**
+	 * Get emails boxes list
+	 * @returns Array with emails boxes list entity
+	 */
+	getEmailsBoxes() {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/`);
+	}
+
+	/**
+	 * Get email box entity
+	 * @param id email box id
+	 * @returns Emails box entity
+	 */
+	getEmailBox(id: number) {
+		return this.httpClient.client.get<IEmailBox>(`${this.namespace}/emails/:id`, { urlParams: { id } });
+	}
+
+	/**
+	 * Connect email box
+	 * @param data email box payload
+	 * @returns Email box entity
+	 */
+	connectEmailBox(data: IConnectEmailBox) {
+		return this.httpClient.client.post(`${this.namespace}/emails/`, data);
+	}
+
+	/**
+	 * Update email box
+	 * @param id email box id
+	 * @param data email box payload
+	 * @returns Email box entity
+	 */
+	updateEmailBox(id: number, data: IUpdateEmailBox) {
+		return this.httpClient.client.patch(`${this.namespace}/emails/:id`, data, { urlParams: { id } });
+	}
+
+	/**
+	 * Remove email box
+	 * @param id email box id
+	 */
+	removeEmailBox(id: number) {
+		return this.httpClient.client.delete(`${this.namespace}/emails/:id`, { urlParams: { id } });
+	}
 
 	/**
 	 * Get email folders list
