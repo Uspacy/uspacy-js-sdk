@@ -61,11 +61,25 @@ export interface ITemplateResponse {
 	meta: IMeta[];
 }
 
+export interface IBankRequisiteField {
+	name: string;
+	type: string;
+	code: string;
+	default_value: string;
+	is_show_preview: number;
+	is_show_default: number;
+	tooltip: string;
+	value?: string;
+	required?: boolean;
+}
+
 export interface IBankRequisite {
 	created_by: number;
 	fields: {
-		list: [];
-		values: {};
+		list: IBankRequisiteField[];
+		values: {
+			[key: string]: string;
+		};
 	};
 	id: number;
 	is_basic: boolean;
