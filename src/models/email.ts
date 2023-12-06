@@ -1,19 +1,19 @@
 export interface IFolder {
-	id: number;
-	email_id: number;
-	folder_name: string;
-	path: string;
-	delimitter: string;
-	message_count: number;
-	is_inbox: boolean;
-	is_trash: boolean;
-	is_spam: boolean;
-	is_draft: boolean;
-	is_junk: boolean;
-	is_sent: boolean;
-	is_root: boolean;
-	has_children: number;
-	pivot: {
+	id?: number;
+	email_id?: number;
+	folder_name?: string;
+	path?: string;
+	delimitter?: string;
+	message_count?: number;
+	is_inbox?: boolean;
+	is_trash?: boolean;
+	is_spam?: boolean;
+	is_draft?: boolean;
+	is_junk?: boolean;
+	is_sent?: boolean;
+	is_root?: boolean;
+	has_children?: number;
+	pivot?: {
 		letter_id: number;
 		email_folder_id: number;
 	};
