@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 
 export interface IErrorDataInterface {
 	errors: {
-		text: string[];
+		[key: string]: string[];
 	};
 	status: boolean;
 }

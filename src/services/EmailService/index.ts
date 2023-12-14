@@ -38,7 +38,27 @@ export class EmailService {
 	 * @returns Email box entity
 	 */
 	connectEmailBox(data: IConnectEmailBox) {
-		return this.httpClient.client.post(`${this.namespace}/emails/`, data);
+		return this.httpClient.client.post(`${this.namespace}/emails/credentials`, data);
+	}
+
+	/**
+	 * Setup email box after connect
+	 * @param id email box id
+	 * @param data email box payload
+	 * @returns Email box entity
+	 */
+	setupEmailBox(id: number, data: IUpdateEmailBox) {
+		return this.httpClient.client.post(`${this.namespace}/emails/settings/:id`, data, { urlParams: { id } });
+	}
+
+	/**
+	 * Update email box credentials (password, email and etc)
+	 * @param id email box id
+	 * @param data email box payload
+	 * @returns Email box entity
+	 */
+	updateEmailBoxCredentials(id: number, data: IUpdateEmailBox) {
+		return this.httpClient.client.patch(`${this.namespace}/emails/credentials/:id`, data, { urlParams: { id } });
 	}
 
 	/**
@@ -48,7 +68,7 @@ export class EmailService {
 	 * @returns Email box entity
 	 */
 	updateEmailBox(id: number, data: IUpdateEmailBox) {
-		return this.httpClient.client.patch(`${this.namespace}/emails/:id`, data, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace}/emails/settings/:id`, data, { urlParams: { id } });
 	}
 
 	/**
