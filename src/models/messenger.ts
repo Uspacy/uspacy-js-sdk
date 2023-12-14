@@ -108,6 +108,7 @@ export interface IChat {
 		muteUntil?: number;
 	};
 	unreadCount?: number;
+	unreadMentions: string[];
 }
 
 export interface IMessagesGroup {
