@@ -11,6 +11,7 @@ import { AuthService } from './services/AuthService';
 import { CommentsService } from './services/CommentsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { CrmEntitiesService } from './services/CrmEntitiesService';
+import { CrmLeadsFunnelsService } from './services/CrmLeadsFunnelsService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { EmailService } from './services/EmailService';
 import { FilesService } from './services/FilesService';
@@ -47,6 +48,7 @@ class Uspacy {
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
 		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
+		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
 		public readonly webhooksService: WebhooksService,
 		public readonly rolesService: RolesService,
 		public readonly crmEntitiesService: CrmEntitiesService,
