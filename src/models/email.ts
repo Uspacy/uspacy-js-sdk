@@ -72,6 +72,7 @@ export interface IEmailBox {
 	updated_at: string;
 	sync_freq: number;
 	sync_folders?: IFolder[];
+	folders?: IFolder[];
 }
 
 export interface IFolders {
@@ -95,7 +96,11 @@ export interface IEmailBoxes {
 }
 
 export interface IEmailFilters {
-	page: number;
-	list: number;
-	folderId: number;
+	page?: number;
+	list?: number;
+	folderId?: number;
+	date?: number[][];
+	time_label?: string[];
+	certainDateOrPeriod?: number[];
+	is_read?: number[];
 }

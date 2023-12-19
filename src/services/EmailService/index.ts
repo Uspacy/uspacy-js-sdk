@@ -122,4 +122,38 @@ export class EmailService {
 	removeEmailLetter(id: number) {
 		return this.httpClient.client.delete(`${this.namespace}/letters/:id`, { urlParams: { id } });
 	}
+
+	/**
+	 * Change unread to read status in the email letters
+	 * @param ids email letters ids array
+	 */
+	readEmailLetters(ids: number[]) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/read`, { ids });
+	}
+
+	/**
+	 * Change read to unread status in the email letters
+	 * @param ids email letters ids array
+	 */
+	unreadEmailLetters(ids: number[]) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, { ids });
+	}
+
+	/**
+	 * Move letter from folder to folder
+	 * @param letterId letters id
+	 * @param folderId to folder id
+	 */
+	moveLetter(letterId: number, folderId: number) {
+		return this.httpClient.client.patch<ILetter>(`${this.namespace}/letters/:letterId/move/:folderId`, { urlParams: { letterId, folderId } });
+	}
+
+	/**
+	 * Move letters from folder to folder
+	 * @param ids letters ids array
+	 * @param folderId to folder id
+	 */
+	moveLetters(ids: number[], folderId: number) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/move/:folderId`, { ids }, { urlParams: { folderId } });
+	}
 }
