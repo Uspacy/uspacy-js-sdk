@@ -104,3 +104,10 @@ export interface IEmailFilters {
 	certainDateOrPeriod?: number[];
 	is_read?: number[];
 }
+
+export interface IEmailFiltersParams {
+	page?: number;
+	list?: number;
+	date?: number[][];
+	is_read?: number[];
+}

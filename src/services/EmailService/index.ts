@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailBox, IEmailBoxes, IFolders, ILetter, ILetters } from '../../models/email';
+import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
@@ -89,12 +89,14 @@ export class EmailService {
 
 	/**
 	 * Get email letters list
+	 * @param id folder id
+	 * @param params filters params
 	 * @returns Array with email letters list entity by folder
 	 */
-	getEmailLetters(id: number, page: number, list: number) {
+	getEmailLetters(id: number, params: IEmailFiltersParams) {
 		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/by_folder/:id`, {
 			urlParams: { id },
-			params: { page, list },
+			params,
 		});
 	}
 
