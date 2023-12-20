@@ -100,8 +100,9 @@ export interface IEmailFilters {
 	list?: number;
 	folderId?: number;
 	date?: number[][];
-	time_label?: string[];
-	certainDateOrPeriod?: number[];
+	time_label_date?: string[];
+	certainDateOrPeriod_date?: number[];
+	openCalendar?: boolean;
 	is_read?: number[];
 }
 
