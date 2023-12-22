@@ -84,7 +84,7 @@ export class TokensService {
 			const jwt = await this.decodeToken();
 			return jwt.exp < Math.floor(Date.now() / 1000);
 		} catch (_) {
-			return true;
+			return false;
 		}
 	}
 
