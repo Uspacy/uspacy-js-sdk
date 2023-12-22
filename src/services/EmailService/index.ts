@@ -101,11 +101,24 @@ export class EmailService {
 	}
 
 	/**
+	 * Get email chain letters in parent letter
+	 * @param id parent email letter id
+	 * @param params filters params
+	 * @returns Array with email chain letters list entity by parent letter
+	 */
+	getEmailChainLetters(id: number, params: IEmailFiltersParams) {
+		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/:id/children`, {
+			urlParams: { id },
+			params,
+		});
+	}
+
+	/**
 	 * Get email letter
 	 * @returns Email letter entity
 	 */
 	getEmailLetter(id: number) {
-		return this.httpClient.client.get<IResponseWithMeta<ILetter>>(`${this.namespace}/letters/:id`, { urlParams: { id } });
+		return this.httpClient.client.get<ILetter>(`${this.namespace}/letters/:id`, { urlParams: { id } });
 	}
 
 	/**
