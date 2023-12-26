@@ -139,6 +139,15 @@ export class EmailService {
 	}
 
 	/**
+	 * Remove email letters
+	 * @param ids email ids array
+	 * @returns remove email letters entity array
+	 */
+	removeEmailLetters(ids: number[]) {
+		return this.httpClient.client.delete(`${this.namespace}/letters/`, { params: { ids } });
+	}
+
+	/**
 	 * Change unread to read status in the email letters
 	 * @param ids email letters ids array
 	 */
