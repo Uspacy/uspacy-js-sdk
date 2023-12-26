@@ -38,9 +38,9 @@ export interface IAttachments {
 }
 
 export interface IImapMapping {
-	letter_id: number;
-	message_id: string;
-	parent_message_id: string;
+	letter_id?: number;
+	message_id?: string;
+	parent_message_id?: string;
 }
 
 export interface ILetter {
@@ -57,6 +57,7 @@ export interface ILetter {
 	folders: IFolder[];
 	attachments: IAttachments[];
 	imap_mapping: IImapMapping;
+	email: IEmailBox;
 }
 
 export interface IEmailBox {
