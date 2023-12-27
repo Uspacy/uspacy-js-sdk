@@ -144,7 +144,7 @@ export class EmailService {
 	 * @returns remove email letters entity array
 	 */
 	removeEmailLetters(ids: number[]) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/`, { params: { ids } });
+		return this.httpClient.client.delete(`${this.namespace}/letters/`, { data: { ids } });
 	}
 
 	/**
