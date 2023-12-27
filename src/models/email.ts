@@ -1,3 +1,5 @@
+import { IFile } from './files';
+
 export interface IFolder {
 	id?: number;
 	email_id?: number;
@@ -31,10 +33,11 @@ export interface IContacts {
 	};
 }
 
-export interface IAttachments {
-	letter_id: number;
-	file_id: number;
-	file_url: string;
+export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'lastModified' | 'originalFilename' | 'size' | 'uploadId'> {
+	letterId: number;
+	fileId: number;
+	fileName: string;
+	fileUrl: string;
 }
 
 export interface IImapMapping {
