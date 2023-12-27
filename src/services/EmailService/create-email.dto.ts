@@ -10,9 +10,9 @@ export interface IAttachmentsForCreateLetter {
 	file_id: number;
 	file_name: string;
 	file_url: string;
-	creator_id: 1;
+	creator_id: number;
 	entity_type: string;
-	entity_id: 1;
+	entity_id: number;
 	upload_id: number;
 	original_filename: string;
 	last_modified: number;
