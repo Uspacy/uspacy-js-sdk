@@ -20,4 +20,4 @@ const uspacyClient = Uspacy.createInstance();
 uspacyClient.authService.login({ email: 'email@gmail.com', password: '12345678' });
 ```
 
-## [Docs](https://uspacy.github.io/js-sdk)
+## [Docs](https://uspacy.github.io/uspacy-js-sdk)
