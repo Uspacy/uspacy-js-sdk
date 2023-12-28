@@ -3,10 +3,12 @@ import { IFile } from './files';
 export interface IFolder {
 	id?: number;
 	email_id?: number;
+	parent_id?: number;
 	folder_name?: string;
 	path?: string;
 	delimitter?: string;
 	message_count?: number;
+	unread_message_count?: number;
 	is_inbox?: boolean;
 	is_trash?: boolean;
 	is_spam?: boolean;
@@ -33,11 +35,10 @@ export interface IContacts {
 	};
 }
 
-export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'lastModified' | 'originalFilename' | 'size' | 'uploadId'> {
+export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'lastModified' | 'originalFilename' | 'size' | 'uploadId' | 'url'> {
 	letterId: number;
 	fileId: number;
 	fileName: string;
-	fileUrl: string;
 }
 
 export interface IImapMapping {
