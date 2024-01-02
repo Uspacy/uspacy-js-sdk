@@ -93,10 +93,11 @@ export class EmailService {
 	 * @param params filters params
 	 * @returns Array with email letters list entity by folder
 	 */
-	getEmailLetters(id: number, params: IEmailFiltersParams) {
+	getEmailLetters(id: number, params: IEmailFiltersParams, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/by_folder/:id`, {
 			urlParams: { id },
 			params,
+			signal,
 		});
 	}
 
