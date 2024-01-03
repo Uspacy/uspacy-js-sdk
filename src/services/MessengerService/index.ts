@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { FetchMessagesRequest, GoToMessageRequest, IChat } from '../../models/messenger';
+import { FetchMessagesRequest, GoToMessageRequest, IChat, ICreateWidgetData } from '../../models/messenger';
 
 /**
  * Messenger service
@@ -61,5 +61,14 @@ export class MessengerService {
 	 */
 	async readAllMessages(chatId: IChat['id']) {
 		return this.httpClient.client.post(`${this.namespace}/messages/readAll/`, { chatId });
+	}
+
+	/**
+	 * create widget
+	 * @param data create widget payload
+	 * @returns created widget data
+	 */
+	createWidget(data: ICreateWidgetData) {
+		return this.httpClient.client.post(`${this.namespace}/widgets`, data);
 	}
 }

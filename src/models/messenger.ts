@@ -151,3 +151,16 @@ export interface IExternalChatsItems {
 	undistributed: IChat[];
 	inactive: IChat[];
 }
+
+export interface ICreateWidgetData {
+	id?: string;
+	name: string;
+	nameExternalLine?: string;
+	settings: {
+		icon?: string;
+		welcomeMessage?: string;
+		operatorName?: string;
+		textColor?: string;
+		backgroundColor?: string;
+	};
+}
