@@ -80,4 +80,12 @@ export class MessengerService {
 	getWidgets() {
 		return this.httpClient.client.get(`${this.namespace}/widgets`);
 	}
+
+	/**
+	 * delete widget
+	 * @param id widget id
+	 */
+	deleteWidgets(id: ICreateWidgetData['id']) {
+		return this.httpClient.client.delete(`${this.namespace}/widgets/${id}`);
+	}
 }
