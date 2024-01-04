@@ -71,4 +71,13 @@ export class MessengerService {
 	createWidget(data: ICreateWidgetData) {
 		return this.httpClient.client.post(`${this.namespace}/widgets`, data);
 	}
+
+	/**
+	 * create widget
+	 * @param data create widget payload
+	 * @returns created widget data
+	 */
+	getWidgets() {
+		return this.httpClient.client.get(`${this.namespace}/widgets`);
+	}
 }
