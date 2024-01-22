@@ -157,6 +157,9 @@ export interface ICreateWidgetData {
 	name: string;
 	nameExternalLine?: string;
 	entryPoint?: string;
+	active?: boolean;
+	authUserId?: number;
+	externalLine: string;
 	settings: {
 		icon?: string;
 		welcomeMessage?: string;
