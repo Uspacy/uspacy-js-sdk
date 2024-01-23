@@ -130,7 +130,7 @@ export class GroupsService {
 	 * @param userId user id
 	 */
 	acceptUserInviteRequest(id: string, userId: number) {
-		return this.httpClient.client.patch(`${this.namespace}/:id/attachUser/${userId}`, { urlParams: { id, userId } });
+		return this.httpClient.client.patch(`${this.namespace}/:id/attachUser/${userId}`, {}, { urlParams: { id, userId } });
 	}
 
 	/**
@@ -151,7 +151,7 @@ export class GroupsService {
 		const logoFormData = new FormData();
 		logoFormData.append('logo', logo ? logo : '');
 
-		return this.httpClient.client.post(`${this.namespace}/:id/upload_logo`, { urlParams: { id }, params: logoFormData });
+		return this.httpClient.client.post(`${this.namespace}/:id/upload_logo`, logoFormData, { urlParams: { id } });
 	}
 
 	/**
@@ -159,7 +159,7 @@ export class GroupsService {
 	 * @param id user id
 	 */
 	userApplyToJoinGroup(id: string) {
-		return this.httpClient.client.post(`${this.namespacev1}/join/:id/request/`, { urlParams: { id } });
+		return this.httpClient.client.post(`${this.namespacev1}/join/:id/request/`, {}, { urlParams: { id } });
 	}
 
 	/**
