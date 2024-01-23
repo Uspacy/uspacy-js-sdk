@@ -77,8 +77,8 @@ export class MessengerService {
 	 * @param data create widget payload
 	 * @returns created widget data
 	 */
-	getWidgets() {
-		return this.httpClient.client.get(`${this.namespace}/widgets`);
+	getWidgets(limit?: number, page?: number) {
+		return this.httpClient.client.get(`${this.namespace}/widgets`, { params: { limit, page } });
 	}
 
 	/**
