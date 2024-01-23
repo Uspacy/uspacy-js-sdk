@@ -166,5 +166,6 @@ export interface ICreateWidgetData {
 		operatorName?: string;
 		textColor?: string;
 		backgroundColor?: string;
+		operatorAvatar?: string;
 	};
 }
