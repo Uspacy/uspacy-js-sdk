@@ -21,3 +21,15 @@ export interface IEntityMain {
 	data: IEntityMainData[];
 	meta: IMeta;
 }
+
+export interface IEntityData {
+	id: number;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any;
+}
+
+export interface IEntity {
+	data: IEntityData[];
+	meta: IMeta;
+	aborted: boolean;
+}
