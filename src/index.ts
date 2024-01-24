@@ -9,6 +9,7 @@ import { TokensService } from './core/TokensService';
 import { AppsService } from './services/AppsService';
 import { AuthService } from './services/AuthService';
 import { CommentsService } from './services/CommentsService';
+import { CrmCallsService } from './services/CrmCallsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { CrmEntitiesService } from './services/CrmEntitiesService';
 import { CrmLeadsFunnelsService } from './services/CrmLeadsFunnelsService';
@@ -47,16 +48,17 @@ class Uspacy {
 		public readonly tasksTimerService: TasksTimerService,
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
-		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
-		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
 		public readonly webhooksService: WebhooksService,
 		public readonly rolesService: RolesService,
-		public readonly crmEntitiesService: CrmEntitiesService,
 		public readonly notificationsService: NotificationsService,
 		public readonly newsFeedService: NewsFeedService,
 		public readonly migrationsService: MigrationsService,
 		public readonly messengerService: MessengerService,
 		public readonly emailService: EmailService,
+		public readonly crmEntitiesService: CrmEntitiesService,
+		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
+		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
+		public readonly crmCallsService: CrmCallsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
