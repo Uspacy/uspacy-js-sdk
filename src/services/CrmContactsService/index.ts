@@ -2,25 +2,25 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
-import { ICompanyFilters } from '../../models/crm-filters';
+import { IContactFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IField } from '../../models/field';
 
 /**
- * CrmCompanies service
+ * CrmContacts service
  */
 @injectable()
-export class CrmCompaniesService {
-	private namespace = '/crm/v1/entities/companies';
+export class CrmContactsService {
+	private namespace = '/crm/v1/entities/contacts';
 	private entitiesNamespace = '/crm/v1/entities';
 
 	constructor(private httpClient: HttpClient) {}
 
 	/**
-	 * Get crm companies list
-	 * @returns Array crm companies list with meta
+	 * Get crm contacts list
+	 * @returns Array crm contacts list with meta
 	 */
-	getCompanies() {
+	getContacts() {
 		return this.httpClient.client.get<IEntity>(this.namespace, {
 			params: {
 				list: 9999,
@@ -29,59 +29,59 @@ export class CrmCompaniesService {
 	}
 
 	/**
-	 * Create company
-	 * @param data company data without id
-	 * @returns company entity
+	 * Create contact
+	 * @param data contact data without id
+	 * @returns contact entity
 	 * */
-	createCompany(data: Partial<IEntityData>) {
+	createContact(data: Partial<IEntityData>) {
 		return this.httpClient.client.post<IEntityData>(this.namespace, data);
 	}
 
 	/**
-	 * Update company
-	 * @param id company id
-	 * @param data company data
-	 * @returns company entity
+	 * Update contact
+	 * @param id contact id
+	 * @param data contact data
+	 * @returns contact entity
 	 */
-	updateCompany(id: number, data: Partial<IEntityData>) {
+	updateContact(id: number, data: Partial<IEntityData>) {
 		return this.httpClient.client.patch<IEntityData>(`${this.namespace}/:id`, data, {
 			urlParams: { id },
 		});
 	}
 
 	/**
-	 * Delete company
-	 * @param id company id
+	 * Delete contact
+	 * @param id contact id
 	 */
-	deleteCompany(id: number) {
+	deleteContact(id: number) {
 		return this.httpClient.client.delete<IEntityData>(`${this.namespace}/:id`, {
 			urlParams: { id },
 		});
 	}
 
 	/**
-	 * Mass deleting companies
-	 * @param entityIds company ids to edit
-	 * @param exceptIds company ids to exclude from editing
-	 * @param all should edit all companies
-	 * @param params query params if editing all companies
+	 * Mass deleting contacts
+	 * @param entityIds contact ids to edit
+	 * @param exceptIds contact ids to exclude from editing
+	 * @param all should edit all contacts
+	 * @param params query params if editing all contacts
 	 */
-	massCompaniesDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
+	massContactsDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
 		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${params}`, {
 			data: { all, entity_ids: entityIds, except_ids: exceptIds },
 		});
 	}
 
 	/**
-	 * Mass editing companies
-	 * @param entityIds company ids to edit
-	 * @param exceptIds company ids to exclude from editing
-	 * @param all should edit all companies
-	 * @param params query params if editing all companies
+	 * Mass editing contacts
+	 * @param entityIds contact ids to edit
+	 * @param exceptIds contact ids to exclude from editing
+	 * @param all should edit all contacts
+	 * @param params query params if editing all contacts
 	 * @param payload editing payload
 	 * @param settings editing settings
 	 */
-	massCompaniesEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
+	massContactsEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
 		return this.httpClient.client.patch<IEntityData>(`${this.namespace}/mass_edit${params}`, {
 			all,
 			entity_ids: entityIds,
@@ -92,15 +92,15 @@ export class CrmCompaniesService {
 	}
 
 	/**
-	 * Get companies list with filters
-	 * @param params companies list filter params
+	 * Get contacts list with filters
+	 * @param params contacts list filter params
 	 * @param signal AbortSignal for cancelling request
-	 * @param relatedEntityId related entity id if fetching related to entity companies
-	 * @param relatedEntityType related entity type if fetching related to entity companies
-	 * @returns Array crm companies list
+	 * @param relatedEntityId related entity id if fetching related to entity contacts
+	 * @param relatedEntityType related entity type if fetching related to entity contacts
+	 * @returns Array crm contacts list
 	 */
-	getCompaniesWithFilters(
-		params: Omit<ICompanyFilters, 'openDatePicker'>,
+	getContactsWithFilters(
+		params: Omit<IContactFilters, 'openDatePicker'>,
 		signal: AbortSignal,
 		relatedEntityId?: string,
 		relatedEntityType?: string,
@@ -109,7 +109,7 @@ export class CrmCompaniesService {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
-				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/companies`;
+				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/contacts`;
 			}
 			return this.namespace;
 		};
@@ -125,60 +125,60 @@ export class CrmCompaniesService {
 	}
 
 	/**
-	 * Get company fields
-	 * @returns company field list
+	 * Get contact fields
+	 * @returns contact field list
 	 */
-	getCompanyFields() {
+	getContactFields() {
 		return this.httpClient.client.get<IField[]>(`${this.namespace}/fields`);
 	}
 
 	/**
-	 * Update company field
-	 * @param data company field data
-	 * @returns company field
+	 * Update contact field
+	 * @param data contact field data
+	 * @returns contact field
 	 */
-	updateCompanyField(data: IField) {
+	updateContactField(data: IField) {
 		return this.httpClient.client.patch<IField>(`${this.namespace}/fields/:code`, data, {
 			urlParams: { code: data?.code },
 		});
 	}
 
 	/**
-	 * Update company list values
-	 * @param data company field data
-	 * @returns values of company field
+	 * Update contact list values
+	 * @param data contact field data
+	 * @returns values of contact field
 	 */
-	updateCompanyListValues(data: IField) {
+	updateContactListValues(data: IField) {
 		return this.httpClient.client.post<IField['values']>(`${this.namespace}/lists/:code`, data?.values, {
 			urlParams: { code: data?.code },
 		});
 	}
 
 	/**
-	 * Create company field
-	 * @param data company field data
-	 * @returns company field
+	 * Create contact field
+	 * @param data contact field data
+	 * @returns contact field
 	 */
-	createCompanyField(data: IField) {
+	createContactField(data: IField) {
 		return this.httpClient.client.post<IField>(`${this.namespace}/fields`, data);
 	}
 
 	/**
-	 * Delete company list values
-	 * @param value company list value
-	 * @param fieldCode company field code
+	 * Delete contact list values
+	 * @param value contact list value
+	 * @param fieldCode contact field code
 	 */
-	deleteCompanyListValues(value: string, fieldCode: string) {
+	deleteContactListValues(value: string, fieldCode: string) {
 		return this.httpClient.client.delete<IEntityData>(`${this.namespace}/lists/:code/:value`, {
 			urlParams: { code: fieldCode, value },
 		});
 	}
 
 	/**
-	 * Delete company field
-	 * @param code company field code
+	 * Delete contact field
+	 * @param code contact field code
 	 */
-	deleteCompanyField(code: string) {
+	deleteContactField(code: string) {
 		return this.httpClient.client.delete<IEntityData>(`${this.namespace}/fields/:code`, {
 			urlParams: { code },
 		});
