@@ -24,7 +24,8 @@ export interface ITaskValues {
 	timeTracking?: boolean;
 	group?: IGroup;
 	parentTask?: ITask;
-
+	fixed?: boolean;
+	timezoneOffset?: number;
 	template?: boolean;
 	scheduler?: {
 		active?: boolean;

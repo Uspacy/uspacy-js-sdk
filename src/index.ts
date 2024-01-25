@@ -25,6 +25,7 @@ import { ProfileService } from './services/ProfileService';
 import { RolesService } from './services/RolesService';
 import { TasksService } from './services/TasksService';
 import { TasksStagesService } from './services/TasksStagesService';
+import { TasksTemplatesService } from './services/TasksTemplatesService';
 import { TasksTimerService } from './services/TasksTimerService';
 import { UsersService } from './services/UsersService';
 import { WebhooksService } from './services/WebhooksService';
@@ -44,6 +45,7 @@ class Uspacy {
 		public readonly appsService: AppsService,
 		public readonly tasksService: TasksService,
 		public readonly tasksStagesService: TasksStagesService,
+		public readonly tasksTemplatesService: TasksTemplatesService,
 		public readonly tasksTimerService: TasksTimerService,
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
