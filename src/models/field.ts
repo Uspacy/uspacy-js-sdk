@@ -43,7 +43,8 @@ export type FieldTypes =
 	| 'call_date'
 	| 'call_record'
 	| 'call_entity_reference'
-	| 'call_phone';
+	| 'call_phone'
+	| 'id_column';
 
 export interface IField {
 	name: string;
