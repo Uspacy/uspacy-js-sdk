@@ -28,6 +28,7 @@ export type FieldTypes =
 	| 'productPrice'
 	| 'productRemind'
 	| 'productArticle'
+	| 'productActivity'
 	| 'productType'
 	| 'productCategory'
 	| 'productAvailability'
@@ -63,6 +64,8 @@ export interface IField {
 	entity_reference_id?: number;
 	base_field?: boolean;
 	tooltip?: string;
+	display_in_tabs?: boolean;
+	showOnlyFilled?: boolean;
 }
 export interface IFieldCreate {
 	name: string;
