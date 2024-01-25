@@ -4,7 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
 import { IDealFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
-import { IField } from '../../models/field';
+import { IField, IFields } from '../../models/field';
 
 /**
  * CrmDeals service
@@ -124,7 +124,7 @@ export class CrmDealsService {
 	 * @returns deal field list
 	 */
 	getDealFields() {
-		return this.httpClient.client.get<IField[]>(`${this.namespace}/fields`);
+		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
 	}
 
 	/**

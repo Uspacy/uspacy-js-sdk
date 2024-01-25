@@ -4,7 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
 import { ICompanyFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
-import { IField } from '../../models/field';
+import { IField, IFields } from '../../models/field';
 
 /**
  * CrmCompanies service
@@ -129,7 +129,7 @@ export class CrmCompaniesService {
 	 * @returns company field list
 	 */
 	getCompanyFields() {
-		return this.httpClient.client.get<IField[]>(`${this.namespace}/fields`);
+		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
 	}
 
 	/**

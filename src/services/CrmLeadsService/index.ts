@@ -4,7 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
 import { ILeadFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
-import { IField } from '../../models/field';
+import { IField, IFields } from '../../models/field';
 
 /**
  * CrmLeads service
@@ -127,7 +127,7 @@ export class CrmLeadsService {
 	 * @returns lead field list
 	 */
 	getLeadFields() {
-		return this.httpClient.client.get<IField[]>(`${this.namespace}/fields`);
+		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
 	}
 
 	/**
