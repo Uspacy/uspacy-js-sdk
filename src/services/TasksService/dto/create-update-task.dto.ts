@@ -26,6 +26,8 @@ export interface ITaskValues {
 	parentTask?: ITask;
 	fixed?: boolean;
 	timezoneOffset?: number;
+	deadline_day?: number;
+	deadline_hour?: number;
 	template?: boolean;
 	scheduler?: {
 		active?: boolean;
