@@ -43,7 +43,7 @@ export class CrmCompaniesService {
 	 * @param data company data
 	 * @returns company entity
 	 */
-	updateCompany(id: number, data: IEntityData) {
+	updateCompany(id: number, data: Partial<IEntityData>) {
 		return this.httpClient.client.patch<IEntityData>(`${this.namespace}/:id`, data, {
 			urlParams: { id },
 		});
