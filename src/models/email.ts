@@ -62,10 +62,14 @@ export interface ILetter {
 	attachments: IAttachments[];
 	imap_mapping: IImapMapping;
 	email: IEmailBox;
+	main_letter_id?: number;
+	is_first_reply?: boolean;
+	chain_length?: number;
 }
 
 export interface IEmailBox {
 	id: number;
+	auth_user_id: number;
 	portal_name: string;
 	added_by: number;
 	imap_host: string;

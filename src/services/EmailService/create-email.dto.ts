@@ -11,6 +11,7 @@ export interface IAttachmentsForCreateLetter {
 }
 
 export interface ICreateLetterPayload {
+	main_letter_id?: number;
 	subject?: string;
 	body?: string;
 	body_html?: string;
