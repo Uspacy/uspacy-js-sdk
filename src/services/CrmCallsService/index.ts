@@ -69,9 +69,8 @@ export class CrmCallsService {
 	 * @param id call id
 	 */
 	deleteCall(id: number) {
-		this.httpClient.client.delete<ICall>(`${this.namespace}/:id`, {
+		return this.httpClient.client.delete(`${this.namespace}/:id`, {
 			urlParams: { id },
 		});
-		return id;
 	}
 }
