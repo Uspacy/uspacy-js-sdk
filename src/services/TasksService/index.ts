@@ -103,7 +103,7 @@ export class TasksService {
 	 * @returns recurring template entity
 	 */
 	getRecurringTemplate(id: string, crm_entity_list?: boolean) {
-		return this.httpClient.client.get<ITask>(`${this.namespace}/recurring/:id/`, {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/recurring/:id/`, {
 			...(crm_entity_list && { params: { crm_entity_list } }),
 			urlParams: { id },
 		});
@@ -115,7 +115,7 @@ export class TasksService {
 	 * @returns one time template entity
 	 */
 	getOneTimeTemplate(id: string, crm_entity_list?: boolean) {
-		return this.httpClient.client.get<ITask>(`${this.namespace}/one_time/:id/`, {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/one_time/:id/`, {
 			...(crm_entity_list && { params: { crm_entity_list } }),
 			urlParams: { id },
 		});
@@ -145,7 +145,7 @@ export class TasksService {
 	 * @returns recurring template entity
 	 */
 	createRecurringTemplate(body: ITaskValues) {
-		return this.httpClient.client.post<ITask>(`${this.namespace}/recurring`, body);
+		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/recurring`, body);
 	}
 
 	/**
@@ -153,7 +153,7 @@ export class TasksService {
 	 * @returns one time template entity
 	 */
 	createOneTimeTemplate(body: ITaskValues) {
-		return this.httpClient.client.post<ITask>(`${this.namespace}/one_time`, body);
+		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/one_time`, body);
 	}
 
 	/**
@@ -173,7 +173,7 @@ export class TasksService {
 	 * @returns recurring template entity
 	 */
 	updateRecurringTemplate(id: string, body: ITaskValues) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/recurring/:id/`, body, {
+		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/recurring/:id/`, body, {
 			urlParams: { id },
 		});
 	}
@@ -184,7 +184,7 @@ export class TasksService {
 	 * @returns one time template entity
 	 */
 	updateOneTimeTemplate(id: string, body: ITaskValues) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/one_time/:id/`, body, {
+		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/one_time/:id/`, body, {
 			urlParams: { id },
 		});
 	}
