@@ -14,9 +14,11 @@ import { CrmCompaniesService } from './services/CrmCompaniesService';
 import { CrmContactsService } from './services/CrmContactsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { CrmDealsService } from './services/CrmDealsService';
+import { CrmDealsStagesService } from './services/CrmDealsStagesService';
 import { CrmEntitiesService } from './services/CrmEntitiesService';
 import { CrmLeadsFunnelsService } from './services/CrmLeadsFunnelsService';
 import { CrmLeadsService } from './services/CrmLeadsService';
+import { CrmLeadsStagesService } from './services/CrmLeadsStagesService';
 import { CrmTasksService } from './services/CrmTasksService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { EmailService } from './services/EmailService';
@@ -61,14 +63,16 @@ class Uspacy {
 		public readonly messengerService: MessengerService,
 		public readonly emailService: EmailService,
 		public readonly crmEntitiesService: CrmEntitiesService,
-		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
-		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
 		public readonly crmCallsService: CrmCallsService,
 		public readonly crmCompaniesService: CrmCompaniesService,
 		public readonly crmContactsService: CrmContactsService,
 		public readonly crmDealsService: CrmDealsService,
 		public readonly crmLeadsService: CrmLeadsService,
 		public readonly crmTasksService: CrmTasksService,
+		public readonly crmDealsFunnelsService: CrmDealsFunnelsService,
+		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
+		public readonly crmDealsStagesService: CrmDealsStagesService,
+		public readonly crmLeadsStagesService: CrmLeadsStagesService,
 	) {}
 
 	static createInstance(config?: IConfig) {
