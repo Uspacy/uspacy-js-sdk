@@ -95,23 +95,23 @@ export class CrmDealsFunnelsService {
 
 	/**
 	 * Update reasons for deals funnel stage
-	 * @param funnelId funnels id
+	 * @param id reason id
 	 * @param reason reason data
 	 * @returns reason entity
 	 */
-	updateReasonsForDealsFunnelStage(funnelId: number, reason: Partial<IReason>) {
-		return this.httpClient.client.patch<IReason>(`${this.reasonsNamespace}/:funnelId`, reason, {
-			urlParams: { funnelId },
+	updateReasonsForDealsFunnelStage(id: number, reason: Partial<IReason>) {
+		return this.httpClient.client.patch<IReason>(`${this.reasonsNamespace}/:id`, reason, {
+			urlParams: { id },
 		});
 	}
 
 	/**
 	 * Delete reasons for deals funnel stage
-	 * @param funnelId funnels id
+	 * @param id reason id
 	 */
-	deleteReasonsForDealsFunnelStage(funnelId: number) {
-		return this.httpClient.client.delete(`${this.reasonsNamespace}/:funnelId`, {
-			urlParams: { funnelId },
+	deleteReasonsForDealsFunnelStage(id: number) {
+		return this.httpClient.client.delete(`${this.reasonsNamespace}/:id`, {
+			urlParams: { id },
 		});
 	}
 
