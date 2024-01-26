@@ -82,7 +82,7 @@ export class CrmCompaniesService {
 	 * @param settings editing settings
 	 */
 	massCompaniesEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
-		return this.httpClient.client.patch<IEntityData>(`${this.namespace}/mass_edit${params}`, {
+		return this.httpClient.client.patch(`${this.namespace}/mass_edit${params}`, {
 			all,
 			entity_ids: entityIds,
 			except_ids: exceptIds,
