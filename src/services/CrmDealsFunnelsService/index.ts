@@ -120,7 +120,7 @@ export class CrmDealsFunnelsService {
 	 * @param funnelId funnels id
 	 * @returns Array with reasons
 	 */
-	getReasonsForDealsFunnelStage(funnelId: number) {
+	getStagesForDealsFunnel(funnelId: number) {
 		return this.httpClient.client.get<IStages>(`${this.namespace}/kanban/stage`, {
 			params: {
 				funnel_id: funnelId,
