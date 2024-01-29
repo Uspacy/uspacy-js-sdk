@@ -19,6 +19,11 @@ import { CrmEntitiesService } from './services/CrmEntitiesService';
 import { CrmLeadsFunnelsService } from './services/CrmLeadsFunnelsService';
 import { CrmLeadsService } from './services/CrmLeadsService';
 import { CrmLeadsStagesService } from './services/CrmLeadsStagesService';
+import { CrmProductsCategoryService } from './services/CrmProductsCategoryService';
+import { CrmProductsForEntityService } from './services/CrmProductsForEntityService';
+import { CrmProductsService } from './services/CrmProductsService';
+import { CrmProductsTaxesService } from './services/CrmProductsTaxesService';
+import { CrmProductsUnitService } from './services/CrmProductsUnitService';
 import { CrmTasksService } from './services/CrmTasksService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { EmailService } from './services/EmailService';
@@ -73,6 +78,11 @@ class Uspacy {
 		public readonly crmLeadsFunnelsService: CrmLeadsFunnelsService,
 		public readonly crmDealsStagesService: CrmDealsStagesService,
 		public readonly crmLeadsStagesService: CrmLeadsStagesService,
+		public readonly crmProductsService: CrmProductsService,
+		public readonly crmProductTaxesService: CrmProductsTaxesService,
+		public readonly crmProductUnitService: CrmProductsUnitService,
+		public readonly crmProductsCategoryService: CrmProductsCategoryService,
+		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 	) {}
 
 	static createInstance(config?: IConfig) {
