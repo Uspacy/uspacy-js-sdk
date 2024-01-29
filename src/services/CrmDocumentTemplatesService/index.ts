@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IDocumentTemplate, IDocumentTemplateFields, IDocumentTemplates } from '../../models/crm-document-template';
-import { IDocumentTemplateFieldFilters } from '../../models/crm-filters';
+import { IDocumentTemplateFieldFilters, IDocumentTemplateFilters } from '../../models/crm-filters';
 
 /**
  * CrmDocumentTemplates service
@@ -15,12 +15,12 @@ export class CrmDocumentTemplatesService {
 
 	/**
 	 * Get crm document templates list
-	 * @param query query string
+	 * @param params document templates filter params
 	 * @param signal AbortSignal for cancelling request
 	 * @returns CRM document templates list with meta
 	 */
-	getDocumentTemplates(query: string, signal: AbortSignal) {
-		return this.httpClient.client.get<IDocumentTemplates>(`${this.namespace}/${query}`, { signal });
+	getDocumentTemplates(params: IDocumentTemplateFilters, signal: AbortSignal) {
+		return this.httpClient.client.get<IDocumentTemplates>(this.namespace, { signal, params });
 	}
 
 	/**
