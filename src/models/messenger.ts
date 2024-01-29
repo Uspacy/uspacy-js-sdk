@@ -164,7 +164,7 @@ export interface ICreateWidgetData {
 		icon?: string;
 		welcomeMessage?: string;
 		operatorName?: string;
-		textColor?: string;
+		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
 	};
