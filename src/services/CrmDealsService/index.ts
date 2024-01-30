@@ -179,6 +179,13 @@ export class CrmDealsService {
 		});
 	}
 
+	/**
+	 * Move deal from stage to stage
+	 * @param entityId deal id
+	 * @param stageId stage id
+	 * @param reasonId reason id
+	 * @returns deal entity
+	 */
 	moveDealFromStageToStage(entityId: number, stageId: number, reasonId: number | null) {
 		return this.httpClient.client.post(
 			`${this.namespace}/:entityId/move/stage/:stageId`,

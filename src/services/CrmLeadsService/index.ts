@@ -182,6 +182,13 @@ export class CrmLeadsService {
 		});
 	}
 
+	/**
+	 * Move lead from stage to stage
+	 * @param entityId lead id
+	 * @param stageId stage id
+	 * @param reasonId reason id
+	 * @returns lead entity
+	 */
 	moveLeadFromStageToStage(entityId: number, stageId: number, reasonId: number | null) {
 		return this.httpClient.client.post(
 			`${this.namespace}/:entityId/move/stage/:stageId`,
