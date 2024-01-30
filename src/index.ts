@@ -25,6 +25,7 @@ import { CrmProductsForEntityService } from './services/CrmProductsForEntityServ
 import { CrmProductsService } from './services/CrmProductsService';
 import { CrmProductsTaxesService } from './services/CrmProductsTaxesService';
 import { CrmProductsUnitService } from './services/CrmProductsUnitService';
+import { CrmRequisitesService } from './services/CrmRequisitesService';
 import { CrmTasksService } from './services/CrmTasksService';
 import { DepartmentsService } from './services/DepartmentsService';
 import { EmailService } from './services/EmailService';
@@ -85,6 +86,7 @@ class Uspacy {
 		public readonly crmProductsCategoryService: CrmProductsCategoryService,
 		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 		public readonly crmDocumentTemplatesService: CrmDocumentTemplatesService,
+		public readonly crmRequisitesService: CrmRequisitesService,
 	) {}
 
 	static createInstance(config?: IConfig) {
