@@ -2,6 +2,8 @@ import { IComment } from './comment';
 import { IFile } from './files';
 import { ITaskTimerList } from './timer';
 
+export type taskType = 'task' | 'recurring' | 'one_time';
+
 export interface ITask {
 	id: string;
 	parentId: null | number;
@@ -14,6 +16,8 @@ export interface ITask {
 	responsibleId: string;
 	accomplicesIds: string[];
 	auditorsIds: string[];
+	usersIds: string[];
+	taskType: taskType;
 	body: string;
 	status: string;
 	kanbanStageId: string;
@@ -34,6 +38,8 @@ export interface ITask {
 	elapsedTimes?: ITaskTimerList;
 	template?: boolean;
 	templateId?: number;
+	deadlineDay?: number;
+	deadlineHour?: number;
 	scheduler?: {
 		activationLimit?: boolean;
 		taskId?: number;
