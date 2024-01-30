@@ -365,8 +365,10 @@ export class CrmEntitiesService {
 	 * @param params query params if editing all entity items
 	 */
 	massEntityItemsDeletion(code: string, { entityIds, exceptIds, all, params }: IMassActions) {
+		const data = { all, entity_ids: entityIds, except_ids: exceptIds };
 		return this.httpClient.client.delete(`${this.namespace}/:code/mass_deletion${params}`, {
-			data: { all, entity_ids: entityIds, except_ids: exceptIds },
+			data,
+			urlParams: { code },
 		});
 	}
 
@@ -381,12 +383,16 @@ export class CrmEntitiesService {
 	 * @param settings editing settings
 	 */
 	massEntityItemsEditing(code: string, { entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
-		return this.httpClient.client.patch(`${this.namespace}/:code/mass_edit${params}`, {
+		const data = {
 			all,
 			entity_ids: entityIds,
 			except_ids: exceptIds,
 			payload,
 			settings,
+		};
+
+		return this.httpClient.client.patch(`${this.namespace}/:code/mass_edit${params}`, data, {
+			urlParams: { code },
 		});
 	}
 
