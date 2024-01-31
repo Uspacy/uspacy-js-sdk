@@ -15,6 +15,7 @@ export interface IFolder {
 	is_draft?: boolean;
 	is_junk?: boolean;
 	is_sent?: boolean;
+	is_pending?: boolean;
 	is_root?: boolean;
 	has_children?: number;
 	pivot?: {
