@@ -10,6 +10,7 @@ export interface IMeta {
 	lastPage?: number;
 	perPage?: number;
 	current_page?: number;
+	currentPage?: number;
 	from?: number;
 	last_page?: number;
 	per_page?: number;
