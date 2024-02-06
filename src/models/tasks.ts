@@ -40,6 +40,7 @@ export interface ITask {
 	templateId?: number;
 	deadlineDay?: number;
 	deadlineHour?: number;
+	active?: boolean;
 	scheduler?: {
 		activationLimit?: boolean;
 		taskId?: number;
