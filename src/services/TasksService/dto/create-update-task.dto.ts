@@ -9,7 +9,7 @@ export interface ITaskValues {
 	responsibleId?: string;
 	accomplicesIds?: string[];
 	auditorsIds?: string[];
-	usersIds?: string[];
+	userIds?: string[];
 	body?: string;
 	kanbanStageId?: string;
 	priority?: string;

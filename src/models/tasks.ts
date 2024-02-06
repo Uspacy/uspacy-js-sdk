@@ -16,7 +16,7 @@ export interface ITask {
 	responsibleId: string;
 	accomplicesIds: string[];
 	auditorsIds: string[];
-	usersIds: string[];
+	userIds: string[];
 	taskType: taskType;
 	body: string;
 	status: string;
