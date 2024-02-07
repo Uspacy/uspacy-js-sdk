@@ -14,13 +14,14 @@
 
 export interface ICreatedLeadBody {
 	comments: string;
-	email?: [{ type: string; value: string; main: boolean; sort: string; id: string }];
+	email?: { type: string; value: string; main: boolean; sort: string; id: string }[];
 	first_name: string;
 	last_name: string;
 	lead_label: string[];
 	messengers: [];
 	owner: number;
-	phone: [{ type: string; value: string; sort?: string; id?: string }];
+	phone: { type: string; value: string; sort?: string; id?: string }[];
+	external_channels?: { type: string; value: string; sort?: string; id?: string }[];
 	source: string;
 	title: string;
 }
