@@ -9,6 +9,7 @@ export interface ITaskValues {
 	responsibleId?: string;
 	accomplicesIds?: string[];
 	auditorsIds?: string[];
+	userIds?: string[];
 	body?: string;
 	kanbanStageId?: string;
 	priority?: string;
@@ -24,7 +25,10 @@ export interface ITaskValues {
 	timeTracking?: boolean;
 	group?: IGroup;
 	parentTask?: ITask;
-
+	fixed?: boolean;
+	timezoneOffset?: number;
+	deadlineDay?: number;
+	deadlineHour?: number;
 	template?: boolean;
 	scheduler?: {
 		active?: boolean;
