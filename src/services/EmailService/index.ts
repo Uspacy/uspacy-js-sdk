@@ -136,7 +136,7 @@ export class EmailService {
 	 * @param id email letter id
 	 */
 	resendEmailLetter(id: number) {
-		return this.httpClient.client.post(`${this.namespace}/letters/:id/resend`, undefined, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace}/letters/:id/resend`, undefined, { urlParams: { id } });
 	}
 
 	/**
