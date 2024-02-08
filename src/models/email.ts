@@ -1,5 +1,6 @@
 import { IFile } from './files';
 
+export type LetterStatus = 'pending' | 'error' | 'succseed';
 export interface IFolder {
 	id?: number;
 	email_id?: number;
@@ -66,6 +67,7 @@ export interface ILetter {
 	main_letter_id?: number;
 	is_first_reply?: boolean;
 	chain_length?: number;
+	status: LetterStatus;
 }
 
 export interface IEmailBox {
