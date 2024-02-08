@@ -132,6 +132,14 @@ export class EmailService {
 	}
 
 	/**
+	 * resend email letter
+	 * @param id email letter id
+	 */
+	resendEmailLetter(id: number) {
+		return this.httpClient.client.post(`${this.namespace}/letters/:id/resend`, undefined, { urlParams: { id } });
+	}
+
+	/**
 	 * Remove email letter
 	 * @returns remove email letter entity
 	 */
