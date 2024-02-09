@@ -10,6 +10,7 @@ export interface IFolder {
 	delimitter?: string;
 	message_count?: number;
 	unread_message_count?: number;
+	error_message_count?: number;
 	is_inbox?: boolean;
 	is_trash?: boolean;
 	is_spam?: boolean;
