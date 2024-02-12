@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { FetchMessagesRequest, GoToMessageRequest, IChat } from '../../models/messenger';
+import { FetchMessagesRequest, GoToMessageRequest, IChat, ICreateWidgetData } from '../../models/messenger';
 
 /**
  * Messenger service
@@ -61,5 +61,40 @@ export class MessengerService {
 	 */
 	async readAllMessages(chatId: IChat['id']) {
 		return this.httpClient.client.post(`${this.namespace}/messages/readAll/`, { chatId });
+	}
+
+	/**
+	 * create widget
+	 * @param data create widget payload
+	 * @returns created widget data
+	 */
+	createWidget(data: ICreateWidgetData) {
+		return this.httpClient.client.post(`${this.namespace}/widgets`, data);
+	}
+
+	/**
+	 * create widget
+	 * @param data create widget payload
+	 * @returns created widget data
+	 */
+	getWidgets(limit?: number, page?: number) {
+		return this.httpClient.client.get(`${this.namespace}/widgets`, { params: { limit, page } });
+	}
+
+	/**
+	 * delete widget
+	 * @param id widget id
+	 */
+	deleteWidgets(id: ICreateWidgetData['id']) {
+		return this.httpClient.client.delete(`${this.namespace}/widgets/${id}`);
+	}
+
+	/**
+	 * update widget
+	 * @param data update widget payload
+	 * @returns updated widget data
+	 */
+	updateWidget(data: ICreateWidgetData) {
+		return this.httpClient.client.patch(`${this.namespace}/widgets/${data.id}`, data);
 	}
 }
