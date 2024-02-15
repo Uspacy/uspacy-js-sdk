@@ -110,7 +110,6 @@ export interface IChat {
 	};
 	unreadCount?: number;
 	unreadMentions: string[];
-	draftMessage?: string;
 }
 
 export interface IMessagesGroup {
@@ -123,7 +122,7 @@ export interface IMessagesGroup {
 	editableMessageId?: string;
 	parentMessageId?: string;
 	scrollPosition?: number;
-	message: string;
+	draftMessage: string;
 }
 
 export enum EMessengerType {
