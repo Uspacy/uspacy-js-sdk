@@ -14,6 +14,7 @@ import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 @injectable()
 export class TasksService {
 	private namespace = '/tasks/v1/tasks';
+	private namespaceTemplates = '/tasks/v1/templates';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -23,7 +24,7 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array tasks entity
 	 */
-	getTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
+	getTasks(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
@@ -31,13 +32,26 @@ export class TasksService {
 	}
 
 	/**
-	 * Get regular tasks list with filters
-	 * @param params regular tasks list filter params
+	 * Get recurring templates list
+	 * @param params recurring templates list
 	 * @param withoutResponsible withoutResponsible filter param
-	 * @returns Array regular tasks entity
+	 * @returns Array recurring template entity
 	 */
-	getRegularTasksWithFilters(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
+	getRecurringTemplates(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/recurring`, {
+			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
+			signal,
+		});
+	}
+
+	/**
+	 * Get one time templates list
+	 * @param params one time templates list
+	 * @param withoutResponsible withoutResponsible filter param
+	 * @returns Array one time template entity
+	 */
+	getOneTimeTemplates(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/one_time`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -84,12 +98,25 @@ export class TasksService {
 	}
 
 	/**
-	 * Get template by id
-	 * @param id template id
-	 * @returns template entity
+	 * Get recurring template by id
+	 * @param id recurring template id
+	 * @returns recurring template entity
 	 */
-	getTemplate(id: string) {
-		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
+	getRecurringTemplate(id: string, crm_entity_list?: boolean) {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/recurring/:id/`, {
+			...(crm_entity_list && { params: { crm_entity_list } }),
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Get one time template by id
+	 * @param id one time template id
+	 * @returns one time template entity
+	 */
+	getOneTimeTemplate(id: string, crm_entity_list?: boolean) {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/one_time/:id/`, {
+			...(crm_entity_list && { params: { crm_entity_list } }),
 			urlParams: { id },
 		});
 	}
@@ -114,12 +141,50 @@ export class TasksService {
 	}
 
 	/**
+	 * Create recurring template
+	 * @returns recurring template entity
+	 */
+	createRecurringTemplate(body: ITaskValues) {
+		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/recurring`, body);
+	}
+
+	/**
+	 * Create one time template
+	 * @returns one time template entity
+	 */
+	createOneTimeTemplate(body: ITaskValues) {
+		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/one_time`, body);
+	}
+
+	/**
 	 * Update task
 	 * @param id task id
 	 * @returns task entity
 	 */
 	updateTask(id: string, body: ITaskValues) {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Update recurring template
+	 * @param id recurring template id
+	 * @returns recurring template entity
+	 */
+	updateRecurringTemplate(id: string, body: ITaskValues) {
+		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/recurring/:id/`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Update one time template
+	 * @param id one time template id
+	 * @returns one time template entity
+	 */
+	updateOneTimeTemplate(id: string, body: ITaskValues) {
+		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/one_time/:id/`, body, {
 			urlParams: { id },
 		});
 	}
