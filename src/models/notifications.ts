@@ -5,6 +5,15 @@ export enum NotificationAction {
 	UPDATE_STAGE = 'updateStage',
 }
 
+interface IRootParent {
+	data: {
+		title: string;
+		id: string;
+	};
+	type: string;
+	service: string;
+}
+
 export interface INotificationMessage {
 	id: string;
 	topic: string;
@@ -13,6 +22,7 @@ export interface INotificationMessage {
 	data: {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		entity: any;
+		root_parent: IRootParent;
 		user_id: number;
 		service: string;
 		timestamp: string;
