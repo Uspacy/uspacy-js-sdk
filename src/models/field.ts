@@ -45,7 +45,8 @@ export type FieldTypes =
 	| 'call_record'
 	| 'call_entity_reference'
 	| 'call_phone'
-	| 'id_column';
+	| 'id_column'
+	| 'external_channels';
 
 export interface IField {
 	name: string;
