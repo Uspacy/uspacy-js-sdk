@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -186,7 +187,11 @@ export class EmailService {
 	 * @param ids letters ids array
 	 * @param folderId to folder id
 	 */
-	moveLetters(ids: number[], folderId: number) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/move/:folderId`, { ids }, { urlParams: { folderId } });
+	moveLetters(ids: number[], folderId: number, chain_ids: number[]) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/move/:folderId`,
+			{ ids, ...(chain_ids?.length > 0 && { chain_ids }) },
+			{ urlParams: { folderId } },
+		);
 	}
 }
