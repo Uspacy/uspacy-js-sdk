@@ -161,16 +161,16 @@ export class EmailService {
 	 * Change unread to read status in the email letters
 	 * @param ids email letters ids array
 	 */
-	readEmailLetters(ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/read`, { ids });
+	readEmailLetters(ids: number[], chain_ids: number[]) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/read`, { ids, ...(chain_ids?.length > 0 && { chain_ids }) });
 	}
 
 	/**
 	 * Change read to unread status in the email letters
 	 * @param ids email letters ids array
 	 */
-	unreadEmailLetters(ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, { ids });
+	unreadEmailLetters(ids: number[], chain_ids: number[]) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, { ids, ...(chain_ids?.length > 0 && { chain_ids }) });
 	}
 
 	/**
