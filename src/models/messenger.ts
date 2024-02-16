@@ -122,7 +122,10 @@ export interface IMessagesGroup {
 	editableMessageId?: string;
 	parentMessageId?: string;
 	scrollPosition?: number;
-	draftMessage: string;
+	draftMessage: {
+		message: string;
+		lexicalState: string;
+	};
 }
 
 export enum EMessengerType {
