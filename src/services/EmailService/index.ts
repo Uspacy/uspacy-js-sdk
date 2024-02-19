@@ -162,7 +162,10 @@ export class EmailService {
 	 * @param ids email letters ids array
 	 */
 	readEmailLetters(ids: number[], chain_ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/read`, { ids, ...(chain_ids?.length > 0 && { chain_ids }) });
+		return this.httpClient.client.patch(`${this.namespace}/letters/read`, {
+			...(ids?.length > 0 && { ids }),
+			...(chain_ids?.length > 0 && { chain_ids }),
+		});
 	}
 
 	/**
@@ -170,7 +173,10 @@ export class EmailService {
 	 * @param ids email letters ids array
 	 */
 	unreadEmailLetters(ids: number[], chain_ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, { ids, ...(chain_ids?.length > 0 && { chain_ids }) });
+		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, {
+			...(ids?.length > 0 && { ids }),
+			...(chain_ids?.length > 0 && { chain_ids }),
+		});
 	}
 
 	/**
@@ -190,7 +196,7 @@ export class EmailService {
 	moveLetters(ids: number[], folderId: number, chain_ids: number[]) {
 		return this.httpClient.client.patch(
 			`${this.namespace}/letters/move/:folderId`,
-			{ ids, ...(chain_ids?.length > 0 && { chain_ids }) },
+			{ ...(ids?.length > 0 && { ids }), ...(chain_ids?.length > 0 && { chain_ids }) },
 			{ urlParams: { folderId } },
 		);
 	}
