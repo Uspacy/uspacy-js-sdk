@@ -144,8 +144,8 @@ export class TasksService {
 	 * Replicate task
 	 * @returns task entity
 	 */
-	replicateTask(body: ITaskValues) {
-		return this.httpClient.client.post<ITask>(this.namespace, body);
+	replicateTask(body: ITaskValues, id: string) {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/:id/replicate`, body, { urlParams: { id } });
 	}
 
 	/**
