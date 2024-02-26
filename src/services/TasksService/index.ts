@@ -141,6 +141,14 @@ export class TasksService {
 	}
 
 	/**
+	 * Replicate task
+	 * @returns task entity
+	 */
+	replicateTask(body: ITaskValues) {
+		return this.httpClient.client.post<ITask>(this.namespace, body);
+	}
+
+	/**
 	 * Create recurring template
 	 * @returns recurring template entity
 	 */
