@@ -78,6 +78,7 @@ export enum ChatType {
 export interface IChat {
 	id?: string;
 	timestamp: number;
+	originalTimestamp?: number;
 	ownerId?: number;
 	name: string;
 	pictureUrl?: string;
@@ -121,7 +122,7 @@ export interface IMessagesGroup {
 	editableMessageId?: string;
 	parentMessageId?: string;
 	scrollPosition?: number;
-	message: string;
+	draftMessage: string;
 }
 
 export enum EMessengerType {
