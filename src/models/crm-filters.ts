@@ -1,4 +1,17 @@
-export interface ILeadFilters {
+interface IBaseFilter {
+	search?: string;
+	page?: number;
+	perPage?: number;
+	boolean_operator?: string;
+	openDatePicker?: boolean;
+	kanban_reason_id?: number[];
+	status?: string[];
+	table_fields?: string[];
+	task_type?: string[];
+	entityCode?: string;
+}
+
+export interface ILeadFilters extends IBaseFilter {
 	kanban_status?: string[];
 	stages?: string[];
 	source?: string[];
@@ -6,47 +19,23 @@ export interface ILeadFilters {
 	certainDateOrPeriod?: number[];
 	period?: number[][];
 	owner?: number[];
-	openDatePicker?: boolean;
-	search?: string;
-	page?: number;
-	perPage?: number;
-	table_fields?: string[];
 }
 
-export interface IDealFilters {
+export interface IDealFilters extends IBaseFilter {
 	kanban_status?: string[];
 	stages?: string[];
+	kanban_stage_id?: string[] | number[];
 	time_label?: string[];
 	certainDateOrPeriod?: number[];
 	period?: number[][];
 	owner?: number[];
 	tasks_label?: string[];
 	tasks?: number[][];
-	openDatePicker?: boolean;
-	search?: string;
-	page: number;
-	perPage?: number;
 	select?: number;
 	table_fields?: string[];
 }
 
-export interface IProductFilters {
-	availability?: string[];
-	type?: string[];
-	currency?: string;
-	price_from?: number;
-	price_to?: number;
-	balance_from?: number;
-	balance_to?: number;
-	is_active?: string[];
-	openDatePicker?: boolean;
-	search?: string;
-	page: number;
-	perPage?: number;
-	select?: number;
-}
-
-export interface ICompanyFilters {
+export interface ICompanyFilters extends IBaseFilter {
 	company_label?: string[];
 	source?: string[];
 	time_label?: string[];
@@ -54,14 +43,9 @@ export interface ICompanyFilters {
 	period?: number[][];
 	owner?: number[];
 	deals?: string[];
-	openDatePicker?: boolean;
-	search?: string;
-	page: number;
-	perPage?: number;
-	table_fields?: string[];
 }
 
-export interface IContactFilters {
+export interface IContactFilters extends IBaseFilter {
 	contact_label?: string[];
 	source?: string[];
 	time_label?: string[];
@@ -69,29 +53,17 @@ export interface IContactFilters {
 	period?: number[][];
 	owner?: number[];
 	deals?: string[];
-	openDatePicker?: boolean;
-	search?: string;
-	page: number;
-	perPage?: number;
-	table_fields?: string[];
 }
-export interface ITaskFilters {
-	page: number;
-	perPage?: number;
+export interface ITaskFilters extends IBaseFilter {
 	status?: string[];
-	task_type?: string[];
 	responsible_id?: number[];
 	time_label?: string[];
 	certainDateOrPeriod?: number[];
 	period?: number[][];
 	participants?: number[];
-	openDatePicker?: boolean;
-	search?: string;
 }
 
-export interface ICallFilters {
-	page: number;
-	perPage?: number;
+export interface ICallFilters extends IBaseFilter {
 	responsible_id?: number[];
 	type?: string[];
 	status?: string[];
@@ -101,27 +73,33 @@ export interface ICallFilters {
 	time_label?: string[];
 	certainDateOrPeriod?: number[];
 	period?: number[][];
-	openDatePicker?: boolean;
-	search?: string;
 }
 
-export interface IEntityFilters {
+export interface IProductFilters extends IBaseFilter {
+	availability?: string[];
+	type?: string[];
+	currency?: string;
+	price_from?: number;
+	price_to?: number;
+	balance_from?: number;
+	balance_to?: number;
+	is_active?: string[];
+	select?: number;
+}
+
+export interface IEntityFilters extends IBaseFilter {
 	created_at?: string[];
 	updated_at?: string[];
-	created_at_period: number[][];
-	updated_at_period: number[][];
+	created_at_period?: number[][];
+	updated_at_period?: number[][];
 	owner?: number[];
 	created_by?: number[];
 	changed_by?: number[];
-	time_label: string[];
-	certainDateOrPeriod: number[];
-	search?: string;
-	page: number;
-	perPage?: number;
+	time_label?: string[];
+	certainDateOrPeriod?: string[];
 	select?: number;
-	entityCode: string;
+	entityCode?: string;
 	stages?: string[];
-	table_fields?: string[];
 }
 
 export interface ICreatedAt {
@@ -150,3 +128,5 @@ export interface IDocumentTemplateFieldFilters {
 	binding_entities?: number[];
 	search?: string;
 }
+
+export type IFilter = ILeadFilters & IDealFilters & IContactFilters & ICompanyFilters & IProductFilters & IEntityFilters;

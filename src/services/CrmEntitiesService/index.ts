@@ -2,7 +2,6 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData, IEntityMain, IEntityMainData } from '../../models/crm-entities';
-import { IEntityFilters } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage, IStages } from '../../models/crm-stages';
@@ -293,20 +292,14 @@ export class CrmEntitiesService {
 	 * @param relatedEntityType related entity type if fetching related to entity  items
 	 * @returns Array crm entity items list
 	 */
-	getEntityItemsWithFilters(
-		code: string,
-		params: Omit<IEntityFilters, 'openDatePicker'>,
-		signal: AbortSignal,
-		relatedEntityId?: string,
-		relatedEntityType?: string,
-	) {
+	getEntityItemsWithFilters(code: string, params: string, signal: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
-				return `${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code`;
+				return `${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code?${params}`;
 			}
-			return `${this.namespace}/:code`;
+			return `${this.namespace}/:code?${params}`;
 		};
 
 		return this.httpClient.client.get<IEntity>(getLink(), {

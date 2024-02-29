@@ -2,7 +2,6 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
-import { IContactFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IField, IFields } from '../../models/field';
 
@@ -99,19 +98,14 @@ export class CrmContactsService {
 	 * @param relatedEntityType related entity type if fetching related to entity contacts
 	 * @returns Array crm contacts list
 	 */
-	getContactsWithFilters(
-		params: Omit<IContactFilters, 'openDatePicker'>,
-		signal: AbortSignal,
-		relatedEntityId?: string,
-		relatedEntityType?: string,
-	) {
+	getContactsWithFilters(params: string, signal: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
-				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/contacts`;
+				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/contacts?${params}`;
 			}
-			return this.namespace;
+			return `${this.namespace}?${params}`;
 		};
 
 		return this.httpClient.client.get<IEntity>(getLink(), {
@@ -120,7 +114,6 @@ export class CrmContactsService {
 				relatedEntityType: relatedEntityType,
 				relatedEntityId: relatedEntityId,
 			},
-			params,
 		});
 	}
 

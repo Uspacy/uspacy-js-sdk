@@ -28,7 +28,6 @@ export type FieldTypes =
 	| 'productPrice'
 	| 'productRemind'
 	| 'productArticle'
-	| 'productActivity'
 	| 'productType'
 	| 'productCategory'
 	| 'productAvailability'
@@ -38,6 +37,7 @@ export type FieldTypes =
 	| 'productUnit'
 	| 'productTax'
 	| 'productRemainder'
+	| 'productActivity'
 	// call field types
 	| 'call_type'
 	| 'call_status'
@@ -45,8 +45,12 @@ export type FieldTypes =
 	| 'call_record'
 	| 'call_entity_reference'
 	| 'call_phone'
+	| 'deals_filter'
+	| 'tasks_filter'
 	| 'id_column'
-	| 'external_channels';
+	| 'requisite'
+	| 'external_channels'
+	| 'priority';
 
 export interface IField {
 	name: string;
