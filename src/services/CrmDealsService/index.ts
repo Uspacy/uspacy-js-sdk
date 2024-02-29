@@ -2,7 +2,6 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IEntity, IEntityData } from '../../models/crm-entities';
-import { IDealFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IField, IFields } from '../../models/field';
 
@@ -36,14 +35,14 @@ export class CrmDealsService {
 	 * @param relatedEntityType related entity type if fetching related to entity deals
 	 * @returns Array crm deals list
 	 */
-	getDealsWithFilters(params: Omit<IDealFilters, 'openDatePicker'>, signal: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
+	getDealsWithFilters(params: string, signal: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
-				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/deals`;
+				return `${this.entitiesNamespace}/:relatedEntityType/:relatedEntityId/related/deals?${params}`;
 			}
-			return this.namespace;
+			return `${this.namespace}?${params}`;
 		};
 
 		return this.httpClient.client.get<IEntity>(getLink(), {
