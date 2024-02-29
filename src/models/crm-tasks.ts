@@ -18,12 +18,14 @@ interface IEntityInfo {
 export interface ITask {
 	id: number;
 	created_by: number;
+	created_at: number;
 	title: string;
 	type: 'task' | 'call' | 'meeting' | 'chat' | 'email';
 	status: 'planned' | 'done' | 'cancelled';
 	description: string;
 	start_time: number;
 	end_time: number;
+	closed_at: number;
 	responsible_id: number;
 	company_id: number;
 	participants: number[];
