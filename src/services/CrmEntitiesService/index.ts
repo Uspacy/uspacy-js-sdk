@@ -309,7 +309,6 @@ export class CrmEntitiesService {
 				relatedEntityId: relatedEntityId,
 				code,
 			},
-			params,
 		});
 	}
 

@@ -39,7 +39,6 @@ export class CrmLeadsService {
 				relatedEntityType: relatedEntityType,
 				relatedEntityId: relatedEntityId,
 			},
-			params,
 		});
 	}
 

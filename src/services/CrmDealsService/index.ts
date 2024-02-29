@@ -51,7 +51,6 @@ export class CrmDealsService {
 				relatedEntityType: relatedEntityType,
 				relatedEntityId: relatedEntityId,
 			},
-			params,
 		});
 	}
 
