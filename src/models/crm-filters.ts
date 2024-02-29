@@ -96,7 +96,7 @@ export interface IEntityFilters extends IBaseFilter {
 	created_by?: number[];
 	changed_by?: number[];
 	time_label?: string[];
-	certainDateOrPeriod?: string[];
+	certainDateOrPeriod?: number[];
 	select?: number;
 	entityCode?: string;
 	stages?: string[];
