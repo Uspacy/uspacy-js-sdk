@@ -19,6 +19,8 @@ export interface ITask {
 	id: number;
 	created_by: number;
 	created_at: number;
+	updated_at: number;
+	first_closed_at: number;
 	title: string;
 	type: 'task' | 'call' | 'meeting' | 'chat' | 'email';
 	status: 'planned' | 'done' | 'cancelled';
