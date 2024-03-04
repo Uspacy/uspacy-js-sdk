@@ -46,6 +46,7 @@ export enum EActiveEntity {
 export interface IMessage {
 	id: string;
 	timestamp: number;
+	updateTimestamp?: number;
 	authorId: number;
 	message: string;
 	type: MessageType;
