@@ -44,12 +44,6 @@ export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'l
 	fileName: string;
 }
 
-export interface IImapMapping {
-	letter_id?: number;
-	message_id?: string;
-	parent_message_id?: string;
-}
-
 export interface ILetter {
 	id: number;
 	uid: number;
@@ -63,12 +57,13 @@ export interface ILetter {
 	contacts: IContacts[];
 	folders: IFolder[];
 	attachments: IAttachments[];
-	imap_mapping: IImapMapping;
 	email: IEmailBox;
-	main_letter_id?: number;
+	main_message_id?: number;
 	is_first_reply?: boolean;
-	chain_length?: number;
+	thread_length?: number;
 	status: LetterStatus;
+	is_thread?: boolean;
+	parent_message_id?: string;
 }
 
 export interface IEmailBox {
