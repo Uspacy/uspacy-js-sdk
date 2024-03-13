@@ -1,6 +1,12 @@
 import { IFile } from './files';
 
 export type LetterStatus = 'pending' | 'error' | 'succseed';
+
+export interface IThreads {
+	email_id: number;
+	filter: string[];
+}
+
 export interface IFolder {
 	id?: number;
 	email_id?: number;
