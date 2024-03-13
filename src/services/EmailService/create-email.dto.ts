@@ -10,7 +10,7 @@ export interface IAttachmentsForCreateLetter {
 
 export interface ICreateLetterPayload {
 	destination_folder_id?: number;
-	main_message_id?: number;
+	main_message_id?: string;
 	subject?: string;
 	body?: string;
 	body_html?: string;

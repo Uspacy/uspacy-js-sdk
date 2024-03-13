@@ -2,7 +2,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters } from '../../models/email';
+import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters, IThreads } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
@@ -140,18 +140,20 @@ export class EmailService {
 	 * @param ids email ids array
 	 * @returns remove email letters entity array
 	 */
-	removeEmailLetters(ids: number[]) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/`, { data: { ids } });
+	removeEmailLetters(ids: number[], threads: IThreads) {
+		return this.httpClient.client.delete(`${this.namespace}/letters/`, {
+			data: { ids, ...(threads?.filter?.length > 0 && { threads }) },
+		});
 	}
 
 	/**
 	 * Change unread to read status in the email letters
 	 * @param ids email letters ids array
 	 */
-	readEmailLetters(ids: number[], chain_ids: number[]) {
+	readEmailLetters(ids: number[], threads: IThreads) {
 		return this.httpClient.client.patch(`${this.namespace}/letters/read`, {
 			...(ids?.length > 0 && { ids }),
-			...(chain_ids?.length > 0 && { chain_ids }),
+			...(threads?.filter?.length > 0 && { threads }),
 		});
 	}
 
@@ -159,10 +161,10 @@ export class EmailService {
 	 * Change read to unread status in the email letters
 	 * @param ids email letters ids array
 	 */
-	unreadEmailLetters(ids: number[], chain_ids: number[]) {
+	unreadEmailLetters(ids: number[], threads: IThreads) {
 		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, {
 			...(ids?.length > 0 && { ids }),
-			...(chain_ids?.length > 0 && { chain_ids }),
+			...(threads?.filter?.length > 0 && { threads }),
 		});
 	}
 
@@ -180,10 +182,10 @@ export class EmailService {
 	 * @param ids letters ids array
 	 * @param folderId to folder id
 	 */
-	moveLetters(ids: number[], folderId: number, chain_ids: number[]) {
+	moveLetters(ids: number[], folderId: number, threads: IThreads) {
 		return this.httpClient.client.patch(
 			`${this.namespace}/letters/move/:folderId`,
-			{ ...(ids?.length > 0 && { ids }), ...(chain_ids?.length > 0 && { chain_ids }) },
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
 			{ urlParams: { folderId } },
 		);
 	}
