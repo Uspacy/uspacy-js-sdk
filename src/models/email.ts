@@ -64,7 +64,7 @@ export interface ILetter {
 	folders: IFolder[];
 	attachments: IAttachments[];
 	email: IEmailBox;
-	main_message_id?: number;
+	main_message_id?: string;
 	is_first_reply?: boolean;
 	thread_length?: number;
 	status: LetterStatus;
