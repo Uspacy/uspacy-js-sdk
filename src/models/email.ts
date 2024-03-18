@@ -125,6 +125,7 @@ export interface IEmailFilters {
 	certainDateOrPeriod_date?: number[];
 	openCalendar?: boolean;
 	is_read?: number[];
+	q?: string;
 }
 
 export interface IEmailFiltersParams {
@@ -132,4 +133,5 @@ export interface IEmailFiltersParams {
 	list?: number;
 	date?: number[][];
 	is_read?: number[];
+	q?: string;
 }
