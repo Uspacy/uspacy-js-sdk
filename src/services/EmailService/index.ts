@@ -138,7 +138,7 @@ export class EmailService {
 	/**
 	 * Remove email letters
 	 * @param ids email ids array
-	 * @returns remove email letters entity array
+	 * @param threads email letter threads
 	 */
 	removeEmailLetters(ids: number[], threads: IThreads) {
 		return this.httpClient.client.delete(`${this.namespace}/letters/`, {
@@ -149,38 +149,36 @@ export class EmailService {
 	/**
 	 * Change unread to read status in the email letters
 	 * @param ids email letters ids array
+	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
-	readEmailLetters(ids: number[], threads: IThreads) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/read`, {
-			...(ids?.length > 0 && { ids }),
-			...(threads?.filter?.length > 0 && { threads }),
-		});
+	readEmailLetters(ids: number[], folderId: number, threads: IThreads) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/read:folderId`,
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
+			{ urlParams: { folderId } },
+		);
 	}
 
 	/**
 	 * Change read to unread status in the email letters
 	 * @param ids email letters ids array
-	 */
-	unreadEmailLetters(ids: number[], threads: IThreads) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, {
-			...(ids?.length > 0 && { ids }),
-			...(threads?.filter?.length > 0 && { threads }),
-		});
-	}
-
-	/**
-	 * Move letter from folder to folder
-	 * @param letterId letters id
 	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
-	moveLetter(letterId: number, folderId: number) {
-		return this.httpClient.client.patch<ILetter>(`${this.namespace}/letters/:letterId/move/:folderId`, { urlParams: { letterId, folderId } });
+	unreadEmailLetters(ids: number[], folderId: number, threads: IThreads) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/unread:folderId`,
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
+			{ urlParams: { folderId } },
+		);
 	}
 
 	/**
 	 * Move letters from folder to folder
 	 * @param ids letters ids array
 	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
 	moveLetters(ids: number[], folderId: number, threads: IThreads) {
 		return this.httpClient.client.patch(
