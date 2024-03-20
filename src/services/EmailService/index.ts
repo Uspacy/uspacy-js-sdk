@@ -154,7 +154,7 @@ export class EmailService {
 	 */
 	readEmailLetters(ids: number[], folderId: number, threads: IThreads) {
 		return this.httpClient.client.patch(
-			`${this.namespace}/letters/read:folderId`,
+			`${this.namespace}/letters/read/:folderId`,
 			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
 			{ urlParams: { folderId } },
 		);
@@ -168,7 +168,7 @@ export class EmailService {
 	 */
 	unreadEmailLetters(ids: number[], folderId: number, threads: IThreads) {
 		return this.httpClient.client.patch(
-			`${this.namespace}/letters/unread:folderId`,
+			`${this.namespace}/letters/unread/:folderId`,
 			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
 			{ urlParams: { folderId } },
 		);
