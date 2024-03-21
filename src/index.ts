@@ -8,6 +8,7 @@ import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AppsService } from './services/AppsService';
 import { AuthService } from './services/AuthService';
+import { AutomationsService } from './services/AutomationsService';
 import { CommentsService } from './services/CommentsService';
 import { CrmCallsService } from './services/CrmCallsService';
 import { CrmCompaniesService } from './services/CrmCompaniesService';
@@ -87,6 +88,7 @@ class Uspacy {
 		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 		public readonly crmDocumentTemplatesService: CrmDocumentTemplatesService,
 		public readonly crmRequisitesService: CrmRequisitesService,
+		public readonly automationsService: AutomationsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
