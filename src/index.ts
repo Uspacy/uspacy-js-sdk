@@ -8,6 +8,7 @@ import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AppsService } from './services/AppsService';
 import { AuthService } from './services/AuthService';
+import { AutomationsService } from './services/AutomationsService';
 import { CommentsService } from './services/CommentsService';
 import { CrmDealsFunnelsService } from './services/CrmDealsFunnelsService';
 import { CrmEntitiesService } from './services/CrmEntitiesService';
@@ -57,6 +58,7 @@ class Uspacy {
 		public readonly migrationsService: MigrationsService,
 		public readonly messengerService: MessengerService,
 		public readonly emailService: EmailService,
+		public readonly automationsService: AutomationsService,
 	) {}
 
 	static createInstance(config?: IConfig) {
