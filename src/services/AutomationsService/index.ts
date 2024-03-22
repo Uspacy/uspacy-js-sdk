@@ -33,7 +33,7 @@ export class AutomationsService {
 	 * @param id automation id
 	 */
 	deleteAutomation(id: number) {
-		return this.httpClient.client.delete<number>(`${this.namespace}/:id/`, { urlParams: { id } });
+		return this.httpClient.client.delete<number>(`${this.namespace}/:id`, { urlParams: { id } });
 	}
 
 	/**
@@ -41,6 +41,6 @@ export class AutomationsService {
 	 * @param id automation id
 	 */
 	toggleAutomation(id: number, body: IAutomation) {
-		return this.httpClient.client.patch(`${this.namespace}/:id/`, body, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace}/:id`, body, { urlParams: { id } });
 	}
 }
