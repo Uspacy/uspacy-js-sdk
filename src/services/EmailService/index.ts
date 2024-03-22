@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters } from '../../models/email';
+import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters, IThreads } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
@@ -102,19 +103,6 @@ export class EmailService {
 	}
 
 	/**
-	 * Get email chain letters in parent letter
-	 * @param id parent email letter id
-	 * @param params filters params
-	 * @returns Array with email chain letters list entity by parent letter
-	 */
-	getEmailChainLetters(id: number, params: IEmailFiltersParams) {
-		return this.httpClient.client.get<IResponseWithMeta<ILetters>>(`${this.namespace}/letters/:id/children`, {
-			urlParams: { id },
-			params,
-		});
-	}
-
-	/**
 	 * Get email letter
 	 * @returns Email letter entity
 	 */
@@ -132,6 +120,14 @@ export class EmailService {
 	}
 
 	/**
+	 * resend email letter
+	 * @param id email letter id
+	 */
+	resendEmailLetter(id: number) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/:id/resend`, undefined, { urlParams: { id } });
+	}
+
+	/**
 	 * Remove email letter
 	 * @returns remove email letter entity
 	 */
@@ -142,43 +138,53 @@ export class EmailService {
 	/**
 	 * Remove email letters
 	 * @param ids email ids array
-	 * @returns remove email letters entity array
+	 * @param threads email letter threads
 	 */
-	removeEmailLetters(ids: number[]) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/`, { data: { ids } });
+	removeEmailLetters(ids: number[], threads: IThreads) {
+		return this.httpClient.client.delete(`${this.namespace}/letters/`, {
+			data: { ids, ...(threads?.filter?.length > 0 && { threads }) },
+		});
 	}
 
 	/**
 	 * Change unread to read status in the email letters
 	 * @param ids email letters ids array
+	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
-	readEmailLetters(ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/read`, { ids });
+	readEmailLetters(ids: number[], folderId: number, threads: IThreads) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/read/:folderId`,
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
+			{ urlParams: { folderId } },
+		);
 	}
 
 	/**
 	 * Change read to unread status in the email letters
 	 * @param ids email letters ids array
-	 */
-	unreadEmailLetters(ids: number[]) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/unread`, { ids });
-	}
-
-	/**
-	 * Move letter from folder to folder
-	 * @param letterId letters id
 	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
-	moveLetter(letterId: number, folderId: number) {
-		return this.httpClient.client.patch<ILetter>(`${this.namespace}/letters/:letterId/move/:folderId`, { urlParams: { letterId, folderId } });
+	unreadEmailLetters(ids: number[], folderId: number, threads: IThreads) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/unread/:folderId`,
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
+			{ urlParams: { folderId } },
+		);
 	}
 
 	/**
 	 * Move letters from folder to folder
 	 * @param ids letters ids array
 	 * @param folderId to folder id
+	 * @param threads email letter threads
 	 */
-	moveLetters(ids: number[], folderId: number) {
-		return this.httpClient.client.patch(`${this.namespace}/letters/move/:folderId`, { ids }, { urlParams: { folderId } });
+	moveLetters(ids: number[], folderId: number, threads: IThreads) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/letters/move/:folderId`,
+			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
+			{ urlParams: { folderId } },
+		);
 	}
 }
