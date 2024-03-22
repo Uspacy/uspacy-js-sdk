@@ -18,11 +18,12 @@ export class AutomationsService {
 	 * @param page page number
 	 * @param list
 	 */
-	async getAutomations(page?: number, list?: number) {
+	async getAutomations(page?: number, list?: number, search?: string) {
 		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
 			params: {
 				page,
 				list,
+				search,
 			},
 		});
 	}
