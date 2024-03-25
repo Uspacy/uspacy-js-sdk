@@ -16,7 +16,8 @@ export class AutomationsService {
 	/**
 	 * Get automations list
 	 * @param page page number
-	 * @param list
+	 * @param list page count
+	 * @param search search query
 	 */
 	async getAutomations(page?: number, list?: number, search?: string) {
 		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
@@ -39,6 +40,7 @@ export class AutomationsService {
 	/**
 	 * Toggle automation
 	 * @param id automation id
+	 * @param body request body
 	 */
 	toggleAutomation(id: number, body: IAutomation) {
 		return this.httpClient.client.patch(`${this.namespace}:id`, body, { urlParams: { id } });
