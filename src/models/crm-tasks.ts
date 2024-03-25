@@ -24,6 +24,7 @@ export interface ITask {
 	title: string;
 	type: 'task' | 'call' | 'meeting' | 'chat' | 'email';
 	status: 'planned' | 'done' | 'cancelled';
+	priority: 'low' | 'notHigh' | 'neutral' | 'high' | 'veryHigh';
 	description: string;
 	start_time: number;
 	end_time: number;
