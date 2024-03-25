@@ -1,6 +1,6 @@
 import { IFile } from '../../../models/files';
 import { IGroup } from '../../../models/groups';
-import { ITask } from '../../../models/tasks';
+import { ITask, taskType } from '../../../models/tasks';
 
 export interface ITaskValues {
 	id?: string;
@@ -30,6 +30,7 @@ export interface ITaskValues {
 	deadlineDay?: number;
 	deadlineHour?: number;
 	template?: boolean;
+	taskType?: taskType;
 	scheduler?: {
 		active?: boolean;
 		period?: 'day' | 'week' | 'month' | 'year';

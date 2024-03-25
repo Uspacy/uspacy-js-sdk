@@ -1,5 +1,3 @@
-import { IImapMapping } from '../../models/email';
-
 export interface IContactsForCreateLetter {
 	email?: string;
 	name?: string;
@@ -11,11 +9,14 @@ export interface IAttachmentsForCreateLetter {
 }
 
 export interface ICreateLetterPayload {
+	destination_folder_id?: number;
+	main_message_id?: string;
 	subject?: string;
 	body?: string;
 	body_html?: string;
 	is_read?: boolean;
 	contacts?: IContactsForCreateLetter[];
 	attachments?: IAttachmentsForCreateLetter[];
-	imap_mapping?: IImapMapping;
+	message_id?: string;
+	parent_message_id?: string;
 }
