@@ -41,6 +41,7 @@ export interface ITask {
 	deadlineDay?: number;
 	deadlineHour?: number;
 	active?: boolean;
+	sort?: number;
 	scheduler?: {
 		activationLimit?: boolean;
 		taskId?: number;
