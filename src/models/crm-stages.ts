@@ -1,3 +1,5 @@
+import { IEntityData } from './crm-entities';
+
 export interface IReason {
 	id: number;
 	title: string;
@@ -8,6 +10,10 @@ export interface IReason {
 export interface IReasons {
 	SUCCESS: IReason[];
 	FAIL: IReason[];
+}
+
+export interface IStageData {
+	data: IEntityData[];
 }
 
 export interface IStage {
@@ -23,4 +29,11 @@ export interface IStage {
 
 export interface IStages {
 	data: IStage[];
+}
+
+export interface IReasonsCreate {
+	funnelId: number;
+	title: string;
+	sort?: number;
+	type: string;
 }
