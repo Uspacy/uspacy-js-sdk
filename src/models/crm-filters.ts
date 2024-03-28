@@ -9,6 +9,7 @@ interface IBaseFilter {
 	table_fields?: string[];
 	task_type?: string[];
 	entityCode?: string;
+	sortModel?: { [key: string]: string }[];
 }
 
 export interface ILeadFilters extends IBaseFilter {
