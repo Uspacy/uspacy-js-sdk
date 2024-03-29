@@ -9,7 +9,7 @@ import { IProductForEntity, IProductForEntityCreate, IProductInfoForEntity } fro
 @injectable()
 export class CrmProductsForEntityService {
 	private infoNamespace = '/crm/v1/static/entity-product-lists';
-	private namespace = '/crm/v1/static/list-products/';
+	private namespace = '/crm/v1/static/list-products';
 
 	constructor(private httpClient: HttpClient) {}
 
