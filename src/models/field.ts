@@ -37,13 +37,20 @@ export type FieldTypes =
 	| 'productUnit'
 	| 'productTax'
 	| 'productRemainder'
+	| 'productActivity'
 	// call field types
 	| 'call_type'
 	| 'call_status'
 	| 'call_date'
 	| 'call_record'
 	| 'call_entity_reference'
-	| 'call_phone';
+	| 'call_phone'
+	| 'deals_filter'
+	| 'tasks_filter'
+	| 'id_column'
+	| 'requisite'
+	| 'external_channels'
+	| 'priority';
 
 export interface IField {
 	name: string;
@@ -62,6 +69,8 @@ export interface IField {
 	entity_reference_id?: number;
 	base_field?: boolean;
 	tooltip?: string;
+	display_in_tabs?: boolean;
+	showOnlyFilled?: boolean;
 }
 export interface IFieldCreate {
 	name: string;

@@ -1,5 +1,12 @@
 import { IFile } from './files';
 
+export type LetterStatus = 'pending' | 'error' | 'succseed';
+
+export interface IThreads {
+	email_id: number;
+	filter: string[];
+}
+
 export interface IFolder {
 	id?: number;
 	email_id?: number;
@@ -9,12 +16,14 @@ export interface IFolder {
 	delimitter?: string;
 	message_count?: number;
 	unread_message_count?: number;
+	error_message_count?: number;
 	is_inbox?: boolean;
 	is_trash?: boolean;
 	is_spam?: boolean;
 	is_draft?: boolean;
 	is_junk?: boolean;
 	is_sent?: boolean;
+	is_pending?: boolean;
 	is_root?: boolean;
 	has_children?: number;
 	pivot?: {
@@ -41,12 +50,6 @@ export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'l
 	fileName: string;
 }
 
-export interface IImapMapping {
-	letter_id?: number;
-	message_id?: string;
-	parent_message_id?: string;
-}
-
 export interface ILetter {
 	id: number;
 	uid: number;
@@ -60,12 +63,18 @@ export interface ILetter {
 	contacts: IContacts[];
 	folders: IFolder[];
 	attachments: IAttachments[];
-	imap_mapping: IImapMapping;
 	email: IEmailBox;
+	main_message_id?: string;
+	is_first_reply?: boolean;
+	thread_length?: number;
+	status: LetterStatus;
+	is_thread?: boolean;
+	parent_message_id?: string;
 }
 
 export interface IEmailBox {
 	id: number;
+	auth_user_id: number;
 	portal_name: string;
 	added_by: number;
 	imap_host: string;
@@ -116,6 +125,7 @@ export interface IEmailFilters {
 	certainDateOrPeriod_date?: number[];
 	openCalendar?: boolean;
 	is_read?: number[];
+	q?: string;
 }
 
 export interface IEmailFiltersParams {
@@ -123,4 +133,5 @@ export interface IEmailFiltersParams {
 	list?: number;
 	date?: number[][];
 	is_read?: number[];
+	q?: string;
 }

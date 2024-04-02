@@ -15,4 +15,5 @@ export interface IConnectEmailBox {
 
 export interface IUpdateEmailBox extends IConnectEmailBox {
 	folders: IFolder[];
+	folders_remove?: number[];
 }
