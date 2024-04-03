@@ -64,7 +64,7 @@ export class TasksService {
 	 * @returns Array hierarchy entity
 	 */
 	getHierarchies(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/one_time`, {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/hierarchy`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
