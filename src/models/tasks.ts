@@ -69,6 +69,10 @@ export interface ITask {
 			title: string;
 		}[];
 	};
+	childTasks?: {
+		data: ITask[];
+		total: number;
+	};
 }
 
 export interface IMeta {
