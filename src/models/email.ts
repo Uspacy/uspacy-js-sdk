@@ -60,6 +60,7 @@ export interface ILetter {
 	body_html: string;
 	date: number;
 	is_read: boolean;
+	is_processed?: boolean;
 	contacts: IContacts[];
 	folders: IFolder[];
 	attachments: IAttachments[];
@@ -85,7 +86,6 @@ export interface IEmailBox {
 	sender_name: string;
 	access_level: string;
 	last_message_id: number;
-	is_processed?: boolean;
 	tariff: number;
 	has_file: boolean;
 	last_synced_at: string;
