@@ -1,7 +1,6 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { StorageService } from '../../core/StorageService';
 import { INotificationMessage } from '../../models/notifications';
 
 /**
@@ -10,7 +9,6 @@ import { INotificationMessage } from '../../models/notifications';
 @injectable()
 export class NotificationsService {
 	private namespace = '/notifications/v1/notifications';
-	public storageService: StorageService = new StorageService('notifications');
 
 	constructor(private httpClient: HttpClient) {}
 
