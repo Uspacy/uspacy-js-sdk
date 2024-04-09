@@ -119,11 +119,12 @@ export interface IFilterTasks {
 	openCalendar?: boolean;
 	search?: string;
 	boolean_operator?: string;
-	// ! Temporary, it's will be remove in the future. We have conflicts with old and new logic in tasks
 	time_label?: string[];
 	accomplices?: number[];
 	auditors?: number[];
 	groupId?: number;
+	child_list?: number;
+	child_page?: number;
 }
 
 export interface ITasksParams {
@@ -148,8 +149,9 @@ export interface ITasksParams {
 	template?: boolean | number;
 	boolean_operator?: string;
 	use_search?: boolean;
-	// ! Temporary, it's will be remove in the future. We have conflicts with old and new logic in tasks
 	accomplices?: number[];
 	auditors?: number[];
 	groupId?: number;
+	child_list?: number;
+	child_page?: number;
 }
