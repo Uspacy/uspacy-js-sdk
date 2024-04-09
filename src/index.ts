@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { container, singleton } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
 
 import { ConfigService, IConfig } from './core/ConfigService';
 import { HttpClient } from './core/HttpClient';
@@ -44,7 +44,7 @@ import { TasksTimerService } from './services/TasksTimerService';
 import { UsersService } from './services/UsersService';
 import { WebhooksService } from './services/WebhooksService';
 
-@singleton()
+@injectable()
 class Uspacy {
 	constructor(
 		public readonly httpClient: HttpClient,

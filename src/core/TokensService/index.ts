@@ -12,34 +12,36 @@ import { StorageService } from '../StorageService';
  */
 @injectable()
 export class TokensService {
-	private storageService: StorageService = new StorageService('tokens');
+	private storageService: StorageService;
 	constructor(
 		private sessionService: SessionService,
 		private configService: ConfigService,
-	) {}
+	) {
+		this.storageService = new StorageService('tokens', configService);
+	}
 
 	setToken(token: string) {
-		return this.storageService.table.setItem('token', token);
+		return this.storageService.setItem('token', token);
 	}
 
 	getToken(): Promise<string> {
-		return this.storageService.table.getItem('token');
+		return this.storageService.getItem('token');
 	}
 
 	removeToken(): Promise<void> {
-		return this.storageService.table.removeItem('token');
+		return this.storageService.removeItem('token');
 	}
 
 	setRefreshToken(token: string): Promise<string> {
-		return this.storageService.table.setItem('refreshToken', token);
+		return this.storageService.setItem('refreshToken', token);
 	}
 
 	getRefreshToken(): Promise<string> {
-		return this.storageService.table.getItem('refreshToken');
+		return this.storageService.getItem('refreshToken');
 	}
 
 	removeRefreshToken(): Promise<void> {
-		return this.storageService.table.removeItem('refreshToken');
+		return this.storageService.removeItem('refreshToken');
 	}
 
 	decodeToken(t?: string): Promise<IJwt> {

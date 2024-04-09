@@ -1,5 +1,6 @@
 import { injectable } from 'tsyringe';
 
+import { ConfigService } from '../../core/ConfigService';
 import { HttpClient } from '../../core/HttpClient';
 import { StorageService } from '../../core/StorageService';
 import { IEntity } from '../../models/migrations';
@@ -13,15 +14,20 @@ export class MigrationsService {
 	private importNamespace = '/import';
 	private calculateNamespace = '/calculate';
 
-	private storageService: StorageService = new StorageService('tokens');
+	private storageService: StorageService;
 	private getRefreshToken(): Promise<string> {
-		return this.storageService.table.getItem('refreshToken');
+		return this.storageService.getItem('refreshToken');
 	}
 
 	/**
 	 * @param config http client
 	 */
-	constructor(private httpClient: HttpClient) {}
+	constructor(
+		private httpClient: HttpClient,
+		private configService: ConfigService,
+	) {
+		this.storageService = new StorageService('tokens', configService);
+	}
 
 	/**
 	 * Get Bitrix24 Entities
