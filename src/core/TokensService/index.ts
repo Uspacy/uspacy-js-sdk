@@ -54,11 +54,24 @@ export class TokensService {
 		});
 	}
 
+	decodeRefreshToken(t?: string): Promise<IJwt> {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const token = t || (await this.getRefreshToken());
+				if (!token) throw new Error('Token not provided');
+				resolve(decode(token));
+			} catch (e) {
+				reject(e);
+			}
+		});
+	}
+
 	refreshToken(): Promise<IResponseJwt> {
 		return new Promise(async (resolve, reject) => {
 			if (!this.sessionService.isSetRememberSession()) return reject(new Error(''));
 			try {
 				const token = await this.getRefreshToken();
+				const decodedToken = await this.decodeRefreshToken(token);
 				const result = await axios.post<IResponseJwt>(
 					'/auth/v1/auth/refresh_token',
 					{},
@@ -66,8 +79,7 @@ export class TokensService {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
-						// credentials: 'omit',
-						baseURL: this.configService.config?.httpClientConfig?.baseURL,
+						baseURL: this.configService.config?.httpClientConfig?.baseURL || decodedToken.domain,
 					},
 				);
 				await this.setToken(result.data.jwt);
