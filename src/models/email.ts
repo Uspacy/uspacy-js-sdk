@@ -95,6 +95,7 @@ export interface IEmailBox {
 	sync_freq: number;
 	sync_folders?: IFolder[];
 	folders?: IFolder[];
+	crm_integration_enabled: number;
 }
 
 export interface IFolders {
@@ -135,4 +136,17 @@ export interface IEmailFiltersParams {
 	date?: number[][];
 	is_read?: number[];
 	q?: string;
+}
+
+export enum ESettingName {
+	INCOMING_NEW_ADDRESS = 'incoming_new_address',
+	OUTGOING_NEW_ADDRESS = 'outgoing_new_address',
+	INCOMING_EXISTING_ADDRESS = 'incoming_existing_address',
+	SOURCE = 'source',
+	RESPONSIBLE = 'responsible',
+}
+
+export interface ICrmSetting {
+	setting_name: ESettingName;
+	setting_value: string | number;
 }
