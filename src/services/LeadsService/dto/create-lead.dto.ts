@@ -14,7 +14,7 @@
 
 export interface ICreatedLeadBody {
 	comments?: string;
-	email?: { type: string; value: string; main: boolean; sort?: string; id?: string }[];
+	email?: { type: string; value: string; main?: boolean; sort?: string; id?: string }[];
 	first_name?: string;
 	last_name?: string;
 	lead_label?: string;
