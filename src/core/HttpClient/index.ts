@@ -33,10 +33,14 @@ export class HttpClient {
 				try {
 					await this.resolveBusy();
 					const token = await this.tokenService.getToken();
-					if (token && !config.headers.Authorization) {
-						const decodedToken = await this.tokenService.decodeToken(token);
-						config.headers.Authorization = `Bearer ${token}`;
-						config.baseURL = `https://${decodedToken.domain}`;
+					if (token) {
+						if (!config.headers.Authorization) {
+							config.headers.Authorization = `Bearer ${token}`;
+						}
+						if (!config.baseURL) {
+							const decodedToken = await this.tokenService.decodeToken(token);
+							config.baseURL = `https://${decodedToken.domain}`;
+						}
 					}
 					if (config.url) {
 						Object.entries(config.urlParams || {}).forEach(([k, v]) => {
