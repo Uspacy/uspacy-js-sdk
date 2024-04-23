@@ -50,6 +50,13 @@ export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'l
 	fileName: string;
 }
 
+export interface ICrmEntity {
+	id: number;
+	letter_id: number;
+	table_id: number;
+	title: string;
+}
+
 export interface ILetter {
 	id: number;
 	uid: number;
@@ -70,6 +77,12 @@ export interface ILetter {
 	status: LetterStatus;
 	is_thread?: boolean;
 	parent_message_id?: string;
+	crm_entities: {
+		companies: ICrmEntity[];
+		contacts: ICrmEntity[];
+		deals: ICrmEntity[];
+		leads: ICrmEntity[];
+	};
 }
 
 export interface IEmailBox {
