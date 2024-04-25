@@ -1,3 +1,4 @@
+import { IEntityData } from './crm-entities';
 import { IFile } from './files';
 
 export type LetterStatus = 'pending' | 'error' | 'succseed';
@@ -161,4 +162,11 @@ export enum ESettingName {
 export interface ICrmSetting {
 	setting_name: ESettingName;
 	setting_value: string | number;
+}
+
+export interface ILettersCrmEntities {
+	contacts?: IEntityData[];
+	companies?: IEntityData[];
+	leads?: IEntityData[];
+	deals?: IEntityData[];
 }
