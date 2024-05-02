@@ -22,6 +22,6 @@ export interface ICreateLetterPayload {
 	message_id?: string;
 	parent_message_id?: string;
 	crm_entities?: {
-		[key: string]: IEntityData;
+		[key: string]: IEntityData[];
 	};
 }
