@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { injectable } from 'tsyringe';
 
 import { ConfigService } from '../../core/ConfigService';
@@ -118,7 +119,7 @@ export class MigrationsService {
 	 * @param systemName name of imported system
 	 * @param body response body
 	 */
-	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody) {
+	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody<any>) {
 		const responseBody = systemName === 'monday' ? body : { Entities: data, ApiKey: apiKey };
 		return this.httpClient.client.post(`${this.importNamespace}/${systemName}`, responseBody);
 	}

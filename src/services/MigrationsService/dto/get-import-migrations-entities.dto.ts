@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IErrorsAxiosResponse } from '../../../models/errors';
 import { IServicesStatus } from '../../../models/migrations';
 
@@ -17,7 +18,7 @@ export interface IImportData {
 	webhook?: string;
 	data: IMigrationData[];
 	systemId?: string;
-	body?: IMigrationBody;
+	body?: IMigrationBody<any>;
 	apiKey?: string;
 	systemName?: string;
 }
@@ -29,8 +30,6 @@ export interface ISystemStatus {
 	errorLoadingProgress: IErrorsAxiosResponse;
 }
 
-export interface IMigrationBody {
-	ApiKey: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	entities_mapping: any;
+export interface IMigrationBody<T> {
+	[index: string]: T;
 }
