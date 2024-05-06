@@ -17,6 +17,7 @@ export interface IImportData {
 	webhook?: string;
 	data: IMigrationData[];
 	systemId?: string;
+	body?: IMigrationBody;
 	apiKey?: string;
 	systemName?: string;
 }
@@ -26,4 +27,10 @@ export interface ISystemStatus {
 	allSystemsStatus?: IServicesStatus;
 	loadingProgress: boolean;
 	errorLoadingProgress: IErrorsAxiosResponse;
+}
+
+export interface IMigrationBody {
+	ApiKey: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	entities_mapping: any;
 }
