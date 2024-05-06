@@ -16,7 +16,7 @@ export interface IDataPresence {
 
 export interface IImportData {
 	webhook?: string;
-	data: IMigrationData[];
+	data?: IMigrationData[];
 	systemId?: string;
 	body?: IMigrationBody<any>;
 	apiKey?: string;
