@@ -119,7 +119,7 @@ export class MigrationsService {
 	 * @param systemName name of imported system
 	 * @param body response body
 	 */
-	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody<any>) {
+	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody) {
 		const responseBody = systemName === 'monday' ? body : { Entities: data, ApiKey: apiKey };
 		return this.httpClient.client.post(`${this.importNamespace}/${systemName}`, responseBody);
 	}
