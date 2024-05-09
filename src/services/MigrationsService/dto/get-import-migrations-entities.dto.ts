@@ -18,7 +18,7 @@ export interface IImportData {
 	webhook?: string;
 	data?: IMigrationData[];
 	systemId?: string;
-	body?: IMigrationBody<any>;
+	body?: IMigrationBody;
 	apiKey?: string;
 	systemName?: string;
 }
@@ -30,6 +30,7 @@ export interface ISystemStatus {
 	errorLoadingProgress: IErrorsAxiosResponse;
 }
 
-export interface IMigrationBody<T> {
-	[index: string]: T;
+export interface IMigrationBody {
+	ApiKey: string;
+	entities_mapping: any;
 }
