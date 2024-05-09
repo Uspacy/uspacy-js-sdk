@@ -222,6 +222,16 @@ export class TasksService {
 	}
 
 	/**
+	 * Delegation task
+	 * @param id task id
+	 * @param user_id user id
+	 * @returns task entity
+	 */
+	delegationTask(id: string, user_id: number) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/delegation`, { user_id }, { urlParams: { id } });
+	}
+
+	/**
 	 * Mass editing tasks
 	 * @param taskIds tasks ids
 	 * @param exceptIds exception tasks ids
