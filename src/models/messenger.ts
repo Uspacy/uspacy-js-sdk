@@ -66,6 +66,16 @@ export interface IMessage {
 		authorId: number;
 		refMessageId: string;
 	};
+	meta?: {
+		entity: 'post' | 'stories' | 'reels';
+		type: 'comment' | 'reaction' | 'default';
+		accountName: string;
+		accountImage: string;
+		body: {
+			text: string;
+			attachedFiles: string[];
+		};
+	};
 }
 
 export enum ChatType {
