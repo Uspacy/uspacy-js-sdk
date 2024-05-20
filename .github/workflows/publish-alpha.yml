@@ -3,7 +3,7 @@ name: Publish Alpha
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [stage]
     paths-ignore:
       - '.github/**'
 
