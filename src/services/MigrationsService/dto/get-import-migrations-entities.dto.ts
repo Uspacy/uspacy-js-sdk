@@ -33,4 +33,5 @@ export interface ISystemStatus {
 export interface IMigrationBody {
 	ApiKey: string;
 	entities_mapping: any;
+	totals: number;
 }
