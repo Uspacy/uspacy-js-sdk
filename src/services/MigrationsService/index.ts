@@ -156,6 +156,18 @@ export class MigrationsService {
 	}
 
 	/**
+	 * Get monday import progress
+	 * @param system system name
+	 */
+	getMondayProgress(system: string) {
+		return this.httpClient.client.get<ISystemStatus>(`/progress/${system}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+	}
+
+	/**
 	 * Stop import progress
 	 * @param system system name
 	 */
