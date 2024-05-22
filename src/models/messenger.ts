@@ -85,7 +85,7 @@ export interface IMessage {
 		accountImage: string;
 		body: {
 			text: string;
-			attachedFiles: string[];
+			attachedFiles: { url: string; type: string }[];
 			url: string;
 		};
 	};
