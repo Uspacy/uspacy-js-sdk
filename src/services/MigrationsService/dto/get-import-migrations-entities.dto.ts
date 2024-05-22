@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IErrorsAxiosResponse } from '../../../models/errors';
 import { IServicesStatus } from '../../../models/migrations';
 
@@ -15,8 +16,9 @@ export interface IDataPresence {
 
 export interface IImportData {
 	webhook?: string;
-	data: IMigrationData[];
+	data?: IMigrationData[];
 	systemId?: string;
+	body?: IMigrationBody;
 	apiKey?: string;
 	systemName?: string;
 }
@@ -26,4 +28,10 @@ export interface ISystemStatus {
 	allSystemsStatus?: IServicesStatus;
 	loadingProgress: boolean;
 	errorLoadingProgress: IErrorsAxiosResponse;
+}
+
+export interface IMigrationBody {
+	ApiKey: string;
+	entities_mapping: any;
+	totals: number;
 }
