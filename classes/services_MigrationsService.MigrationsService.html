@@ -48,6 +48,7 @@
 <a href="services_MigrationsService.MigrationsService.html#getBitrix24Entities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Bitrix24<wbr/>Entities</span></a>
 <a href="services_MigrationsService.MigrationsService.html#getDataPresence" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Data<wbr/>Presence</span></a>
 <a href="services_MigrationsService.MigrationsService.html#getMigrationEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Migration<wbr/>Entities</span></a>
+<a href="services_MigrationsService.MigrationsService.html#getMondayProgress" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Monday<wbr/>Progress</span></a>
 <a href="services_MigrationsService.MigrationsService.html#getRefreshToken" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Refresh<wbr/>Token</span></a>
 <a href="services_MigrationsService.MigrationsService.html#getSystemProgress" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>System<wbr/>Progress</span></a>
 <a href="services_MigrationsService.MigrationsService.html#importAmoEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>import<wbr/>Amo<wbr/>Entities</span></a>
@@ -167,6 +168,23 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_migrations.IEntity.html" class="tsd-signature-type tsd-kind-interface">IEntity</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entities list</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getMondayProgress" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Monday<wbr/>Progress</span><a href="#getMondayProgress" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getMondayProgress.getMondayProgress-1"><span class="tsd-kind-call-signature">get<wbr/>Monday<wbr/>Progress</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">system</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/services_MigrationsService_dto_get_import_migrations_entities_dto.ISystemStatus.html" class="tsd-signature-type tsd-kind-interface">ISystemStatus</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getMondayProgress.getMondayProgress-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get monday import progress</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">system</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>system name</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/services_MigrationsService_dto_get_import_migrations_entities_dto.ISystemStatus.html" class="tsd-signature-type tsd-kind-interface">ISystemStatus</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="getRefreshToken" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>get<wbr/>Refresh<wbr/>Token</span><a href="#getRefreshToken" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -237,7 +255,7 @@
 <section class="tsd-panel tsd-member"><a id="importMigrationEntities" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>import<wbr/>Migration<wbr/>Entities</span><a href="#importMigrationEntities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="importMigrationEntities.importMigrationEntities-1"><span class="tsd-kind-call-signature">import<wbr/>Migration<wbr/>Entities</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">apiKey</span>, <span class="tsd-kind-parameter">data</span>, <span class="tsd-kind-parameter">systemName</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#importMigrationEntities.importMigrationEntities-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="importMigrationEntities.importMigrationEntities-1"><span class="tsd-kind-call-signature">import<wbr/>Migration<wbr/>Entities</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">apiKey</span>, <span class="tsd-kind-parameter">data</span>, <span class="tsd-kind-parameter">systemName</span>, <span class="tsd-kind-parameter">body</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#importMigrationEntities.importMigrationEntities-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Import System Entities By API Key</p>
 </div>
@@ -251,12 +269,17 @@
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><span class="tsd-kind-parameter">data</span>: <a href="../interfaces/services_MigrationsService_dto_get_import_migrations_entities_dto.IMigrationData.html" class="tsd-signature-type tsd-kind-interface">IMigrationData</a><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>entities fro import</p>
+<div class="tsd-comment tsd-typography"><p>entities for import</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><span class="tsd-kind-parameter">systemName</span>: <span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>name of imported system</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">body</span>: <a href="../interfaces/services_MigrationsService_dto_get_import_migrations_entities_dto.IMigrationBody.html" class="tsd-signature-type tsd-kind-interface">IMigrationBody</a></h5>
+<div class="tsd-comment tsd-typography"><p>response body</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -308,6 +331,7 @@
 <li><a href="#getBitrix24Entities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Bitrix24<wbr/>Entities</span></a></li>
 <li><a href="#getDataPresence" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Data<wbr/>Presence</span></a></li>
 <li><a href="#getMigrationEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Migration<wbr/>Entities</span></a></li>
+<li><a href="#getMondayProgress" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Monday<wbr/>Progress</span></a></li>
 <li><a href="#getRefreshToken" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Refresh<wbr/>Token</span></a></li>
 <li><a href="#getSystemProgress" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>System<wbr/>Progress</span></a></li>
 <li><a href="#importAmoEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>import<wbr/>Amo<wbr/>Entities</span></a></li>
