@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { injectable } from 'tsyringe';
 
 import { ConfigService } from '../../core/ConfigService';
