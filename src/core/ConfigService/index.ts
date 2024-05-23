@@ -1,6 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
 import { injectable } from 'tsyringe';
 
+import { IStorageService } from '../../models/storage-service';
+
 @injectable()
 export class ConfigService {
 	private defaultConfig: IConfig = {
@@ -19,6 +21,7 @@ export class ConfigService {
 interface IConfigDefault {
 	httpClientConfig: AxiosRequestConfig;
 	appPrefix: string;
+	storageService?: IStorageService;
 }
 
 export interface IConfig extends Partial<IConfigDefault> {}

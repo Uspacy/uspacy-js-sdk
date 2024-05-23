@@ -33,7 +33,7 @@ export class TasksService {
 
 	/**
 	 * Get recurring templates list
-	 * @param params recurring templates list
+	 * @param params recurring templates filter params
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array recurring template entity
 	 */
@@ -46,12 +46,25 @@ export class TasksService {
 
 	/**
 	 * Get one time templates list
-	 * @param params one time templates list
+	 * @param params one time templates filter params
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array one time template entity
 	 */
 	getOneTimeTemplates(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/one_time`, {
+			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
+			signal,
+		});
+	}
+
+	/**
+	 * Get hierarchies list
+	 * @param params one hierarchies filter params
+	 * @param withoutResponsible withoutResponsible filter param
+	 * @returns Array hierarchy entity
+	 */
+	getHierarchies(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespace}/hierarchy`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -206,6 +219,16 @@ export class TasksService {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
 			urlParams: { id },
 		});
+	}
+
+	/**
+	 * Delegation task
+	 * @param id task id
+	 * @param user_id user id
+	 * @returns task entity
+	 */
+	delegationTask(id: string, user_id: number) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/delegation`, { user_id }, { urlParams: { id } });
 	}
 
 	/**

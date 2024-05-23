@@ -1,9 +1,10 @@
 import { injectable } from 'tsyringe';
 
+import { ConfigService } from '../../core/ConfigService';
 import { HttpClient } from '../../core/HttpClient';
 import { StorageService } from '../../core/StorageService';
 import { IEntity } from '../../models/migrations';
-import { IDataPresence, IMigrationData, ISystemStatus } from './dto/get-import-migrations-entities.dto';
+import { IDataPresence, IMigrationBody, IMigrationData, ISystemStatus } from './dto/get-import-migrations-entities.dto';
 
 /**
  * Migrations service
@@ -13,15 +14,20 @@ export class MigrationsService {
 	private importNamespace = '/import';
 	private calculateNamespace = '/calculate';
 
-	private storageService: StorageService = new StorageService('tokens');
+	private storageService: StorageService;
 	private getRefreshToken(): Promise<string> {
-		return this.storageService.table.getItem('refreshToken');
+		return this.storageService.getItem('refreshToken');
 	}
 
 	/**
 	 * @param config http client
 	 */
-	constructor(private httpClient: HttpClient) {}
+	constructor(
+		private httpClient: HttpClient,
+		private configService: ConfigService,
+	) {
+		this.storageService = new StorageService('tokens', configService);
+	}
 
 	/**
 	 * Get Bitrix24 Entities
@@ -102,37 +108,19 @@ export class MigrationsService {
 	 * @returns entities list
 	 */
 	async getMigrationEntities(apiKey: string, systemName: string) {
-		const refreshToken = await this.getRefreshToken();
-
-		return this.httpClient.client.post<IEntity>(
-			`${this.calculateNamespace}/${systemName}`,
-			{ ApiKey: apiKey },
-			{
-				headers: {
-					'X-Refresh': refreshToken || '',
-				},
-			},
-		);
+		return this.httpClient.client.post<IEntity>(`${this.calculateNamespace}/${systemName}`, { ApiKey: apiKey });
 	}
 
 	/**
 	 * Import System Entities By API Key
 	 * @param apiKey api key
-	 * @param data entities fro import
+	 * @param data entities for import
 	 * @param systemName name of imported system
+	 * @param body response body
 	 */
-	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string) {
-		const refreshToken = await this.getRefreshToken();
-
-		return this.httpClient.client.post(
-			`${this.importNamespace}/${systemName}`,
-			{ Entities: data, ApiKey: apiKey },
-			{
-				headers: {
-					'X-Refresh': refreshToken || '',
-				},
-			},
-		);
+	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody) {
+		const responseBody = systemName === 'monday' ? body : { Entities: data, ApiKey: apiKey };
+		return this.httpClient.client.post(`${this.importNamespace}/${systemName}`, responseBody);
 	}
 
 	/**
@@ -163,6 +151,18 @@ export class MigrationsService {
 				'Content-Type': 'application/json',
 			},
 			params: { system },
+		});
+	}
+
+	/**
+	 * Get monday import progress
+	 * @param system system name
+	 */
+	getMondayProgress(system: string) {
+		return this.httpClient.client.get<ISystemStatus>(`/progress/${system}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		});
 	}
 
