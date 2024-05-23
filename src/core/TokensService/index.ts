@@ -81,7 +81,7 @@ export class TokensService {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
-						baseURL: this.configService.config?.httpClientConfig?.baseURL || decodedToken.domain,
+						baseURL: this.configService.config?.httpClientConfig?.baseURL || `https://${decodedToken.domain}`,
 					},
 				);
 				await this.setToken(result.data.jwt);
