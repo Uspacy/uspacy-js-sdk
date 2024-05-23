@@ -43,6 +43,18 @@ export enum EActiveEntity {
 	INACTIVE_EXTERNAL = 'inactiveExternal',
 }
 
+export enum EMetaEntity {
+	POST = 'post',
+	STORY = 'story',
+	REEL = 'reel',
+}
+
+export enum EMetaType {
+	COMMENT = 'comment',
+	REACTION = 'reaction',
+	DEFAULT = 'default',
+}
+
 export interface IMessage {
 	id: string;
 	timestamp: number;
@@ -65,6 +77,17 @@ export interface IMessage {
 		chatId: string;
 		authorId: number;
 		refMessageId: string;
+	};
+	meta?: {
+		entity: EMetaEntity;
+		type: EMetaType;
+		accountName: string;
+		accountImage: string;
+		body: {
+			text: string;
+			attachedFiles: { url: string; type: string }[];
+			url: string;
+		};
 	};
 }
 
