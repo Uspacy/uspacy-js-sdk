@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { injectable } from 'tsyringe';
 
 import { ConfigService } from '../ConfigService';
@@ -25,7 +25,6 @@ export class HttpClient {
 	) {
 		this.client = axios.create({
 			...this.configService.config?.httpClientConfig,
-			withCredentials: false,
 		});
 
 		this.client.interceptors.request.use((config) => {
@@ -48,9 +47,9 @@ export class HttpClient {
 						});
 					}
 					resolve(config);
-				} catch (err) {
+				} catch (err: unknown | string | AxiosError) {
 					await this.logout();
-					reject(err);
+					reject(typeof err === 'string' ? new AxiosError(err) : err);
 				}
 			});
 		});
@@ -82,11 +81,12 @@ export class HttpClient {
 	async logout() {
 		await this.tokenService.removeToken();
 		await this.tokenService.removeRefreshToken();
-		// clearCacheAfterLogout();
 		this.sessionService.removeRememberSession();
-		setTimeout(() => {
-			window.location.reload();
-		}, 500);
+		if (typeof window !== 'undefined') {
+			setTimeout(() => {
+				window.location.reload();
+			}, 500);
+		}
 	}
 
 	private async resolveBusy() {

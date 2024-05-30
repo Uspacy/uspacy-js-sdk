@@ -89,7 +89,7 @@ class Uspacy {
 		public readonly crmRequisitesService: CrmRequisitesService,
 	) {}
 
-	static createInstance(config?: IConfig) {
+	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
 		container.register(ConfigService, { useValue: new ConfigService(config) });
 		return container.resolve(this);
 	}
