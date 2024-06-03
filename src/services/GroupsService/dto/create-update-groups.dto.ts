@@ -1,3 +1,5 @@
+import { IThemeSettings } from '../../../models/groups';
+
 export interface IGroupDto {
 	name: string;
 	groupType: string;
@@ -9,6 +11,8 @@ export interface IGroupDto {
 	usersIds?: string[];
 	groupId?: string;
 	archived?: number;
+	enableColorTheme: boolean;
+	themeSettings: IThemeSettings;
 }
 
 export interface IInviteUsersDto {

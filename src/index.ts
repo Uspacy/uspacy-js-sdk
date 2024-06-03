@@ -91,7 +91,7 @@ class Uspacy {
 		public readonly automationsService: AutomationsService,
 	) {}
 
-	static createInstance(config?: IConfig) {
+	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
 		container.register(ConfigService, { useValue: new ConfigService(config) });
 		return container.resolve(this);
 	}
