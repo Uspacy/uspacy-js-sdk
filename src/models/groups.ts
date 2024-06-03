@@ -10,3 +10,10 @@ export interface IGroup {
 	moderatorsIds: string[];
 	usersIds: string[];
 }
+
+export interface IThemeSettings {
+	bgColor: string;
+	iconColor: string;
+	icon: string;
+	enablePattern: boolean;
+}
