@@ -51,25 +51,7 @@ export class GroupsService {
 	 * Create group
 	 */
 	createGroup(body: IGroupDto) {
-		const formData = new FormData();
-
-		formData.append('name', body.name ? body.name : '');
-		formData.append('groupType', body.groupType ? body.groupType : '');
-		formData.append('description', body.description ? body.description : '');
-		formData.append('groupTheme', body.groupTheme ? body.groupTheme : '');
-		formData.append('ownerId', body.ownerId ? body.ownerId : '');
-		formData.append('logo', body.logo ? body.logo : '');
-		body.moderatorsIds.length > 0
-			? body.moderatorsIds.map((el) => {
-					formData.append('moderatorsIds[]', el);
-			  })
-			: '';
-		body.usersIds.length > 0
-			? body.usersIds.map((el) => {
-					formData.append('usersIds[]', el);
-			  })
-			: '';
-		return this.httpClient.client.post(`${this.namespace}`, formData);
+		return this.httpClient.client.post<IGroup>(`${this.namespace}`, body);
 	}
 
 	/**
