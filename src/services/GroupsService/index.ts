@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -60,8 +59,11 @@ export class GroupsService {
 		formData.append('groupTheme', body.groupTheme ? body.groupTheme : '');
 		formData.append('ownerId', body.ownerId ? body.ownerId : '');
 		formData.append('logo', body.logo ? body.logo : '');
-		formData.append('enableColorTheme', body.enableColorTheme ? body.enableColorTheme : '');
-		formData.append('themeSettings', body.themeSettings ? body.themeSettings : '');
+		formData.append('enableColorTheme', body.enableColorTheme ? '1' : '');
+		formData.append('themeSettings[bgColor]', body.themeSettings.bgColor);
+		formData.append('themeSettings[icon]', body.themeSettings.icon);
+		formData.append('themeSettings[iconColor]', body.themeSettings.iconColor);
+		formData.append('themeSettings[enablePattern]', body.themeSettings.enablePattern ? '1' : '');
 		body.moderatorsIds.length > 0
 			? body.moderatorsIds.map((el) => {
 					formData.append('moderatorsIds[]', el);
@@ -72,6 +74,7 @@ export class GroupsService {
 					formData.append('usersIds[]', el);
 			  })
 			: '';
+
 		return this.httpClient.client.post(`${this.namespace}`, formData);
 	}
 
