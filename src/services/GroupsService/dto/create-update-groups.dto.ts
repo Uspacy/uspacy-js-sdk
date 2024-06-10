@@ -11,8 +11,8 @@ export interface IGroupDto {
 	usersIds?: string[];
 	groupId?: string;
 	archived?: number;
-	enableColorTheme: boolean;
-	themeSettings: IThemeSettings;
+	enableColorTheme?: boolean;
+	themeSettings?: IThemeSettings;
 }
 
 export interface IInviteUsersDto {
