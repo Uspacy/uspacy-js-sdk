@@ -59,11 +59,11 @@ export class GroupsService {
 		formData.append('groupTheme', body.groupTheme ? body.groupTheme : '');
 		formData.append('ownerId', body.ownerId ? body.ownerId : '');
 		formData.append('logo', body.logo ? body.logo : '');
-		formData.append('enableColorTheme', body.enableColorTheme ? '1' : '');
+		formData.append('enableColorTheme', body.enableColorTheme ? '1' : '0');
 		formData.append('themeSettings[bgColor]', body.themeSettings.bgColor);
 		formData.append('themeSettings[icon]', body.themeSettings.icon);
 		formData.append('themeSettings[iconColor]', body.themeSettings.iconColor);
-		formData.append('themeSettings[enablePattern]', body.themeSettings.enablePattern ? '1' : '');
+		formData.append('themeSettings[enablePattern]', body.themeSettings.enablePattern ? '1' : '0');
 		body.moderatorsIds.length > 0
 			? body.moderatorsIds.map((el) => {
 					formData.append('moderatorsIds[]', el);
