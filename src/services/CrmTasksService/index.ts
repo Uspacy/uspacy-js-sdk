@@ -44,7 +44,7 @@ export class CrmTasksService {
 	 * @param relatedEntityType related entity type if fetching related to entity tasks
 	 * @returns Array crm tasks list
 	 */
-	getTasksWithFilters(params: Omit<ITaskFilters, 'openDatePicker'>, signal: AbortSignal) {
+	getTasksWithFilters(params: string, signal: AbortSignal) {
 		return this.httpClient.client.get<ITasks>(this.namespace, {
 			signal: signal,
 			params,
