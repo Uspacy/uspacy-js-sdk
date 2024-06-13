@@ -45,9 +45,8 @@ export class CrmTasksService {
 	 * @returns Array crm tasks list
 	 */
 	getTasksWithFilters(params: string, signal: AbortSignal) {
-		return this.httpClient.client.get<ITasks>(this.namespace, {
+		return this.httpClient.client.get<ITasks>(`${this.namespace}?${params}`, {
 			signal: signal,
-			params,
 		});
 	}
 
