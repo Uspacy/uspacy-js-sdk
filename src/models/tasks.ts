@@ -119,6 +119,7 @@ export interface IFilterTasks {
 	parent_id?: number[];
 	openCalendar?: boolean;
 	search?: string;
+	sortModel?: { id: string; desc: boolean }[];
 	boolean_operator?: string;
 	time_label?: string[];
 	accomplices?: number[];
