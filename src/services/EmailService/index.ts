@@ -215,4 +215,22 @@ export class EmailService {
 	patchLetterCrmEntities(id: number, data: ILettersCrmEntities) {
 		return this.httpClient.client.patch(`${this.namespace}/letters/:id`, { crm_entities: data }, { urlParams: { id } });
 	}
+
+	/**
+	 * Redirect to OAuth 2 link
+	 * @param url success link
+	 * @param service microsoft, google and etc
+	 */
+	redirectToOauthLink(url: string, service: string) {
+		return this.httpClient.client.patch(`${this.namespace}/oauth/${service}/redirect`, { state: url });
+	}
+
+	/**
+	 * Redirect to OAuth 2 link
+	 * @param code code for mail box auth
+	 * @param service microsoft, google and etc
+	 */
+	receiveToOauthLink(code: string, service: string) {
+		return this.httpClient.client.patch(`${this.namespace}/oauth/${service}/receive`, { code });
+	}
 }
