@@ -22,7 +22,7 @@ export interface ITask {
 	updated_at: number;
 	first_closed_at: number;
 	title: string;
-	type: 'task' | 'call' | 'meeting' | 'chat' | 'email';
+	type: 'activity' | 'call' | 'meeting' | 'chat' | 'email';
 	status: 'planned' | 'done' | 'cancelled';
 	priority: 'low' | 'notHigh' | 'neutral' | 'high' | 'veryHigh';
 	description: string;
