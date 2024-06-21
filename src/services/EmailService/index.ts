@@ -222,7 +222,7 @@ export class EmailService {
 	 * @param service microsoft, google and etc
 	 */
 	redirectToOauthLink(url: string, service: string) {
-		return this.httpClient.client.patch(`${this.namespace}/oauth/${service}/redirect`, { state: url });
+		return this.httpClient.client.get(`${this.namespace}/oauth/${service}/redirect`, { params: { state: url } });
 	}
 
 	/**
@@ -231,6 +231,6 @@ export class EmailService {
 	 * @param service microsoft, google and etc
 	 */
 	receiveToOauthLink(code: string, service: string) {
-		return this.httpClient.client.patch(`${this.namespace}/oauth/${service}/receive`, { code });
+		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code });
 	}
 }
