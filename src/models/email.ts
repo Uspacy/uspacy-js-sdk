@@ -42,6 +42,7 @@ export interface IContacts {
 		letter_id: number;
 		email_contact_id: number;
 		contact_type: string;
+		name?: string;
 	};
 }
 
