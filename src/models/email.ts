@@ -89,11 +89,13 @@ export interface IEmailBox {
 	has_file: boolean;
 	last_synced_at: string;
 	status: string;
+	status_before?: string;
 	created_at: string;
 	updated_at: string;
 	sync_freq: number;
 	sync_folders?: IFolder[];
 	folders?: IFolder[];
+	oauth_provider?: string;
 }
 
 export interface IFolders {
