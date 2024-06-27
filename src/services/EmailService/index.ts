@@ -198,7 +198,7 @@ export class EmailService {
 	}
 
 	/**
-	 * Redirect to OAuth 2 link
+	 * Connect emailbox after OAuth 2 auth
 	 * @param code code for mail box auth
 	 * @param service microsoft, google and etc
 	 */
