@@ -40,6 +40,7 @@ export interface IEntityMain {
 
 export interface IEntityData {
 	id: number;
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
 }
