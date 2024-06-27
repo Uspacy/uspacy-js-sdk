@@ -31,6 +31,7 @@ export interface ITaskValues {
 	deadlineHour?: number;
 	template?: boolean;
 	taskType?: taskType;
+	delegation?: boolean;
 	scheduler?: {
 		active?: boolean;
 		period?: 'day' | 'week' | 'month' | 'year';

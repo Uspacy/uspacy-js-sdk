@@ -19,6 +19,8 @@ export interface INotificationMessage {
 	topic: string;
 	type: string;
 	env: string;
+	read?: boolean;
+	createdAt: number;
 	data: {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		entity: any;

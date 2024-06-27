@@ -79,6 +79,7 @@ export interface IServicesStatus {
 	zoho?: IStatus;
 	trello?: IStatus;
 	clickup?: IStatus;
+	monday?: IStatus;
 }
 
 export interface IStatus {

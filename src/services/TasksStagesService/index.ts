@@ -21,18 +21,4 @@ export class TasksStagesService {
 	getTasksStages(groupId: number) {
 		return this.httpClient.client.get<IResponseWithMeta<IStages>>(this.namespace, { ...(groupId && { params: { groupId } }) });
 	}
-
-	/**
-	 * Move task from column to other column
-	 * @param cardId task id
-	 * @param stageId stage or column id
-	 * @param prevCardId previous task id in column
-	 */
-	moveTask(cardId: string, stageId: string, prevCardId?: string) {
-		return this.httpClient.client.post<IResponseWithMeta<IStages>>(
-			`${this.namespace}/:id/moveTask`,
-			{ id: cardId, ...(prevCardId && { prev_id: prevCardId }) },
-			{ urlParams: { id: stageId } },
-		);
-	}
 }
