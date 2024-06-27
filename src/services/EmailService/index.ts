@@ -187,4 +187,22 @@ export class EmailService {
 			{ urlParams: { folderId } },
 		);
 	}
+
+	/**
+	 * Redirect to OAuth 2 link
+	 * @param url success link
+	 * @param service microsoft, google and etc
+	 */
+	redirectToOauthLink(url: string, service: string) {
+		return this.httpClient.client.get(`${this.namespace}/oauth/${service}/redirect`, { params: { state: url } });
+	}
+
+	/**
+	 * Connect emailbox after OAuth 2 auth
+	 * @param code code for mail box auth
+	 * @param service microsoft, google and etc
+	 */
+	receiveToOauthLink(code: string, service: string) {
+		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code });
+	}
 }
