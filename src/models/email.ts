@@ -42,6 +42,7 @@ export interface IContacts {
 		letter_id: number;
 		email_contact_id: number;
 		contact_type: string;
+		name?: string;
 	};
 }
 
@@ -103,12 +104,14 @@ export interface IEmailBox {
 	has_file: boolean;
 	last_synced_at: string;
 	status: string;
+	status_before?: string;
 	created_at: string;
 	updated_at: string;
 	sync_freq: number;
 	sync_folders?: IFolder[];
 	folders?: IFolder[];
 	crm_integration_enabled: number;
+	oauth_provider?: string;
 }
 
 export interface IFolders {
