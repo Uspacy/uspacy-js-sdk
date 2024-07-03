@@ -32,10 +32,13 @@ export interface ITask {
 	responsible_id: number;
 	company_id: number;
 	participants: number[];
-	contacts: IEntityInfo[];
-	deals: IEntityInfo[];
-	leads: IEntityInfo[];
-	company: IEntityInfo;
+	crm_entities: {
+		contacts: IEntityInfo[];
+		deals: IEntityInfo[];
+		leads: IEntityInfo[];
+		companies: IEntityInfo[];
+		[key: string]: IEntityInfo[];
+	};
 	entity?: IEntityData | [];
 	noAccess?: boolean;
 	mentioned?: INotify;

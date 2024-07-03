@@ -1,34 +1,23 @@
-import cookie from 'js-cookie';
 import { injectable } from 'tsyringe';
 
-import { ConfigService } from '../ConfigService';
+import { SessionStorage } from '../SessionStorage';
 
 /**
  * Session service
  */
 @injectable()
 export class SessionService {
-	private KEY: string;
-	private expires: number = 14;
-	constructor(private readonly configService: ConfigService) {
-		this.KEY = `${this.configService.config.appPrefix}.rememberSession`;
-	}
+	constructor(private readonly sessionStorage: SessionStorage) {}
 
 	setRememberSession() {
-		cookie.set(this.KEY, 'true', {
-			expires: this.expires,
-			path: '/',
-		});
+		return this.sessionStorage.storage.setRememberSession();
 	}
 
 	removeRememberSession() {
-		cookie.remove(this.KEY, {
-			expires: this.expires,
-			path: '/',
-		});
+		return this.sessionStorage.storage.removeRememberSession();
 	}
 
 	isSetRememberSession() {
-		return !!cookie.get(this.KEY);
+		return this.sessionStorage.storage.isSetRememberSession();
 	}
 }

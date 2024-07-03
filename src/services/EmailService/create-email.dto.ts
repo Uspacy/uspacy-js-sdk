@@ -1,3 +1,5 @@
+import { IEntityData } from '../../models/crm-entities';
+
 export interface IContactsForCreateLetter {
 	email?: string;
 	name?: string;
@@ -19,4 +21,7 @@ export interface ICreateLetterPayload {
 	attachments?: IAttachmentsForCreateLetter[];
 	message_id?: string;
 	parent_message_id?: string;
+	crm_entities?: {
+		[key: string]: IEntityData[];
+	};
 }

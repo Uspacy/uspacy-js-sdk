@@ -39,26 +39,28 @@ module.exports = (_, argv) => {
 			},
 		},
 		devtool: 'source-map',
-		devServer: {
-			static: path.join(__dirname, 'lib'),
-			compress: true,
-			port: 4000,
-			devMiddleware: {
-				writeToDisk: true,
-			},
-			proxy: {
-				'/': {
-					target: process.env.PROXY_URL,
-					secure: false,
-					changeOrigin: true,
-					bypass: function (req) {
-						if (req.url.startsWith('/static')) {
-							return req.url;
-						}
+		...(isDemo && {
+			devServer: {
+				static: path.join(__dirname, 'lib'),
+				compress: true,
+				port: 4000,
+				devMiddleware: {
+					writeToDisk: true,
+				},
+				proxy: {
+					'/': {
+						target: process.env.PROXY_URL,
+						secure: false,
+						changeOrigin: true,
+						bypass: function (req) {
+							if (req.url.startsWith('/static')) {
+								return req.url;
+							}
+						},
 					},
 				},
 			},
-		},
+		}),
 		plugins: [
 			new Dotenv(),
 			...(isDev
