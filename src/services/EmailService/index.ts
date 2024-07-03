@@ -2,7 +2,17 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailBox, IEmailBoxes, IEmailFiltersParams, IFolders, ILetter, ILetters, IThreads } from '../../models/email';
+import {
+	ICrmSetting,
+	IEmailBox,
+	IEmailBoxes,
+	IEmailFiltersParams,
+	IFolders,
+	ILetter,
+	ILetters,
+	ILettersCrmEntities,
+	IThreads,
+} from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
@@ -186,6 +196,24 @@ export class EmailService {
 			{ ...(ids?.length > 0 && { ids }), ...(threads?.filter?.length > 0 && { threads }) },
 			{ urlParams: { folderId } },
 		);
+	}
+
+	/**
+	 * Get settings for integration with crm
+	 * @param id email box id
+	 * @returns settings data
+	 */
+	getIntgrWithCrmSettings(id: number) {
+		return this.httpClient.client.get<ICrmSetting[]>(`${this.namespace}/emails/crm_settings/:id`, { urlParams: { id } });
+	}
+
+	/**
+	 * Update letters crm entities
+	 * @param id letter id
+	 * @param data letters crm entities payload
+	 */
+	patchLetterCrmEntities(id: number, data: ILettersCrmEntities) {
+		return this.httpClient.client.patch(`${this.namespace}/letters/:id`, { crm_entities: data }, { urlParams: { id } });
 	}
 
 	/**
