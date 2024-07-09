@@ -13,6 +13,7 @@ export interface IExternalLine {
 export enum MessageType {
 	DEFAULT = 'MESSAGE',
 	AUDIO = 'AUDIO',
+	VOICE = 'VOICE',
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
 }
