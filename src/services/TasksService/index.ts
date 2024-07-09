@@ -4,7 +4,8 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IFields } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
-import { ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { CouchdbService } from '../CouchdbService';
 import { ITaskValues } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
@@ -16,7 +17,10 @@ export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
 
-	constructor(private httpClient: HttpClient) {}
+	constructor(
+		private httpClient: HttpClient,
+		private readonly couchdbService: CouchdbService,
+	) {}
 
 	/**
 	 * Get tasks list with filters
@@ -378,5 +382,72 @@ export class TasksService {
 	 */
 	getTasksField() {
 		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
+	}
+
+	/**
+	 * Get tasks filters presets
+	 * @returns tasks filters presets
+	 */
+	getFiltersPresets() {
+		return this.couchdbService.find<IFilterTasks>('tasks-presets');
+	}
+
+	/**
+	 * Get tasks filters preset
+	 * @param id preset id
+	 */
+	getFiltersPreset(id: string) {
+		return this.couchdbService.findById<IFilterTasks>('tasks-presets', id);
+	}
+
+	/**
+	 * Create tasks filters preset
+	 * @param body preset body
+	 */
+	createFilterPreset(body: IFilterTasks) {
+		return this.couchdbService.create('tasks-presets', body);
+	}
+
+	/**
+	 * Update tasks filters preset
+	 * @param id preset id
+	 * @param rev preset revision
+	 * @param body preset body
+	 */
+	updateFilterPreset(id: string, rev: string, body: IFilterTasks) {
+		return this.couchdbService.update('tasks-presets', id, rev, body);
+	}
+
+	/**
+	 * Delete tasks filters preset
+	 * @param id preset id
+	 * @param rev preset revision
+	 */
+	deleteFilterPreset(id: string, rev: string) {
+		return this.couchdbService.delete('tasks-presets', id, rev);
+	}
+
+	/**
+	 * Create tasks settings
+	 */
+	createSettings(body: object) {
+		return this.couchdbService.create('tasks-settings', body, '');
+	}
+
+	/**
+	 * Get tasks settings
+	 * @returns tasks settings
+	 */
+	async getTasksSettings() {
+		const id = await this.couchdbService.getPartitionKey();
+		return this.couchdbService.findById('tasks-settings', id);
+	}
+
+	/**
+	 * Update tasks settings
+	 * @returns tasks settings
+	 */
+	async updateTasksSettings(id: string, rev: string, body: object) {
+		return this.couchdbService.update('tasks-settings', id, rev, body);
 	}
 }
