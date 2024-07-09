@@ -9,4 +9,13 @@ export interface IGroup {
 	logo: string;
 	moderatorsIds: string[];
 	usersIds: string[];
+	enableColorTheme: boolean;
+	themeSettings: IThemeSettings;
+}
+
+export interface IThemeSettings {
+	bgColor: string;
+	iconColor: string;
+	icon: string;
+	enablePattern: boolean;
 }

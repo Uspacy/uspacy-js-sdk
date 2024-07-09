@@ -1,3 +1,4 @@
+import { IEntityData } from './crm-entities';
 import { IFile } from './files';
 
 export type LetterStatus = 'pending' | 'error' | 'succseed';
@@ -41,6 +42,7 @@ export interface IContacts {
 		letter_id: number;
 		email_contact_id: number;
 		contact_type: string;
+		name?: string;
 	};
 }
 
@@ -48,6 +50,13 @@ export interface IAttachments extends Pick<IFile, 'entityId' | 'entityType' | 'l
 	letterId: number;
 	fileId: number;
 	fileName: string;
+}
+
+export interface ICrmEntity {
+	id: number;
+	letter_id: number;
+	table_id: number;
+	title: string;
 }
 
 export interface ILetter {
@@ -70,6 +79,12 @@ export interface ILetter {
 	status: LetterStatus;
 	is_thread?: boolean;
 	parent_message_id?: string;
+	crm_entities: {
+		companies: ICrmEntity[];
+		contacts: ICrmEntity[];
+		deals: ICrmEntity[];
+		leads: ICrmEntity[];
+	};
 }
 
 export interface IEmailBox {
@@ -89,11 +104,14 @@ export interface IEmailBox {
 	has_file: boolean;
 	last_synced_at: string;
 	status: string;
+	status_before?: string;
 	created_at: string;
 	updated_at: string;
 	sync_freq: number;
 	sync_folders?: IFolder[];
 	folders?: IFolder[];
+	crm_integration_enabled: number;
+	oauth_provider?: string;
 }
 
 export interface IFolders {
@@ -134,4 +152,31 @@ export interface IEmailFiltersParams {
 	date?: number[][];
 	is_read?: number[];
 	q?: string;
+}
+
+export enum ESettingName {
+	INCOMING_NEW_ADDRESS = 'incoming_new_address',
+	INCOMING_NEW_ADDRESS_SOURSE = 'incoming_new_address_source',
+	INCOMING_NEW_ADDRESS_RESPONSIBLE = 'incoming_new_address_responsible',
+	INCOMING_NEW_ADDRESS_RESPONSIBLE_TITLE = 'incoming_new_address_responsible_title',
+	OUTGOING_NEW_ADDRESS = 'outgoing_new_address',
+	OUTGOING_NEW_ADDRESS_SOURSE = 'outgoing_new_address_source',
+	OUTGOING_NEW_ADDRESS_RESPONSIBLE = 'outgoing_new_address_responsible',
+	OUTGOING_NEW_ADDRESS_RESPONSIBLE_TITLE = 'outgoing_new_address_responsible_title',
+	INCOMING_EXISTING_ADDRESS = 'incoming_existing_address',
+	INCOMING_EXISTING_ADDRESS_SOURSE = 'incoming_existing_address_source',
+	INCOMING_EXISTING_ADDRESS_RESPONSIBLE = 'incoming_existing_address_responsible',
+	INCOMING_EXISTING_ADDRESS_RESPONSIBLE_TITLE = 'incoming_existing_address_responsible_title',
+}
+
+export interface ICrmSetting {
+	setting_name: ESettingName;
+	setting_value: string | number;
+}
+
+export interface ILettersCrmEntities {
+	contacts?: IEntityData[];
+	companies?: IEntityData[];
+	leads?: IEntityData[];
+	deals?: IEntityData[];
 }
