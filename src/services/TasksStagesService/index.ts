@@ -21,19 +21,4 @@ export class TasksStagesService {
 	getTasksStages(groupId: number) {
 		return this.httpClient.client.get<IResponseWithMeta<IStages>>(this.namespace, { ...(groupId && { params: { groupId } }) });
 	}
-
-	/**
-	 * Move task from column to other column
-	 * @param cardId task id
-	 * @param stageId stage or column id
-	 */
-	moveTask(cardId: string, stageId: string) {
-		return this.httpClient.client.post<IResponseWithMeta<IStages>>(
-			`${this.namespace}/:id/moveTask`,
-			{ id: cardId },
-			{
-				urlParams: { id: stageId },
-			},
-		);
-	}
 }

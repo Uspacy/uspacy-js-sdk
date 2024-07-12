@@ -11,8 +11,10 @@ export interface IConnectEmailBox {
 		period?: '7 days' | '1 month' | '3 months' | '1 year';
 	};
 	access_level?: 'personal' | 'shared';
+	crm_integration_enabled?: boolean;
 }
 
 export interface IUpdateEmailBox extends IConnectEmailBox {
 	folders: IFolder[];
+	folders_remove?: number[];
 }
