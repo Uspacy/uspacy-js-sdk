@@ -28,6 +28,7 @@ export interface IAutomation {
 	created_at: string;
 	description: string;
 	id: number;
+	portal_id: number;
 	portal: string;
 	title: string;
 	trigger: ITriggerEntity[];
