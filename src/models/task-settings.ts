@@ -17,8 +17,3 @@ export interface ITableSettings {
 		[key: string]: ITaskColumnSettings;
 	};
 }
-
-export interface ITaskSettings extends ITableSettings {
-	_id: string;
-	_rev: string;
-}
