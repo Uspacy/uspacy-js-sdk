@@ -89,7 +89,6 @@ class Uspacy {
 		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 		public readonly crmDocumentTemplatesService: CrmDocumentTemplatesService,
 		public readonly crmRequisitesService: CrmRequisitesService,
-		public readonly automationsService: AutomationsService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
