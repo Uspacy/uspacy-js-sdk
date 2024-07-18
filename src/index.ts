@@ -70,6 +70,7 @@ class Uspacy {
 		public readonly migrationsService: MigrationsService,
 		public readonly messengerService: MessengerService,
 		public readonly emailService: EmailService,
+		public readonly automationsService: AutomationsService,
 		public readonly crmEntitiesService: CrmEntitiesService,
 		public readonly crmCallsService: CrmCallsService,
 		public readonly crmCompaniesService: CrmCompaniesService,

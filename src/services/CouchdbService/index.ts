@@ -26,9 +26,9 @@ export class CouchdbService {
 	 * @param databaseName Database name
 	 * @param fileds Fields to return
 	 */
-	async find<F = unknown>(databaseName: string) {
+	async find<T = unknown>(databaseName: string) {
 		const partinionKey = await this.getPartitionKey();
-		return this.httpClient.client.post<ICouchQueryResponse<F>>(`${this.namespace}/${databaseName}/_find`, {
+		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
 				_id: {
 					$gt: partinionKey,
@@ -42,8 +42,8 @@ export class CouchdbService {
 	 * @param databaseName Database name
 	 * @param fileds Fields to return
 	 */
-	async findById<F = unknown>(databaseName: string, id: string) {
-		return this.httpClient.client.get<ICouchItemData<F>>(`${this.namespace}/${databaseName}/${id}`);
+	async findById<T = unknown>(databaseName: string, id: string) {
+		return this.httpClient.client.get<ICouchItemData<T>>(`${this.namespace}/${databaseName}/${id}`);
 	}
 
 	/**
