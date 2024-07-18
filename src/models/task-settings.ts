@@ -13,7 +13,5 @@ export interface ITaskColumnSettings {
 }
 
 export interface ITableSettings {
-	table_settings: {
-		[key: string]: ITaskColumnSettings;
-	};
+	[key: string]: ITaskColumnSettings;
 }
