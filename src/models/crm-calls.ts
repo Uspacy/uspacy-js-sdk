@@ -39,6 +39,7 @@ export enum EButtonType {
 	HANGUP = 'HANGUP',
 	PAUSE = 'PAUSE',
 	RESUME = 'RESUME',
+	ANSWER = 'ANSWER',
 }
 
 export interface ICallEvent {
