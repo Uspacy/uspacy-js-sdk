@@ -34,3 +34,27 @@ export interface ICall {
 	tmp_id: number;
 	employees: number[];
 }
+
+export enum EButtonType {
+	HANGUP = 'HANGUP',
+	PAUSE = 'PAUSE',
+	RESUME = 'RESUME',
+}
+
+export interface ICallEvent {
+	call_type: 'incoming' | 'outgoing';
+	from: string;
+	to: string;
+	call_event_id: number;
+	auth_user_id: number;
+	integration_code: string;
+	buttons: {
+		url: string;
+		data: { id: 1041160600; type: EButtonType };
+	}[];
+
+	// mock
+	time?: string;
+	status?: string;
+	note?: string;
+}
