@@ -3,7 +3,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
+import { ICouchItemData } from '../../models/couchdb';
 import { IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
@@ -393,7 +393,7 @@ export class TasksService {
 	 * @returns tasks filters presets
 	 */
 	getFiltersPresets(type: string) {
-		return this.couchdbService.find<ICouchQueryResponse<ICouchItemData<IFilterPreset<IFilterTasks>>>>('tasks-presets', type);
+		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', type);
 	}
 
 	/**
