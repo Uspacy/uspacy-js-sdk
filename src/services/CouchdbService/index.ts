@@ -24,23 +24,27 @@ export class CouchdbService {
 	/**
 	 * Find data from database
 	 * @param databaseName Database name
-	 * @param fileds Fields to return
+	 * @param type non-required param for filtering items by somethings type, for example: tasks, templates, leads and etc
+	 * @returns Array of items
 	 */
-	async find<T = unknown>(databaseName: string) {
+	async find<T = unknown>(databaseName: string, type?: string) {
 		const partinionKey = await this.getPartitionKey();
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
 				_id: {
 					$gt: partinionKey,
 				},
+				...(type && { type }),
 			},
+			limit: 1000,
+			skip: 0,
 		});
 	}
 
 	/**
 	 * Find data from database
 	 * @param databaseName Database name
-	 * @param fileds Fields to return
+	 * @param fields Fields to return
 	 */
 	async findById<T = unknown>(databaseName: string, id: string) {
 		return this.httpClient.client.get<ICouchItemData<T>>(`${this.namespace}/${databaseName}/${id}`);
