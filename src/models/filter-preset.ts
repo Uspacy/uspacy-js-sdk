@@ -6,9 +6,9 @@ export interface IFilterField {
 	fast: boolean;
 }
 
-export interface IFilterPreset<F = unknown> {
-	id: number;
+export interface IFilterPreset<F> {
 	title: string;
+	type: string;
 	filters: F;
 	current: boolean;
 	pinned: boolean;

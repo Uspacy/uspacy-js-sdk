@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { ICouchItemData } from '../../models/couchdb';
 import { IFields } from '../../models/field';
+import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
 import { ITableSettings } from '../../models/task-settings';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
@@ -389,8 +392,8 @@ export class TasksService {
 	 * Get tasks filters presets
 	 * @returns tasks filters presets
 	 */
-	getFiltersPresets() {
-		return this.couchdbService.find<IFilterTasks>('tasks-presets');
+	getFiltersPresets(type: string) {
+		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', type);
 	}
 
 	/**
@@ -398,14 +401,14 @@ export class TasksService {
 	 * @param id preset id
 	 */
 	getFiltersPreset(id: string) {
-		return this.couchdbService.findById<IFilterTasks>('tasks-presets', id);
+		return this.couchdbService.findById<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', id);
 	}
 
 	/**
 	 * Create tasks filters preset
 	 * @param body preset body
 	 */
-	createFilterPreset(body: IFilterTasks) {
+	createFilterPreset(body: ICouchItemData<IFilterPreset<IFilterTasks>>) {
 		return this.couchdbService.create('tasks-presets', body);
 	}
 
@@ -415,7 +418,7 @@ export class TasksService {
 	 * @param rev preset revision
 	 * @param body preset body
 	 */
-	updateFilterPreset(id: string, rev: string, body: IFilterTasks) {
+	updateFilterPreset(id: string, rev: string, body: ICouchItemData<IFilterPreset<IFilterTasks>>) {
 		return this.couchdbService.update('tasks-presets', id, rev, body);
 	}
 
