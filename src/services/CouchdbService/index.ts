@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { HttpClient } from '../../core/HttpClient';
 import { TokensService } from '../../core/TokensService';
-import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
+import { ICouchItemData, ICouchQueryResponse, ICreateCouchItemResponse } from '../../models/couchdb';
 
 /**
  * Apps service
@@ -57,7 +57,7 @@ export class CouchdbService {
 	 */
 	async create(databaseName: string, data: object, salt: string = `:${uuid()}`) {
 		const partinionKey = await this.getPartitionKey();
-		return this.httpClient.client.post<ICouchItemData>(`${this.namespace}/${databaseName}`, {
+		return this.httpClient.client.post<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}`, {
 			_id: partinionKey + salt,
 			...data,
 		});
@@ -71,7 +71,7 @@ export class CouchdbService {
 	 * @param data Data to update
 	 */
 	async update(databaseName: string, id: string, rev: string, data: object) {
-		return this.httpClient.client.put<ICouchItemData>(`${this.namespace}/${databaseName}/${id}`, {
+		return this.httpClient.client.put<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}/${id}`, {
 			...data,
 			_rev: rev,
 			_id: id,
