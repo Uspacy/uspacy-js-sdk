@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { HttpClient } from '../../core/HttpClient';
 import { TokensService } from '../../core/TokensService';
-import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
+import { ICouchItemData, ICouchQueryResponse, ICreateCouchItemResponse } from '../../models/couchdb';
 
 /**
  * Apps service
@@ -24,23 +24,27 @@ export class CouchdbService {
 	/**
 	 * Find data from database
 	 * @param databaseName Database name
-	 * @param fileds Fields to return
+	 * @param type non-required param for filtering items by somethings type, for example: tasks, templates, leads and etc
+	 * @returns Array of items
 	 */
-	async find<T = unknown>(databaseName: string) {
+	async find<T = unknown>(databaseName: string, type?: string) {
 		const partinionKey = await this.getPartitionKey();
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
 				_id: {
 					$gt: partinionKey,
 				},
+				...(type && { type }),
 			},
+			limit: 1000,
+			skip: 0,
 		});
 	}
 
 	/**
 	 * Find data from database
 	 * @param databaseName Database name
-	 * @param fileds Fields to return
+	 * @param fields Fields to return
 	 */
 	async findById<T = unknown>(databaseName: string, id: string) {
 		return this.httpClient.client.get<ICouchItemData<T>>(`${this.namespace}/${databaseName}/${id}`);
@@ -53,7 +57,7 @@ export class CouchdbService {
 	 */
 	async create(databaseName: string, data: object, salt: string = `:${uuid()}`) {
 		const partinionKey = await this.getPartitionKey();
-		return this.httpClient.client.post<ICouchItemData>(`${this.namespace}/${databaseName}`, {
+		return this.httpClient.client.post<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}`, {
 			_id: partinionKey + salt,
 			...data,
 		});
@@ -67,7 +71,7 @@ export class CouchdbService {
 	 * @param data Data to update
 	 */
 	async update(databaseName: string, id: string, rev: string, data: object) {
-		return this.httpClient.client.put<ICouchItemData>(`${this.namespace}/${databaseName}/${id}`, {
+		return this.httpClient.client.put<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}/${id}`, {
 			...data,
 			_rev: rev,
 			_id: id,
