@@ -423,11 +423,11 @@ export class TasksService {
 	}
 
 	/**
-	 * Mass update tasks filters presets
+	 * Bulk update tasks filters presets
 	 * @param body preset body
 	 */
-	massUpdateFiltersPresets(body: ICouchItemData<IFilterPreset<IFilterTasks>>[]) {
-		return this.couchdbService.mass_update('tasks-presets', body);
+	bulkUpdateFiltersPresets(body: ICouchItemData<IFilterPreset<IFilterTasks>>[]) {
+		return this.couchdbService.bulkUpdate('tasks-presets', body);
 	}
 
 	/**

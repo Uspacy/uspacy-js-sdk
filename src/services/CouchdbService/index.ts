@@ -79,12 +79,12 @@ export class CouchdbService {
 	}
 
 	/**
-	 * Mass update data from database
+	 * Bulk update data from database
 	 * @param databaseName Database name
 	 * @param data Data to update
 	 * @returns Array of items
 	 */
-	async mass_update(databaseName: string, data: object[]) {
+	async bulkUpdate(databaseName: string, data: object[]) {
 		return this.httpClient.client.post<ICreateCouchItemResponse[]>(`${this.namespace}/${databaseName}/_bulk_docs`, {
 			docs: data,
 		});
