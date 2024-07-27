@@ -8,6 +8,7 @@ import { uspacySdk } from '../index';
 		// uspacySdk.tasksService.getFiltersPreset(d.data.docs[0]._id);
 		// uspacySdk.tasksService.updateFilterPreset(d.data.docs[0]._id, d.data.docs[0]._rev, { aa: 'bb111' });
 		// uspacySdk.tasksService.createFilterPreset({ aa: 'bb' });
+		// await uspacySdk.tasksService.massUpdateFiltersPresets(body);
 		// uspacySdk.tasksService.deleteFilterPreset(d.data.docs[0]._id, d.data.docs[0]._rev);
 	} catch (err) {
 		// eslint-disable-next-line no-console
