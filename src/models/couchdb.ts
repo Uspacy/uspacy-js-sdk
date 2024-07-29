@@ -1,6 +1,6 @@
 export type ICouchItemData<T = unknown> = T & {
-	_id: string;
-	_rev: string;
+	_id?: string;
+	_rev?: string;
 };
 
 export interface ICreateCouchItemResponse {
