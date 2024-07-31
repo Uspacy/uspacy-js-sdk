@@ -16,4 +16,5 @@ export interface IFilterPreset<F> {
 	pinned: boolean;
 	default: boolean;
 	filterFields: IFilterField[];
+	currentFilterFields: IFilterField[];
 }
