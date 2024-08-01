@@ -7,6 +7,8 @@ export interface IFilterField {
 }
 
 export interface IFilterPreset<F> {
+	// This field need for migrate old presets from indexedDB.
+	id?: string;
 	title: string;
 	type: string;
 	filters: F;
