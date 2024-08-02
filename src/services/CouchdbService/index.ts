@@ -32,7 +32,7 @@ export class CouchdbService {
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
 				_id: {
-					$gt: partinionKey,
+					$regex: partinionKey,
 				},
 				...(type && { type }),
 			},
