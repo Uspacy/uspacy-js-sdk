@@ -12,6 +12,7 @@ interface IRootParent {
 	};
 	type: string;
 	service: string;
+	table_name: string;
 }
 
 export interface INotificationMessage {
