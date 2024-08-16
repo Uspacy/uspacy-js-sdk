@@ -62,6 +62,7 @@ export interface ITaskFilters extends IBaseFilter {
 	certainDateOrPeriod?: number[];
 	period?: number[][];
 	participants?: number[];
+	start_time?: [number[]];
 }
 
 export interface ICallFilters extends IBaseFilter {
