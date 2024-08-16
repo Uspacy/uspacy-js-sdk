@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { ITaskFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
 
@@ -42,7 +43,7 @@ export class CrmTasksService {
 	 * @param relatedEntityType related entity type if fetching related to entity tasks
 	 * @returns Array crm tasks list
 	 */
-	getTasksWithFilters(params: string, signal: AbortSignal) {
+	getTasksWithFilters(params: Omit<ITaskFilters, 'openDatePicker'>, signal: AbortSignal) {
 		return this.httpClient.client.get<ITasks>(`${this.namespace}?${params}`, {
 			signal: signal,
 		});
