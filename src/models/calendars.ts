@@ -1,4 +1,4 @@
-export interface IGoogleCalendarsAccount {
+export interface ICalendarsAccount {
 	id: number;
 	email: string;
 	provider: string;
@@ -15,7 +15,7 @@ export interface IGoogleCalendarsAccount {
 	picture: string;
 }
 
-export interface IGoogleCalendar {
+export interface ICalendar {
 	title: string;
 	description: string;
 	remote_calendar_id: string;
@@ -23,7 +23,7 @@ export interface IGoogleCalendar {
 	timeZone: string;
 }
 
-export interface IAfterGoodleOauth2Response {
+export interface IAfterGoogleOauthResponse {
 	domain: string;
 	is_open_auth_calendar_drawer: boolean;
 }
