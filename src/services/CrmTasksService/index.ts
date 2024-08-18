@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICalendarsSuccessResponse, IGoogleCalendar, IGoogleCalendarsAccount } from '../../models/calendars';
+import { ICalendar, ICalendarsAccount, ICalendarsSuccessResponse } from '../../models/calendars';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
@@ -125,11 +125,11 @@ export class CrmTasksService {
 	}
 
 	/**
-	 * Get google calendars accounts
-	 * @returns google calendars accounts list
+	 * Get calendars accounts
+	 * @returns calendars accounts list
 	 */
-	getGoogleCalendarsAccounts() {
-		return this.httpClient.client.get<IGoogleCalendarsAccount[]>(`${this.namespace}/accounts`);
+	getCalendarsAccounts() {
+		return this.httpClient.client.get<ICalendarsAccount[]>(`${this.namespace}/accounts`);
 	}
 
 	/**
@@ -137,7 +137,7 @@ export class CrmTasksService {
 	 * @returns google calendars list
 	 */
 	getGoogleCalendars() {
-		return this.httpClient.client.get<IGoogleCalendar[]>(`${this.namespace}/google/calendar_list`);
+		return this.httpClient.client.get<ICalendar[]>(`${this.namespace}/google/calendar_list`);
 	}
 
 	/**
@@ -146,7 +146,7 @@ export class CrmTasksService {
 	 * @returns google calendars list
 	 */
 	saveCalendarSettings(body: ICalendarSettings) {
-		return this.httpClient.client.post<IGoogleCalendarsAccount>(`${this.namespace}/google/save`, body);
+		return this.httpClient.client.post<ICalendarsAccount>(`${this.namespace}/google/save`, body);
 	}
 
 	/**
@@ -169,7 +169,7 @@ export class CrmTasksService {
 	 * Delete google calendars account
 	 * @param email user email
 	 */
-	deleteGoogleCalendarsAccount(email: string) {
+	deleteCalendarsAccount(email: string) {
 		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.namespace}/accounts/:email`, {
 			params: { email },
 		});

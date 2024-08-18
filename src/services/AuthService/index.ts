@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { SessionService } from '../../core/SessionService';
 import { TokensService } from '../../core/TokensService';
-import { IAfterGoodleOauth2Response } from '../../models/calendars';
+import { IAfterGoogleOauthResponse } from '../../models/calendars';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
@@ -244,6 +244,6 @@ export class AuthService {
 	 * Redirect to uspacy after google oauth
 	 */
 	getUrlToRedirectAfterOAuth(body: IResponseGoogleData) {
-		return this.httpClient.client.get<IAfterGoodleOauth2Response>(`${this.namespace}/calendars/google/info`, { params: body });
+		return this.httpClient.client.get<IAfterGoogleOauthResponse>(`${this.namespace}/calendars/google/info`, { params: body });
 	}
 }
