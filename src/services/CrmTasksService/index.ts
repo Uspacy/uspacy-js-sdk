@@ -1,8 +1,10 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { ICalendarsSuccessResponse, IGoogleCalendar, IGoogleCalendarsAccount } from '../../models/calendars';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
+import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 
 /**
  * CrmTasks service
@@ -10,6 +12,7 @@ import { ITask, ITasks } from '../../models/crm-tasks';
 @injectable()
 export class CrmTasksService {
 	private namespace = '/activities/v1/activities';
+	private calendarsNamespace = '/activities/v1/calendars';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -110,6 +113,65 @@ export class CrmTasksService {
 			except_ids: exceptIds,
 			payload,
 			settings,
+		});
+	}
+
+	/**
+	 * Get OAuth 2.0 redirect url
+	 * @returns redirect url
+	 */
+	getOAuth2CalendarRedirectUrl() {
+		return this.httpClient.client.get<{ link: string }>(`${this.calendarsNamespace}/oauth/google/redirect`);
+	}
+
+	/**
+	 * Get google calendars accounts
+	 * @returns google calendars accounts list
+	 */
+	getGoogleCalendarsAccounts() {
+		return this.httpClient.client.get<IGoogleCalendarsAccount[]>(`${this.namespace}/accounts`);
+	}
+
+	/**
+	 * Get google calendars
+	 * @returns google calendars list
+	 */
+	getGoogleCalendars() {
+		return this.httpClient.client.get<IGoogleCalendar[]>(`${this.namespace}/google/calendar_list`);
+	}
+
+	/**
+	 * Save calendar settings
+	 * @param body calendar settings
+	 * @returns google calendars list
+	 */
+	saveCalendarSettings(body: ICalendarSettings) {
+		return this.httpClient.client.post<IGoogleCalendarsAccount>(`${this.namespace}/google/save`, body);
+	}
+
+	/**
+	 * Start initial google calendars sync
+	 * @param body initial sync settings
+	 */
+	startInitialGoogleCalendarsSync(body: ISyncSettings) {
+		return this.httpClient.client.post<ICalendarsSuccessResponse>(`${this.namespace}/google/initial_sync`, body);
+	}
+
+	/**
+	 * Start google calendars sync
+	 * @param body sync settings
+	 */
+	startGoogleCalendarsSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.namespace}/google/sync`);
+	}
+
+	/**
+	 * Delete google calendars account
+	 * @param email user email
+	 */
+	deleteGoogleCalendarsAccount(email: string) {
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.namespace}/accounts/:email`, {
+			params: { email },
 		});
 	}
 }
