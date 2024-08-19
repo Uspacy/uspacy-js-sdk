@@ -177,7 +177,7 @@ export class CrmTasksService {
 	 * @param email user email
 	 */
 	deleteCalendarsAccount(email: string) {
-		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/:email`, {
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/`, {
 			params: { email },
 		});
 	}
