@@ -158,11 +158,18 @@ export class CrmTasksService {
 	}
 
 	/**
-	 * Start google calendars sync
+	 * Start calendars sync
 	 * @param body sync settings
 	 */
-	startGoogleCalendarsSync() {
-		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/sync`);
+	startCalendarsSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/sync`);
+	}
+
+	/**
+	 * Stop calendars sync
+	 */
+	stopGoogleCalendarsSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/stop_sync`);
 	}
 
 	/**
