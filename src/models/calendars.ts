@@ -40,9 +40,9 @@ export enum ECalendarDirectionType {
 }
 
 export enum EEventsValues {
-	ACTIVITY = 'activity',
+	TASK = 'task',
 	CALL = 'call',
 	MEETING = 'meeting',
 	CHAT = 'chat',
-	MAIL = 'mail',
+	MAIL = 'email',
 }
