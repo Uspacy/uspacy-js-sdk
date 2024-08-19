@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICalendar, ICalendarsAccount, ICalendarsSuccessResponse } from '../../models/calendars';
+import { ICalendar, ICalendarsAccount, ICalendarsAccounts, ICalendarsSuccessResponse } from '../../models/calendars';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
@@ -129,7 +129,7 @@ export class CrmTasksService {
 	 * @returns calendars accounts list
 	 */
 	getCalendarsAccounts() {
-		return this.httpClient.client.get<ICalendarsAccount[]>(`${this.calendarsNamespace}/accounts`);
+		return this.httpClient.client.get<ICalendarsAccounts[]>(`${this.calendarsNamespace}/accounts`);
 	}
 
 	/**
@@ -177,8 +177,8 @@ export class CrmTasksService {
 	 * @param email user email
 	 */
 	deleteCalendarsAccount(email: string) {
-		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/`, {
-			params: { email },
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/:email`, {
+			urlParams: { email },
 		});
 	}
 }
