@@ -129,7 +129,7 @@ export class CrmTasksService {
 	 * @returns calendars accounts list
 	 */
 	getCalendarsAccounts() {
-		return this.httpClient.client.get<ICalendarsAccounts[]>(`${this.calendarsNamespace}/accounts`);
+		return this.httpClient.client.get<ICalendarsAccounts>(`${this.calendarsNamespace}/accounts`);
 	}
 
 	/**
