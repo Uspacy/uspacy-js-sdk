@@ -132,7 +132,7 @@ export class CrmTasksService {
 	 * @returns calendars accounts list
 	 */
 	getCalendarsAccounts() {
-		return this.httpClient.client.get<ICalendarsAccount[]>(`${this.namespace}/accounts`);
+		return this.httpClient.client.get<ICalendarsAccount[]>(`${this.calendarsNamespace}/accounts`);
 	}
 
 	/**
@@ -140,7 +140,7 @@ export class CrmTasksService {
 	 * @returns google calendars list
 	 */
 	getGoogleCalendars() {
-		return this.httpClient.client.get<ICalendar[]>(`${this.namespace}/google/calendar_list`);
+		return this.httpClient.client.get<ICalendar[]>(`${this.calendarsNamespace}/google/calendar_list`);
 	}
 
 	/**
@@ -149,7 +149,7 @@ export class CrmTasksService {
 	 * @returns google calendars list
 	 */
 	saveCalendarSettings(body: ICalendarSettings) {
-		return this.httpClient.client.post<ICalendarsAccount>(`${this.namespace}/google/save`, body);
+		return this.httpClient.client.post<ICalendarsAccount>(`${this.calendarsNamespace}/google/save`, body);
 	}
 
 	/**
@@ -157,7 +157,7 @@ export class CrmTasksService {
 	 * @param body initial sync settings
 	 */
 	startInitialGoogleCalendarsSync(body: ISyncSettings) {
-		return this.httpClient.client.post<ICalendarsSuccessResponse>(`${this.namespace}/google/initial_sync`, body);
+		return this.httpClient.client.post<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/initial_sync`, body);
 	}
 
 	/**
@@ -165,7 +165,7 @@ export class CrmTasksService {
 	 * @param body sync settings
 	 */
 	startGoogleCalendarsSync() {
-		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.namespace}/google/sync`);
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/sync`);
 	}
 
 	/**
@@ -173,7 +173,7 @@ export class CrmTasksService {
 	 * @param email user email
 	 */
 	deleteCalendarsAccount(email: string) {
-		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.namespace}/accounts/:email`, {
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/:email`, {
 			params: { email },
 		});
 	}
