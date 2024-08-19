@@ -2,7 +2,6 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { ICalendar, ICalendarsAccount, ICalendarsSuccessResponse } from '../../models/calendars';
-import { ITaskFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
@@ -12,8 +11,7 @@ import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
  */
 @injectable()
 export class CrmTasksService {
-	private namespace = '/crm/v1/static/tasks';
-	private entitiesNamespace = '/crm/v1/entities';
+	private namespace = '/activities/v1/activities';
 	private calendarsNamespace = '/activities/v1/calendars';
 
 	constructor(private httpClient: HttpClient) {}
@@ -47,10 +45,9 @@ export class CrmTasksService {
 	 * @param relatedEntityType related entity type if fetching related to entity tasks
 	 * @returns Array crm tasks list
 	 */
-	getTasksWithFilters(params: Omit<ITaskFilters, 'openDatePicker'>, signal: AbortSignal) {
-		return this.httpClient.client.get<ITasks>(this.namespace, {
+	getTasksWithFilters(params: string, signal: AbortSignal) {
+		return this.httpClient.client.get<ITasks>(`${this.namespace}?${params}`, {
 			signal: signal,
-			params,
 		});
 	}
 
@@ -161,11 +158,18 @@ export class CrmTasksService {
 	}
 
 	/**
-	 * Start google calendars sync
+	 * Start calendars sync
 	 * @param body sync settings
 	 */
-	startGoogleCalendarsSync() {
-		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/sync`);
+	startCalendarsSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/sync`);
+	}
+
+	/**
+	 * Stop calendars sync
+	 */
+	stopGoogleCalendarsSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/stop_sync`);
 	}
 
 	/**
