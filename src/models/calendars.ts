@@ -15,6 +15,10 @@ export interface ICalendarsAccount {
 	picture: string;
 }
 
+export interface ICalendarsAccounts {
+	data: ICalendarsAccount[];
+}
+
 export interface ICalendar {
 	title: string;
 	description: string;
