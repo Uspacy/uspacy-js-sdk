@@ -1,5 +1,6 @@
 export interface ICalendarsAccount {
 	id: number;
+	active: boolean;
 	email: string;
 	provider: string;
 	title: string;
@@ -8,9 +9,9 @@ export interface ICalendarsAccount {
 	activity_type: string;
 	last_sync_at: string;
 	direction: string;
-	selected: number;
+	selected: boolean;
 	description: string;
-	private_event: number;
+	private_event: boolean;
 	remote_calendar_id: string;
 	picture: string;
 }
@@ -48,5 +49,5 @@ export enum EEventsValues {
 	CALL = 'call',
 	MEETING = 'meeting',
 	CHAT = 'chat',
-	MAIL = 'email',
+	EMAIL = 'email',
 }

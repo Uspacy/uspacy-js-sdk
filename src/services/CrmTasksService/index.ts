@@ -169,16 +169,22 @@ export class CrmTasksService {
 	 * Stop calendars sync
 	 */
 	stopGoogleCalendarsSync() {
-		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/stop_sync`);
+		return this.httpClient.client.patch<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/stop_sync`);
 	}
 
 	/**
-	 * Delete google calendars account
-	 * @param email user email
+	 * Activate calendars sync
 	 */
-	deleteCalendarsAccount(email: string) {
-		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/:email`, {
-			urlParams: { email },
+	activateGoogleCalendarsSync(id: number) {
+		return this.httpClient.client.patch<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/google/activate_sync/:id`, undefined, {
+			urlParams: { id },
 		});
+	}
+
+	/**
+	 * Delete calendars account
+	 */
+	deleteCalendarsAccount() {
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/google`);
 	}
 }
