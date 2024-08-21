@@ -1,6 +1,7 @@
 export interface ICalendarsAccount {
 	id: number;
 	active: boolean;
+	status: ECalendarAccountStatuses;
 	email: string;
 	provider: string;
 	title: string;
@@ -50,4 +51,10 @@ export enum EEventsValues {
 	MEETING = 'meeting',
 	CHAT = 'chat',
 	EMAIL = 'email',
+}
+
+export enum ECalendarAccountStatuses {
+	RUN = 'run',
+	STARTED = 'started',
+	STOPPED = 'stopped',
 }
