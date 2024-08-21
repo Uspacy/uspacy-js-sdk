@@ -6,10 +6,10 @@ export interface ICalendarsAccount {
 	provider: string;
 	title: string;
 	timezone: string;
-	sync_types: string;
-	activity_type: string;
+	sync_types: EEventsValues[];
+	activity_type: EEventsValues;
 	last_sync_at: string;
-	direction: string;
+	direction: ECalendarDirectionType;
 	selected: boolean;
 	description: string;
 	private_event: boolean;
