@@ -25,7 +25,7 @@ export interface ICalendar {
 	title: string;
 	description: string;
 	remote_calendar_id: string;
-	role: string;
+	role: ECalendarRoles;
 	timeZone: string;
 }
 
@@ -57,4 +57,10 @@ export enum ECalendarAccountStatuses {
 	RUN = 'run',
 	STARTED = 'started',
 	STOPPED = 'stopped',
+}
+
+export enum ECalendarRoles {
+	OWNER = 'owner',
+	WRITER = 'writer',
+	READER = 'reader',
 }
