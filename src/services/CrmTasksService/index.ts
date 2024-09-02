@@ -9,8 +9,7 @@ import { ITask, ITasks } from '../../models/crm-tasks';
  */
 @injectable()
 export class CrmTasksService {
-	private namespace = '/crm/v1/static/tasks';
-	private entitiesNamespace = '/crm/v1/entities';
+	private namespace = '/activities/v1/activities';
 
 	constructor(private httpClient: HttpClient) {}
 
