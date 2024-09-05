@@ -16,6 +16,7 @@ export enum MessageType {
 	VOICE = 'VOICE',
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
+	SYSTEM = 'SYSTEM',
 }
 
 export enum ERelationsEntity {
@@ -34,6 +35,7 @@ export interface IRelations {
 	entity: ERelationsEntity;
 	name: string;
 	entityId: number;
+	pictureUrl: string
 }
 
 export enum EActiveEntity {
@@ -173,6 +175,16 @@ export type GoToMessageRequest = {
 	id: string;
 };
 
+export type ReadMessagesRequest = {
+	chatId: string;
+	messagesIds: string[];
+};
+
+export interface ForwardMessageRequest {
+	chatId: string;
+	messagesIds: string[];
+}
+
 export interface IExternalChatsItems {
 	active: IChat[];
 	undistributed: IChat[];
@@ -194,5 +206,37 @@ export interface ICreateWidgetData {
 		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
+	};
+}
+
+export interface ICreateMessageData {
+	id?: string;
+	timestamp?: number;
+	message: string;
+	type: MessageType;
+	chatId: string;
+	parentMessage?: string;
+	attachedFiles?: IFile[];
+	readBy?: number[];
+	mentioned?: string[];
+	externalLine?: string;
+	externalAuthorId?: string;
+	relations?: IRelations[];
+	externalId?: string;
+	ref?: {
+		chatId: string;
+		authorId: number;
+		messageId: string;
+	};
+	meta?: {
+		entity: EMetaEntity;
+		type: EMetaType;
+		accountName: string;
+		accountImage: string;
+		body: {
+			text: string;
+			attachedFiles: { url: string; type: string }[];
+			url: string;
+		};
 	};
 }
