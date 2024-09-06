@@ -17,4 +17,6 @@ export interface IPortalSettings {
 	themeDecor: string;
 	themeName: string;
 	holidays: { id: number; date: string; name: string }[];
+	logo: string;
+	thumbnail: string;
 }
