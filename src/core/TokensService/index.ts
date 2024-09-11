@@ -68,9 +68,9 @@ export class TokensService {
 		});
 	}
 
-	refreshToken(): Promise<IResponseJwt> {
+	refreshToken(forceRefresh = false): Promise<IResponseJwt> {
 		return new Promise(async (resolve, reject) => {
-			if (!this.sessionService.isSetRememberSession()) return reject(new Error(''));
+			if (!this.sessionService.isSetRememberSession() && !forceRefresh) return reject(new Error(''));
 			try {
 				const token = await this.getRefreshToken();
 				const decodedToken = await this.decodeRefreshToken(token);
