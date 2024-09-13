@@ -32,6 +32,7 @@ import { DepartmentsService } from './services/DepartmentsService';
 import { EmailService } from './services/EmailService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
+import { HistoryService } from './services/HistoryService';
 import { InvatesService } from './services/InvatesService';
 import { MessengerService } from './services/MessengerService';
 import { MigrationsService } from './services/MigrationsService';
@@ -89,6 +90,7 @@ class Uspacy {
 		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 		public readonly crmDocumentTemplatesService: CrmDocumentTemplatesService,
 		public readonly crmRequisitesService: CrmRequisitesService,
+		public readonly historyService: HistoryService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
