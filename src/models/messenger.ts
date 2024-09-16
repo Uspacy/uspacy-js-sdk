@@ -240,3 +240,15 @@ export interface ICreateMessageData {
 		};
 	};
 }
+
+export interface ICreateExternalLineData {
+	name: string;
+	icon: string;
+	phoneNumber: string;
+	externalId: string;
+}
+
+export interface IUpdateExternalLineData {
+	name?: string;
+	icon?: string;
+}

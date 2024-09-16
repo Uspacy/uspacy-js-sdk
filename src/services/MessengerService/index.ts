@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { FetchMessagesRequest, ForwardMessageRequest, GoToMessageRequest, IChat, ICreateMessageData, ICreateWidgetData, ReadMessagesRequest } from '../../models/messenger';
+import { FetchMessagesRequest, ForwardMessageRequest, GoToMessageRequest, IChat, ICreateExternalLineData, ICreateMessageData, ICreateWidgetData, IUpdateExternalLineData, ReadMessagesRequest } from '../../models/messenger';
 
 /**
  * Messenger service
@@ -130,7 +130,7 @@ export class MessengerService {
 	}
 
 	/**
-	 * create widget
+	 * Create widget
 	 * @param data create widget payload
 	 * @returns created widget data
 	 */
@@ -139,7 +139,7 @@ export class MessengerService {
 	}
 
 	/**
-	 * create widget
+	 * Get widget
 	 * @param data create widget payload
 	 * @returns created widget data
 	 */
@@ -148,7 +148,7 @@ export class MessengerService {
 	}
 
 	/**
-	 * delete widget
+	 * Delete widget
 	 * @param id widget id
 	 */
 	deleteWidgets(id: ICreateWidgetData['id']) {
@@ -156,11 +156,56 @@ export class MessengerService {
 	}
 
 	/**
-	 * update widget
+	 * Update widget
 	 * @param data update widget payload
 	 * @returns updated widget data
 	 */
 	updateWidget(data: ICreateWidgetData) {
 		return this.httpClient.client.patch(`${this.namespace}/widgets/${data.id}`, data);
+	}
+
+	/**
+	 * Get external lines
+	 * @returns external lines data
+	 */
+	getExternalLines() {
+		return this.httpClient.client.get(`${this.namespace}/external-lines`);
+	}
+
+	/**
+	 * Create external line
+	 * @param data create external line payload
+	 * @returns external line data
+	 */
+	createExternalLine(data: ICreateExternalLineData) {
+		return this.httpClient.client.post(`${this.namespace}/external-lines`, data);
+	}
+
+	/**
+	 * Get external line
+	 * @param id external line id
+	 * @returns external line data
+	 */
+	getExternalLine(id: string) {
+		return this.httpClient.client.get(`${this.namespace}/external-lines/${id}`);
+	}
+
+	/**
+	 * Delete external line
+	 * @param id external line id
+	 * @returns external line data
+	 */
+	deleteExternalLine(id: string) {
+		return this.httpClient.client.delete(`${this.namespace}/external-lines/${id}`);
+	}
+
+	/**
+	 * Update external line
+	 * @param id external line id
+	 * @param data update external line payload
+	 * @returns external line data
+	 */
+	updateExternalLine(id: string, data: IUpdateExternalLineData) {
+		return this.httpClient.client.patch(`${this.namespace}/external-lines/${id}`, data);
 	}
 }
