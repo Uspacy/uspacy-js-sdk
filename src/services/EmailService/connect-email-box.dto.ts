@@ -7,6 +7,8 @@ export interface IConnectEmailBox {
 	password?: string;
 	imap_host?: string;
 	imap_port?: string;
+	smtp_host?: string;
+	smtp_port?: string;
 	sync_from?: {
 		period?: '7 days' | '1 month' | '3 months' | '1 year';
 	};
