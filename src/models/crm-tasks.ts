@@ -42,6 +42,7 @@ export interface ITask {
 	entity?: IEntityData | [];
 	noAccess?: boolean;
 	mentioned?: INotify;
+	calendar_provider?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	entities?: any;
 }
