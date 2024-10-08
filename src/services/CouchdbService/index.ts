@@ -18,7 +18,7 @@ export class CouchdbService {
 
 	async getPartitionKey() {
 		const docodedToken = await this.tokenService.decodeToken();
-		return docodedToken.domain + '-' + docodedToken.id;
+		return { partitionKey: docodedToken.domain + '-' + docodedToken.id, domain: `${docodedToken.domain}-` };
 	}
 
 	/**
