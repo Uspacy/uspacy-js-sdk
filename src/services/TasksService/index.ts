@@ -7,8 +7,8 @@ import { ICouchItemData } from '../../models/couchdb';
 import { IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
-import { ITableSettings } from '../../models/task-settings';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { ITasksColumnSettings } from '../../models/tasks-settings';
 import { CouchdbService } from '../CouchdbService';
 import { ITaskValues } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
@@ -442,7 +442,7 @@ export class TasksService {
 	/**
 	 * Create tasks settings
 	 */
-	createSettings(body: ITableSettings) {
+	createSettings(body: ITasksColumnSettings) {
 		return this.couchdbService.create('tasks-settings', body, '');
 	}
 
@@ -451,15 +451,15 @@ export class TasksService {
 	 * @returns tasks settings
 	 */
 	async getTasksSettings() {
-		const id = await this.couchdbService.getPartitionKey();
-		return this.couchdbService.findById<ITableSettings>('tasks-settings', id);
+		const { domain } = await this.couchdbService.getPartitionKey();
+		return this.couchdbService.find<ITasksColumnSettings>('tasks-settings', '', domain);
 	}
 
 	/**
 	 * Update tasks settings
 	 * @returns tasks settings
 	 */
-	async updateTasksSettings(id: string, rev: string, body: ITableSettings) {
+	async updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
 	}
 }
