@@ -10,7 +10,7 @@ import { ICouchItemData, ICouchQueryResponse, ICreateCouchItemResponse } from '.
  */
 @injectable()
 export class CouchdbService {
-	private namespace = 'https://couchdb.uspacy.tech';
+	private namespace = '/settings-backend/v1';
 	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly tokenService: TokensService,
@@ -18,7 +18,7 @@ export class CouchdbService {
 
 	async getPartitionKey() {
 		const docodedToken = await this.tokenService.decodeToken();
-		return docodedToken.domain + '-' + docodedToken.id;
+		return { partitionKey: docodedToken.domain + '-' + docodedToken.id, domain: `${docodedToken.domain}-` };
 	}
 
 	/**
@@ -27,13 +27,11 @@ export class CouchdbService {
 	 * @param type non-required param for filtering items by somethings type, for example: tasks, templates, leads and etc
 	 * @returns Array of items
 	 */
-	async find<T = unknown>(databaseName: string, type?: string) {
-		const partinionKey = await this.getPartitionKey();
+	async find<T = unknown>(databaseName: string, type?: string, id?: string) {
+		const { partitionKey } = await this.getPartitionKey();
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
-				_id: {
-					$regex: partinionKey,
-				},
+				_id: { $regex: id || partitionKey },
 				...(type && { type }),
 			},
 			limit: 1000,
@@ -56,9 +54,9 @@ export class CouchdbService {
 	 * @param data Data to create
 	 */
 	async create(databaseName: string, data: object, salt: string = `:${uuid()}`) {
-		const partinionKey = await this.getPartitionKey();
+		const { partitionKey } = await this.getPartitionKey();
 		return this.httpClient.client.post<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}`, {
-			_id: partinionKey + salt,
+			_id: partitionKey + salt,
 			...data,
 		});
 	}
