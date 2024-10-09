@@ -40,15 +40,6 @@ export class CouchdbService {
 	}
 
 	/**
-	 * Find data from database
-	 * @param databaseName Database name
-	 * @param fields Fields to return
-	 */
-	async findById<T = unknown>(databaseName: string, id: string) {
-		return this.httpClient.client.get<ICouchItemData<T>>(`${this.namespace}/${databaseName}/${id}`);
-	}
-
-	/**
 	 * Create data in database
 	 * @param databaseName Database name
 	 * @param data Data to create

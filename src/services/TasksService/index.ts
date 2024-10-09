@@ -401,7 +401,7 @@ export class TasksService {
 	 * @param id preset id
 	 */
 	getFiltersPreset(id: string) {
-		return this.couchdbService.findById<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', id);
+		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', '', id);
 	}
 
 	/**
@@ -450,8 +450,8 @@ export class TasksService {
 	 * Get tasks settings
 	 * @returns tasks settings
 	 */
-	getTasksSettings(domain: string, type: string) {
-		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type, domain);
+	getTasksSettings(type: string) {
+		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type);
 	}
 
 	/**
