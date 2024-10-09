@@ -3,7 +3,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICouchItemData } from '../../models/couchdb';
+import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
 import { IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
@@ -443,23 +443,22 @@ export class TasksService {
 	 * Create tasks settings
 	 */
 	createSettings(body: ITasksColumnSettings) {
-		return this.couchdbService.create('tasks-settings', body, '');
+		return this.couchdbService.create('tasks-settings', body);
 	}
 
 	/**
 	 * Get tasks settings
 	 * @returns tasks settings
 	 */
-	async getTasksSettings() {
-		const { domain } = await this.couchdbService.getPartitionKey();
-		return this.couchdbService.find<ITasksColumnSettings>('tasks-settings', '', domain);
+	getTasksSettings(domain: string, type: string) {
+		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type, domain);
 	}
 
 	/**
 	 * Update tasks settings
 	 * @returns tasks settings
 	 */
-	async updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
+	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
 	}
 }
