@@ -18,7 +18,7 @@ export class CouchdbService {
 
 	async getPartitionKey() {
 		const docodedToken = await this.tokenService.decodeToken();
-		return { partitionKey: docodedToken.domain + '-' + docodedToken.id, domain: `${docodedToken.domain}-` };
+		return docodedToken.domain + '-' + docodedToken.id;
 	}
 
 	/**
@@ -28,7 +28,7 @@ export class CouchdbService {
 	 * @returns Array of items
 	 */
 	async find<T = unknown>(databaseName: string, type?: string, id?: string) {
-		const { partitionKey } = await this.getPartitionKey();
+		const partitionKey = await this.getPartitionKey();
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
 				_id: { $regex: id || partitionKey },
@@ -54,7 +54,7 @@ export class CouchdbService {
 	 * @param data Data to create
 	 */
 	async create(databaseName: string, data: object, salt: string = `:${uuid()}`) {
-		const { partitionKey } = await this.getPartitionKey();
+		const partitionKey = await this.getPartitionKey();
 		return this.httpClient.client.post<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}`, {
 			_id: partitionKey + salt,
 			...data,
