@@ -11,13 +11,12 @@ export interface IColumnSorting {
 	sort: string;
 }
 
-export interface ITaskColumnSettings {
+export interface ITasksColumnSettings {
+	_id?: string;
+	_rev?: string;
+	type?: string;
 	column_visibility: IColumnVisibility;
 	column_sizes: IColumnSizes;
 	column_ordering: string[];
 	column_sorting: IColumnSorting[];
-}
-
-export interface ITableSettings {
-	[key: string]: ITaskColumnSettings;
 }
