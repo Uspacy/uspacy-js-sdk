@@ -3,12 +3,12 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICouchItemData } from '../../models/couchdb';
+import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
 import { IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
-import { ITableSettings } from '../../models/task-settings';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { ITasksColumnSettings } from '../../models/tasks-settings';
 import { CouchdbService } from '../CouchdbService';
 import { ITaskValues } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
@@ -401,7 +401,7 @@ export class TasksService {
 	 * @param id preset id
 	 */
 	getFiltersPreset(id: string) {
-		return this.couchdbService.findById<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', id);
+		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', '', id);
 	}
 
 	/**
@@ -442,24 +442,23 @@ export class TasksService {
 	/**
 	 * Create tasks settings
 	 */
-	createSettings(body: ITableSettings) {
-		return this.couchdbService.create('tasks-settings', body, '');
+	createSettings(body: ITasksColumnSettings) {
+		return this.couchdbService.create('tasks-settings', body);
 	}
 
 	/**
 	 * Get tasks settings
 	 * @returns tasks settings
 	 */
-	async getTasksSettings() {
-		const id = await this.couchdbService.getPartitionKey();
-		return this.couchdbService.findById<ITableSettings>('tasks-settings', id);
+	getTasksSettings(type: string) {
+		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type);
 	}
 
 	/**
 	 * Update tasks settings
 	 * @returns tasks settings
 	 */
-	async updateTasksSettings(id: string, rev: string, body: ITableSettings) {
+	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
 	}
 }

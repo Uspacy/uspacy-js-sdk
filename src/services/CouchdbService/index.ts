@@ -10,7 +10,7 @@ import { ICouchItemData, ICouchQueryResponse, ICreateCouchItemResponse } from '.
  */
 @injectable()
 export class CouchdbService {
-	private namespace = 'https://couchdb.uspacy.tech';
+	private namespace = '/settings-backend/v1';
 	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly tokenService: TokensService,
@@ -27,27 +27,16 @@ export class CouchdbService {
 	 * @param type non-required param for filtering items by somethings type, for example: tasks, templates, leads and etc
 	 * @returns Array of items
 	 */
-	async find<T = unknown>(databaseName: string, type?: string) {
+	async find<T = unknown>(databaseName: string, type?: string, id?: string) {
 		const partinionKey = await this.getPartitionKey();
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
 			selector: {
-				_id: {
-					$regex: partinionKey,
-				},
+				_id: { $regex: id || partinionKey },
 				...(type && { type }),
 			},
 			limit: 1000,
 			skip: 0,
 		});
-	}
-
-	/**
-	 * Find data from database
-	 * @param databaseName Database name
-	 * @param fields Fields to return
-	 */
-	async findById<T = unknown>(databaseName: string, id: string) {
-		return this.httpClient.client.get<ICouchItemData<T>>(`${this.namespace}/${databaseName}/${id}`);
 	}
 
 	/**
