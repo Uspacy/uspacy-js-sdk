@@ -408,8 +408,8 @@ export class TasksService {
 	 * Create tasks filters preset
 	 * @param body preset body
 	 */
-	createFilterPreset(body: ICouchItemData<IFilterPreset<IFilterTasks>>) {
-		return this.couchdbService.create('tasks-presets', body);
+	createFilterPreset(body: ICouchItemData<IFilterPreset<IFilterTasks>>, type: string) {
+		return this.couchdbService.create('tasks-presets', body, type);
 	}
 
 	/**
@@ -442,8 +442,8 @@ export class TasksService {
 	/**
 	 * Create tasks settings
 	 */
-	createSettings(body: ITasksColumnSettings) {
-		return this.couchdbService.create('tasks-settings', body);
+	createSettings(body: ITasksColumnSettings, type: string) {
+		return this.couchdbService.create('tasks-settings', body, type);
 	}
 
 	/**
