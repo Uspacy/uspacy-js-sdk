@@ -16,9 +16,9 @@ export class CouchdbService {
 		private readonly tokenService: TokensService,
 	) {}
 
-	async getPartitionKey() {
+	async getPartitionKey(type: string) {
 		const docodedToken = await this.tokenService.decodeToken();
-		return docodedToken.domain + '-' + docodedToken.id;
+		return `${docodedToken.domain}-${docodedToken.id}-${type}`;
 	}
 
 	/**
@@ -27,13 +27,10 @@ export class CouchdbService {
 	 * @param type non-required param for filtering items by somethings type, for example: tasks, templates, leads and etc
 	 * @returns Array of items
 	 */
-	async find<T = unknown>(databaseName: string, type?: string, id?: string) {
-		const partinionKey = await this.getPartitionKey();
+	async find<T = unknown>(databaseName: string, type: string, id?: string) {
+		const partinionKey = await this.getPartitionKey(type);
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
-			selector: {
-				_id: { $regex: id || partinionKey },
-				...(type && { type }),
-			},
+			selector: { _id: { $regex: id || partinionKey } },
 			limit: 1000,
 			skip: 0,
 		});
@@ -44,8 +41,8 @@ export class CouchdbService {
 	 * @param databaseName Database name
 	 * @param data Data to create
 	 */
-	async create(databaseName: string, data: object, salt: string = `:${uuid()}`) {
-		const partinionKey = await this.getPartitionKey();
+	async create(databaseName: string, data: object, type: string, salt: string = `:${uuid()}`) {
+		const partinionKey = await this.getPartitionKey(type);
 		return this.httpClient.client.post<ICreateCouchItemResponse>(`${this.namespace}/${databaseName}`, {
 			_id: partinionKey + salt,
 			...data,
