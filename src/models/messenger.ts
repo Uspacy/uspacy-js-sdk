@@ -35,7 +35,7 @@ export interface IRelations {
 	entity: ERelationsEntity;
 	name: string;
 	entityId: number;
-	pictureUrl: string
+	pictureUrl: string;
 }
 
 export enum EActiveEntity {
@@ -223,22 +223,28 @@ export interface ICreateMessageData {
 	externalAuthorId?: string;
 	relations?: IRelations[];
 	externalId?: string;
-	ref?: {
-		chatId: string;
-		authorId: number;
-		messageId: string;
-	};
-	meta?: {
-		entity: EMetaEntity;
-		type: EMetaType;
-		accountName: string;
-		accountImage: string;
-		body: {
-			text: string;
-			attachedFiles: { url: string; type: string }[];
-			url: string;
-		};
-	};
+	ref?: ICreateMessageRef;
+	meta?: ICreateMessageMeta;
+}
+
+export interface ICreateMessageRef {
+	chatId: string;
+	authorId: number;
+	messageId: string;
+}
+
+export interface ICreateMessageMeta {
+	entity: EMetaEntity;
+	type: EMetaType;
+	accountName: string;
+	accountImage: string;
+	body: ICreateMessageMetaBody;
+}
+
+export interface ICreateMessageMetaBody {
+	text: string;
+	attachedFiles: { url: string; type: string }[];
+	url: string;
 }
 
 export interface ICreateExternalLineData {
