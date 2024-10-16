@@ -94,6 +94,8 @@ export interface IEmailBox {
 	added_by: number;
 	imap_host: string;
 	imap_port: string;
+	smtp_host: string;
+	smtp_port: string;
 	email: string;
 	password: string;
 	name: string;

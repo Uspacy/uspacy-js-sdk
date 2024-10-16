@@ -4,6 +4,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { SessionService } from '../../core/SessionService';
 import { TokensService } from '../../core/TokensService';
+import { IAfterGoogleOauthResponse } from '../../models/calendars';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
@@ -14,6 +15,7 @@ import { IDowngradePayload } from './dto/downgrade.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
+import { IResponseGoogleData } from './dto/response-google-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
 import { ICreateUsingPaymentIntent, IIntentPayload, ISubscriptionsIndividual, ISubscriptionsLegal } from './dto/subscription.dto';
 
@@ -236,5 +238,12 @@ export class AuthService {
 	 */
 	downgrade(body: IDowngradePayload) {
 		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/downgrade`, body);
+	}
+
+	/**
+	 * Redirect to uspacy after google oauth
+	 */
+	getUrlToRedirectAfterOAuth(body: IResponseGoogleData) {
+		return this.httpClient.client.get<IAfterGoogleOauthResponse>(`${this.namespace}/calendars/google/info`, { params: body });
 	}
 }
