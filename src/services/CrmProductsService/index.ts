@@ -6,6 +6,7 @@ import { IProductFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IProduct, IProducts } from '../../models/crm-products';
 import { IField, IFields } from '../../models/field';
+import { IResponseWithMeta } from '../../models/response';
 
 /**
  * CrmProducts service
@@ -33,8 +34,8 @@ export class CrmProductsService {
 	 * @param relatedEntityType related entity type if fetching related to entity products
 	 * @returns Array crm products list
 	 */
-	getProductsWithFilters(params: Omit<IProductFilters, 'openDatePicker'>, signal: AbortSignal) {
-		return this.httpClient.client.get<IProducts>(this.namespace, {
+	getProductsWithFilters(params: Omit<IProductFilters, 'openDatePicker'>, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<IProduct>>(this.namespace, {
 			signal: signal,
 			params,
 		});

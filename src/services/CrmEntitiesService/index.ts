@@ -1,11 +1,12 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEntity, IEntityData, IEntityMain, IEntityMainData } from '../../models/crm-entities';
+import { IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
-import { IReason, IReasonsCreate, IStage, IStages } from '../../models/crm-stages';
-import { IField, IFields } from '../../models/field';
+import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
+import { IField } from '../../models/field';
+import { IResponseWithMeta } from '../../models/response';
 
 /**
  * CrmEntities service
@@ -23,7 +24,7 @@ export class CrmEntitiesService {
 	 * @returns Array crm entities list
 	 */
 	getEntities() {
-		return this.httpClient.client.get<IEntityMain>(this.entityNamespace);
+		return this.httpClient.client.get<IResponseWithMeta<IEntityMainData>>(this.entityNamespace);
 	}
 
 	/**
@@ -31,7 +32,7 @@ export class CrmEntitiesService {
 	 * @returns Array crm entities list
 	 * */
 	getEntitiesWithFunnels() {
-		return this.httpClient.client.get<IEntityMain>(this.entityNamespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IEntityMainData>>(this.entityNamespace, {
 			params: {
 				'with-funnels': true,
 			},
@@ -75,7 +76,7 @@ export class CrmEntitiesService {
 	 * @returns entity funnels
 	 */
 	getEntityFunnel(code: string) {
-		return this.httpClient.client.get<IEntity>(`${this.namespace}/:code/funnel`, {
+		return this.httpClient.client.get<IFunnel[]>(`${this.namespace}/:code/funnel`, {
 			urlParams: { code },
 		});
 	}
@@ -86,7 +87,7 @@ export class CrmEntitiesService {
 	 * @returns entity fields
 	 */
 	getEntityFields(code: string) {
-		return this.httpClient.client.get<IFields>(`${this.namespace}/:code/fields`, {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/:code/fields`, {
 			urlParams: { code },
 		});
 	}
@@ -230,8 +231,8 @@ export class CrmEntitiesService {
 	 * @param funnelId funnel id
 	 * @returns entity stages
 	 * */
-	getEntityStages(code: string, funnelId: number) {
-		return this.httpClient.client.get<{ data: IStages }>(`${this.namespace}/:code/kanban/stage`, {
+	getEntityStages(code: string, funnelId?: number) {
+		return this.httpClient.client.get<IResponseWithMeta<IStage>>(`${this.namespace}/:code/kanban/stage`, {
 			urlParams: { code, funnelId },
 			params: { funnel_id: funnelId },
 		});
@@ -272,6 +273,17 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Get leads reasons list
+	 * @param leadsId id of leads entity
+	 * @returns Array with leads reasons
+	 */
+	getEntityReasons(entityId: number) {
+		return this.httpClient.client.get<IReason[]>(`${this.reasonsNamespace}/:entityId`, {
+			urlParams: { entityId },
+		});
+	}
+
+	/**
 	 * Get entity items list
 	 * @param code entity code
 	 * @returns entity items list
@@ -284,6 +296,18 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Get entity item
+	 * @param code entity code
+	 * @param id entity item id
+	 * @returns entity item
+	 * */
+	getEntityItem(code: string, id: number | string) {
+		return this.httpClient.client.get<IEntityData>(`${this.namespace}/:code/:id`, {
+			urlParams: { code, id },
+		});
+	}
+
+	/**
 	 * Get entity items list with filters
 	 * @param code entity code
 	 * @param params entity items list filter params
@@ -292,18 +316,19 @@ export class CrmEntitiesService {
 	 * @param relatedEntityType related entity type if fetching related to entity  items
 	 * @returns Array crm entity items list
 	 */
-	getEntityItemsWithFilters(code: string, params: string, signal: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
+	getEntityItemsWithFilters(code: string, params: object, signal?: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
-				return `${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code?${params}`;
+				return `${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code/`;
 			}
-			return `${this.namespace}/:code?${params}`;
+			return `${this.namespace}/:code/`;
 		};
 
-		return this.httpClient.client.get<IEntity>(getLink(), {
+		return this.httpClient.client.get<IResponseWithMeta<IEntityData>>(getLink(), {
 			signal,
+			params,
 			urlParams: {
 				relatedEntityType: relatedEntityType,
 				relatedEntityId: relatedEntityId,
@@ -358,9 +383,13 @@ export class CrmEntitiesService {
 	 */
 	massEntityItemsDeletion(code: string, { entityIds, exceptIds, all, params }: IMassActions) {
 		const data = { all, entity_ids: entityIds, except_ids: exceptIds };
-		return this.httpClient.client.delete(`${this.namespace}/:code/mass_deletion${params}`, {
+
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+
+		return this.httpClient.client.delete(`${this.namespace}/:code/mass_deletion${suffix}`, {
 			data,
 			urlParams: { code },
+			params: typeof params === 'object' ? params : undefined,
 		});
 	}
 
@@ -382,9 +411,11 @@ export class CrmEntitiesService {
 			payload,
 			settings,
 		};
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
 
-		return this.httpClient.client.patch(`${this.namespace}/:code/mass_edit${params}`, data, {
+		return this.httpClient.client.patch(`${this.namespace}/:code/mass_edit${suffix}`, data, {
 			urlParams: { code },
+			params: typeof params === 'object' ? params : undefined,
 		});
 	}
 
@@ -415,6 +446,20 @@ export class CrmEntitiesService {
 	createEntityItemFromKanban(code: string, data: Partial<IEntityData>) {
 		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code`, data, {
 			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get entity items list with filters by stage id
+	 * @param code entity code
+	 * @param params entity items list filter params
+	 * @param stageId stage id
+	 * @returns Array crm entity items list
+	 */
+	getEntityItemsByStage(code: string, params: object, stageId: string) {
+		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:stageId`, {
+			params,
+			urlParams: { code, stageId },
 		});
 	}
 }

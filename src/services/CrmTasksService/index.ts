@@ -45,9 +45,11 @@ export class CrmTasksService {
 	 * @param relatedEntityType related entity type if fetching related to entity tasks
 	 * @returns Array crm tasks list
 	 */
-	getTasksWithFilters(params: string, signal: AbortSignal) {
-		return this.httpClient.client.get<ITasks>(`${this.namespace}?${params}`, {
-			signal: signal,
+	getTasksWithFilters(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.namespace}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
 		});
 	}
 

@@ -31,11 +31,7 @@ export interface IEntityMainData {
 	activity_support?: boolean;
 	task_support?: boolean;
 	cardBlocks?: ICardBlock[];
-}
-
-export interface IEntityMain {
-	data: IEntityMainData[];
-	meta: IMeta;
+	canRead?: boolean;
 }
 
 export interface IEntityData {

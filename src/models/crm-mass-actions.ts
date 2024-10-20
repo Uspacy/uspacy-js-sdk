@@ -6,7 +6,7 @@ export interface IMassActions {
 	entityIds: number[];
 	exceptIds: number[];
 	all: boolean;
-	params?: string;
+	params?: string | { [key: string]: any };
 	payload?: { [key: string]: any };
 	settings?: { [key: string]: any };
 	profile?: IUser;
