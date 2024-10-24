@@ -28,3 +28,13 @@ export interface IComment {
 		entityId: number;
 	}[];
 }
+
+export interface ICommentParams {
+	entityType: EntityType;
+	entityId: number;
+	page?: number;
+	list?: number;
+	q?: string;
+	nextId?: number;
+	lastId?: number;
+}
