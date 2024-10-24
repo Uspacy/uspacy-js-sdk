@@ -3,13 +3,14 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { EntityType, IComment } from '../../models/comment';
 import { IResponseWithMeta } from '../../models/response';
+import { ICreateCommentDto } from './create-comment-dto';
 
 /**
  * Comments service
  */
 @injectable()
 export class CommentsService {
-	private namespace = '/comments/v1/comments';
+	private namespace = '/comments/v1';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -17,13 +18,14 @@ export class CommentsService {
 	 * Get comments
 	 * @returns list of comments
 	 */
-	getComments(entityType: EntityType, entityId: number, list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithMeta<IComment[]>>(this.namespace, {
+	getComments(entityType: EntityType, entityId: number, page: number, list: number, q?: string, nextId?: number, lastId?: number) {
+		return this.httpClient.client.get<IResponseWithMeta<IComment[]>>(`${this.namespace}/list_comments`, {
 			params: {
 				entityType,
 				entityId,
+				page,
 				list,
-				childList,
+				q,
 				nextId,
 				lastId,
 			},
@@ -32,36 +34,21 @@ export class CommentsService {
 
 	/**
 	 * Create comment
+	 * @param body create comment params
+	 * @returns comment entity
 	 */
-	createComment(entityType: string, entityId: number, message?: string) {
-		return this.httpClient.client.post<IComment>(this.namespace, {
-			entityType,
-			entityId,
-			message,
-		});
-	}
-
-	/**
-	 * Get comment by id
-	 * @param id comment id
-	 * @returns
-	 */
-	getCommentById(id: number) {
-		return this.httpClient.client.get<IComment>(`${this.namespace}/:id/`, {
-			urlParams: {
-				id,
-			},
-		});
+	createComment(body: ICreateCommentDto) {
+		return this.httpClient.client.post<IComment>(`${this.namespace}/comments`, body);
 	}
 
 	/**
 	 * Update comment
 	 * @param id comment id
-	 * @param message message
+	 * @param body update comment params
 	 * @returns
 	 */
-	updateComment(id: number, message: string, entityType?: string, entityId?: number) {
-		return this.httpClient.client.patch<IComment>(`${this.namespace}/:id/`, { message, entityType, entityId, id }, { urlParams: { id } });
+	updateComment(id: number, body: ICreateCommentDto) {
+		return this.httpClient.client.patch<IComment>(`${this.namespace}/comments/:id/`, body, { urlParams: { id } });
 	}
 
 	/**
@@ -70,36 +57,15 @@ export class CommentsService {
 	 * @returns
 	 */
 	deleteComment(id: number) {
-		return this.httpClient.client.delete(`${this.namespace}/:id/`, { urlParams: { id } });
+		return this.httpClient.client.delete(`${this.namespace}/comments/:id/`, { urlParams: { id } });
 	}
 
 	/**
-	 * Delete comments by entity
-	 * @param entityType entity type
-	 * @param entityId entity id
-	 */
-	deleteCommentsByEntity(entityType: number, entityId: EntityType) {
-		return this.httpClient.client.delete(`${this.namespace}/`, { params: { entityType, entityId } });
-	}
-
-	/**
-	 * Get comments
-	 * @returns list of comments
-	 */
-	getCommentsByEntityIds(entityIds: number[], entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/`, {
-			params: { entityIds, entityType, list, childList, nextId, lastId },
-		});
-	}
-
-	/**
-	 * Fetch comment by id with params
+	 * Read comments
 	 * @param id comment id
 	 * @returns
 	 */
-	getCommentByEntityId(entityId: number, entityType: 'post' | 'comment', list?: number, childList?: number, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/`, {
-			params: { entityId, entityType, list, childList, nextId, lastId },
-		});
+	readComments(commentIds: number[]) {
+		return this.httpClient.client.post(`${this.namespace}/comments/read/`, { commentIds });
 	}
 }
