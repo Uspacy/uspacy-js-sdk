@@ -19,7 +19,7 @@ export class CommentsService {
 	 * @returns list of comments
 	 */
 	getComments(entityType: EntityType, entityId: number, page: number, list: number, q?: string, nextId?: number, lastId?: number) {
-		return this.httpClient.client.get<IResponseWithMeta<IComment[]>>(`${this.namespace}/list_comments`, {
+		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/list_comments`, {
 			params: {
 				entityType,
 				entityId,
