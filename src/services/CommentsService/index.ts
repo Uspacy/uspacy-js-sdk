@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { EntityType, IComment } from '../../models/comment';
+import { IComment, ICommentParams } from '../../models/comment';
 import { IResponseWithMeta } from '../../models/response';
 import { ICreateCommentDto } from './create-comment-dto';
 
@@ -18,17 +18,9 @@ export class CommentsService {
 	 * Get comments
 	 * @returns list of comments
 	 */
-	getComments(entityType: EntityType, entityId: number, page: number, list: number, q?: string, nextId?: number, lastId?: number) {
+	getComments({ entityType, entityId, page, list, q, nextId, lastId }: ICommentParams) {
 		return this.httpClient.client.get<IResponseWithMeta<IComment>>(`${this.namespace}/list_comments`, {
-			params: {
-				entityType,
-				entityId,
-				page,
-				list,
-				q,
-				nextId,
-				lastId,
-			},
+			params: { entityType, entityId, page, list, q, nextId, lastId },
 		});
 	}
 
