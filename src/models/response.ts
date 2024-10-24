@@ -15,6 +15,7 @@ export interface IMeta {
 	last_page?: number;
 	per_page?: number;
 	to?: number;
+	numberOfUnread?: number;
 }
 
 export interface IResponseWithMessage {
