@@ -13,8 +13,8 @@ export interface ICreateCommentDto {
 	authorId: number;
 	message: string;
 	date: number;
-	mentioned: INotify[];
-	notify: INotify[];
+	mentioned: INotify;
+	notify: INotify;
 	root_parent: IRootParent;
 	files_ids?: number[];
 	pinned?: number;
