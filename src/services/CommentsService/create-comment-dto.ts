@@ -5,6 +5,7 @@ export interface IRootParent {
 	data: { id: string; title: string };
 	service: string;
 	type: EntityType;
+	table_name: string;
 }
 
 export interface ICreateCommentDto {
@@ -15,7 +16,7 @@ export interface ICreateCommentDto {
 	date: number;
 	mentioned: INotify;
 	notify: INotify;
-	root_parent: IRootParent;
+	root_parent?: IRootParent;
 	files_ids?: number[];
 	pinned?: number;
 	read?: boolean;
