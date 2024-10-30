@@ -35,6 +35,7 @@ export interface ICommentParams {
 	page?: number;
 	list?: number;
 	q?: string;
+	childList?: number;
 	pinned?: number;
 	nextId?: number;
 	lastId?: number;
