@@ -17,7 +17,7 @@ export interface ICreateCommentDto {
 	mentioned: INotify;
 	notify: INotify;
 	root_parent?: IRootParent;
-	files_ids?: number[];
+	file_ids?: number[];
 	pinned?: number;
 	read?: boolean;
 }
