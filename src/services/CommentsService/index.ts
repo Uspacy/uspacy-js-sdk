@@ -23,6 +23,14 @@ export class CommentsService {
 	}
 
 	/**
+	 * Get comment
+	 * @returns comment entity
+	 */
+	getComment(id: number) {
+		return this.httpClient.client.get<IComment>(`${this.namespace}/comments/:id/`, { urlParams: { id } });
+	}
+
+	/**
 	 * Create comment
 	 * @param body create comment params
 	 * @returns comment entity
