@@ -94,8 +94,11 @@ export class CrmTasksService {
 	 * @param params query params if editing all tasks
 	 */
 	massTasksDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
-		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${params}`, {
-			data: { all, entity_ids: entityIds, except_ids: exceptIds },
+		const data = { all, entity_ids: entityIds, except_ids: exceptIds };
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${suffix}`, {
+			data,
+			params: typeof params === 'object' ? params : undefined,
 		});
 	}
 
@@ -109,13 +112,15 @@ export class CrmTasksService {
 	 * @param settings editing settings
 	 */
 	massTasksEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
-		return this.httpClient.client.patch(`${this.namespace}/mass_edit${params}`, {
+		const data = {
 			all,
 			entity_ids: entityIds,
 			except_ids: exceptIds,
 			payload,
 			settings,
-		});
+		};
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.patch(`${this.namespace}/mass_edit${suffix}`, data);
 	}
 
 	/**
