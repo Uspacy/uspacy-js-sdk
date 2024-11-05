@@ -1,5 +1,6 @@
 import { IFile } from './files';
 import { INotify } from './notify';
+import { IMeta } from './response';
 
 export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact';
 export type CommentSortType = 'asc' | 'desc';
@@ -17,8 +18,8 @@ export interface IComment {
 	prevId: number;
 	read: boolean;
 	subComments?: {
-		data?: IComment[];
-		total?: number;
+		data: IComment[];
+		meta: IMeta;
 	};
 	files?: IFile[];
 	mentioned?: INotify[];
