@@ -7,17 +7,36 @@ export interface IComment {
 	id: number;
 	entityType: EntityType;
 	entityId: number;
-	message: string;
 	authorId: string;
+	message: string;
 	date: number;
+	pinned: number;
+	commentId: number;
+	nextId: number;
+	prevId: number;
+	read: boolean;
+	subComments?: {
+		data?: IComment[];
+		total?: number;
+	};
+	files?: IFile[];
 	mentioned?: INotify[];
 	notify: INotify[];
-	files?: IFile[];
-	nextId?: number | null;
-	prevId?: number | null;
 	reactions?: {
 		reaction: number;
 		amount: number;
 		entityId: number;
 	}[];
+}
+
+export interface ICommentParams {
+	entityType: EntityType;
+	entityId: number;
+	page?: number;
+	list?: number;
+	q?: string;
+	childList?: number;
+	pinned?: number;
+	nextId?: number;
+	lastId?: number;
 }
