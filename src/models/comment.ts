@@ -2,6 +2,7 @@ import { IFile } from './files';
 import { INotify } from './notify';
 
 export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact';
+export type CommentSortType = 'asc' | 'desc';
 
 export interface IComment {
 	id: number;
@@ -36,7 +37,11 @@ export interface ICommentParams {
 	list?: number;
 	q?: string;
 	childList?: number;
+	childPage?: number;
 	pinned?: number;
 	nextId?: number;
 	lastId?: number;
+	sortBy?: {
+		id: CommentSortType;
+	};
 }
