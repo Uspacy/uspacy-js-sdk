@@ -1,8 +1,8 @@
 import { IMeta } from './response';
 
 export interface IChangedValue {
-	value: string | number | string[] | number[];
-	display_value: string | number | string[] | number[];
+	value: string;
+	display_value: string;
 }
 
 export interface IChangesItem {
