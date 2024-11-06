@@ -42,6 +42,7 @@ export interface ICommentParams {
 	pinned?: number;
 	nextId?: number;
 	lastId?: number;
+	id?: number;
 	sortBy?: {
 		id: CommentSortType;
 	};
