@@ -60,8 +60,11 @@
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntitiesWithFunnels" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFields" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFunnel" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Funnel</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityItem" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Item</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityItems" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityItemsByStage" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items<wbr/>By<wbr/>Stage</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityItemsWithFilters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items<wbr/>With<wbr/>Filters</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityReasons" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Reasons</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityStages" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Stages</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#massEntityItemsDeletion" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Entity<wbr/>Items<wbr/>Deletion</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#massEntityItemsEditing" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Entity<wbr/>Items<wbr/>Editing</span></a>
@@ -411,27 +414,27 @@
 <section class="tsd-panel tsd-member"><a id="getEntities" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entities</span><a href="#getEntities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntities.getEntities-1"><span class="tsd-kind-call-signature">get<wbr/>Entities</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMain.html" class="tsd-signature-type tsd-kind-interface">IEntityMain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntities.getEntities-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntities.getEntities-1"><span class="tsd-kind-call-signature">get<wbr/>Entities</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMainData.html" class="tsd-signature-type tsd-kind-interface">IEntityMainData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntities.getEntities-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get crm entities list</p>
 </div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMain.html" class="tsd-signature-type tsd-kind-interface">IEntityMain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entities list</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMainData.html" class="tsd-signature-type tsd-kind-interface">IEntityMainData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entities list</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntitiesWithFunnels" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span><a href="#getEntitiesWithFunnels" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntitiesWithFunnels.getEntitiesWithFunnels-1"><span class="tsd-kind-call-signature">get<wbr/>Entities<wbr/>With<wbr/>Funnels</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMain.html" class="tsd-signature-type tsd-kind-interface">IEntityMain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntitiesWithFunnels.getEntitiesWithFunnels-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntitiesWithFunnels.getEntitiesWithFunnels-1"><span class="tsd-kind-call-signature">get<wbr/>Entities<wbr/>With<wbr/>Funnels</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMainData.html" class="tsd-signature-type tsd-kind-interface">IEntityMainData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntitiesWithFunnels.getEntitiesWithFunnels-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get crm entities list with funnels</p>
 </div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMain.html" class="tsd-signature-type tsd-kind-interface">IEntityMain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entities list</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMainData.html" class="tsd-signature-type tsd-kind-interface">IEntityMainData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entities list</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityFields" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Fields</span><a href="#getEntityFields" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntityFields.getEntityFields-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Fields</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IFields.html" class="tsd-signature-type tsd-kind-interface">IFields</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFields.getEntityFields-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntityFields.getEntityFields-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Fields</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFields.getEntityFields-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get entity fields</p>
 </div>
@@ -443,13 +446,13 @@
 <div class="tsd-comment tsd-typography"><p>entity code</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IFields.html" class="tsd-signature-type tsd-kind-interface">IFields</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity fields</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity fields</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityFunnel" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Funnel</span><a href="#getEntityFunnel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntityFunnel.getEntityFunnel-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Funnel</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntity.html" class="tsd-signature-type tsd-kind-interface">IEntity</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFunnel.getEntityFunnel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntityFunnel.getEntityFunnel-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Funnel</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_funnel.IFunnel.html" class="tsd-signature-type tsd-kind-interface">IFunnel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFunnel.getEntityFunnel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get entity funnel</p>
 </div>
@@ -461,7 +464,30 @@
 <div class="tsd-comment tsd-typography"><p>entity code</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntity.html" class="tsd-signature-type tsd-kind-interface">IEntity</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity funnels</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_funnel.IFunnel.html" class="tsd-signature-type tsd-kind-interface">IFunnel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity funnels</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getEntityItem" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Item</span><a href="#getEntityItem" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getEntityItem.getEntityItem-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Item</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityData.html" class="tsd-signature-type tsd-kind-interface">IEntityData</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityItem.getEntityItem-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get entity item</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">id</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity item id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityData.html" class="tsd-signature-type tsd-kind-interface">IEntityData</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity item</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityItems" class="tsd-anchor"></a>
@@ -482,10 +508,38 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityData.html" class="tsd-signature-type tsd-kind-interface">IEntityData</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity items list</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getEntityItemsByStage" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Items<wbr/>By<wbr/>Stage</span><a href="#getEntityItemsByStage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getEntityItemsByStage.getEntityItemsByStage-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Items<wbr/>By<wbr/>Stage</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">params</span>, <span class="tsd-kind-parameter">stageId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityItemsByStage.getEntityItemsByStage-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get entity items list with filters by stage id</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">params</span>: <span class="tsd-signature-type">object</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity items list filter params</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">stageId</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>stage id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entity items list</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityItemsWithFilters" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Items<wbr/>With<wbr/>Filters</span><a href="#getEntityItemsWithFilters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntityItemsWithFilters.getEntityItemsWithFilters-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Items<wbr/>With<wbr/>Filters</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">params</span>, <span class="tsd-kind-parameter">signal</span>, <span class="tsd-kind-parameter">relatedEntityId</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">relatedEntityType</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntity.html" class="tsd-signature-type tsd-kind-interface">IEntity</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityItemsWithFilters.getEntityItemsWithFilters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntityItemsWithFilters.getEntityItemsWithFilters-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Items<wbr/>With<wbr/>Filters</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">params</span>, <span class="tsd-kind-parameter">signal</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">relatedEntityId</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">relatedEntityType</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityData.html" class="tsd-signature-type tsd-kind-interface">IEntityData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityItemsWithFilters.getEntityItemsWithFilters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get entity items list with filters</p>
 </div>
@@ -498,12 +552,12 @@
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">params</span>: <span class="tsd-signature-type">string</span></h5>
+<h5><span class="tsd-kind-parameter">params</span>: <span class="tsd-signature-type">object</span></h5>
 <div class="tsd-comment tsd-typography"><p>entity items list filter params</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">signal</span>: <span class="tsd-signature-type ">AbortSignal</span></h5>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">signal</span>: <span class="tsd-signature-type ">AbortSignal</span></h5>
 <div class="tsd-comment tsd-typography"><p>AbortSignal for cancelling request</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
@@ -517,13 +571,28 @@
 <div class="tsd-comment tsd-typography"><p>related entity type if fetching related to entity  items</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntity.html" class="tsd-signature-type tsd-kind-interface">IEntity</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entity items list</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityData.html" class="tsd-signature-type tsd-kind-interface">IEntityData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entity items list</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getEntityReasons" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Reasons</span><a href="#getEntityReasons" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getEntityReasons.getEntityReasons-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Reasons</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">entityId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_stages.IReason.html" class="tsd-signature-type tsd-kind-interface">IReason</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityReasons.getEntityReasons-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get leads reasons list</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">entityId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_stages.IReason.html" class="tsd-signature-type tsd-kind-interface">IReason</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array with leads reasons</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityStages" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Stages</span><a href="#getEntityStages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntityStages.getEntityStages-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Stages</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">funnelId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_crm_stages.IStages.html" class="tsd-signature-type tsd-kind-interface">IStages</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityStages.getEntityStages-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntityStages.getEntityStages-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Stages</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">funnelId</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_stages.IStage.html" class="tsd-signature-type tsd-kind-interface">IStage</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityStages.getEntityStages-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get entity stages</p>
 </div>
@@ -536,11 +605,11 @@
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">funnelId</span>: <span class="tsd-signature-type">number</span></h5>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">funnelId</span>: <span class="tsd-signature-type">number</span></h5>
 <div class="tsd-comment tsd-typography"><p>funnel id</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_crm_stages.IStages.html" class="tsd-signature-type tsd-kind-interface">IStages</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity stages</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_stages.IStage.html" class="tsd-signature-type tsd-kind-interface">IStage</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity stages</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="massEntityItemsDeletion" class="tsd-anchor"></a>
@@ -842,8 +911,11 @@
 <li><a href="#getEntitiesWithFunnels" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a></li>
 <li><a href="#getEntityFields" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a></li>
 <li><a href="#getEntityFunnel" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Funnel</span></a></li>
+<li><a href="#getEntityItem" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Item</span></a></li>
 <li><a href="#getEntityItems" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items</span></a></li>
+<li><a href="#getEntityItemsByStage" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items<wbr/>By<wbr/>Stage</span></a></li>
 <li><a href="#getEntityItemsWithFilters" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Items<wbr/>With<wbr/>Filters</span></a></li>
+<li><a href="#getEntityReasons" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Reasons</span></a></li>
 <li><a href="#getEntityStages" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Stages</span></a></li>
 <li><a href="#massEntityItemsDeletion" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Entity<wbr/>Items<wbr/>Deletion</span></a></li>
 <li><a href="#massEntityItemsEditing" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>mass<wbr/>Entity<wbr/>Items<wbr/>Editing</span></a></li>
