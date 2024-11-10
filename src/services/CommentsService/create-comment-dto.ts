@@ -9,13 +9,13 @@ export interface IRootParent {
 }
 
 export interface ICreateCommentDto {
-	entity_type: EntityType;
-	entity_id: number;
+	entityType: EntityType;
+	entityId: number;
 	authorId: number;
 	message: string;
-	date: number;
-	mentioned: INotify;
-	notify: INotify;
+	date?: number;
+	mentioned?: INotify;
+	notify?: INotify;
 	root_parent?: IRootParent;
 	file_ids?: number[];
 	pinned?: number;
