@@ -15,13 +15,14 @@ export class AnnouncersService {
 	/**
 	 * Get announcers
 	 */
-	async getAnnouncers(populateParams: string[], locale: string) {
+	async getAnnouncers(populateParams: string[], locale: string, apiPoint: string) {
 		const populate = generateUrlForAdminApi({
 			apiPoint: this.namespace,
 			locale,
 			populateParams: populateParams,
 		});
 		return this.httpClient.client.get<IAnnouncers>(populate, {
+			baseURL: apiPoint,
 			params: {
 				populate: 'body,meta',
 				locale,
