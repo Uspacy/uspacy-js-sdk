@@ -4,13 +4,6 @@ export type WidgetButtonType = 'main' | 'info';
 export type BannerButtonVariant = 'contained' | 'outlined' | 'glass';
 export type BannerIcon = 'default';
 
-interface ISlides {
-	id: number;
-	src?: string;
-	lang?: string;
-	video?: string;
-}
-
 interface IList {
 	id: number;
 	text: string;
@@ -48,20 +41,6 @@ export interface IAnnounceBanner {
 	backgroundImage?: IImage;
 	backgroundColor?: string;
 	chips?: IChip[];
-}
-
-export interface IAnnouncment {
-	id: number;
-	slides: ISlides[];
-	title?: string;
-	subtitle?: string;
-	list?: IList[];
-	button?: IButton;
-	text?: string;
-	text2?: string;
-	text3?: string;
-	infoLink?: string;
-	nextViewed?: string;
 }
 
 export interface IAnnounceNotification extends INotificationMessage {
