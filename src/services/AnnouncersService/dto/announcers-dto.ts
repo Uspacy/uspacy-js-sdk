@@ -5,8 +5,12 @@ export interface ResponseApiItem<T> {
 	attributes: T;
 }
 
-export interface ResponseApi<D> {
-	data: D;
+export interface ResponseApi {
+	data: ResponseApiItem<{
+		notification: IAnnounceNotification;
+		widget: IAnnounceWidget[];
+		banner: IAnnounceBanner;
+	}>;
 	meta: {
 		pagination: {
 			page: number;
@@ -21,14 +25,4 @@ export interface IAdminUrlParams {
 	apiPoint?: string;
 	locale?: string;
 	populateParams: string[];
-}
-
-export interface IAnnouncers {
-	data: ResponseApi<
-		ResponseApiItem<{
-			notification: IAnnounceNotification;
-			widget: IAnnounceWidget[];
-			banner: IAnnounceBanner;
-		}>
-	>;
 }
