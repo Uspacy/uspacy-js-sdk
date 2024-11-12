@@ -26,6 +26,7 @@ export class AnnouncersService {
 				populate: 'body,meta',
 				locale,
 			},
+			useAuth: false,
 		});
 	}
 }
