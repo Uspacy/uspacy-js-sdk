@@ -41,19 +41,20 @@ export class HttpClient {
 		// by default useAuth = true;
 		const useAuth = config.useAuth !== false;
 		await this.resolveBusy();
+		const token = await this.tokenService.getToken();
 
 		if (useAuth) {
-			const token = await this.tokenService.getToken();
 			if (token) {
 				if (!config.headers?.Authorization) {
 					config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
 				}
 			}
-			if (!config.baseURL) {
-				const decodedToken = await this.tokenService.decodeToken(token);
-				config.baseURL = `https://${decodedToken.domain}`;
-			}
 		}
+		if (!config.baseURL) {
+			const decodedToken = await this.tokenService.decodeToken(token);
+			config.baseURL = `https://${decodedToken.domain}`;
+		}
+
 		if (config.url && config.urlParams) {
 			config.url = Object.entries(config.urlParams).reduce(
 				(url, [key, value]) => url.replace(`:${key}`, encodeURIComponent(String(value))),
