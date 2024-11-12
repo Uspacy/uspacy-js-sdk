@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { generateUrlForAdminApi } from '../../helpers/adminApi';
-import { IAnnouncers } from './dto/announcers-dto';
+import { ResponseApi } from './dto/announcers-dto';
 
 /**
  * Announcers
@@ -21,7 +21,7 @@ export class AnnouncersService {
 			locale,
 			populateParams: populateParams,
 		});
-		return this.httpClient.client.get<IAnnouncers>(populate, {
+		return this.httpClient.client.get<ResponseApi>(populate, {
 			baseURL: apiPoint,
 			params: {
 				populate: 'body,meta',
