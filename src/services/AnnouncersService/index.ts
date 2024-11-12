@@ -2,14 +2,13 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { generateUrlForAdminApi } from '../../helpers/adminApi';
-import { IApp } from '../../models/app';
-import { IResponseWithMeta } from '../../models/response';
+import { IAnnouncers } from './dto/announcers-dto';
 
 /**
- * Announcers service
+ * Announcers
  */
 @injectable()
-export class AppsService {
+export class AnnouncersService {
 	private namespace = '/announce';
 	constructor(private readonly httpClient: HttpClient) {}
 
@@ -22,7 +21,7 @@ export class AppsService {
 			locale,
 			populateParams: populateParams,
 		});
-		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(populate, {
+		return this.httpClient.client.get<IAnnouncers>(populate, {
 			params: {
 				populate: 'body,meta',
 				locale,
