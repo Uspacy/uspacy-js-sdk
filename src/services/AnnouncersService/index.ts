@@ -14,11 +14,11 @@ export class AnnouncersService {
 	/**
 	 * Get announcers
 	 */
-	async getAnnouncers(populateParams: string[], locale: string, apiPoint: string) {
+	async getAnnouncers(populate: string[], locale: string, apiPoint: string) {
 		return this.httpClient.client.get<ResponseApi>(this.namespace, {
 			baseURL: apiPoint,
 			params: {
-				populateParams,
+				populate,
 				locale,
 			},
 			useAuth: false,
