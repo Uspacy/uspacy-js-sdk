@@ -1,7 +1,7 @@
 import { IAnnounceBanner, IAnnounceNotification, IAnnounceWidget } from '../../../models/announcers';
 
 export interface ResponseApiItem<T> {
-	id: number;
+	id?: number;
 	attributes: T;
 }
 
@@ -18,7 +18,7 @@ export interface ResponseApi<D> {
 }
 
 export interface IAdminUrlParams {
-	apiPoint: string;
+	apiPoint?: string;
 	locale?: string;
 	populateParams: string[];
 }
