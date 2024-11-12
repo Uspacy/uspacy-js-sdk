@@ -18,12 +18,12 @@ interface IButton {
 	external?: boolean;
 }
 
-interface IWidgetButton extends IButton {
+export interface IWidgetButton extends IButton {
 	id: number;
 	type?: WidgetButtonType;
 }
 
-interface IBannerButton extends IButton {
+export interface IBannerButton extends IButton {
 	id: number;
 	type?: BannerButtonVariant;
 	color?: string;
