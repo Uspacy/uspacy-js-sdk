@@ -15,7 +15,7 @@ export class AnnouncersService {
 	/**
 	 * Get announcers
 	 */
-	async getAnnpincers(populateParams: string[], locale: string) {
+	async getAnnouncers(populateParams: string[], locale: string) {
 		const populate = generateUrlForAdminApi({
 			apiPoint: this.namespace,
 			locale,
