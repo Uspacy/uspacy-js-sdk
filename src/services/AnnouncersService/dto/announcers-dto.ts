@@ -7,7 +7,7 @@ export interface ResponseApiItem<T> {
 
 export interface ResponseApi {
 	data: ResponseApiItem<{
-		notification: IAnnounceNotification;
+		notification: IAnnounceNotification[];
 		widget: IAnnounceWidget[];
 		banner: IAnnounceBanner;
 	}>;
