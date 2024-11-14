@@ -32,4 +32,5 @@ export interface IHistoryChange {
 	changed_by: string;
 	changed_at: string;
 	items: IChangesItem[];
+	id?: number;
 }
