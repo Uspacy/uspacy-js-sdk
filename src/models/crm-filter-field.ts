@@ -15,6 +15,9 @@ export interface IFilterPreset {
 	filters: IFilter;
 	pinned: boolean;
 	default: boolean;
+	current: boolean;
+	soon?: boolean;
+	shadow?: boolean;
 	filterFields: IFilterField[];
 }
 

@@ -9,6 +9,7 @@ declare module 'axios' {
 	interface AxiosRequestConfig {
 		urlParams?: Record<string, string | number>;
 		_retry?: boolean;
+		useAuth?: boolean;
 	}
 }
 
@@ -37,17 +38,23 @@ export class HttpClient {
 	}
 
 	private async handleRequest(config: AxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
+		// by default useAuth = true;
+		const useAuth = config.useAuth !== false;
 		await this.resolveBusy();
 		const token = await this.tokenService.getToken();
-		if (token) {
-			if (!config.headers?.Authorization) {
-				config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
-			}
-			if (!config.baseURL) {
-				const decodedToken = await this.tokenService.decodeToken(token);
-				config.baseURL = `https://${decodedToken.domain}`;
+
+		if (useAuth) {
+			if (token) {
+				if (!config.headers?.Authorization) {
+					config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
+				}
 			}
 		}
+		if (!config.baseURL) {
+			const decodedToken = await this.tokenService.decodeToken(token);
+			config.baseURL = `https://${decodedToken.domain}`;
+		}
+
 		if (config.url && config.urlParams) {
 			config.url = Object.entries(config.urlParams).reduce(
 				(url, [key, value]) => url.replace(`:${key}`, encodeURIComponent(String(value))),
