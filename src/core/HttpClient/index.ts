@@ -49,13 +49,8 @@ export class HttpClient {
 					config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
 				}
 			}
-
-			if (!config.baseURL) {
-				const decodedToken = await this.tokenService.decodeToken(token);
-				config.baseURL = `https://${decodedToken.domain}`;
-			}
 		}
-		if (!config.baseURL) {
+		if (!config.baseURL && token) {
 			const decodedToken = await this.tokenService.decodeToken(token);
 			config.baseURL = `https://${decodedToken.domain}`;
 		}
