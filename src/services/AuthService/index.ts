@@ -244,6 +244,6 @@ export class AuthService {
 	 * Redirect to uspacy after google oauth
 	 */
 	getUrlToRedirectAfterOAuth(body: IResponseGoogleData) {
-		return this.httpClient.client.get<IAfterGoogleOauthResponse>(`${this.namespace}/calendars/google/info`, { params: body });
+		return this.httpClient.client.get<IAfterGoogleOauthResponse>(`${this.namespace}/calendars/google/info`, { params: body, useAuth: false });
 	}
 }
