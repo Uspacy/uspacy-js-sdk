@@ -50,7 +50,7 @@ export class HttpClient {
 				}
 			}
 		}
-		if (!config.baseURL) {
+		if (!config.baseURL && token) {
 			const decodedToken = await this.tokenService.decodeToken(token);
 			config.baseURL = `https://${decodedToken.domain}`;
 		}
