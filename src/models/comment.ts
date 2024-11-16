@@ -20,6 +20,8 @@ export interface IComment {
 	subComments?: {
 		data: IComment[];
 		meta: IMeta;
+		prevMeta?: IMeta;
+		nextMeta?: IMeta;
 	};
 	files?: IFile[];
 	mentioned?: INotify[];
