@@ -24,6 +24,17 @@ export class AnalyticsService {
 	}
 
 	/**
+	 * Get analytic report
+	 * @param id analytic report id
+	 * @returns report
+	 */
+	getAnalyticReport(id: string) {
+		return this.httpClient.client.get<IAnalyticReport>(`${this.namespace}/:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
 	 * Create analytic report
 	 * @param data analytic report data without id
 	 * @returns report
@@ -45,7 +56,7 @@ export class AnalyticsService {
 	}
 
 	/**
-	 * Delete lead
+	 * Delete analytic report
 	 * @param id analytic report id
 	 */
 	deleteReport(id: number) {
