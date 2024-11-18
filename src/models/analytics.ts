@@ -12,19 +12,19 @@ export interface IAnalyticReport {
 	description: string;
 	chart_type: 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'pie' | 'numeric' | 'donut';
 	entity_table_name: string;
-	panel_ids: number[];
+	panel_ids?: number[];
 	created_at: number;
 	owner_id: number;
 	logical_operator: 'AND' | 'OR';
 	filter: {
 		main: {
 			field_code: string;
-			value: string[] | number[] | MoneyFilterType | DateFilterType;
-		};
+			value: string[] | number[] | boolean[] | MoneyFilterType | DateFilterType;
+		}[];
 		group_by: string;
 		view_by: {
 			value: string;
-			timeFrame: string;
+			timeframe: string;
 		};
 		measure_for: string;
 		additional: {
