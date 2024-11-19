@@ -1,6 +1,6 @@
 import { IMeta } from './response';
 
-export type MoneyFilterType = { from: number; to: number; currency: string };
+export type MoneyFilterType = { from: number; to: number; currency?: string };
 export type DateFilterType = {
 	namePeriods: string[];
 	certainPeriod: number[];
