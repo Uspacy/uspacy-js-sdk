@@ -18,7 +18,7 @@ export class AnalyticsService {
 	 * @returns Array analytics report list
 	 */
 	getAnalyticsReportList(params: string, signal: AbortSignal) {
-		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespace}/reports?${params}`, {
+		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespace}/reports?page=1&list=10`, {
 			signal: signal,
 		});
 	}
