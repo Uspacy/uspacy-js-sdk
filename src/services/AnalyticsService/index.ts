@@ -18,7 +18,7 @@ export class AnalyticsService {
 	 * @returns Array analytics report list
 	 */
 	getAnalyticsReportList(params: string, signal: AbortSignal) {
-		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespace}/analytics-backend/reports?page=1&list=10`, {
+		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespace}/reports?page=1&list=10`, {
 			signal: signal,
 		});
 	}
@@ -29,7 +29,7 @@ export class AnalyticsService {
 	 * @returns report
 	 */
 	getAnalyticReport(id: string) {
-		return this.httpClient.client.get<IAnalyticReport>(`${this.namespace}/analytics-backend/reports/:id`, {
+		return this.httpClient.client.get<IAnalyticReport>(`${this.namespace}/reports/:id`, {
 			urlParams: { id },
 		});
 	}
@@ -40,7 +40,7 @@ export class AnalyticsService {
 	 * @returns report
 	 * */
 	createReport(data: Partial<IAnalyticReport>) {
-		return this.httpClient.client.post<IAnalyticReport>(`${this.namespace}/analytics-backend/reports`, data);
+		return this.httpClient.client.post<IAnalyticReport>(`${this.namespace}/reports`, data);
 	}
 
 	/**
@@ -50,7 +50,7 @@ export class AnalyticsService {
 	 * @returns report
 	 */
 	updateReport(id: number, data: Partial<IAnalyticReport>) {
-		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespace}/analytics-backend/reports/:id`, data, {
+		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespace}/reports/:id`, data, {
 			urlParams: { id },
 		});
 	}
@@ -60,7 +60,7 @@ export class AnalyticsService {
 	 * @param id analytic report id
 	 */
 	deleteReport(id: number) {
-		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespace}/analytics-backend/reports/:id`, {
+		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespace}/reports/:id`, {
 			urlParams: { id },
 		});
 	}
