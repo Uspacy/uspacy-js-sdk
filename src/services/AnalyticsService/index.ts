@@ -1,14 +1,15 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IAnalyticReport, IAnalyticReportList } from '../../models/analytics';
+import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList } from '../../models/analytics';
 
 /**
- * Messenger service
+ * Analytics service
  */
 @injectable()
 export class AnalyticsService {
 	private namespace = 'analytics-backend/v1';
+	private namespaceReports = `${this.namespace}/reports`;
 	constructor(private readonly httpClient: HttpClient) {}
 
 	/**
@@ -17,8 +18,8 @@ export class AnalyticsService {
 	 * @param signal AbortSignal for cancelling request
 	 * @returns Array analytics report list
 	 */
-	getAnalyticsReportList(params: string, signal: AbortSignal) {
-		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespace}/reports`, {
+	getAnalyticsReportList(params: IAnalyticReportFilter, signal: AbortSignal) {
+		return this.httpClient.client.get<IAnalyticReportList>(`${this.namespaceReports}`, {
 			params,
 			signal: signal,
 		});
@@ -30,7 +31,7 @@ export class AnalyticsService {
 	 * @returns report
 	 */
 	getAnalyticReport(id: string) {
-		return this.httpClient.client.get<IAnalyticReport>(`${this.namespace}/reports/:id`, {
+		return this.httpClient.client.get<IAnalyticReport>(`${this.namespaceReports}/:id`, {
 			urlParams: { id },
 		});
 	}
@@ -41,7 +42,7 @@ export class AnalyticsService {
 	 * @returns report
 	 * */
 	createReport(data: Partial<IAnalyticReport>) {
-		return this.httpClient.client.post<IAnalyticReport>(`${this.namespace}/reports`, data);
+		return this.httpClient.client.post<IAnalyticReport>(`${this.namespaceReports}`, data);
 	}
 
 	/**
@@ -51,7 +52,7 @@ export class AnalyticsService {
 	 * @returns report
 	 */
 	updateReport(id: number, data: Partial<IAnalyticReport>) {
-		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespace}/reports/:id`, data, {
+		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespaceReports}/:id`, data, {
 			urlParams: { id },
 		});
 	}
@@ -61,7 +62,7 @@ export class AnalyticsService {
 	 * @param id analytic report id
 	 */
 	deleteReport(id: number) {
-		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespace}/reports/:id`, {
+		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}/:id`, {
 			urlParams: { id },
 		});
 	}

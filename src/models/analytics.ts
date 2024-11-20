@@ -6,6 +6,14 @@ export type DateFilterType = {
 	certainPeriod: number[];
 };
 
+export interface IAnalyticReportFilter {
+	title: string;
+	page: number;
+	list: number;
+	owner_id: number[];
+	entity_table_name: string[];
+}
+
 export interface IAnalyticReport {
 	id: number;
 	title: string;
