@@ -5,5 +5,5 @@ export interface IWebhookRequest {
 	active: boolean;
 	events: IEvent[];
 	name?: string;
-	permissions: IPermission[];
+	permissions?: IPermission[];
 }
