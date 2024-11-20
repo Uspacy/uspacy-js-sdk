@@ -25,6 +25,10 @@ export interface IInput {
 	action?: string;
 }
 
+export interface IPermission {
+	service: string;
+}
+
 export interface IWebhook {
 	active: boolean;
 	confirmed?: boolean;
@@ -34,6 +38,8 @@ export interface IWebhook {
 	updated_at: number;
 	url: string;
 	user_id: number;
+	permissions?: IPermission[];
+	webhook_url?: string;
 }
 
 export interface IWebhooksResponse {
