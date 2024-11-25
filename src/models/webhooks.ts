@@ -38,6 +38,7 @@ export interface IWebhook {
 	updated_at: number;
 	url: string;
 	user_id: number;
+	name?: string;
 	permissions?: IPermission[];
 	webhook_url?: string;
 }
