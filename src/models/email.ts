@@ -2,6 +2,8 @@ import { IEntityData } from './crm-entities';
 import { IFile } from './files';
 
 export type LetterStatus = 'pending' | 'error' | 'succseed';
+export type AccessLevel = 'personal' | 'shared';
+export type AccessRoles = 'viewer' | 'destroyer' | 'setter';
 
 export interface IThreads {
 	email_id: number;
@@ -101,7 +103,7 @@ export interface IEmailBox {
 	password: string;
 	name: string;
 	sender_name: string;
-	access_level: string;
+	access_level: AccessLevel;
 	last_message_id: number;
 	tariff: number;
 	has_file: boolean;
@@ -115,6 +117,11 @@ export interface IEmailBox {
 	folders?: IFolder[];
 	crm_integration_enabled: number;
 	oauth_provider?: string;
+	access_roles?: {
+		user_id?: number;
+		department_id?: number;
+		name: AccessRoles;
+	}[];
 }
 
 export interface IFolders {
