@@ -33,6 +33,8 @@ export class WebhooksService {
 
 	/**
 	 * Create webhook
+	 * @param body webhook fields
+	 * @param isIncoming optional param, for incoming webhook
 	 */
 	createWebhook(body: IWebhookRequest, isIncoming?: boolean) {
 		return this.httpClient.client.post<number>(this.getNamespace(isIncoming), body);
@@ -41,6 +43,7 @@ export class WebhooksService {
 	/**
 	 * Delete webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
 	deleteWebhook(id: number, isIncoming?: boolean) {
 		return this.httpClient.client.delete<number>(`${this.getNamespace(isIncoming)}/:id/`, { urlParams: { id } });
@@ -49,6 +52,7 @@ export class WebhooksService {
 	/**
 	 * Get webhook object
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 * @returns Webhook object
 	 */
 	getWebhookById(id: number, isIncoming?: boolean) {
@@ -58,6 +62,7 @@ export class WebhooksService {
 	/**
 	 * Toggle webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
 	toggleWebhook(id: number, isIncoming?: boolean) {
 		return this.httpClient.client.patch(`${this.getNamespace(isIncoming)}/:id/toggle`, undefined, { urlParams: { id } });
@@ -66,6 +71,7 @@ export class WebhooksService {
 	/**
 	 * Repeat webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
 	repeatWebhook(id: number, isIncoming?: boolean) {
 		return this.httpClient.client.patch(`${this.getNamespace(isIncoming)}/:id/repeat`, undefined, { urlParams: { id } });
@@ -74,8 +80,19 @@ export class WebhooksService {
 	/**
 	 * Delete webhooks
 	 * @param ids ids array
+	 * @param isIncoming optional param, for incoming webhook
 	 */
 	deleteSelectedWebhooks(ids: number[], isIncoming?: boolean) {
 		return this.httpClient.client.delete<number[]>(this.getNamespace(isIncoming), { data: { ids } });
+	}
+
+	/**
+	 * Update webhook
+	 * @param id webhook id
+	 * @param body fields to update
+	 * @param isIncoming optional param, for incoming webhook
+	 */
+	updateWebhook(id: number, body: Partial<IWebhookRequest>, isIncoming?: boolean) {
+		return this.httpClient.client.patch<number[]>(`${this.getNamespace(isIncoming)}/:id/repeat`, body, { urlParams: { id } });
 	}
 }
