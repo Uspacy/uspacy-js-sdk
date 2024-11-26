@@ -93,6 +93,6 @@ export class WebhooksService {
 	 * @param isIncoming optional param, for incoming webhook
 	 */
 	updateWebhook(id: number, body: Partial<IWebhookRequest>, isIncoming?: boolean) {
-		return this.httpClient.client.patch<number[]>(`${this.getNamespace(isIncoming)}/:id/repeat`, body, { urlParams: { id } });
+		return this.httpClient.client.patch<number[]>(`${this.getNamespace(isIncoming)}/:id`, body, { urlParams: { id } });
 	}
 }
