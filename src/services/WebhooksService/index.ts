@@ -22,11 +22,12 @@ export class WebhooksService {
 	 * Get webhooks list
 	 * @returns Array webhooks entity
 	 */
-	getWebhooks(page: number, list?: number, isIncoming?: boolean) {
+	getWebhooks(page: number, list?: number, name?: string, isIncoming?: boolean) {
 		return this.httpClient.client.get<IWebhooksResponse>(this.getNamespace(isIncoming), {
 			params: {
 				page,
 				list,
+				name,
 			},
 		});
 	}
