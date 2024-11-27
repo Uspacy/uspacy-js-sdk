@@ -24,3 +24,22 @@ export interface IPermissionsFunnels {
 	level: string;
 	entity_id: number;
 }
+
+export interface PermissionFunnel {
+	entity_type: string;
+	action: string;
+	level: string;
+	entity_id: number;
+	selected: boolean;
+}
+
+export interface FunnelItem {
+	id: number;
+	title: string;
+	funnel_code: string;
+	permissions: PermissionFunnel[];
+}
+
+export interface IPermissionsFunnelsResponse {
+	[key: string]: FunnelItem[];
+}
