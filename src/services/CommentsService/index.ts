@@ -60,7 +60,7 @@ export class CommentsService {
 	 * Update comment
 	 * @param id comment id
 	 * @param body update comment params
-	 * @returns
+	 * @returns comment entity
 	 */
 	updateComment(id: number, body: ICreateCommentDto) {
 		return this.httpClient.client.patch<IComment>(`${this.namespace}/comments/:id/`, body, { urlParams: { id } });
@@ -82,5 +82,16 @@ export class CommentsService {
 	 */
 	readComments(commentIds: number[]) {
 		return this.httpClient.client.post(`${this.namespace}/comments/read/`, { commentIds });
+	}
+
+	/**
+	 * Read comments
+	 * @param id comment id
+	 * @param pinned comment pinned true
+	 * @returns comment entity
+	 */
+
+	pinComment(id: number, pinned: boolean) {
+		return this.httpClient.client.patch(`${this.namespace}/comments/:id/pin`, { pinned }, { urlParams: { id } });
 	}
 }
