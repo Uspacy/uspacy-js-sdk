@@ -10,6 +10,12 @@ export interface IThreads {
 	filter: string[];
 }
 
+export interface IAccessRoles {
+	user_id?: number;
+	department_id?: number;
+	name: AccessRoles;
+}
+
 export interface IFolder {
 	id?: number;
 	email_id?: number;
@@ -116,11 +122,7 @@ export interface IEmailBox {
 	folders?: IFolder[];
 	crm_integration_enabled: number;
 	oauth_provider?: string;
-	access_roles?: {
-		user_id?: number;
-		department_id?: number;
-		name: AccessRoles;
-	}[];
+	access_roles: IAccessRoles[];
 }
 
 export interface IFolders {
