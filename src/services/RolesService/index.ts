@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IPermissions, IRole } from '../../models/roles';
+import { IPermissions, IPermissionsFunnelsResponse, IRole } from '../../models/roles';
 import { ICreateRoleDto, IUpdateRolePermissionsFunnels, IUptadeRoleDto } from './create-update-role-dto';
 
 /**
@@ -65,7 +65,7 @@ export class RolesService {
 	 * @returns list of funnels
 	 */
 	getPermissionsFunnels(role: string) {
-		return this.httpClient.client.get(`${this.crmNamespace}/permissions/funnels`, { urlParams: { role } });
+		return this.httpClient.client.get<IPermissionsFunnelsResponse>(`${this.crmNamespace}/permissions/funnels`, { urlParams: { role } });
 	}
 
 	/**
