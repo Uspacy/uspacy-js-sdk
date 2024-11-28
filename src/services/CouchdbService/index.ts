@@ -30,7 +30,7 @@ export class CouchdbService {
 	async find<T = unknown>(databaseName: string, type: string, id?: string) {
 		const partinionKey = await this.getPartitionKey(type);
 		return this.httpClient.client.post<ICouchQueryResponse<T>>(`${this.namespace}/${databaseName}/_find`, {
-			selector: { _id: { $lt: id || partinionKey, $gt: (id || partinionKey) + '\ufff0' } },
+			selector: { _id: { $gt: id || partinionKey, $lt: `${id || partinionKey}\\ufff0` } },
 			limit: 1000,
 			skip: 0,
 		});
