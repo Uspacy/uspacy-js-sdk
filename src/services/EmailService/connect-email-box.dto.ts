@@ -1,9 +1,9 @@
-import { AccessLevel, AccessRoles, IFolder } from '../../models/email';
+import { AccessLevel, IAccessRoles, IFolder } from '../../models/email';
 
 export interface IConnectEmailBox {
-	name?: string;
-	sender_name?: string;
-	email?: string;
+	name: string;
+	sender_name: string;
+	email: string;
 	password?: string;
 	imap_host?: string;
 	imap_port?: string;
@@ -12,12 +12,8 @@ export interface IConnectEmailBox {
 	sync_from?: {
 		period?: '7 days' | '1 month' | '3 months' | '1 year';
 	};
-	access_level?: AccessLevel;
-	access_roles?: {
-		user_id?: number;
-		department_id?: number;
-		name: AccessRoles;
-	}[];
+	access_level: AccessLevel;
+	access_roles: IAccessRoles[];
 	crm_integration_enabled?: boolean;
 }
 
