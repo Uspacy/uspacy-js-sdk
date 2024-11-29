@@ -10,6 +10,11 @@ import { IWebhookRequest } from './dto/create-webhook.dto';
 @injectable()
 export class WebhooksService {
 	private namespace = '/company/v1/webhooks';
+	private namespaceIncoming = '/company/v1/incoming_webhooks';
+
+	private getNamespace(prefix?: boolean): string {
+		return prefix ? this.namespaceIncoming : this.namespace;
+	}
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -17,60 +22,78 @@ export class WebhooksService {
 	 * Get webhooks list
 	 * @returns Array webhooks entity
 	 */
-	getWebhooks(page: number, list?: number) {
-		return this.httpClient.client.get<IWebhooksResponse>(this.namespace, {
+	getWebhooks(page: number, list?: number, name?: string, isIncoming?: boolean) {
+		return this.httpClient.client.get<IWebhooksResponse>(this.getNamespace(isIncoming), {
 			params: {
 				page,
 				list,
+				name,
 			},
 		});
 	}
 
 	/**
 	 * Create webhook
+	 * @param body webhook fields
+	 * @param isIncoming optional param, for incoming webhook
 	 */
-	createWebhook(body: IWebhookRequest) {
-		return this.httpClient.client.post<number>(this.namespace, body);
+	createWebhook(body: IWebhookRequest, isIncoming?: boolean) {
+		return this.httpClient.client.post<number>(this.getNamespace(isIncoming), body);
 	}
 
 	/**
 	 * Delete webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
-	deleteWebhook(id: number) {
-		return this.httpClient.client.delete<number>(`${this.namespace}/:id/`, { urlParams: { id } });
+	deleteWebhook(id: number, isIncoming?: boolean) {
+		return this.httpClient.client.delete<number>(`${this.getNamespace(isIncoming)}/:id/`, { urlParams: { id } });
 	}
 
 	/**
 	 * Get webhook object
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 * @returns Webhook object
 	 */
-	getWebhookById(id: number) {
-		return this.httpClient.client.get<IWebhook>(`${this.namespace}/:id/`, { urlParams: { id } });
+	getWebhookById(id: number, isIncoming?: boolean) {
+		return this.httpClient.client.get<IWebhook>(`${this.getNamespace(isIncoming)}/:id/`, { urlParams: { id } });
 	}
 
 	/**
 	 * Toggle webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
-	toggleWebhook(id: number) {
-		return this.httpClient.client.patch(`${this.namespace}/:id/toggle`, undefined, { urlParams: { id } });
+	toggleWebhook(id: number, isIncoming?: boolean) {
+		return this.httpClient.client.patch(`${this.getNamespace(isIncoming)}/:id/toggle`, undefined, { urlParams: { id } });
 	}
 
 	/**
 	 * Repeat webhook
 	 * @param id webhook id
+	 * @param isIncoming optional param, for incoming webhook
 	 */
-	repeatWebhook(id: number) {
-		return this.httpClient.client.patch(`${this.namespace}/:id/repeat`, undefined, { urlParams: { id } });
+	repeatWebhook(id: number, isIncoming?: boolean) {
+		return this.httpClient.client.patch(`${this.getNamespace(isIncoming)}/:id/repeat`, undefined, { urlParams: { id } });
 	}
 
 	/**
 	 * Delete webhooks
 	 * @param ids ids array
+	 * @param isIncoming optional param, for incoming webhook
 	 */
-	deleteSelectedWebhooks(ids: number[]) {
-		return this.httpClient.client.delete<number[]>(this.namespace, { data: { ids } });
+	deleteSelectedWebhooks(ids: number[], isIncoming?: boolean) {
+		return this.httpClient.client.delete<number[]>(this.getNamespace(isIncoming), { data: { ids } });
+	}
+
+	/**
+	 * Update webhook
+	 * @param id webhook id
+	 * @param body fields to update
+	 * @param isIncoming optional param, for incoming webhook
+	 */
+	updateWebhook(id: number, body: Partial<IWebhookRequest>, isIncoming?: boolean) {
+		return this.httpClient.client.patch<number[]>(`${this.getNamespace(isIncoming)}/:id`, body, { urlParams: { id } });
 	}
 }
