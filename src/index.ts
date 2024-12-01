@@ -7,6 +7,7 @@ import { HttpClient } from './core/HttpClient';
 import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
 import { AnalyticsService } from './services/AnalyticsService';
+import { AnnouncersService } from './services/AnnouncersService';
 import { AppsService } from './services/AppsService';
 import { AuthService } from './services/AuthService';
 import { AutomationsService } from './services/AutomationsService';
@@ -93,6 +94,7 @@ class Uspacy {
 		public readonly crmRequisitesService: CrmRequisitesService,
 		public readonly historyService: HistoryService,
 		public readonly analyticsService: AnalyticsService,
+		public readonly announcersService: AnnouncersService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
