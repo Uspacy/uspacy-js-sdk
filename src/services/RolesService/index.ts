@@ -72,6 +72,6 @@ export class RolesService {
 	 * Update role permissions funnels
 	 */
 	updateRolePermisionsFunnels(body: IUpdateRolePermissionsFunnels) {
-		return this.httpClient.client.post(`${this.crmNamespace}/permissions/funnels`, body);
+		return this.httpClient.client.post(`${this.crmNamespace}/permissions`, body);
 	}
 }
