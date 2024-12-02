@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.109-alpha.15",
+  "version": "0.0.112",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -52,8 +52,6 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "prebuild": "rimraf lib",
-    "prestart:dev": "rimraf lib",
     "build:docs": "typedoc",
     "start:dev": "concurrently \"webpack --watch --mode development\" \"yarn emitDeclarations:watch\"",
     "start:demo": "cross-env NODE_ENV=demo webpack serve --mode development",
