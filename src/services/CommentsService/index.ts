@@ -68,9 +68,9 @@ export class CommentsService {
 	}
 
 	/**
-	 * Read comments
+	 * pin comments
 	 * @param id comment id
-	 * @param pinned comment pinned true
+	 * @param pinned comment pinned flag
 	 * @returns comment entity
 	 */
 
