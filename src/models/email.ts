@@ -126,6 +126,18 @@ export interface IEmailBox {
 	access_roles: IAccessRoles[];
 }
 
+export interface ISignature {
+	id: number;
+	name: string;
+	signature: string;
+	added_by: number;
+	is_all_emails: boolean;
+	is_default: boolean;
+	created_at: string;
+	updated_at: string;
+	email_ids: number[];
+}
+
 export interface IFolders {
 	data: IFolder[];
 }
@@ -160,7 +172,7 @@ export interface IEmailFilters {
 
 export interface IEmailFiltersParams {
 	page?: number;
-	list?: number;
+	list?: number | 'all';
 	date?: number[][];
 	is_read?: number[];
 	q?: string;
