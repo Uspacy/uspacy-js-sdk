@@ -95,7 +95,6 @@ class Uspacy {
 		public readonly historyService: HistoryService,
 		public readonly analyticsService: AnalyticsService,
 		public readonly announcersService: AnnouncersService,
-		public readonly analyticsService: AnalyticsService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
