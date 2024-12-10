@@ -47,6 +47,7 @@ export interface IAnnounceNotification extends INotificationMessage {
 	id: string;
 	title: string;
 	subTitle: string;
+	date: number;
 	buttons?: IButton[];
 	image?: IImage;
 	isAnnounce?: boolean;
