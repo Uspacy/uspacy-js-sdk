@@ -51,7 +51,7 @@ export class AnalyticsService {
 	 * @param data analytic report data
 	 * @returns report
 	 */
-	updateReport(id: number, data: Partial<IAnalyticReport>) {
+	updateReport(id: string, data: Partial<IAnalyticReport>) {
 		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespaceReports}:id`, data, {
 			urlParams: { id },
 		});
@@ -61,7 +61,7 @@ export class AnalyticsService {
 	 * Delete analytic report
 	 * @param id analytic report id
 	 */
-	deleteReport(id: number) {
+	deleteReport(id: string) {
 		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}:id`, {
 			urlParams: { id },
 		});
