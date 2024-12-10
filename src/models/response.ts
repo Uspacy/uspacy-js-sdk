@@ -17,6 +17,7 @@ export interface IMeta {
 	to?: number;
 	numberOfUnread?: number;
 	parentTotal?: number;
+	unfiltered_total?: number;
 }
 
 export interface IResponseWithMessage {
