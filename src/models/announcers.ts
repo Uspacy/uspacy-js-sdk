@@ -53,12 +53,8 @@ export interface IAnnounceNotification extends INotificationMessage {
 }
 
 export interface IImage {
-	data: {
-		id: number;
-		attributes: {
-			url: string;
-		};
-	} | null;
+	id: number;
+	url: string;
 }
 
 export interface IAnnounceWidget {
