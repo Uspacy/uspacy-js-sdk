@@ -9,7 +9,7 @@ import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList } from '../
 @injectable()
 export class AnalyticsService {
 	private namespace = 'analytics-backend/v1';
-	private namespaceReports = `${this.namespace}/reports`;
+	private namespaceReports = `${this.namespace}/reports/`;
 	constructor(private readonly httpClient: HttpClient) {}
 
 	/**
@@ -31,7 +31,7 @@ export class AnalyticsService {
 	 * @returns report
 	 */
 	getAnalyticReport(id: string) {
-		return this.httpClient.client.get<IAnalyticReport>(`${this.namespaceReports}/:id`, {
+		return this.httpClient.client.get<IAnalyticReport>(`${this.namespaceReports}:id`, {
 			urlParams: { id },
 		});
 	}
@@ -51,8 +51,8 @@ export class AnalyticsService {
 	 * @param data analytic report data
 	 * @returns report
 	 */
-	updateReport(id: number, data: Partial<IAnalyticReport>) {
-		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespaceReports}/:id`, data, {
+	updateReport(id: string, data: Partial<IAnalyticReport>) {
+		return this.httpClient.client.patch<IAnalyticReport>(`${this.namespaceReports}:id`, data, {
 			urlParams: { id },
 		});
 	}
@@ -61,8 +61,8 @@ export class AnalyticsService {
 	 * Delete analytic report
 	 * @param id analytic report id
 	 */
-	deleteReport(id: number) {
-		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}/:id`, {
+	deleteReport(id: string) {
+		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}:id`, {
 			urlParams: { id },
 		});
 	}
