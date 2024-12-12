@@ -170,6 +170,7 @@ export interface IEmailFilters {
 }
 
 export interface IEmailFiltersParams {
+	email_id?: number;
 	page?: number;
 	list?: number | 'all';
 	date?: number[][];
