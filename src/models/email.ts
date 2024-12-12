@@ -10,6 +10,11 @@ export interface IThreads {
 	filter: string[];
 }
 
+export interface ISignaturesEmails {
+	email_id: number;
+	is_default: boolean;
+}
+
 export interface IAccessRoles {
 	user_id?: number;
 	department_id?: number;
@@ -132,10 +137,9 @@ export interface ISignature {
 	signature: string;
 	added_by: number;
 	is_all_emails: boolean;
-	is_default: boolean;
 	created_at: string;
 	updated_at: string;
-	email_ids: number[];
+	emails: ISignaturesEmails[];
 }
 
 export interface IFolders {
