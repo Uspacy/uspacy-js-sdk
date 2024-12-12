@@ -65,7 +65,10 @@ export class RolesService {
 	 * @returns list of funnels
 	 */
 	getPermissionsFunnels(role?: string) {
-		return this.httpClient.client.get<IPermissionsFunnelsResponse>(`${this.crmNamespace}/permissions/funnels`, { urlParams: { role } });
+		return this.httpClient.client.get<IPermissionsFunnelsResponse>(`${this.crmNamespace}/permissions/funnels`, {
+			urlParams: { role },
+			params: { role },
+		});
 	}
 
 	/**
