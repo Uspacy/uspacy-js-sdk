@@ -24,4 +24,5 @@ export interface ICreateLetterPayload {
 	crm_entities?: {
 		[key: string]: IEntityData[];
 	};
+	signature_id?: number;
 }
