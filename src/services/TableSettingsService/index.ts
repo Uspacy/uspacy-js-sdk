@@ -1,6 +1,5 @@
 import { injectable } from 'tsyringe';
 
-import { ICouchQueryResponse } from '../../models/couchdb';
 import { IColumnSettings } from '../../models/table-settings';
 import { CouchdbService } from '../CouchdbService';
 
@@ -27,7 +26,7 @@ export class TableSettingsService {
 	 * @param type table settings type
 	 */
 	getTableSettings(databaseName: string, type: string) {
-		return this.couchdbService.find<ICouchQueryResponse<IColumnSettings>>(databaseName, type);
+		return this.couchdbService.find<IColumnSettings>(databaseName, type);
 	}
 
 	/**
