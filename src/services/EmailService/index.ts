@@ -17,7 +17,7 @@ import {
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
-import { ICreateSignature } from './create-signature.dto';
+import { ISignaturePayload, ISignatureUpdatePayload } from './signature.dto';
 
 /**
  * Email service
@@ -250,7 +250,7 @@ export class EmailService {
 	 * @param body email signature payload
 	 * @returns  Email signature entity
 	 */
-	createEmailSignature(body: ICreateSignature) {
+	createEmailSignature(body: ISignaturePayload) {
 		return this.httpClient.client.post<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/`, body);
 	}
 
@@ -260,7 +260,7 @@ export class EmailService {
 	 * @param body email signature payload
 	 * @returns  Email signature entity
 	 */
-	updateEmailSignature(id: number, body: ICreateSignature) {
+	updateEmailSignature(id: number, body: ISignatureUpdatePayload) {
 		return this.httpClient.client.patch<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/:id`, body, { urlParams: { id } });
 	}
 
