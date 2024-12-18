@@ -18,7 +18,7 @@ export type MetricType = 'count' | 'amount_of_the_deal';
 export type DayInterval = 'day' | 'month' | 'year';
 
 export interface IAnalyticReport {
-	id: number;
+	id: string;
 	title: string;
 	description: string;
 	chart_type: ChartVariantType | 'donut';
