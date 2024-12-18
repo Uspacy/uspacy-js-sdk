@@ -6,5 +6,3 @@ export interface ISignaturePayload {
 	is_all_emails: boolean;
 	emails: ISignaturesEmails[];
 }
-
-export type ISignatureUpdatePayload = Partial<ISignaturePayload>;
