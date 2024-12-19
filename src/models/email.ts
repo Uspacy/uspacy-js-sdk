@@ -140,6 +140,7 @@ export interface ISignature {
 	created_at: string;
 	updated_at: string;
 	emails: ISignaturesEmails[];
+	active: boolean;
 }
 
 export interface IFolders {
