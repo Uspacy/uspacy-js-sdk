@@ -56,6 +56,13 @@ export enum EMetaType {
 	DEFAULT = 'default',
 }
 
+export enum EMessageStatus {
+	SENT = 'sent',
+	DELIVERED = 'delivered',
+	READ = 'read',
+	ERROR = 'error',
+}
+
 export interface IMessage {
 	id: string;
 	timestamp: number;
@@ -74,6 +81,8 @@ export interface IMessage {
 	externalLine?: IExternalLine | string;
 	externalAuthorId?: string;
 	relations?: IRelations[];
+	status?: EMessageStatus;
+	statusText?: string;
 	ref?: {
 		chatId: string;
 		authorId: number;

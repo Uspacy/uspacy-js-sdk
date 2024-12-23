@@ -241,8 +241,8 @@ export class EmailService {
 	 * @param params pagination params
 	 * @returns  Array with email signatures list entity
 	 */
-	getEmailSignatures(params: IEmailFiltersParams) {
-		return this.httpClient.client.get<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/`, { params });
+	getEmailSignatures() {
+		return this.httpClient.client.get<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/`);
 	}
 
 	/**
