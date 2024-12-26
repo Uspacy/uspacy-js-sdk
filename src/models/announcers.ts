@@ -47,18 +47,15 @@ export interface IAnnounceNotification extends INotificationMessage {
 	id: string;
 	title: string;
 	subTitle: string;
+	date: number;
 	buttons?: IButton[];
 	image?: IImage;
 	isAnnounce?: boolean;
 }
 
 export interface IImage {
-	data: {
-		id: number;
-		attributes: {
-			url: string;
-		};
-	} | null;
+	id: number;
+	url: string;
 }
 
 export interface IAnnounceWidget {
