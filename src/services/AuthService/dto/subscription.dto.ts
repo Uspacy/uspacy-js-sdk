@@ -71,3 +71,26 @@ export interface ICreateUsingPaymentIntent {
 	gwToken: string;
 	paymentMethodType: 'card' | 'bank_transfer';
 }
+
+// ! NEW BILLING
+export interface ISubscriptionPayload {
+	email: string;
+	phone: string;
+	plan_code: string;
+	quantity: number;
+}
+
+export interface IIndividualPayload extends ISubscriptionPayload {
+	first_name: string;
+	last_name: string;
+	auto_renewal: boolean;
+}
+
+export interface ILegalPayload extends ISubscriptionPayload {
+	edruofop: string;
+	name: string;
+	full_name_organization: string;
+	short_name_organization: string;
+	director_pib: string;
+	legal_address: string;
+}

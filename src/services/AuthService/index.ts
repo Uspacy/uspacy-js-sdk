@@ -8,7 +8,7 @@ import { IAfterGoogleOauthResponse } from '../../models/calendars';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { ICoupon, IIntent, IInvoiceData, IInvoices, IRatesList, ISubscription } from '../../models/tariffs';
+import { ICoupon, IIntent, IInvoice, IInvoiceData, IInvoices, IPortalSubscription, IRatesList, ISubscription, ITariff } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { IDowngradePayload } from './dto/downgrade.dto';
@@ -17,7 +17,14 @@ import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { IResponseGoogleData } from './dto/response-google-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { ICreateUsingPaymentIntent, IIntentPayload, ISubscriptionsIndividual, ISubscriptionsLegal } from './dto/subscription.dto';
+import {
+	ICreateUsingPaymentIntent,
+	IIndividualPayload,
+	IIntentPayload,
+	ILegalPayload,
+	ISubscriptionsIndividual,
+	ISubscriptionsLegal,
+} from './dto/subscription.dto';
 
 /**
  * Auth service
@@ -245,5 +252,48 @@ export class AuthService {
 	 */
 	getUrlToRedirectAfterOAuth(body: IResponseGoogleData) {
 		return this.httpClient.client.get<IAfterGoogleOauthResponse>(`${this.namespace}/calendars/google/info`, { params: body, useAuth: false });
+	}
+
+	// ! NEW BILLING
+	/**
+	 * Get tariffs list
+	 * @returns Array tarifs entity
+	 */
+	getTariffsList() {
+		return this.httpClient.client.get<ITariff[]>(`${this.namespace}/tariffs`);
+	}
+
+	getPortalSubscription() {
+		return this.httpClient.client.get<IPortalSubscription>(`${this.namespace}/tariffs/subscription`);
+	}
+
+	/**
+	 * Create subscription individual
+	 * @returns Object invoice entity
+	 */
+	createSubscriptionInvdividual(body: IIndividualPayload) {
+		return this.httpClient.client.post<IInvoice>(`${this.namespace}/tariffs/invoices/individual`, body);
+	}
+
+	/**
+	 * Create subscription legal
+	 * @returns Object invoice entity
+	 */
+	createSubscriptionLegal(body: ILegalPayload) {
+		return this.httpClient.client.post<IInvoice>(`${this.namespace}/tariffs/invoices/legal`, body);
+	}
+
+	/**
+	 * Activating demo tariff
+	 */
+	activatingDemo() {
+		return this.httpClient.client.post<{ status: 'ok' }>(`${this.namespace}/tariffs/demo`);
+	}
+
+	/**
+	 * Disable subscription renewal
+	 */
+	disableSubscriptionRenewal() {
+		return this.httpClient.client.post<boolean>(`${this.namespace}/tariffs/disable_renewal`);
 	}
 }

@@ -206,3 +206,47 @@ export interface IRatesListData {
 export interface IRatesList {
 	data: IRatesListData[];
 }
+
+// ! NEW BILLING
+export interface ITariff {
+	title: string;
+	plan_code: string;
+	price: string;
+	currency: string;
+	period_unit: string;
+	period: number;
+	active: boolean;
+	region: string;
+}
+
+export interface IPortalSubscription {
+	paid_users: number;
+	plan_title: string;
+	plan: string;
+	plan_end: number;
+	demo_activation: boolean;
+}
+
+export interface IInvoice {
+	email: string;
+	portal: string;
+	plan_code: string;
+	quantity: number;
+	region: string;
+	phone: string;
+	auto_renewal: boolean;
+	url: string;
+	sub_id: number;
+	company: number;
+	first_name?: string;
+	last_name?: string;
+	contact?: number;
+	edruofop?: string;
+	name?: string;
+	full_name_organization?: string;
+	short_name_organization?: string;
+	director_pib?: string;
+	legal_address?: string;
+	coupon?: string[];
+	tax_id?: string;
+}
