@@ -294,6 +294,6 @@ export class AuthService {
 	 * Disable subscription renewal
 	 */
 	disableSubscriptionRenewal() {
-		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/disable_renewal`);
+		return this.httpClient.client.post<boolean>(`${this.namespace}/tariffs/disable_renewal`);
 	}
 }
