@@ -78,6 +78,7 @@ export interface ISubscriptionPayload {
 	phone: string;
 	plan_code: string;
 	quantity: number;
+	tariff_extension?: boolean;
 }
 
 export interface IIndividualPayload extends ISubscriptionPayload {

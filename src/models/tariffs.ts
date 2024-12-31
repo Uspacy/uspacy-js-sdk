@@ -225,6 +225,9 @@ export interface IPortalSubscription {
 	plan: string;
 	plan_end: number;
 	demo_activation: boolean;
+	auto_renewal: boolean;
+	first_payment_date: number;
+	created_at: number;
 }
 
 export interface IInvoice {
