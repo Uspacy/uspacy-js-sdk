@@ -230,7 +230,7 @@ export interface IPortalSubscription {
 	created_at: number;
 }
 
-export interface IInvoice {
+export interface IBill {
 	email: string;
 	portal: string;
 	plan_code: string;
@@ -241,6 +241,8 @@ export interface IInvoice {
 	url: string;
 	sub_id: number;
 	company: number;
+	invoice_number: string;
+	total_amount: number;
 	first_name?: string;
 	last_name?: string;
 	contact?: number;
