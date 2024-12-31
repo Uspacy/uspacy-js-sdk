@@ -79,6 +79,7 @@ export interface ISubscriptionPayload {
 	plan_code: string;
 	quantity: number;
 	tariff_extension?: boolean;
+	coupon?: string[];
 }
 
 export interface IIndividualPayload extends ISubscriptionPayload {
