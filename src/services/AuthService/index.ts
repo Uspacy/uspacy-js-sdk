@@ -8,7 +8,7 @@ import { IAfterGoogleOauthResponse } from '../../models/calendars';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { ICoupon, IIntent, IInvoice, IInvoiceData, IInvoices, IPortalSubscription, IRatesList, ISubscription, ITariff } from '../../models/tariffs';
+import { IBill, ICoupon, IIntent, IInvoiceData, IInvoices, IPortalSubscription, IRatesList, ISubscription, ITariff } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { IDowngradePayload } from './dto/downgrade.dto';
@@ -272,7 +272,7 @@ export class AuthService {
 	 * @returns Object invoice entity
 	 */
 	createSubscriptionInvdividual(body: IIndividualPayload) {
-		return this.httpClient.client.post<IInvoice>(`${this.namespace}/tariffs/invoices/individual`, body);
+		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/individual`, body);
 	}
 
 	/**
@@ -280,7 +280,7 @@ export class AuthService {
 	 * @returns Object invoice entity
 	 */
 	createSubscriptionLegal(body: ILegalPayload) {
-		return this.httpClient.client.post<IInvoice>(`${this.namespace}/tariffs/invoices/legal`, body);
+		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal`, body);
 	}
 
 	/**
