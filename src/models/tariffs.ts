@@ -254,4 +254,5 @@ export interface IBill {
 	legal_address?: string;
 	coupon?: string[];
 	tax_id?: string;
+	hash?: string;
 }

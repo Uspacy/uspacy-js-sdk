@@ -78,6 +78,7 @@ export interface ISubscriptionPayload {
 	phone: string;
 	plan_code: string;
 	quantity: number;
+	auto_renewal: boolean;
 	tariff_extension?: boolean;
 	coupon?: string[];
 }
@@ -85,7 +86,8 @@ export interface ISubscriptionPayload {
 export interface IIndividualPayload extends ISubscriptionPayload {
 	first_name: string;
 	last_name: string;
-	auto_renewal: boolean;
+	url?: string;
+	data?: string;
 }
 
 export interface ILegalPayload extends ISubscriptionPayload {
