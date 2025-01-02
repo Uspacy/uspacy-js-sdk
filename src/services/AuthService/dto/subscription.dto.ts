@@ -78,8 +78,8 @@ export interface ISubscriptionPayload {
 	phone: string;
 	plan_code: string;
 	quantity: number;
-	auto_renewal: boolean;
-	tariff_extension?: boolean;
+	auto_renewal?: boolean;
+	users_upgrade?: boolean;
 	coupon?: string[];
 }
 
