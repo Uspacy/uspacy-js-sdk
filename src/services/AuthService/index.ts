@@ -22,6 +22,7 @@ import {
 	IIndividualPayload,
 	IIntentPayload,
 	ILegalPayload,
+	ISubscriptionPayload,
 	ISubscriptionsIndividual,
 	ISubscriptionsLegal,
 } from './dto/subscription.dto';
@@ -295,5 +296,12 @@ export class AuthService {
 	 */
 	disableSubscriptionRenewal() {
 		return this.httpClient.client.post<boolean>(`${this.namespace}/tariffs/disable_renewal`);
+	}
+
+	/**
+	 * Downgrade tariff
+	 */
+	downgradeTariff(body: Pick<ISubscriptionPayload, 'plan_code' | 'quantity'>) {
+		return this.httpClient.client.post<IPortalSubscription>(`${this.namespace}/tariffs/downgrade`, body);
 	}
 }
