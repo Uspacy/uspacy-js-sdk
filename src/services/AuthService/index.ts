@@ -288,7 +288,7 @@ export class AuthService {
 	 * Activating demo tariff
 	 */
 	activatingDemo() {
-		return this.httpClient.client.post(`${this.namespace}/tariffs/demo`);
+		return this.httpClient.client.post<IPortalSubscription>(`${this.namespace}/tariffs/demo`);
 	}
 
 	/**
