@@ -4,6 +4,7 @@ export interface IFilterField {
 	sort: number;
 	checked: boolean;
 	fast: boolean;
+	code?: string;
 }
 
 export interface IFilterPreset<F> {
@@ -19,4 +20,6 @@ export interface IFilterPreset<F> {
 	default: boolean;
 	filterFields: IFilterField[];
 	currentFilterFields: IFilterField[];
+	soon?: boolean;
+	shadow?: boolean;
 }
