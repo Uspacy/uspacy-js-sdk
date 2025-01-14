@@ -7,5 +7,6 @@ export interface IFunnel {
 	default: boolean;
 	active: boolean;
 	stages: IStage[];
-	permissions: { create?: TypePermission; view?: TypePermission; edit?: TypePermission; delete?: TypePermission };
+	tariff_limited: boolean;
+	permissions?: { create?: TypePermission; view?: TypePermission; edit?: TypePermission; delete?: TypePermission };
 }
