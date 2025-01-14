@@ -41,6 +41,8 @@ export interface IAnnounceBanner {
 	backgroundImage?: IImage;
 	backgroundColor?: string;
 	chips?: IChip[];
+	startDate?: string;
+	endDate?: string;
 }
 
 export interface IAnnounceNotification extends INotificationMessage {
@@ -51,6 +53,8 @@ export interface IAnnounceNotification extends INotificationMessage {
 	buttons?: IButton[];
 	image?: IImage;
 	isAnnounce?: boolean;
+	startDate?: string;
+	endDate?: string;
 }
 
 export interface IImage {
@@ -65,4 +69,6 @@ export interface IAnnounceWidget {
 	text?: string;
 	list?: IList[];
 	buttons: IWidgetButton[];
+	startDate?: string;
+	endDate?: string;
 }
