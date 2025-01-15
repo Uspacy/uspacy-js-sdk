@@ -73,6 +73,10 @@ export interface IField {
 	tooltip?: string;
 	display_in_tabs?: boolean;
 	showOnlyFilled?: boolean;
+	required_for?: {
+		id: number;
+		type: 'funnel' | 'stage';
+	}[];
 }
 export interface IFieldCreate {
 	name: string;
