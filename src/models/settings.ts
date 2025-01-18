@@ -19,4 +19,5 @@ export interface IPortalSettings {
 	holidays: { id: number; date: string; name: string }[];
 	logo: string;
 	thumbnail: string;
+	click2callUrl?: string;
 }
