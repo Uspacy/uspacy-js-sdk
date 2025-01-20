@@ -228,6 +228,7 @@ export interface IPortalSubscription {
 	auto_renewal: boolean;
 	first_payment_date: number;
 	created_at: number;
+	new_customer: boolean;
 }
 
 export interface IBill {
