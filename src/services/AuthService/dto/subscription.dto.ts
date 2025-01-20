@@ -80,7 +80,7 @@ export interface ISubscriptionPayload {
 	quantity: number;
 	auto_renewal?: boolean;
 	users_upgrade?: boolean;
-	coupon?: string[];
+	coupons?: string[];
 }
 
 export interface IIndividualPayload extends ISubscriptionPayload {

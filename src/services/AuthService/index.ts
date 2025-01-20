@@ -8,7 +8,18 @@ import { IAfterGoogleOauthResponse } from '../../models/calendars';
 import { IResponseJwt } from '../../models/jwt';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, ICoupon, IIntent, IInvoiceData, IInvoices, IPortalSubscription, IRatesList, ISubscription, ITariff } from '../../models/tariffs';
+import {
+	IBill,
+	ICoupon,
+	IDiscountCoupon,
+	IIntent,
+	IInvoiceData,
+	IInvoices,
+	IPortalSubscription,
+	IRatesList,
+	ISubscription,
+	ITariff,
+} from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { IDowngradePayload } from './dto/downgrade.dto';
@@ -303,5 +314,14 @@ export class AuthService {
 	 */
 	downgradeTariff(body: Pick<ISubscriptionPayload, 'plan_code' | 'quantity'>) {
 		return this.httpClient.client.post<IPortalSubscription>(`${this.namespace}/tariffs/downgrade`, body);
+	}
+
+	/**
+	 * Get discount coupon
+	 * @param couponCode
+	 * @returns Object coupon entity
+	 */
+	getDiscountCoupon(couponCode: string) {
+		return this.httpClient.client.get<IDiscountCoupon>(`${this.namespace}/tariffs/coupons/${couponCode}`);
 	}
 }
