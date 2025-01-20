@@ -262,7 +262,7 @@ export interface IDiscountCoupon {
 	coupon_id: string;
 	valid_from: string;
 	valid_till: string;
-	status: string;
+	status: 'active' | 'not valid';
 	discount_type: 'relative' | 'absolute';
 	discount_percent: number;
 	discount_amount: { currency: string; value: string };
