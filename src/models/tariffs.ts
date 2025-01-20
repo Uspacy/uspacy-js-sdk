@@ -256,3 +256,13 @@ export interface IBill {
 	tax_id?: string;
 	hash?: string;
 }
+
+export interface IDiscountCoupon {
+	coupon_id: string;
+	valid_from: string;
+	valid_till: string;
+	status: string;
+	discount_type: 'relative' | 'absolute';
+	discount_percent: number;
+	discount_amount: { currency: string; value: string };
+}
