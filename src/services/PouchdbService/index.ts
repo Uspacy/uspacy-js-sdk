@@ -40,7 +40,7 @@ export class PouchdbService {
 	}
 
 	async find(dbName: string, type: string) {
-		const db = await this.remoteDb(dbName);
+		const db = await this.db(dbName);
 		const partitionKey = await this.getPartitionKey(type);
 
 		const params = {
