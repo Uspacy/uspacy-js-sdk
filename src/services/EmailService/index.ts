@@ -11,11 +11,13 @@ import {
 	ILetter,
 	ILetters,
 	ILettersCrmEntities,
+	ISignature,
 	IThreads,
 } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
 import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
+import { ISignaturePayload } from './signature.dto';
 
 /**
  * Email service
@@ -232,5 +234,42 @@ export class EmailService {
 	 */
 	receiveToOauthLink(code: string, service: string) {
 		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code });
+	}
+
+	/**
+	 * Get Email signatures
+	 * @param params pagination params
+	 * @returns  Array with email signatures list entity
+	 */
+	getEmailSignatures() {
+		return this.httpClient.client.get<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/`);
+	}
+
+	/**
+	 * Create Email signature
+	 * @param body email signature payload
+	 * @returns  Email signature entity
+	 */
+	createEmailSignature(body: ISignaturePayload) {
+		return this.httpClient.client.post<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/`, body);
+	}
+
+	/**
+	 * Update Email signature
+	 * @param id email signature id
+	 * @param body email signature payload
+	 * @returns  Email signature entity
+	 */
+	updateEmailSignature(id: number, body: Partial<ISignaturePayload>) {
+		return this.httpClient.client.patch<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/:id`, body, { urlParams: { id } });
+	}
+
+	/**
+	 * Remove Email signature
+	 * @param body email signature payload
+	 * @returns  Email signature entity
+	 */
+	removeEmailSignature(id: number) {
+		return this.httpClient.client.delete<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/:id`, { urlParams: { id } });
 	}
 }

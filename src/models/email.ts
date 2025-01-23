@@ -10,6 +10,11 @@ export interface IThreads {
 	filter: string[];
 }
 
+export interface ISignaturesEmails {
+	email_id: number;
+	is_default: boolean;
+}
+
 export interface IAccessRoles {
 	user_id?: number;
 	department_id?: number;
@@ -125,6 +130,18 @@ export interface IEmailBox {
 	access_roles: IAccessRoles[];
 }
 
+export interface ISignature {
+	id: number;
+	name: string;
+	signature: string;
+	added_by: number;
+	is_all_emails: boolean;
+	created_at: string;
+	updated_at: string;
+	emails: ISignaturesEmails[];
+	active: boolean;
+}
+
 export interface IFolders {
 	data: IFolder[];
 }
@@ -158,8 +175,9 @@ export interface IEmailFilters {
 }
 
 export interface IEmailFiltersParams {
+	email_id?: number;
 	page?: number;
-	list?: number;
+	list?: number | 'all';
 	date?: number[][];
 	is_read?: number[];
 	q?: string;

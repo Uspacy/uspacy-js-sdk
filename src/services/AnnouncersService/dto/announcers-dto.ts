@@ -1,16 +1,14 @@
 import { IAnnounceBanner, IAnnounceNotification, IAnnounceWidget } from '../../../models/announcers';
 
-export interface ResponseApiItem<T> {
+export interface ResponseApiItem {
 	id?: number;
-	attributes: T;
+	notifications: IAnnounceNotification[];
+	widgets: IAnnounceWidget[];
+	banner: IAnnounceBanner;
 }
 
 export interface ResponseApi {
-	data: ResponseApiItem<{
-		notifications: IAnnounceNotification[];
-		widgets: IAnnounceWidget[];
-		banner: IAnnounceBanner;
-	}>;
+	data: ResponseApiItem;
 	meta: {
 		pagination: {
 			page: number;
