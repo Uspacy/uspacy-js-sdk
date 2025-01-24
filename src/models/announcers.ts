@@ -88,4 +88,5 @@ export interface IAnnouncePopup {
 	slides: IImage[];
 	subtitle: string;
 	title: string;
+	list: IList[];
 }
