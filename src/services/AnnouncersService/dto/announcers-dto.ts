@@ -5,7 +5,7 @@ export interface ResponseApiItem {
 	notifications: IAnnounceNotification[];
 	widgets: IAnnounceWidget[];
 	banner: IAnnounceBanner;
-	popup: IAnnouncePopup;
+	popup: IAnnouncePopup[];
 }
 
 export interface ResponseApi {
