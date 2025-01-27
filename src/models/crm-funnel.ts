@@ -1,5 +1,5 @@
 import { IStage } from './crm-stages';
-
+export type TypePermission = 'allowed' | 'mine';
 export interface IFunnel {
 	id: number;
 	title: string;
@@ -7,4 +7,6 @@ export interface IFunnel {
 	default: boolean;
 	active: boolean;
 	stages: IStage[];
+	tariff_limited: boolean;
+	permissions?: { create?: TypePermission; view?: TypePermission; edit?: TypePermission; delete?: TypePermission };
 }
