@@ -94,4 +94,6 @@ export interface IAnnouncePopup {
 	subtitle: string;
 	title: string;
 	list: IList[];
+	startDate?: string;
+	endDate?: string;
 }
