@@ -41,12 +41,6 @@ export class PouchdbService {
 		});
 	}
 
-	async sync(dbName: string) {
-		const db = await this.db(dbName);
-		const remoteDb = await this.remoteDb(dbName);
-		return db.sync(remoteDb, { live: true, retry: true });
-	}
-
 	async find<T>(dbName: string, type: string): Promise<ICouchFindResponse<T>> {
 		const db = await this.db(dbName);
 		const partitionKey = await this.getPartitionKey(type);
