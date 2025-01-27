@@ -73,6 +73,10 @@ export interface IAnnounceWidget {
 	endDate?: string;
 }
 
+export interface ISlides extends IImage {
+	video?: string;
+}
+
 export interface IPopupButton extends Omit<IButton, 'link2' | 'apps'> {
 	additionalLink?: string;
 }
