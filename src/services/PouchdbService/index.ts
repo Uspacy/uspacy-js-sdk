@@ -5,6 +5,7 @@ import { injectable } from 'tsyringe';
 import { v4 as uuid } from 'uuid';
 
 import { TokensService } from '../../core/TokensService';
+import { ICouchFindResponse, ICouchItemData } from '../../models/couchdb';
 
 PouchDB.plugin(PouchDBFind);
 PouchDB.plugin(PouchDBIndexeddb);
@@ -12,6 +13,7 @@ PouchDB.plugin(PouchDBIndexeddb);
 /**
  * PouchDb service
  */
+
 @injectable()
 export class PouchdbService {
 	private namespace = '/settings-backend/v1';
@@ -39,7 +41,7 @@ export class PouchdbService {
 		});
 	}
 
-	async find(dbName: string, type: string) {
+	async find<T>(dbName: string, type: string): Promise<ICouchFindResponse<T>> {
 		const db = await this.db(dbName);
 		const partitionKey = await this.getPartitionKey(type);
 
@@ -49,20 +51,21 @@ export class PouchdbService {
 			skip: 0,
 		};
 
-		return db.find(params);
+		const response = await db.find(params);
+		return response as ICouchFindResponse<T>;
 	}
 
-	async post(dbName: string, type: string, payload: object) {
+	async post<T>(dbName: string, type: string, payload: T) {
 		const db = await this.db(dbName);
 		const partitionKey = await this.getPartitionKey(type);
 		const _id = partitionKey + `:${uuid()}`;
 
-		return await db.post({ _id, type, ...payload });
+		return await db.post<ICouchItemData<T>>({ _id, type, ...payload });
 	}
 
-	async put(dbName: string, type: string, _id: string, _rev: string, payload: object) {
+	async put<T>(dbName: string, type: string, _id: string, _rev: string, payload: T) {
 		const db = await this.db(dbName);
 
-		return await db.put({ _id, _rev, type, ...payload });
+		return await db.put<ICouchItemData<T>>({ _id, _rev, type, ...payload });
 	}
 }
