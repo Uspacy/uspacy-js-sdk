@@ -27,3 +27,11 @@ export interface IFiltersPreset {
 	standardPreset: IFilterPreset;
 	filterPresets: IFilterPreset[];
 }
+
+export interface IFilterPresetsData {
+	data: {
+		presets: IFilterPreset[];
+		filterFields: IFilterField[];
+		filters: IFilter;
+	};
+}

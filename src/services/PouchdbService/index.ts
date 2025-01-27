@@ -41,6 +41,11 @@ export class PouchdbService {
 		});
 	}
 
+	async get<T>(dbName: string, _id: string) {
+		const db = await this.db(dbName);
+		return await db.get<ICouchItemData<T>>(_id);
+	}
+
 	async find<T>(dbName: string, type: string): Promise<ICouchFindResponse<T>> {
 		const db = await this.db(dbName);
 		const partitionKey = await this.getPartitionKey(type);
