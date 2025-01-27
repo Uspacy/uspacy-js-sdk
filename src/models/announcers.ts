@@ -77,15 +77,10 @@ export interface IPopupButton extends Omit<IButton, 'link2' | 'apps'> {
 	additionalLink?: string;
 }
 
-export interface IInfoLink {
-	title: string;
-	link: string;
-}
-
 export interface IAnnouncePopup {
 	id: number;
 	button: IPopupButton;
-	infoLink: IInfoLink;
+	infoLink: IWidgetButton;
 	mobileTitle: string;
 	paragraphOne: string;
 	paragraphTwo: string;
