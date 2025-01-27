@@ -1,8 +1,8 @@
 import PouchDB from 'pouchdb';
 
 export type ICouchItemData<T = unknown> = T & {
-	_id: string;
-	type: string;
+	_id?: string;
+	type?: string;
 	_rev?: string;
 	_deleted?: boolean;
 };
