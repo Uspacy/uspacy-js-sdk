@@ -1,10 +1,11 @@
-import { IAnnounceBanner, IAnnounceNotification, IAnnounceWidget } from '../../../models/announcers';
+import { IAnnounceBanner, IAnnounceNotification, IAnnouncePopup, IAnnounceWidget } from '../../../models/announcers';
 
 export interface ResponseApiItem {
 	id?: number;
 	notifications: IAnnounceNotification[];
 	widgets: IAnnounceWidget[];
 	banner: IAnnounceBanner;
+	popup: IAnnouncePopup[];
 }
 
 export interface ResponseApi {

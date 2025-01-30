@@ -41,6 +41,8 @@ export interface IAnnounceBanner {
 	backgroundImage?: IImage;
 	backgroundColor?: string;
 	chips?: IChip[];
+	startDate?: string;
+	endDate?: string;
 }
 
 export interface IAnnounceNotification extends INotificationMessage {
@@ -51,6 +53,8 @@ export interface IAnnounceNotification extends INotificationMessage {
 	buttons?: IButton[];
 	image?: IImage;
 	isAnnounce?: boolean;
+	startDate?: string;
+	endDate?: string;
 }
 
 export interface IImage {
@@ -65,4 +69,30 @@ export interface IAnnounceWidget {
 	text?: string;
 	list?: IList[];
 	buttons: IWidgetButton[];
+	startDate?: string;
+	endDate?: string;
+}
+
+export interface ISlides extends IImage {
+	video?: string;
+}
+
+export interface IPopupButton extends Omit<IButton, 'link2' | 'apps'> {
+	additionalLink?: string;
+}
+
+export interface IAnnouncePopup {
+	id: number;
+	button: IPopupButton;
+	infoLink: IWidgetButton;
+	mobileTitle: string;
+	paragraphOne: string;
+	paragraphTwo: string;
+	paragraphThree: string;
+	slides: IImage[];
+	subtitle: string;
+	title: string;
+	list: IList[];
+	startDate?: string;
+	endDate?: string;
 }
