@@ -462,4 +462,18 @@ export class CrmEntitiesService {
 			urlParams: { code, stageId },
 		});
 	}
+
+	/**
+	 * Get entity items list with filters by stage id
+	 * @param code entity code
+	 * @param params entity items list filter params
+	 * @param stageId stage id
+	 * @returns Array crm entity items list
+	 */
+	createOrUpdateDependencies(code: string, params: object, stageId: string) {
+		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:stageId`, {
+			params,
+			urlParams: { code, stageId },
+		});
+	}
 }
