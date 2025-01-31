@@ -72,3 +72,27 @@ export interface IAnnounceWidget {
 	startDate?: string;
 	endDate?: string;
 }
+
+export interface ISlides extends IImage {
+	video?: string;
+}
+
+export interface IPopupButton extends Omit<IButton, 'link2' | 'apps'> {
+	additionalLink?: string;
+}
+
+export interface IAnnouncePopup {
+	id: number;
+	button: IPopupButton;
+	infoLink: IWidgetButton;
+	mobileTitle: string;
+	paragraphOne: string;
+	paragraphTwo: string;
+	paragraphThree: string;
+	slides: IImage[];
+	subtitle: string;
+	title: string;
+	list: IList[];
+	startDate?: string;
+	endDate?: string;
+}
