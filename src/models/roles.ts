@@ -25,11 +25,7 @@ export interface IPermissionsFunnels {
 	entity_id: number;
 }
 
-export interface PermissionFunnel {
-	entity_type: string;
-	action: string;
-	level: string;
-	entity_id: number;
+export interface PermissionFunnel extends IPermissionsFunnels {
 	selected: boolean;
 }
 
