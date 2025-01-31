@@ -5,6 +5,7 @@ import { IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
+import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
 
@@ -486,6 +487,41 @@ export class CrmEntitiesService {
 		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:stageId`, {
 			params,
 			urlParams: { code, stageId },
+		});
+	}
+
+	/**
+	 * Create or update dependencies lists
+	 * @param code entity code
+	 * @param params dependencies list params
+	 * @returns dependencies list item
+	 */
+	createOrUpdateDependencies(params: IDependenciesList, code: string) {
+		return this.httpClient.client.post<IDependenciesList>(`${this.namespace}/:code/lists/dependencies`, {
+			params,
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get all dependencies lists by entity
+	 * @param code entity code
+	 * @returns dependencies lists item
+	 */
+	getDependenciesLists(code: string) {
+		return this.httpClient.client.get<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies`, {
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Delete dependencies lists by id
+	 * @param code entity code
+	 * @param id dependencies list id
+	 */
+	deleteDependenciesLists(code: string, id: number) {
+		return this.httpClient.client.get<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
+			urlParams: { code, id },
 		});
 	}
 }
