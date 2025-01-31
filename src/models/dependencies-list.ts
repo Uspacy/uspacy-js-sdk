@@ -1,4 +1,5 @@
 export interface IDependenciesList {
+	id: number;
 	name: string;
 	parent_field_code: string;
 	child_field_code: string;
