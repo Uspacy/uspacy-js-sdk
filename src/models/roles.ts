@@ -17,25 +17,3 @@ export interface IRole {
 	departmentList?: IDepartment[];
 	permissions: IPermissions;
 }
-
-export interface IPermissionsFunnels {
-	entity_type: string;
-	action: string;
-	level: string;
-	entity_id: number;
-}
-
-export interface PermissionFunnel extends IPermissionsFunnels {
-	selected: boolean;
-}
-
-export interface FunnelItem {
-	id: number;
-	title: string;
-	funnel_code: string;
-	permissions: PermissionFunnel[];
-}
-
-export interface IPermissionsFunnelsResponse {
-	[key: string]: FunnelItem[];
-}

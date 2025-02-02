@@ -1,5 +1,3 @@
-import { IPermissionsFunnels } from '../../models/roles';
-
 export interface IUptadeRoleDto {
 	id: string;
 	title?: string;
@@ -17,9 +15,4 @@ interface IDepartment {
 export interface ICreateRoleDto {
 	title: string;
 	permissions: string[];
-}
-
-export interface IUpdateRolePermissionsFunnels {
-	role: string;
-	permissions: IPermissionsFunnels[];
 }

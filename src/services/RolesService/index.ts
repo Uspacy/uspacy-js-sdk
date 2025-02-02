@@ -1,8 +1,8 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IPermissions, IPermissionsFunnelsResponse, IRole } from '../../models/roles';
-import { ICreateRoleDto, IUpdateRolePermissionsFunnels, IUptadeRoleDto } from './create-update-role-dto';
+import { IPermissions, IRole } from '../../models/roles';
+import { ICreateRoleDto, IUptadeRoleDto } from './create-update-role-dto';
 
 /**
  * Roles service
@@ -10,7 +10,6 @@ import { ICreateRoleDto, IUpdateRolePermissionsFunnels, IUptadeRoleDto } from '.
 @injectable()
 export class RolesService {
 	private namespace = '/company/v1';
-	private crmNamespace = '/crm/v1';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -58,23 +57,5 @@ export class RolesService {
 	 */
 	deleteRole(id: string) {
 		return this.httpClient.client.delete(`${this.namespace}/roles/:id`, { urlParams: { id } });
-	}
-
-	/**
-	 * Get permissions funnels
-	 * @returns list of funnels
-	 */
-	getPermissionsFunnels(role?: string) {
-		return this.httpClient.client.get<IPermissionsFunnelsResponse>(`${this.crmNamespace}/permissions/funnels`, {
-			urlParams: { role },
-			params: { role },
-		});
-	}
-
-	/**
-	 * Update role permissions funnels
-	 */
-	updateRolePermisionsFunnels(body: IUpdateRolePermissionsFunnels) {
-		return this.httpClient.client.post(`${this.crmNamespace}/permissions`, body);
 	}
 }
