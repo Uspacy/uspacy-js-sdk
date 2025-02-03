@@ -471,8 +471,7 @@ export class CrmEntitiesService {
 	 * @returns dependencies list item
 	 */
 	createOrUpdateDependencies(params: Partial<IDependenciesList>, code: string) {
-		return this.httpClient.client.post<IDependenciesList>(`${this.namespace}/:code/lists/dependencies`, {
-			params,
+		return this.httpClient.client.post<IDependenciesList>(`${this.namespace}/:code/lists/dependencies`, params, {
 			urlParams: { code },
 		});
 	}
