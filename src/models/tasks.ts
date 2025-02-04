@@ -1,5 +1,6 @@
 import { IComment } from './comment';
 import { IFile } from './files';
+import { IGroup } from './groups';
 import { ITaskTimerList } from './timer';
 
 export type taskType = 'task' | 'recurring' | 'one_time';
@@ -52,6 +53,8 @@ export interface ITask {
 	active?: boolean;
 	sort?: number;
 	delegation?: boolean;
+	group?: IGroup;
+	parentTask?: ITask;
 	scheduler?: {
 		activationLimit?: boolean;
 		taskId?: number;
@@ -144,6 +147,7 @@ export interface IFilterTasks {
 }
 
 export interface ITasksParams {
+	id?: string[];
 	status?: string[];
 	priority?: string[];
 	setter_id?: number[];
