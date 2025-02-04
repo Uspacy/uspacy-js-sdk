@@ -1,6 +1,7 @@
 export interface IResponseWithMeta<D> {
 	data: D[];
 	meta: IMeta;
+	aborted?: boolean;
 }
 
 export interface IMeta {
