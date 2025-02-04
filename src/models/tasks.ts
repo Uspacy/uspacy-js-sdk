@@ -62,7 +62,7 @@ export interface ITask {
 		period?: 'day' | 'week' | 'month' | 'year';
 		every?: number;
 		dayOfWeek?: number;
-		dayOfMonth?: null;
+		dayOfMonth?: number;
 		weekOfMonth?: number;
 		dateStart?: string;
 		dateStop?: number;
