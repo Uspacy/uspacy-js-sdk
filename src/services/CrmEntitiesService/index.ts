@@ -519,7 +519,7 @@ export class CrmEntitiesService {
 	 * @param id dependencies list id
 	 */
 	deleteDependenciesLists(code: string, id: number) {
-		return this.httpClient.client.get<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
+		return this.httpClient.client.delete<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
 			urlParams: { code, id },
 		});
 	}
