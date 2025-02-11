@@ -49,6 +49,8 @@
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#createEntityItemFromKanban" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Item<wbr/>From<wbr/>Kanban</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#createEntityReason" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Reason</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#createEntityStage" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Stage</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#createOrUpdateDependencies" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Or<wbr/>Update<wbr/>Dependencies</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteDependenciesLists" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Dependencies<wbr/>Lists</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntity" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntityField" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Field</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntityFunnel" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Funnel</span></a>
@@ -56,6 +58,7 @@
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntityListValues" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>List<wbr/>Values</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntityReason" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Reason</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#deleteEntityStage" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Stage</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#getDependenciesLists" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Dependencies<wbr/>Lists</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntitiesWithFunnels" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFields" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a>
@@ -262,6 +265,51 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_stages.IStage.html" class="tsd-signature-type tsd-kind-interface">IStage</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity stage</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="createOrUpdateDependencies" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>create<wbr/>Or<wbr/>Update<wbr/>Dependencies</span><a href="#createOrUpdateDependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="createOrUpdateDependencies.createOrUpdateDependencies-1"><span class="tsd-kind-call-signature">create<wbr/>Or<wbr/>Update<wbr/>Dependencies</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">params</span>, <span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#createOrUpdateDependencies.createOrUpdateDependencies-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Create or update dependencies lists</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">params</span>: <span class="tsd-signature-type ">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">&gt;</span></h5>
+<div class="tsd-comment tsd-typography"><p>dependencies list params</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>dependencies list item</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deleteDependenciesLists" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>delete<wbr/>Dependencies<wbr/>Lists</span><a href="#deleteDependenciesLists" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deleteDependenciesLists.deleteDependenciesLists-1"><span class="tsd-kind-call-signature">delete<wbr/>Dependencies<wbr/>Lists</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#deleteDependenciesLists.deleteDependenciesLists-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Delete dependencies lists by id</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">id</span>: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>dependencies list id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="deleteEntity" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Entity</span><a href="#deleteEntity" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -410,6 +458,24 @@
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getDependenciesLists" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Dependencies<wbr/>Lists</span><a href="#getDependenciesLists" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getDependenciesLists.getDependenciesLists-1"><span class="tsd-kind-call-signature">get<wbr/>Dependencies<wbr/>Lists</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getDependenciesLists.getDependenciesLists-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get all dependencies lists by entity</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_dependencies_list.IDependenciesList.html" class="tsd-signature-type tsd-kind-interface">IDependenciesList</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>dependencies lists item</p>
+
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntities" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entities</span><a href="#getEntities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
@@ -900,6 +966,8 @@
 <li><a href="#createEntityItemFromKanban" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Item<wbr/>From<wbr/>Kanban</span></a></li>
 <li><a href="#createEntityReason" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Reason</span></a></li>
 <li><a href="#createEntityStage" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Entity<wbr/>Stage</span></a></li>
+<li><a href="#createOrUpdateDependencies" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Or<wbr/>Update<wbr/>Dependencies</span></a></li>
+<li><a href="#deleteDependenciesLists" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Dependencies<wbr/>Lists</span></a></li>
 <li><a href="#deleteEntity" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity</span></a></li>
 <li><a href="#deleteEntityField" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Field</span></a></li>
 <li><a href="#deleteEntityFunnel" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Funnel</span></a></li>
@@ -907,6 +975,7 @@
 <li><a href="#deleteEntityListValues" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>List<wbr/>Values</span></a></li>
 <li><a href="#deleteEntityReason" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Reason</span></a></li>
 <li><a href="#deleteEntityStage" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Entity<wbr/>Stage</span></a></li>
+<li><a href="#getDependenciesLists" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Dependencies<wbr/>Lists</span></a></li>
 <li><a href="#getEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities</span></a></li>
 <li><a href="#getEntitiesWithFunnels" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a></li>
 <li><a href="#getEntityFields" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a></li>
@@ -969,6 +1038,7 @@
 <li><a href="../modules/models_crm_stages.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/crm-<wbr/>stages</span></a></li>
 <li><a href="../modules/models_crm_tasks.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/crm-<wbr/>tasks</span></a></li>
 <li><a href="../modules/models_department.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/department</span></a></li>
+<li><a href="../modules/models_dependencies_list.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/dependencies-<wbr/>list</span></a></li>
 <li><a href="../modules/models_email.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/email</span></a></li>
 <li><a href="../modules/models_entity.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/entity</span></a></li>
 <li><a href="../modules/models_errors.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/errors</span></a></li>
