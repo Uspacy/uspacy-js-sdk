@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.130",
+  "version": "0.0.131",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -67,7 +67,7 @@
     "test:ci": "cross-env CI=true yarn test",
     "eslint": "eslint --max-warnings=0",
     "format": "prettier --write \"src/**/*.ts\"",
-    "eslint:fix": "yarn eslint -- --fix",
+    "eslint:fix": "yarn eslint . --fix",
     "prepare": "husky install"
   },
   "browserslist": {
