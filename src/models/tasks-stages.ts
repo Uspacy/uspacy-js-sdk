@@ -20,16 +20,9 @@ export interface IStage {
 	color: string;
 	afterId: string;
 	sort: number;
+	group_id?: number;
 }
 
 export interface IStages {
 	data: IStage[];
-	meta: {
-		currentPage: number;
-		from: number;
-		lastPage: number;
-		perPage: number;
-		to: number;
-		total: number;
-	};
 }
