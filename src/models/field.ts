@@ -1,3 +1,5 @@
+import { IDependenciesList } from './dependencies-list';
+
 export type FieldTypes =
 	| 'string'
 	| 'textarea'
@@ -75,6 +77,7 @@ export interface IField {
 		id: number;
 		type: 'funnel' | 'stage';
 	}[];
+	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
 }
 export interface IFieldCreate {
 	name: string;
