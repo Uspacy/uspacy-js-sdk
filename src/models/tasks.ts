@@ -31,6 +31,7 @@ export interface ITask {
 	body: string;
 	status: string;
 	kanbanStageId: string;
+	groupKanbanStageId?: string;
 	priority: string;
 	acceptResult: boolean;
 	requiredResult: boolean;
