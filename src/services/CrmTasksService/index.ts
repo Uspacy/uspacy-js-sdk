@@ -4,6 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { ICalendar, ICalendarsAccount, ICalendarsAccounts, ICalendarsSuccessResponse } from '../../models/calendars';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
+import { ISaveAccountResponse, oauthProvider, oauthType } from '../../models/oauthIntegrations';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 
 /**
@@ -13,6 +14,7 @@ import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 export class CrmTasksService {
 	private namespace = '/activities/v1/activities';
 	private calendarsNamespace = '/activities/v1/calendars';
+	private oauthIntegrationsNamespace = '/activities/v1/integrations';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -193,5 +195,86 @@ export class CrmTasksService {
 	 */
 	deleteCalendarsAccount() {
 		return this.httpClient.client.delete<ICalendarsSuccessResponse>(`${this.calendarsNamespace}/accounts/google`);
+	}
+
+	// ! NEW OAUTH ROUTES
+	/**
+	 * Get OAuth 2.0 redirect url
+	 * @returns redirect url
+	 */
+	getOAuthRedirectUrl(provider: oauthProvider, type: oauthType) {
+		return this.httpClient.client.get<{ link: string }>(`${this.oauthIntegrationsNamespace}/${provider}/${type}/oauth/redirect`);
+	}
+
+	/**
+	 * Get oauth services accounts
+	 * @returns oauth services accounts list
+	 */
+	getOauthServicesAccounts(params?: { with: string[] }) {
+		return this.httpClient.client.get<ICalendarsAccounts>(`${this.oauthIntegrationsNamespace}/accounts`, {
+			...(params && { params }),
+		});
+	}
+
+	/**
+	 * Get calendars
+	 * @returns calendars list
+	 */
+	getCalendars() {
+		return this.httpClient.client.get<ICalendar[]>(`${this.oauthIntegrationsNamespace}/calendars/google/calendar_list`);
+	}
+
+	/**
+	 * Save calendars settings
+	 * @param body calendars settings
+	 * @returns calendars list
+	 */
+	saveCalendarsSettings(body: ICalendarSettings) {
+		return this.httpClient.client.post<ISaveAccountResponse>(`${this.oauthIntegrationsNamespace}/calendars/google/save`, body);
+	}
+
+	/**
+	 * Start initial account sync
+	 * @param body initial sync settings
+	 */
+	startInitialServicesAccountSync(body: ISyncSettings) {
+		return this.httpClient.client.post<ICalendarsSuccessResponse>(`${this.oauthIntegrationsNamespace}/calendars/google/initial_sync`, body);
+	}
+
+	/**
+	 * Start account sync
+	 * @param body sync settings
+	 */
+	startServicesAccountSync() {
+		return this.httpClient.client.get<ICalendarsSuccessResponse>(`${this.oauthIntegrationsNamespace}/calendars/sync`);
+	}
+
+	/**
+	 * Stop account sync
+	 */
+	stopServicesAccountSync() {
+		return this.httpClient.client.patch<ICalendarsSuccessResponse>(`${this.oauthIntegrationsNamespace}/google/stop_sync`);
+	}
+
+	/**
+	 * Activate calendars sync
+	 */
+	activateServicesAccountSync(id: number) {
+		return this.httpClient.client.patch<ICalendarsSuccessResponse>(
+			`${this.oauthIntegrationsNamespace}/calendars/google/activate_sync/:id`,
+			undefined,
+			{
+				urlParams: { id },
+			},
+		);
+	}
+
+	/**
+	 * Delete services account
+	 */
+	deleteServicesAccount(providerId: number, integrationId: number) {
+		return this.httpClient.client.delete<ICalendarsSuccessResponse>(
+			`${this.oauthIntegrationsNamespace}/accounts/${providerId}/integrations/${integrationId}`,
+		);
 	}
 }
