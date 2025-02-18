@@ -253,7 +253,7 @@ export class CrmTasksService {
 	 * Stop account sync
 	 */
 	stopServicesAccountSync() {
-		return this.httpClient.client.patch<ICalendarsSuccessResponse>(`${this.oauthIntegrationsNamespace}/google/stop_sync`);
+		return this.httpClient.client.patch<ICalendarsSuccessResponse>(`${this.oauthIntegrationsNamespace}/calendars/google/stop_sync`);
 	}
 
 	/**
