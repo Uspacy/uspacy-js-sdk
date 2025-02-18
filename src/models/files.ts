@@ -14,9 +14,9 @@ export interface IFile {
 	size: number;
 	uploadId: string;
 	url: string;
-	creatorId: number;
-	width: number;
-	height: number;
+	creatorId?: number;
+	width?: number;
+	height?: number;
 }
 
 export interface IFiles {
