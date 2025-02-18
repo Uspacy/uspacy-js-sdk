@@ -10,6 +10,7 @@ export interface IIntegrationCalendar {
 	activity_type: EEventsValues;
 	remote_calendar_id: string;
 	integration_id: number;
+	private_event: boolean;
 }
 
 export interface Integration {
