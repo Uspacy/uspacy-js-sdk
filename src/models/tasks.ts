@@ -145,6 +145,9 @@ export interface IFilterTasks {
 	child_list?: number;
 	child_page?: number;
 	kanban_fields?: string[];
+	sort_by?: {
+		[key: string]: 'asc' | 'desc';
+	};
 }
 
 export interface ITasksParams {
@@ -176,4 +179,7 @@ export interface ITasksParams {
 	child_list?: number;
 	child_page?: number;
 	kanban_fields?: string[];
+	sort_by?: {
+		[key: string]: 'asc' | 'desc';
+	};
 }
