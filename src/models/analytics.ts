@@ -37,7 +37,7 @@ export interface IAnalyticReport {
 			value: string;
 			timeframe: DayInterval;
 		};
-		measure_for: MetricType;
+		measure_for: string;
 		additional: {
 			is_view_percent: boolean;
 			is_view_value: boolean;
