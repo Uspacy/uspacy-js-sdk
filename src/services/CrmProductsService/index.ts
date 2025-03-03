@@ -80,7 +80,8 @@ export class CrmProductsService {
 	 * @param params query params if editing all products
 	 */
 	massProductsDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
-		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${params}`, {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${suffix}`, {
 			data: { all, entity_ids: entityIds, except_ids: exceptIds },
 		});
 	}
