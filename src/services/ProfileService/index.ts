@@ -2,8 +2,9 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { I2FaEnable, I2FaStatus } from '../../models/2fa';
+import { IField } from '../../models/field';
 import { IRequisite, IRequisitesResponse, IRequisiteUpdate, ITemplate, ITemplateResponse, ITemplateUpdate } from '../../models/requisites';
-import { IResponseWithMessage } from '../../models/response';
+import { IResponseWithMessage, IResponseWithMeta } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
 import { IUser } from '../../models/user';
 
@@ -13,6 +14,7 @@ import { IUser } from '../../models/user';
 @injectable()
 export class ProfileService {
 	private namespace = '/company/v1/users/me';
+	private fields_namespace = '/company/v1/custom_fields/users/fields';
 	private crm_req_namespace = '/crm/v1/requisites';
 
 	constructor(private httpClient: HttpClient) {}
@@ -166,6 +168,68 @@ export class ProfileService {
 			urlParams: {
 				id,
 			},
+		});
+	}
+
+	/**
+	 * Get profile fields
+	 * @returns profile fields
+	 */
+	getProfileFields() {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.fields_namespace}`);
+	}
+
+	/**
+	 * Update profile field
+	 * @param fieldCode field code
+	 * @param data field data
+	 * @returns entity field
+	 */
+	updateProfileField(fieldCode: string, data: IField) {
+		return this.httpClient.client.patch<IField>(`${this.fields_namespace}/:fieldCode`, data, {
+			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Update profile list values
+	 * @param fieldCode field code
+	 * @param data field values data
+	 * @returns values of profile field
+	 */
+	updateProfileListValues(fieldCode: string, data: IField['values']) {
+		return this.httpClient.client.post<IField['values']>(`${this.fields_namespace}/lists/:fieldCode`, data, {
+			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Create profile field
+	 * @param data field data
+	 * @returns entity field
+	 */
+	createProfileField(data: Partial<IField>) {
+		return this.httpClient.client.post<IField>(`${this.fields_namespace}`, data);
+	}
+
+	/**
+	 * Delete profile list values
+	 * @param fieldCode profile field code
+	 * @param value profile list value
+	 */
+	deleteProfileListValues(fieldCode: string, value: string) {
+		return this.httpClient.client.delete(`${this.fields_namespace}/lists/:fieldCode/:value`, {
+			urlParams: { fieldCode, value },
+		});
+	}
+
+	/**
+	 * Delete profile field
+	 * @param fieldCode profile field code
+	 */
+	deleteProfileField(fieldCode: string) {
+		return this.httpClient.client.delete(`${this.fields_namespace}/:fieldCode`, {
+			urlParams: { fieldCode },
 		});
 	}
 }
