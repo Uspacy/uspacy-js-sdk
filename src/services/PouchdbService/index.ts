@@ -10,6 +10,8 @@ import { ICouchFindResponse, ICouchItemData } from '../../models/couchdb';
 PouchDB.plugin(PouchDBFind);
 PouchDB.plugin(PouchDBIndexeddb);
 
+type RemoveDocument = PouchDB.Core.RemoveDocument;
+
 /**
  * PouchDb service
  */
@@ -72,5 +74,17 @@ export class PouchdbService {
 		const db = await this.db(dbName);
 
 		return await db.put<ICouchItemData<T>>({ _id, _rev, type, ...payload });
+	}
+
+	async bulkDocs<T>(dbName: string, payload: ICouchItemData<T>[]) {
+		const db = await this.db(dbName);
+
+		return await db.bulkDocs(payload);
+	}
+
+	async remove<T>(dbName: string, doc: ICouchItemData<T>) {
+		const db = await this.db(dbName);
+
+		return await db.remove(doc as RemoveDocument);
 	}
 }
