@@ -5,12 +5,10 @@ import { injectable } from 'tsyringe';
 import { v4 as uuid } from 'uuid';
 
 import { TokensService } from '../../core/TokensService';
-import { ICouchFindResponse, ICouchItemData } from '../../models/couchdb';
+import { BulkDocsOptions, ICouchFindResponse, ICouchItemData, RemoveDocument } from '../../models/couchdb';
 
 PouchDB.plugin(PouchDBFind);
 PouchDB.plugin(PouchDBIndexeddb);
-
-type RemoveDocument = PouchDB.Core.RemoveDocument;
 
 /**
  * PouchDb service
@@ -76,10 +74,10 @@ export class PouchdbService {
 		return await db.put<ICouchItemData<T>>({ _id, _rev, type, ...payload });
 	}
 
-	async bulkDocs<T>(dbName: string, payload: ICouchItemData<T>[]) {
+	async bulkDocs<T>(dbName: string, payload: ICouchItemData<T>[], options?: BulkDocsOptions) {
 		const db = await this.db(dbName);
 
-		return await db.bulkDocs(payload);
+		return await db.bulkDocs(payload, options);
 	}
 
 	async remove<T>(dbName: string, doc: ICouchItemData<T>) {
