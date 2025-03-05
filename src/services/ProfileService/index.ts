@@ -176,7 +176,7 @@ export class ProfileService {
 	 * @returns profile fields
 	 */
 	getProfileFields() {
-		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.fields_namespace}`);
+		return this.httpClient.client.get<IResponseWithMeta<IField>>('/company/v1/custom_fields/users/fields');
 	}
 
 	/**
@@ -206,10 +206,10 @@ export class ProfileService {
 	/**
 	 * Create profile field
 	 * @param data field data
-	 * @returns entity field
+	 * @returns profile field
 	 */
 	createProfileField(data: Partial<IField>) {
-		return this.httpClient.client.post<IField>(`${this.fields_namespace}`, data);
+		return this.httpClient.client.post<IField>(this.fields_namespace, data);
 	}
 
 	/**
