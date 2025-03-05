@@ -4,7 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { I2FaEnable, I2FaStatus } from '../../models/2fa';
 import { IField } from '../../models/field';
 import { IRequisite, IRequisitesResponse, IRequisiteUpdate, ITemplate, ITemplateResponse, ITemplateUpdate } from '../../models/requisites';
-import { IResponseWithMessage, IResponseWithMeta } from '../../models/response';
+import { IResponseWithMessage } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
 import { IUser } from '../../models/user';
 
@@ -176,7 +176,7 @@ export class ProfileService {
 	 * @returns profile fields
 	 */
 	getProfileFields() {
-		return this.httpClient.client.get<IResponseWithMeta<IField>>('/company/v1/custom_fields/users/fields');
+		return this.httpClient.client.get<IField[]>(this.fields_namespace);
 	}
 
 	/**
@@ -193,13 +193,12 @@ export class ProfileService {
 
 	/**
 	 * Update profile list values
-	 * @param fieldCode field code
 	 * @param data field values data
 	 * @returns values of profile field
 	 */
-	updateProfileListValues(fieldCode: string, data: IField['values']) {
-		return this.httpClient.client.post<IField['values']>(`${this.fields_namespace}/lists/:fieldCode`, data, {
-			urlParams: { fieldCode },
+	updateProfileListValues(data: IField) {
+		return this.httpClient.client.post<IField['values']>(`${this.fields_namespace}/lists/:fieldCode`, data.values, {
+			urlParams: { fieldCode: data.code },
 		});
 	}
 
