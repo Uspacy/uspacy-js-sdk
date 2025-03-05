@@ -14,7 +14,7 @@ import { IUser } from '../../models/user';
 @injectable()
 export class ProfileService {
 	private namespace = '/company/v1/users/me';
-	private fields_namespace = '/company/v1/custom_fields/users/fields';
+	private fields_namespace = '/company/v1/custom_fields/users';
 	private crm_req_namespace = '/crm/v1/requisites';
 
 	constructor(private httpClient: HttpClient) {}
@@ -176,7 +176,7 @@ export class ProfileService {
 	 * @returns profile fields
 	 */
 	getProfileFields() {
-		return this.httpClient.client.get<IField[]>(this.fields_namespace);
+		return this.httpClient.client.get<IField[]>(`${this.fields_namespace}/fields`);
 	}
 
 	/**
@@ -186,7 +186,7 @@ export class ProfileService {
 	 * @returns entity field
 	 */
 	updateProfileField(fieldCode: string, data: IField) {
-		return this.httpClient.client.patch<IField>(`${this.fields_namespace}/:fieldCode`, data, {
+		return this.httpClient.client.patch<IField>(`${this.fields_namespace}/fields/:fieldCode`, data, {
 			urlParams: { fieldCode },
 		});
 	}
@@ -208,7 +208,7 @@ export class ProfileService {
 	 * @returns profile field
 	 */
 	createProfileField(data: Partial<IField>) {
-		return this.httpClient.client.post<IField>(this.fields_namespace, data);
+		return this.httpClient.client.post<IField>(`${this.fields_namespace}/fields`, data);
 	}
 
 	/**
@@ -227,7 +227,7 @@ export class ProfileService {
 	 * @param fieldCode profile field code
 	 */
 	deleteProfileField(fieldCode: string) {
-		return this.httpClient.client.delete(`${this.fields_namespace}/:fieldCode`, {
+		return this.httpClient.client.delete(`${this.fields_namespace}/fields/:fieldCode`, {
 			urlParams: { fieldCode },
 		});
 	}
