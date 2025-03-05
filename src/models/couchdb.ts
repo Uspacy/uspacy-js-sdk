@@ -1,5 +1,8 @@
 import PouchDB from 'pouchdb';
 
+export type RemoveDocument = PouchDB.Core.RemoveDocument;
+export type BulkDocsOptions = PouchDB.Core.BulkDocsOptions;
+
 export type ICouchItemData<T = unknown> = T & {
 	_id?: string;
 	type?: string;
