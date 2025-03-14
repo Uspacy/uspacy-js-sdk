@@ -37,4 +37,14 @@ export class ResourcesService {
 	deleteResource(id: string) {
 		return this.httpClient.client.delete(`${this.namespace}/${id}`);
 	}
+
+	/**
+	 * update resource
+	 * @param id resource id
+	 * @param data resource data
+	 * @returns resource entity
+	 * */
+	updateResource<T>(id: string, data: Partial<T> & { type: 'form' | 'widget' }) {
+		return this.httpClient.client.patch<T>(`${this.namespace}/${id}`, data);
+	}
 }
