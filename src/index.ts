@@ -42,6 +42,7 @@ import { NewsFeedService } from './services/NewsFeedService';
 import { NotificationsService } from './services/NotificationsService';
 import { PouchdbService } from './services/PouchdbService';
 import { ProfileService } from './services/ProfileService';
+import { ResourcesService } from './services/ResourcesService';
 import { RolesService } from './services/RolesService';
 import { TasksService } from './services/TasksService';
 import { TasksStagesService } from './services/TasksStagesService';
@@ -97,6 +98,7 @@ class Uspacy {
 		public readonly analyticsService: AnalyticsService,
 		public readonly announcersService: AnnouncersService,
 		public readonly pouchdbService: PouchdbService,
+		public readonly resourcesService: ResourcesService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
