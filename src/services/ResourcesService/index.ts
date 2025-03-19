@@ -30,6 +30,15 @@ export class ResourcesService {
 	}
 
 	/**
+	 * get resource by id
+	 * @param id resource id
+	 * @returns resource entity
+	 * */
+	getResourceById<T>(id: string) {
+		return this.httpClient.client.get<T>(`${this.namespace}/${id}`);
+	}
+
+	/**
 	 * delete resource
 	 * @param id resource id
 	 * @returns void
