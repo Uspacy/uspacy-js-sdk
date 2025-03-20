@@ -7,7 +7,7 @@ import { HttpClient } from '../../core/HttpClient';
  */
 @injectable()
 export class ResourcesService {
-	private namespace = '/resources/v1/resources';
+	private namespace = '/resources/resources';
 
 	constructor(private httpClient: HttpClient) {}
 
