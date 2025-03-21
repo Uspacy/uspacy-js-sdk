@@ -16,8 +16,8 @@ export class ResourcesService {
 	 * @param data resource data without id
 	 * @returns resource entity
 	 * */
-	createResource<T>(data: Partial<T> & { type: 'form' | 'widget' }) {
-		return this.httpClient.client.post<T>(this.namespace, data);
+	createResource<T>(data: Partial<T> & { type: 'form' | 'widget' }, domain?: string) {
+		return this.httpClient.client.post<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}`, data);
 	}
 
 	/**
@@ -25,8 +25,8 @@ export class ResourcesService {
 	 * @param type resource type
 	 * @returns resources list
 	 * */
-	getResources(type: 'form' | 'widget') {
-		return this.httpClient.client.get(this.namespace, { params: { type } });
+	getResources(type: 'form' | 'widget', domain?: string) {
+		return this.httpClient.client.get(`${!!domain ? `${domain}/` : ''}${this.namespace}`, { params: { type } });
 	}
 
 	/**
@@ -34,8 +34,8 @@ export class ResourcesService {
 	 * @param id resource id
 	 * @returns resource entity
 	 * */
-	getResourceById<T>(id: string) {
-		return this.httpClient.client.get<T>(`${this.namespace}/${id}`);
+	getResourceById<T>(id: string, domain?: string) {
+		return this.httpClient.client.get<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`);
 	}
 
 	/**
@@ -43,8 +43,8 @@ export class ResourcesService {
 	 * @param id resource id
 	 * @returns void
 	 * */
-	deleteResource(id: string) {
-		return this.httpClient.client.delete(`${this.namespace}/${id}`);
+	deleteResource(id: string, domain?: string) {
+		return this.httpClient.client.delete(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`);
 	}
 
 	/**
@@ -53,7 +53,7 @@ export class ResourcesService {
 	 * @param data resource data
 	 * @returns resource entity
 	 * */
-	updateResource<T>(id: string, data: Partial<T> & { type: 'form' | 'widget' }) {
-		return this.httpClient.client.patch<T>(`${this.namespace}/${id}`, data);
+	updateResource<T>(id: string, data: Partial<T> & { type: 'form' | 'widget' }, domain?: string) {
+		return this.httpClient.client.patch<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`, data);
 	}
 }
