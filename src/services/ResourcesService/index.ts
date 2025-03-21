@@ -1,6 +1,8 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { getResourcesDomain } from '../../helpers';
+import { ResourceType } from '../../models/resources';
 
 /**
  * Resources service
@@ -16,8 +18,8 @@ export class ResourcesService {
 	 * @param data resource data without id
 	 * @returns resource entity
 	 * */
-	createResource<T>(data: Partial<T> & { type: 'form' | 'widget' }, domain?: string) {
-		return this.httpClient.client.post<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}`, data);
+	createResource<T>(data: Partial<T> & { type: ResourceType }) {
+		return this.httpClient.client.post<T>(`${getResourcesDomain(data.type)}/${this.namespace}`, data);
 	}
 
 	/**
@@ -25,8 +27,8 @@ export class ResourcesService {
 	 * @param type resource type
 	 * @returns resources list
 	 * */
-	getResources(type: 'form' | 'widget', domain?: string) {
-		return this.httpClient.client.get(`${!!domain ? `${domain}/` : ''}${this.namespace}`, { params: { type } });
+	getResources(type: ResourceType) {
+		return this.httpClient.client.get(`${getResourcesDomain(type)}/${this.namespace}`, { params: { type } });
 	}
 
 	/**
@@ -34,8 +36,8 @@ export class ResourcesService {
 	 * @param id resource id
 	 * @returns resource entity
 	 * */
-	getResourceById<T>(id: string, domain?: string) {
-		return this.httpClient.client.get<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`);
+	getResourceById<T>(id: string, type: ResourceType) {
+		return this.httpClient.client.get<T>(`${getResourcesDomain(type)}/${this.namespace}/${id}`);
 	}
 
 	/**
@@ -43,8 +45,8 @@ export class ResourcesService {
 	 * @param id resource id
 	 * @returns void
 	 * */
-	deleteResource(id: string, domain?: string) {
-		return this.httpClient.client.delete(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`);
+	deleteResource(id: string, type: ResourceType) {
+		return this.httpClient.client.delete(`${getResourcesDomain(type)}/${this.namespace}/${id}`);
 	}
 
 	/**
@@ -53,7 +55,7 @@ export class ResourcesService {
 	 * @param data resource data
 	 * @returns resource entity
 	 * */
-	updateResource<T>(id: string, data: Partial<T> & { type: 'form' | 'widget' }, domain?: string) {
-		return this.httpClient.client.patch<T>(`${!!domain ? `${domain}/` : ''}${this.namespace}/${id}`, data);
+	updateResource<T>(id: string, data: Partial<T> & { type: ResourceType }) {
+		return this.httpClient.client.patch<T>(`${getResourcesDomain(data.type)}/${this.namespace}/${id}`, data);
 	}
 }
