@@ -19,7 +19,7 @@ export class ResourcesService {
 	 * @returns resource entity
 	 * */
 	createResource<T>(data: Partial<T> & { type: ResourceType }) {
-		return this.httpClient.client.post<T>(`${getResourcesDomain(data.type)}/${this.namespace}`, data);
+		return this.httpClient.client.post<T>(`${getResourcesDomain(data.type)}${this.namespace}`, data);
 	}
 
 	/**
@@ -28,7 +28,7 @@ export class ResourcesService {
 	 * @returns resources list
 	 * */
 	getResources(type: ResourceType) {
-		return this.httpClient.client.get(`${getResourcesDomain(type)}/${this.namespace}`, { params: { type } });
+		return this.httpClient.client.get(`${getResourcesDomain(type)}${this.namespace}`, { params: { type } });
 	}
 
 	/**
@@ -37,7 +37,7 @@ export class ResourcesService {
 	 * @returns resource entity
 	 * */
 	getResourceById<T>(id: string, type: ResourceType) {
-		return this.httpClient.client.get<T>(`${getResourcesDomain(type)}/${this.namespace}/${id}`);
+		return this.httpClient.client.get<T>(`${getResourcesDomain(type)}${this.namespace}/${id}`);
 	}
 
 	/**
@@ -46,7 +46,7 @@ export class ResourcesService {
 	 * @returns void
 	 * */
 	deleteResource(id: string, type: ResourceType) {
-		return this.httpClient.client.delete(`${getResourcesDomain(type)}/${this.namespace}/${id}`);
+		return this.httpClient.client.delete(`${getResourcesDomain(type)}${this.namespace}/${id}`);
 	}
 
 	/**
@@ -56,6 +56,6 @@ export class ResourcesService {
 	 * @returns resource entity
 	 * */
 	updateResource<T>(id: string, data: Partial<T> & { type: ResourceType }) {
-		return this.httpClient.client.patch<T>(`${getResourcesDomain(data.type)}/${this.namespace}/${id}`, data);
+		return this.httpClient.client.patch<T>(`${getResourcesDomain(data.type)}${this.namespace}/${id}`, data);
 	}
 }
