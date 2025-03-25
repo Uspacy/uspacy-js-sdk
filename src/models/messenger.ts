@@ -145,6 +145,7 @@ export interface IChat {
 	unreadCount?: number;
 	unreadMentions: string[];
 	isInviteChat?: boolean;
+	assigned?: boolean;
 }
 
 export interface IMessagesGroup {
