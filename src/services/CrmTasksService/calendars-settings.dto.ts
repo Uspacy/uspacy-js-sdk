@@ -1,8 +1,8 @@
-import { ECalendarDirectionType, EEventsValues } from '../../models/calendars';
+import { EEventsValues, EServicesAccountDirectionType } from '../../models/oauthIntegrations';
 
 export interface ICalendarSettings {
 	remote_calendar_id: string;
-	direction: ECalendarDirectionType;
+	direction: EServicesAccountDirectionType;
 	time_zone?: string;
 	sync_types?: EEventsValues[];
 	private_event?: boolean;

@@ -20,4 +20,5 @@ export interface IPortalSettings {
 	logo: string;
 	thumbnail: string;
 	click2callUrl?: string;
+	installedApps: string[];
 }
