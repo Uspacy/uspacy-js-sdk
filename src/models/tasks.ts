@@ -1,4 +1,5 @@
 import { IComment } from './comment';
+import { ITask as IActivity } from './crm-tasks';
 import { IFile } from './files';
 import { IGroup } from './groups';
 import { ITaskTimerList } from './timer';
@@ -7,11 +8,12 @@ export type taskType = 'task' | 'recurring' | 'one_time';
 
 export interface ISubTasksInfo {
 	count: number;
-	subtasks: {
-		id: number;
-		title: string;
-		priority: string;
-	}[];
+	subtasks: Partial<ITask>[];
+}
+
+export interface IActivitiesInfo {
+	count: number;
+	activities: Partial<IActivity>[];
 }
 
 export interface ITask {
@@ -87,8 +89,8 @@ export interface ITask {
 		data: ITask[];
 		total: number;
 	};
-	activityIds?: string[];
 	quantityOfComments?: string[];
+	activitiesInfo?: IActivitiesInfo;
 	subtasksInfo?: ISubTasksInfo;
 	tableName?: string;
 }
