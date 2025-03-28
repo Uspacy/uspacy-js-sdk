@@ -1,5 +1,5 @@
 import { IStage } from './crm-stages';
-export type TypePermission = 'allowed' | 'mine';
+export type TypePermission = 'allowed' | 'mine' | 'department';
 export interface IFunnel {
 	id: number;
 	title: string;
