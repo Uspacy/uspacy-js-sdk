@@ -1,8 +1,20 @@
 import { IComment } from './comment';
+import { ITask as IActivity } from './crm-tasks';
 import { IFile } from './files';
+import { IGroup } from './groups';
 import { ITaskTimerList } from './timer';
 
 export type taskType = 'task' | 'recurring' | 'one_time';
+
+export interface ISubTasksInfo {
+	count: number;
+	subtasks: Partial<ITask>[];
+}
+
+export interface IActivitiesInfo {
+	count: number;
+	activities: Partial<IActivity>[];
+}
 
 export interface ITask {
 	id: string;
@@ -21,6 +33,7 @@ export interface ITask {
 	body: string;
 	status: string;
 	kanbanStageId: string;
+	groupKanbanStageId?: string;
 	priority: string;
 	acceptResult: boolean;
 	requiredResult: boolean;
@@ -43,6 +56,8 @@ export interface ITask {
 	active?: boolean;
 	sort?: number;
 	delegation?: boolean;
+	group?: IGroup;
+	parentTask?: ITask;
 	scheduler?: {
 		activationLimit?: boolean;
 		taskId?: number;
@@ -50,7 +65,7 @@ export interface ITask {
 		period?: 'day' | 'week' | 'month' | 'year';
 		every?: number;
 		dayOfWeek?: number;
-		dayOfMonth?: null;
+		dayOfMonth?: number;
 		weekOfMonth?: number;
 		dateStart?: string;
 		dateStop?: number;
@@ -74,6 +89,10 @@ export interface ITask {
 		data: ITask[];
 		total: number;
 	};
+	quantityOfComments?: string[];
+	activitiesInfo?: IActivitiesInfo;
+	subtasksInfo?: ISubTasksInfo;
+	tableName?: string;
 }
 
 export interface IMeta {
@@ -127,9 +146,14 @@ export interface IFilterTasks {
 	groupId?: number;
 	child_list?: number;
 	child_page?: number;
+	kanban_fields?: string[];
+	sort_by?: {
+		[key: string]: 'asc' | 'desc';
+	};
 }
 
 export interface ITasksParams {
+	id?: string[];
 	status?: string[];
 	priority?: string[];
 	setter_id?: number[];
@@ -156,4 +180,8 @@ export interface ITasksParams {
 	groupId?: number;
 	child_list?: number;
 	child_page?: number;
+	kanban_fields?: string[];
+	sort_by?: {
+		[key: string]: 'asc' | 'desc';
+	};
 }

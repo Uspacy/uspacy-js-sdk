@@ -1,3 +1,5 @@
+import { IDependenciesList } from './dependencies-list';
+
 export type FieldTypes =
 	| 'string'
 	| 'textarea'
@@ -63,7 +65,7 @@ export interface IField {
 	hidden: boolean;
 	multiple: boolean;
 	type: FieldTypes;
-	field_section_id?: string;
+	field_section_id?: number;
 	sort?: string | number;
 	default_value?: string;
 	values?: IFieldValue[];
@@ -73,6 +75,11 @@ export interface IField {
 	tooltip?: string;
 	display_in_tabs?: boolean;
 	showOnlyFilled?: boolean;
+	required_for?: {
+		id: number;
+		type: 'funnel' | 'stage';
+	}[];
+	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
 }
 export interface IFieldCreate {
 	name: string;

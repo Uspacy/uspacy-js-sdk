@@ -4,6 +4,7 @@ export interface IFilterField {
 	sort: number;
 	checked: boolean;
 	fast: boolean;
+	code?: string;
 }
 
 export interface IFilterPreset<F> {
@@ -12,13 +13,15 @@ export interface IFilterPreset<F> {
 	title: string;
 	type: string;
 	// ! TODO: refactor this fields
-	filters: F;
+	filters?: F;
 	// This is necessary to compare the current filters and the filters in the preset itself.
-	currentFilters: F;
+	currentFilters?: F;
 	current: boolean;
 	pinned: boolean;
 	default: boolean;
 	// ! TODO: refactor this fields
-	filterFields: IFilterField[];
-	currentFilterFields: IFilterField[];
+	filterFields?: IFilterField[];
+	currentFilterFields?: IFilterField[];
+	soon?: boolean;
+	shadow?: boolean;
 }

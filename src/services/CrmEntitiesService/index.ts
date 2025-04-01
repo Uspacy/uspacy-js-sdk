@@ -5,6 +5,7 @@ import { IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
+import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
 
@@ -95,26 +96,24 @@ export class CrmEntitiesService {
 	/**
 	 * Update entity field
 	 * @param code entity code
-	 * @param fieldCode field code
 	 * @param data field data
 	 * @returns entity field
 	 */
-	updateEntityField(code: string, fieldCode: string, data: IField) {
+	updateEntityField(code: string, data: IField) {
 		return this.httpClient.client.patch<IField>(`${this.namespace}/:code/fields/:fieldCode`, data, {
-			urlParams: { code, fieldCode },
+			urlParams: { code, fieldCode: data.code },
 		});
 	}
 
 	/**
 	 * Update entity list values
 	 * @param code entity code
-	 * @param fieldCode field code
 	 * @param data field values data
 	 * @returns values of entity field
 	 */
-	updateEntityListValues(code: string, fieldCode: string, data: IField['values']) {
-		return this.httpClient.client.post<IField['values']>(`${this.namespace}/:code/lists/:fieldCode`, data, {
-			urlParams: { code, fieldCode },
+	updateEntityListValues(code: string, data: Partial<IField>) {
+		return this.httpClient.client.post<IField['values']>(`${this.namespace}/:code/lists/:fieldCode`, data.values, {
+			urlParams: { code, fieldCode: data.code },
 		});
 	}
 
@@ -460,6 +459,40 @@ export class CrmEntitiesService {
 		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:stageId`, {
 			params,
 			urlParams: { code, stageId },
+		});
+	}
+
+	/**
+	 * Create or update dependencies lists
+	 * @param code entity code
+	 * @param params dependencies list params
+	 * @returns dependencies list item
+	 */
+	createOrUpdateDependencies(params: Partial<IDependenciesList>, code: string) {
+		return this.httpClient.client.post<IDependenciesList>(`${this.namespace}/:code/lists/dependencies`, params, {
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get all dependencies lists by entity
+	 * @param code entity code
+	 * @returns dependencies lists item
+	 */
+	getDependenciesLists(code: string) {
+		return this.httpClient.client.get<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies`, {
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Delete dependencies lists by id
+	 * @param code entity code
+	 * @param id dependencies list id
+	 */
+	deleteDependenciesLists(code: string, id: number) {
+		return this.httpClient.client.delete<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
+			urlParams: { code, id },
 		});
 	}
 }

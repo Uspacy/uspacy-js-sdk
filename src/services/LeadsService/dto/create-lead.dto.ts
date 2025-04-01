@@ -27,4 +27,5 @@ export interface ICreatedLeadBody {
 	source?: string;
 	title: string;
 	letters?: ILetter[];
+	funnel_id?: number;
 }
