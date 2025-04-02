@@ -52,7 +52,9 @@ export type FieldTypes =
 	| 'id_column'
 	| 'requisite'
 	| 'external_channels'
-	| 'priority';
+	| 'priority'
+	// forms types
+	| 'formTextData';
 
 export interface IField {
 	name: string;
@@ -63,7 +65,7 @@ export interface IField {
 	hidden: boolean;
 	multiple: boolean;
 	type: FieldTypes;
-	field_section_id?: string;
+	field_section_id?: number;
 	sort?: string | number;
 	default_value?: string;
 	values?: IFieldValue[];

@@ -96,26 +96,24 @@ export class CrmEntitiesService {
 	/**
 	 * Update entity field
 	 * @param code entity code
-	 * @param fieldCode field code
 	 * @param data field data
 	 * @returns entity field
 	 */
-	updateEntityField(code: string, fieldCode: string, data: IField) {
+	updateEntityField(code: string, data: IField) {
 		return this.httpClient.client.patch<IField>(`${this.namespace}/:code/fields/:fieldCode`, data, {
-			urlParams: { code, fieldCode },
+			urlParams: { code, fieldCode: data.code },
 		});
 	}
 
 	/**
 	 * Update entity list values
 	 * @param code entity code
-	 * @param fieldCode field code
 	 * @param data field values data
 	 * @returns values of entity field
 	 */
-	updateEntityListValues(code: string, fieldCode: string, data: IField['values']) {
-		return this.httpClient.client.post<IField['values']>(`${this.namespace}/:code/lists/:fieldCode`, data, {
-			urlParams: { code, fieldCode },
+	updateEntityListValues(code: string, data: Partial<IField>) {
+		return this.httpClient.client.post<IField['values']>(`${this.namespace}/:code/lists/:fieldCode`, data.values, {
+			urlParams: { code, fieldCode: data.code },
 		});
 	}
 
