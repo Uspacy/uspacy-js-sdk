@@ -99,7 +99,6 @@ class Uspacy {
 		public readonly announcersService: AnnouncersService,
 		public readonly resourcesService: ResourcesService,
 		public readonly pouchdbService: PouchdbService,
-		public readonly resourcesService: ResourcesService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
