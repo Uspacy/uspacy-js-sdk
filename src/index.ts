@@ -97,6 +97,7 @@ class Uspacy {
 		public readonly historyService: HistoryService,
 		public readonly analyticsService: AnalyticsService,
 		public readonly announcersService: AnnouncersService,
+		public readonly resourcesService: ResourcesService,
 		public readonly pouchdbService: PouchdbService,
 		public readonly resourcesService: ResourcesService,
 	) {}

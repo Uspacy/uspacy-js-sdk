@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5fa08d4-55da-467a-b4a4-3385ea0b525b" name="Changes" comment="" />
+    <list default="true" id="d5fa08d4-55da-467a-b4a4-3385ea0b525b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/crm-document-template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/crm-document-template.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat/4754_required_field" />
+        <entry key="$PROJECT_DIR$" value="feat/5064_permission_department" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,6 +71,17 @@
       <workItem from="1737616822651" duration="1661000" />
       <workItem from="1737726592493" duration="1278000" />
       <workItem from="1737784844354" duration="547000" />
+      <workItem from="1742307334534" duration="19000" />
+      <workItem from="1742311427822" duration="55000" />
+      <workItem from="1742371235274" duration="141000" />
+      <workItem from="1742453986841" duration="74000" />
+      <workItem from="1742471712152" duration="10000" />
+      <workItem from="1743072544149" duration="3786000" />
+      <workItem from="1743171891096" duration="534000" />
+      <workItem from="1743443365923" duration="582000" />
+      <workItem from="1743608125245" duration="988000" />
+      <workItem from="1743748359419" duration="541000" />
+      <workItem from="1743758683258" duration="752000" />
     </task>
     <servers />
   </component>

@@ -7,6 +7,7 @@ export interface IDocumentTemplates {
 	data: IDocumentTemplate[];
 	meta: IMeta;
 	total_templates_count: number;
+	aborted?: boolean;
 }
 export interface IDocumentTemplate {
 	id: number;
@@ -40,4 +41,5 @@ export interface IDocumentTemplateField {
 export interface IDocumentTemplateFields {
 	data: IDocumentTemplateField[];
 	meta: IMeta;
+	aborted?: boolean;
 }
