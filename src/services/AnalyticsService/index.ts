@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList } from '../../models/analytics';
+import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList, IDashboard } from '../../models/analytics';
 
 /**
  * Analytics service
@@ -10,6 +10,7 @@ import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList } from '../
 export class AnalyticsService {
 	private namespace = 'analytics-backend/v1';
 	private namespaceReports = `${this.namespace}/reports/`;
+	private namespaceDashboards = `${this.namespace}/dashboards/`;
 	constructor(private readonly httpClient: HttpClient) {}
 
 	/**
@@ -63,6 +64,56 @@ export class AnalyticsService {
 	 */
 	deleteReport(id: string) {
 		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Get dashboards list
+	 * @returns Array dashboards list
+	 */
+	getDashboardsLists() {
+		return this.httpClient.client.get<IDashboard[]>(`${this.namespaceDashboards}`);
+	}
+
+	/**
+	 * Get dashboard
+	 * @param id dashboard id
+	 * @returns dashboard
+	 */
+	getDashboard(id: string) {
+		return this.httpClient.client.get<IDashboard>(`${this.namespaceDashboards}:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Create dashboard
+	 * @param data dashboard with required title
+	 * @returns dashboard
+	 * */
+	createDashboard(data: Partial<IDashboard>) {
+		return this.httpClient.client.post<IDashboard>(`${this.namespaceDashboards}`, data);
+	}
+
+	/**
+	 * Update dashboard
+	 * @param id dashboard id
+	 * @param data dashboard data
+	 * @returns dashboard
+	 */
+	updateDashboard(id: string, data: Partial<IDashboard>) {
+		return this.httpClient.client.patch<IDashboard>(`${this.namespaceDashboards}:id`, data, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Delete dashboard
+	 * @param id dashboard id
+	 */
+	deleteDashboard(id: string) {
+		return this.httpClient.client.delete<IDashboard>(`${this.namespaceDashboards}:id`, {
 			urlParams: { id },
 		});
 	}
