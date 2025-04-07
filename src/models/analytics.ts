@@ -12,6 +12,7 @@ export interface IAnalyticReportFilter {
 	list: number;
 	owner_id: number[];
 	entity_table_name: string[];
+	reportsIds: string[];
 }
 export type ChartVariantType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'pie' | 'numeric';
 export type MetricType = 'count' | 'amount_of_the_deal';
@@ -48,4 +49,15 @@ export interface IAnalyticReport {
 export interface IAnalyticReportList {
 	meta: IMeta;
 	data: IAnalyticReport[];
+}
+
+export interface IDashboard {
+	id?: string;
+	title: string;
+	access_settings: {
+		owner: number;
+		can_edit_ids?: number[];
+		can_view_ids?: number[];
+	};
+	layout?: { x?: number; y?: number; w?: number; h?: number; reportId: string }[];
 }
