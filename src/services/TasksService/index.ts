@@ -11,6 +11,7 @@ import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITasksColumnSettings } from '../../models/tasks-settings';
 import { CouchdbService } from '../CouchdbService';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
+import { ITransferTasksDto } from './dto/transfer-tasks.dto';
 
 /**
  * Tasks service
@@ -19,6 +20,7 @@ import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
+	private namespaceTransferTasks = '/tasks/v1/transfers';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -459,5 +461,12 @@ export class TasksService {
 	 */
 	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
+	}
+
+	/**
+	 * Transfer tasks
+	 */
+	transferTasks(body: Partial<ITransferTasksDto>) {
+		return this.httpClient.client.post(`${this.namespaceTransferTasks}/user`, body);
 	}
 }

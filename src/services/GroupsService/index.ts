@@ -4,6 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IGroup } from '../../models/groups';
 import { IResponseWithMeta } from '../../models/response';
 import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
+import { ITransferGroupsDto } from './dto/transfer-groups.dto';
 
 /**
  * Groups service
@@ -12,6 +13,7 @@ import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
 export class GroupsService {
 	private namespace = '/groups/v1/groups';
 	private namespacev1 = '/groups/v1';
+	private namespaceTransferGroups = '/groups/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -175,5 +177,12 @@ export class GroupsService {
 	 */
 	checkIfUserSendJoinRequest(groupId: string, userId: number) {
 		return this.httpClient.client.get(`${this.namespacev1}/join/:groupId/request/:userId`, { urlParams: { groupId, userId } });
+	}
+
+	/**
+	 * Transfer groups
+	 */
+	transferGroups(body: Partial<ITransferGroupsDto>) {
+		return this.httpClient.client.post(`${this.namespaceTransferGroups}/user`, body);
 	}
 }
