@@ -8,6 +8,7 @@ import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
+import { ITransferEntitiesDto } from './dto/transfer-entities.dto';
 
 /**
  * CrmEntities service
@@ -17,6 +18,7 @@ export class CrmEntitiesService {
 	private namespace = '/crm/v1/entities';
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
+	private namespaceTransferEntities = '/crm/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -520,5 +522,12 @@ export class CrmEntitiesService {
 		return this.httpClient.client.delete<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
 			urlParams: { code, id },
 		});
+	}
+
+	/**
+	 * Transfer entities
+	 */
+	transferEntities(body: Partial<ITransferEntitiesDto>) {
+		return this.httpClient.client.post(`${this.namespaceTransferEntities}/user`, body);
 	}
 }

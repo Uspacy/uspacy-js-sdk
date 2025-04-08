@@ -12,6 +12,7 @@ import {
 	oauthType,
 } from '../../models/oauthIntegrations';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
+import { ITransferActivitiesDto } from './transfer-activities.dto';
 
 /**
  * CrmTasks service
@@ -21,6 +22,7 @@ export class CrmTasksService {
 	private namespace = '/activities/v1/activities';
 	private calendarsNamespace = '/activities/v1/calendars';
 	private oauthIntegrationsNamespace = '/activities/v1/integrations';
+	private namespaceTransferActivities = '/activities/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -209,5 +211,12 @@ export class CrmTasksService {
 		return this.httpClient.client.delete<ICalendarsSuccessResponse>(
 			`${this.oauthIntegrationsNamespace}/accounts/${providerId}/integrations/${integrationId}`,
 		);
+	}
+
+	/**
+	 * Transfer activities
+	 */
+	transferActivities(body: Partial<ITransferActivitiesDto>) {
+		return this.httpClient.client.post(`${this.namespaceTransferActivities}/user`, body);
 	}
 }
