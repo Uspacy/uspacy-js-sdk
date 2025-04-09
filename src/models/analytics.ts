@@ -60,6 +60,7 @@ export interface IDashboard {
 		viewers?: number[];
 	};
 	layout?: {
+		i?: number;
 		x?: number;
 		y?: number;
 		w?: number;
