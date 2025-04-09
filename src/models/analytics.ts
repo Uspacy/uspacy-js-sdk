@@ -7,12 +7,12 @@ export type DateFilterType = {
 };
 
 export interface IAnalyticReportFilter {
-	title: string;
+	title?: string;
 	page: number;
 	list: number;
-	owner_id: number[];
-	entity_table_name: string[];
-	reports_ids: string[];
+	owner_id?: number[];
+	entity_table_name?: string[];
+	reports_ids?: string[];
 }
 export type ChartVariantType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'pie' | 'numeric';
 export type MetricType = 'count' | 'amount_of_the_deal';
@@ -59,5 +59,16 @@ export interface IDashboard {
 		editors?: number[];
 		viewers?: number[];
 	};
-	layout?: { x?: number; y?: number; w?: number; h?: number; report_id: string }[];
+	layout?: {
+		x?: number;
+		y?: number;
+		w?: number;
+		h?: number;
+		report_id: string;
+		report?: IAnalyticReport;
+		minW?: number;
+		maxW?: number;
+		minH?: number;
+		maxH?: number;
+	}[];
 }
