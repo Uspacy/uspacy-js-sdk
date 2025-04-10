@@ -1,3 +1,6 @@
+import { IFormField } from './forms';
+import { IUser } from './user';
+
 export interface IMeetTime {
 	id: string;
 	startTime: string;
@@ -18,6 +21,16 @@ export interface ISpecialDay {
 	times: IMeetTime[];
 }
 
+export interface ICustomTime {
+	hour: number;
+	minute: number;
+}
+
+export enum ECreateEntity {
+	deal = 'deal',
+	leadAndDeal = 'leadAndDeal',
+}
+
 export interface IBooking {
 	id?: string;
 	general: {
@@ -25,32 +38,31 @@ export interface IBooking {
 		description: string;
 		duration: {
 			value: string | number;
-			customTime: number | null;
+			customTime: ICustomTime | null;
 		};
-		coffeBreak: {
+		coffeeBreak: {
 			value: string | number;
-			customTime: number | null;
+			customTime: ICustomTime | null;
 		};
 		timezone: string;
 		emailReminder: {
 			value: string | number;
-			customTime: number | null;
+			customTime: ICustomTime | null;
 		};
 		calendarReminder: {
 			value: string | number;
-			customTime: number | null;
+			customTime: ICustomTime | null;
 		};
 		type: 'task' | 'call' | 'meeting' | 'chat' | 'email';
+		participants: IUser['id'][];
 		showPicture: boolean;
 		canEditOthers: boolean;
 	};
 	userData: {
 		formName: string;
-		entity: 'deal' | 'leadAndDeal';
+		entity: ECreateEntity;
 		source: string;
-		// після релізу форм оновитись з мейну і задати fields: IFormField[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		fields: any[];
+		fields: IFormField[];
 	};
 	meetHours: {
 		active: boolean;
