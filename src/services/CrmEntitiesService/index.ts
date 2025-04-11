@@ -8,8 +8,7 @@ import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
-import { ITransferEntitiesResponse, ITransferOfCasesProgress } from '../../models/transferOfCases';
-import { ITransferEntitiesDto } from './dto/transfer-entities.dto';
+import { ITransferEntitiesData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 
 /**
  * CrmEntities service
@@ -529,16 +528,16 @@ export class CrmEntitiesService {
 	 * Transfer entities
 	 * @returns transfer entities quantity
 	 */
-	transferEntities(body: Partial<ITransferEntitiesDto>) {
-		return this.httpClient.client.post<ITransferEntitiesResponse>(`${this.namespaceTransferEntities}/user`, body);
+	transferEntities(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/user`, body);
 	}
 
 	/**
 	 * Transfer entities quantity
 	 * @returns transfer entities quantity
 	 */
-	transferEntitiesQuantity(body: Partial<ITransferEntitiesDto>) {
-		return this.httpClient.client.post<ITransferEntitiesResponse>(`${this.namespaceTransferEntities}/quantity`, body);
+	transferEntitiesQuantity(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/quantity`, body);
 	}
 
 	/**

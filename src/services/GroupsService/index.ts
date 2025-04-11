@@ -3,9 +3,8 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IGroup } from '../../models/groups';
 import { IResponseWithMeta } from '../../models/response';
-import { ITransferGroupsResponse, ITransferOfCasesProgress } from '../../models/transferOfCases';
+import { ITransferGroupsData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
-import { ITransferGroupsDto } from './dto/transfer-groups.dto';
 
 /**
  * Groups service
@@ -184,16 +183,16 @@ export class GroupsService {
 	 * Transfer groups
 	 * @returns transfer groups quantity
 	 */
-	transferGroups(body: Partial<ITransferGroupsDto>) {
-		return this.httpClient.client.post<ITransferGroupsResponse>(`${this.namespaceTransferGroups}/user`, body);
+	transferGroups(body: Partial<ITransferGroupsData>) {
+		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/user`, body);
 	}
 
 	/**
 	 * Transfer groups quantity
 	 * @returns transfer groups quantity
 	 */
-	transferGroupsQuantity(body: Partial<ITransferGroupsDto>) {
-		return this.httpClient.client.post<ITransferGroupsResponse>(`${this.namespaceTransferGroups}/quantity`, body);
+	transferGroupsQuantity(body: Partial<ITransferGroupsData>) {
+		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/quantity`, body);
 	}
 
 	/**
