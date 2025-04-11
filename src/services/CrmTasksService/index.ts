@@ -11,9 +11,8 @@ import {
 	oauthProvider,
 	oauthType,
 } from '../../models/oauthIntegrations';
-import { ITransferActivitiesResponse, ITransferOfCasesProgress } from '../../models/transferOfCases';
+import { ITransferActivitiesData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
-import { ITransferActivitiesDto } from './transfer-activities.dto';
 
 /**
  * CrmTasks service
@@ -218,16 +217,16 @@ export class CrmTasksService {
 	 * Transfer activities
 	 * @returns transfer activities quantity
 	 */
-	transferActivities(body: Partial<ITransferActivitiesDto>) {
-		return this.httpClient.client.post<ITransferActivitiesResponse>(`${this.namespaceTransferActivities}/user`, body);
+	transferActivities(body: Partial<ITransferActivitiesData>) {
+		return this.httpClient.client.post<ITransferActivitiesData>(`${this.namespaceTransferActivities}/user`, body);
 	}
 
 	/**
 	 * Transfer activities quantity
 	 * @returns transfer activities quantity
 	 */
-	transferActivitiesQuantity(body: Partial<ITransferActivitiesDto>) {
-		return this.httpClient.client.post<ITransferActivitiesResponse>(`${this.namespaceTransferActivities}/quantity`, body);
+	transferActivitiesQuantity(body: Partial<ITransferActivitiesData>) {
+		return this.httpClient.client.post<ITransferActivitiesData>(`${this.namespaceTransferActivities}/quantity`, body);
 	}
 
 	/**

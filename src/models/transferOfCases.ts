@@ -10,7 +10,7 @@ export interface ITransferOfCasesProgress {
 	createdAt: number;
 }
 
-export interface ITransferTasksResponse {
+export interface ITransferTasksData {
 	count: number;
 	onlyQuantity: boolean;
 	oldUserId: number;
@@ -22,7 +22,7 @@ export interface ITransferTasksResponse {
 	templatesUsers: number[];
 }
 
-export interface ITransferGroupsResponse {
+export interface ITransferGroupsData {
 	count: number;
 	onlyQuantity: boolean;
 	oldUserId: number;
@@ -32,10 +32,9 @@ export interface ITransferGroupsResponse {
 	group_members: boolean;
 }
 
-export interface ITransferActivitiesResponse {
+export interface ITransferActivitiesData {
 	count: number;
 	onlyQuantity: boolean;
-	only_quantity: boolean;
 	old_user_id: number;
 	new_user_ids: number[];
 	responsible_users: number[];
@@ -43,14 +42,16 @@ export interface ITransferActivitiesResponse {
 	calendar_sync: boolean;
 }
 
-export interface ITransferEntitiesResponse {
+export interface ITransferEntitiesData {
 	count: number;
 	onlyQuantity: boolean;
-	only_quantity: boolean;
 	old_user_id: number;
 	new_user_ids: number[];
 	call_user_ids: number[];
 	entities_user_ids: {
 		[key: string]: number[];
+	};
+	counters: {
+		[key: string]: number;
 	};
 }
