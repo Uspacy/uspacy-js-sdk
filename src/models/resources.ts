@@ -1,1 +1,1 @@
-export type ResourceType = 'form' | 'widget' | 'booking';
+export type ResourceType = 'form' | 'widget' | 'calendar';
