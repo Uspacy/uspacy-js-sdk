@@ -510,7 +510,7 @@ export class CrmEntitiesService {
 	 * Transfer entities quantity
 	 * @returns transfer entities quantity
 	 */
-	transferEntitiesQuantity(body: Partial<ITransferEntitiesData>) {
+	getTransferEntitiesQuantity(body: Partial<ITransferEntitiesData>) {
 		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/quantity`, body);
 	}
 
@@ -518,7 +518,7 @@ export class CrmEntitiesService {
 	 * Transfer entities progress
 	 * @returns transfer entities progress
 	 */
-	transferEntitiesProgress() {
+	getTransferEntitiesProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferEntities}/progress`);
 	}
 }

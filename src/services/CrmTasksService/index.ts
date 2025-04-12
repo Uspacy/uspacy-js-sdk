@@ -225,7 +225,7 @@ export class CrmTasksService {
 	 * Transfer activities quantity
 	 * @returns transfer activities quantity
 	 */
-	transferActivitiesQuantity(body: Partial<ITransferActivitiesData>) {
+	getTransferActivitiesQuantity(body: Partial<ITransferActivitiesData>) {
 		return this.httpClient.client.post<ITransferActivitiesData>(`${this.namespaceTransferActivities}/quantity`, body);
 	}
 
@@ -233,7 +233,7 @@ export class CrmTasksService {
 	 * Transfer activities
 	 * @returns transfer activities progress
 	 */
-	transferActivitiesProgress() {
+	getTransferActivitiesProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferActivities}/progress`);
 	}
 }
