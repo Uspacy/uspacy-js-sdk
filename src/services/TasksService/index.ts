@@ -475,7 +475,7 @@ export class TasksService {
 	 * Transfer tasks quantity
 	 * @returns transfer tasks quantity
 	 */
-	transferTasksQuantity(body: Partial<ITransferTasksData>) {
+	getTransferTasksQuantity(body: Partial<ITransferTasksData>) {
 		return this.httpClient.client.post<ITransferTasksData>(`${this.namespaceTransferTasks}/quantity`, body);
 	}
 
@@ -483,7 +483,7 @@ export class TasksService {
 	 * Transfer tasks progress
 	 * @returns transfer tasks progress
 	 */
-	transferTasksProgress() {
+	getTransferTasksProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferTasks}/progress`);
 	}
 }
