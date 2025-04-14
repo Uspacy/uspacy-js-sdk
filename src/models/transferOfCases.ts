@@ -5,9 +5,11 @@ export enum ETransferStatus {
 
 export interface ITransferOfCasesProgress {
 	status: ETransferStatus;
-	totalQuantity: number;
+	totalQuantity?: number;
+	total_quantity?: number;
 	quantity: number;
-	createdAt: number;
+	createdAt?: number;
+	created_at?: number;
 }
 
 export interface ITransferTasksData {
