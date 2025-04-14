@@ -12,7 +12,7 @@ export interface IAnalyticReportFilter {
 	list: number;
 	owner_id?: number[];
 	entity_table_name?: string[];
-	reports_ids?: string[];
+	id?: string[];
 }
 export type ChartVariantType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'pie' | 'numeric';
 export type MetricType = 'count' | 'amount_of_the_deal';
