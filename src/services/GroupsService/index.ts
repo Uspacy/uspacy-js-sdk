@@ -186,4 +186,12 @@ export class GroupsService {
 	transferGroups(body: Partial<ITransferGroupsData>) {
 		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/user`, body);
 	}
+
+	/**
+	 * Transfer groups quantity
+	 * @returns transfer groups quantity
+	 */
+	getTransferGroupsQuantity(body: Partial<ITransferGroupsData>) {
+		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/quantity`, body);
+	}
 }
