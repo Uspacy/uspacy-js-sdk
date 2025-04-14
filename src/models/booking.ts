@@ -33,6 +33,12 @@ export enum ECreateEntity {
 
 export interface IBooking {
 	id?: string;
+	active?: boolean;
+	created_at?: number;
+	updated_at?: number;
+	entryPoint?: string;
+	portal?: string;
+	userId?: number;
 	general: {
 		name: string;
 		description: string;
