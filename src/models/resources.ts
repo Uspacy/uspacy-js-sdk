@@ -16,10 +16,10 @@ export interface IResource {
 	type: ResourceType;
 	active?: boolean;
 	config: ResourceConfig;
-	created_at: number;
-	updated_at: number;
-	entryPoint: string;
-	id: string;
-	portal: string;
-	userId: number;
+	created_at?: number;
+	updated_at?: number;
+	entryPoint?: string;
+	id?: string;
+	portal?: string;
+	userId?: number;
 }
