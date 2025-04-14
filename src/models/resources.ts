@@ -6,7 +6,7 @@ export interface ResourceConfig {
 	crmEntity: string;
 	fields?: IFormField[];
 	other?: IFormOther[];
-	predefinedFields: IPredefinedField[];
+	predefinedFields?: IPredefinedField[];
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
