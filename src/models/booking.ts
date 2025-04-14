@@ -27,7 +27,7 @@ export interface ICustomTime {
 }
 
 export enum ECreateEntity {
-	deal = 'deal',
+	activity = 'activity',
 	leadAndActivity = 'leadAndActivity',
 }
 
