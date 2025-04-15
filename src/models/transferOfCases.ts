@@ -31,7 +31,8 @@ export interface ITransferGroupsData {
 	newUserIds: number[];
 	moderators: number[];
 	group_owners: number[];
-	group_members: boolean;
+	group_members: number[];
+	on_participants: boolean;
 }
 
 export interface ITransferActivitiesData {
