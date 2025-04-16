@@ -24,7 +24,7 @@ export interface IAnalyticReport {
 	description: string;
 	chart_type: ChartVariantType | 'donut';
 	entity_table_name: string;
-	panel_ids?: string[];
+	dashboards?: string[];
 	created_at: number;
 	owner_id: number;
 	filter: {
