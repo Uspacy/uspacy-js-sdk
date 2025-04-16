@@ -256,3 +256,7 @@ export interface IBill {
 	tax_id?: string;
 	hash?: string;
 }
+
+export interface IStripeRedirect {
+	url: string;
+}
