@@ -17,6 +17,7 @@ import {
 	IInvoices,
 	IPortalSubscription,
 	IRatesList,
+	IStripeRedirect,
 	ISubscription,
 	ITariff,
 } from '../../models/tariffs';
@@ -36,6 +37,7 @@ import {
 	ISubscriptionPayload,
 	ISubscriptionsIndividual,
 	ISubscriptionsLegal,
+	ISubscriptionStripePayload,
 } from './dto/subscription.dto';
 
 /**
@@ -293,6 +295,14 @@ export class AuthService {
 	 */
 	createSubscriptionLegal(body: ILegalPayload) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal`, body);
+	}
+
+	/**
+	 * Redirect to stripe buy
+	 * @returns url to stripe redirecting
+	 */
+	redirectToStripe(body: ISubscriptionStripePayload) {
+		return this.httpClient.client.post<IStripeRedirect>(`${this.namespace}/tariffs/stripe/buy`, body);
 	}
 
 	/**

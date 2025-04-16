@@ -98,3 +98,12 @@ export interface ILegalPayload extends ISubscriptionPayload {
 	director_pib: string;
 	legal_address: string;
 }
+
+export interface ISubscriptionStripePayload extends ISubscriptionPayload {
+	first_name: string;
+	last_name: string;
+	url: string;
+	success_url: string;
+	cancel_url: string;
+	data?: string;
+}

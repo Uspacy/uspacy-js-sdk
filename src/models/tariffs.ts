@@ -267,3 +267,7 @@ export interface IDiscountCoupon {
 	discount_percent: number;
 	discount_amount: { currency: string; value: string };
 }
+
+export interface IStripeRedirect {
+	url: string;
+}
