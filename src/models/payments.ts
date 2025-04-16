@@ -36,14 +36,7 @@ export interface ILegalEntityFormEuCom {
 	firstName: string;
 	lastName: string;
 	email: string;
-	companyName: string;
-	vatIdTaxIdForCompaniesOnly: string;
-	country: string;
-	addressLine1: string;
-	addressLine2: string;
-	state: string;
-	city: string;
-	postalZipCode: string;
+	phone: string;
 }
 
 export interface ILegalEntityFormErrors {
@@ -59,14 +52,5 @@ export interface ILegalEntityFormEuComErrors {
 	firstNameErr: boolean;
 	lastNameErr: boolean;
 	emailErr: boolean;
-	countryErr: boolean;
-	postalZipCodeErr: boolean;
-	addressLine1Err: boolean;
-	cityErr: boolean;
-}
-
-export interface ICardCheck {
-	success: boolean;
-	loading: boolean;
-	error: string;
+	phoneErr: boolean;
 }
