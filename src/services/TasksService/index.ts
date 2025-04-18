@@ -486,4 +486,11 @@ export class TasksService {
 	getTransferTasksProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferTasks}/progress`);
 	}
+
+	/**
+	 * Stop transfer tasks
+	 */
+	stopTransferTasks() {
+		return this.httpClient.client.get(`${this.namespaceTransferTasks}/stop`);
+	}
 }
