@@ -236,4 +236,11 @@ export class CrmTasksService {
 	getTransferActivitiesProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferActivities}/progress`);
 	}
+
+	/**
+	 * Stop transfer activities
+	 */
+	stopTransferActivities() {
+		return this.httpClient.client.get(`${this.namespaceTransferActivities}/stop`);
+	}
 }

@@ -547,4 +547,11 @@ export class CrmEntitiesService {
 	getTransferEntitiesProgress() {
 		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferEntities}/progress`);
 	}
+
+	/**
+	 * Stop transfer entities
+	 */
+	stopTransferEntities() {
+		return this.httpClient.client.get(`${this.namespaceTransferEntities}/stop`);
+	}
 }
