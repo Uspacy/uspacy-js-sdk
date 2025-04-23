@@ -48,4 +48,20 @@ export interface IUser {
 	socialMedia: ISocialMediaLinks[];
 	emailInvitation: boolean;
 	dateOfInvitation: number;
+	[key: string]: any;
+}
+
+export interface IUserFilter {
+	search?: string;
+	page?: number;
+	perPage?: number;
+	boolean_operator?: string;
+	openDatePicker?: boolean;
+	status?: string[];
+	country?: string[];
+	head?: number[];
+	department?: number[];
+	table_fields?: string[];
+	sortModel?: { [key: string]: string }[];
+	[key: string]: any;
 }
