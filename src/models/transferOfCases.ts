@@ -22,6 +22,11 @@ export interface ITransferTasksData {
 	auditorsUsers: number[];
 	accomplicesUsers: number[];
 	templatesUsers: number[];
+	templateOwnerUsers: number[];
+	templateResponsibleUsers: number[];
+	templateAuditorsUsers: number[];
+	templateAccomplicesUsers: number[];
+	accessToTemplates: number[];
 }
 
 export interface ITransferGroupsData {
