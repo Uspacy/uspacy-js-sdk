@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
@@ -564,7 +564,7 @@ export class CrmEntitiesService {
 	 * @returns entities currencies amount
 	 */
 	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
-		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:id/amount`, {
+		return this.httpClient.client.get<IEntityAmount>(`${this.namespace}/:code/kanban/stage/:id/amount`, {
 			urlParams: { code, id },
 			params,
 		});

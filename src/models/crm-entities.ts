@@ -46,3 +46,10 @@ export interface IEntity {
 	meta: IMeta;
 	aborted: boolean;
 }
+
+export interface IEntityAmount {
+	field: string;
+	value: number;
+	count: number;
+	currency: string;
+}
