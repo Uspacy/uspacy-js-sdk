@@ -499,6 +499,9 @@ export class CrmEntitiesService {
 
 	/**
 	 * Get entities currencies amount
+	 * @param params entities currencies amount params
+	 * @param code entity code
+	 * @param id stage id
 	 * @returns entities currencies amount
 	 */
 	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
