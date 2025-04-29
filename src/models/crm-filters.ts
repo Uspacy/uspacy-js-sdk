@@ -131,4 +131,9 @@ export interface IDocumentTemplateFieldFilters {
 	search?: string;
 }
 
+export interface IFilterCurrenciesAmount {
+	currency: string;
+	field: string;
+}
+
 export type IFilter = ILeadFilters & IDealFilters & IContactFilters & ICompanyFilters & IProductFilters & IEntityFilters;
