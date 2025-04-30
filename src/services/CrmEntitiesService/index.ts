@@ -1,7 +1,8 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
@@ -493,6 +494,20 @@ export class CrmEntitiesService {
 	deleteDependenciesLists(code: string, id: number) {
 		return this.httpClient.client.delete<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
 			urlParams: { code, id },
+		});
+	}
+
+	/**
+	 * Get entities currencies amount
+	 * @param params entities currencies amount params
+	 * @param code entity code
+	 * @param id stage id
+	 * @returns entities currencies amount
+	 */
+	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
+		return this.httpClient.client.get<IEntityAmount>(`${this.namespace}/:code/kanban/stage/:id/amount`, {
+			urlParams: { code, id },
+			params,
 		});
 	}
 }

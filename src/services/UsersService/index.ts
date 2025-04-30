@@ -5,11 +5,10 @@ import { HttpClient } from '../../core/HttpClient';
 import { I2FaStatus } from '../../models/2fa';
 import { IResponseWithMessage, IResponseWithMeta } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
-import { IUser, UserRole } from '../../models/user';
+import { IUser, IUserFilter, UserRole } from '../../models/user';
 import { ISearchUsersDto } from './dto/search-users.dto';
 import { IUpdateUserDto } from './dto/update-user.dto';
 import { IUploadAvatar } from './dto/upload-avatar.dto';
-
 /**
  * Users service
  */
@@ -229,5 +228,18 @@ export class UsersService {
 	 */
 	hasRole(userRoles: UserRole[], roles: UserRole[]): boolean {
 		return userRoles?.some((userRole) => roles?.some((role) => role === userRole)) || false;
+	}
+
+	/**
+	 * get users by filters
+	 * @param params user filters
+	 * @param signal AbortSignal
+	 * @returns users wit meta
+	 */
+	getUsersByFilers(params: IUserFilter, signal: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<IUser>>(this.namespace, {
+			params,
+			signal,
+		});
 	}
 }
