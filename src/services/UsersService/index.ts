@@ -231,8 +231,10 @@ export class UsersService {
 	}
 
 	/**
-	 * Upload avatar
-	 * @returns user portal settings
+	 * get users by filters
+	 * @param params user filters
+	 * @param signal AbortSignal
+	 * @returns users wit meta
 	 */
 	getUsersByFilers(params: IUserFilter, signal: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<IUser>>(this.namespace, {
