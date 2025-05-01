@@ -8,24 +8,15 @@ import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, ICoupon, IIntent, IInvoiceData, IInvoices, IPortalSubscription, IRatesList, ISubscription, ITariff } from '../../models/tariffs';
+import { IBill, IPortalSubscription, IStripeRedirect, ITariff } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
-import { IDowngradePayload } from './dto/downgrade.dto';
 import { ILoginDto } from './dto/login.dto';
 import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { IResponseOauthData } from './dto/response-oauth-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import {
-	ICreateUsingPaymentIntent,
-	IIndividualPayload,
-	IIntentPayload,
-	ILegalPayload,
-	ISubscriptionPayload,
-	ISubscriptionsIndividual,
-	ISubscriptionsLegal,
-} from './dto/subscription.dto';
+import { IIndividualPayload, ILegalPayload, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
 
 /**
  * Auth service
@@ -156,106 +147,12 @@ export class AuthService {
 	}
 
 	/**
-	 * Get invoices list
-	 * @param limit invoices limit
-	 * @returns Array with invoices entities
-	 */
-	getInvoices(limit: number) {
-		return this.httpClient.client.get<IInvoices>(`${this.namespace}/invoices/`, { params: { limit } });
-	}
-
-	/**
-	 * Get invoice pdf link
-	 * @param id invoice id
-	 * @returns Download link
-	 */
-	getInvoicesPdf(id: string) {
-		return this.httpClient.client.get<{ download_url: string }>(`${this.namespace}/invoices/:id/pdf/`, { urlParams: { id } });
-	}
-
-	/**
-	 * Get rates list
-	 * @returns Array rates entity
-	 */
-	getRatesList() {
-		return this.httpClient.client.get<IRatesList>(`${this.namespace}/rates/`);
-	}
-
-	/**
-	 * Get current subscription
-	 * @returns Object subscription entity
-	 */
-	getSubscription() {
-		return this.httpClient.client.get<ISubscription>(`${this.namespace}/subscriptions/`);
-	}
-
-	/**
-	 * Get coupon
-	 * @returns Object coupon entity
-	 */
-	getCoupon(couponCode: string) {
-		return this.httpClient.client.get<ICoupon>(`${this.namespace}/coupons/${couponCode}`);
-	}
-
-	/**
-	 * Set subscription individual
-	 * @returns Object invoice entity
-	 */
-	subscriptionInvdividual(body: ISubscriptionsIndividual) {
-		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/individual`, body);
-	}
-
-	/**
-	 * Set subscription legal
-	 * @returns Object invoice entity
-	 */
-	subscriptionLegal(body: ISubscriptionsLegal) {
-		return this.httpClient.client.post<IInvoiceData>(`${this.namespace}/subscriptions/legal`, body);
-	}
-
-	/**
-	 * Activate demo tariff
-	 */
-	activateDemo() {
-		return this.httpClient.client.post(`${this.namespace}/subscriptions/demo`);
-	}
-
-	/**
-	 * Create payment intent for card payment in EU, COM, BR, PL
-	 */
-	createPaymentIntent(body: IIntentPayload) {
-		return this.httpClient.client.post<IIntent>(`${this.namespace}/chargebee/payment_intent`, body);
-	}
-
-	/**
-	 * Create using payment intent for card payment in EU, COM, BR, PL
-	 */
-	createUsingPaymentIntent(body: ICreateUsingPaymentIntent) {
-		return this.httpClient.client.post(`${this.namespace}/chargebee/create_using_payment_intent`, body);
-	}
-
-	/**
-	 * Disable subscriptions renewal
-	 */
-	disableSubscriptionsRenewal(auto_debit: boolean) {
-		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/disable_renewal`, auto_debit);
-	}
-
-	/**
-	 * Downgrade tariff
-	 */
-	downgrade(body: IDowngradePayload) {
-		return this.httpClient.client.post<boolean>(`${this.namespace}/subscriptions/downgrade`, body);
-	}
-
-	/**
 	 * Redirect to uspacy after google oauth
 	 */
 	getUrlToRedirectAfterOAuth(body: IResponseOauthData) {
 		return this.httpClient.client.get<IAfterOauthResponse>(`${this.namespace}/oauth/info`, { params: body, useAuth: false });
 	}
 
-	// ! NEW BILLING
 	/**
 	 * Get tariffs list
 	 * @returns Array tarifs entity
@@ -282,6 +179,14 @@ export class AuthService {
 	 */
 	createSubscriptionLegal(body: ILegalPayload) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal`, body);
+	}
+
+	/**
+	 * Redirect to stripe buy
+	 * @returns url to stripe redirecting
+	 */
+	redirectToStripe(body: ISubscriptionStripePayload) {
+		return this.httpClient.client.post<IStripeRedirect>(`${this.namespace}/tariffs/stripe/buy`, body);
 	}
 
 	/**
