@@ -10,7 +10,6 @@ import { IResponseWithMeta } from '../../models/response';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITasksColumnSettings } from '../../models/tasks-settings';
 import { CouchdbService } from '../CouchdbService';
-import { ITaskValues } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
 /**
@@ -32,8 +31,8 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array tasks entity
 	 */
-	getTasks(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
+	getTasks(params: ITasksParams, withoutResponsible?: boolean, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -45,8 +44,8 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array recurring template entity
 	 */
-	getRecurringTemplates(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/recurring`, {
+	getRecurringTemplates(params: ITasksParams, withoutResponsible?: boolean, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITask>>(`${this.namespaceTemplates}/recurring`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -58,8 +57,8 @@ export class TasksService {
 	 * @param withoutResponsible withoutResponsible filter param
 	 * @returns Array one time template entity
 	 */
-	getOneTimeTemplates(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespaceTemplates}/one_time`, {
+	getOneTimeTemplates(params: ITasksParams, withoutResponsible?: boolean, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<ITask>>(`${this.namespaceTemplates}/one_time`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -72,7 +71,7 @@ export class TasksService {
 	 * @returns Array hierarchy entity
 	 */
 	getHierarchies(params: ITasksParams, withoutResponsible: boolean, signal: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(`${this.namespace}/hierarchy`, {
+		return this.httpClient.client.get<IResponseWithMeta<ITask>>(`${this.namespace}/hierarchy`, {
 			params: { ...params, ...(withoutResponsible && { responsible_id: '' }) },
 			signal,
 		});
@@ -88,7 +87,7 @@ export class TasksService {
 	 */
 	getSubtasks(id: string, page: number, list: number, isTemplate: boolean) {
 		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
+			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, {
 				params: {
 					template_id: id,
 					page,
@@ -157,7 +156,7 @@ export class TasksService {
 	 * Create task
 	 * @returns task entity
 	 */
-	createTask(body: ITaskValues) {
+	createTask(body: Partial<ITask>) {
 		return this.httpClient.client.post<ITask>(this.namespace, body);
 	}
 
@@ -165,7 +164,7 @@ export class TasksService {
 	 * Replicate task
 	 * @returns task entity
 	 */
-	replicateTask(body: ITaskValues, id: string) {
+	replicateTask(body: Partial<ITask>, id: string) {
 		return this.httpClient.client.post<ITask>(`${this.namespace}/:id/replicate`, body, { urlParams: { id } });
 	}
 
@@ -173,7 +172,7 @@ export class TasksService {
 	 * Create recurring template
 	 * @returns recurring template entity
 	 */
-	createRecurringTemplate(body: ITaskValues) {
+	createRecurringTemplate(body: Partial<ITask>) {
 		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/recurring`, body);
 	}
 
@@ -181,7 +180,7 @@ export class TasksService {
 	 * Create one time template
 	 * @returns one time template entity
 	 */
-	createOneTimeTemplate(body: ITaskValues) {
+	createOneTimeTemplate(body: Partial<ITask>) {
 		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/one_time`, body);
 	}
 
@@ -190,7 +189,7 @@ export class TasksService {
 	 * @param id task id
 	 * @returns task entity
 	 */
-	updateTask(id: string, body: ITaskValues) {
+	updateTask(id: string, body: Partial<ITask>) {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
 			urlParams: { id },
 		});
@@ -201,7 +200,7 @@ export class TasksService {
 	 * @param id recurring template id
 	 * @returns recurring template entity
 	 */
-	updateRecurringTemplate(id: string, body: ITaskValues) {
+	updateRecurringTemplate(id: string, body: Partial<ITask>) {
 		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/recurring/:id/`, body, {
 			urlParams: { id },
 		});
@@ -212,7 +211,7 @@ export class TasksService {
 	 * @param id one time template id
 	 * @returns one time template entity
 	 */
-	updateOneTimeTemplate(id: string, body: ITaskValues) {
+	updateOneTimeTemplate(id: string, body: Partial<ITask>) {
 		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/one_time/:id/`, body, {
 			urlParams: { id },
 		});
@@ -223,7 +222,7 @@ export class TasksService {
 	 * @param id subtask id
 	 * @returns subtask entity
 	 */
-	updateSubtask(id: string, body: ITaskValues) {
+	updateSubtask(id: string, body: Partial<ITask>) {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
 			urlParams: { id },
 		});

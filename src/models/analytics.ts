@@ -7,11 +7,12 @@ export type DateFilterType = {
 };
 
 export interface IAnalyticReportFilter {
-	title: string;
+	title?: string;
 	page: number;
 	list: number;
-	owner_id: number[];
-	entity_table_name: string[];
+	owner_id?: number[];
+	entity_table_name?: string[];
+	id?: string[];
 }
 export type ChartVariantType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'pie' | 'numeric';
 export type MetricType = 'count' | 'amount_of_the_deal';
@@ -23,7 +24,7 @@ export interface IAnalyticReport {
 	description: string;
 	chart_type: ChartVariantType | 'donut';
 	entity_table_name: string;
-	panel_ids?: number[];
+	dashboards?: string[];
 	created_at: number;
 	owner_id: number;
 	filter: {
@@ -37,7 +38,7 @@ export interface IAnalyticReport {
 			value: string;
 			timeframe: DayInterval;
 		};
-		measure_for: MetricType;
+		measure_for: string;
 		additional: {
 			is_view_percent: boolean;
 			is_view_value: boolean;
@@ -48,4 +49,27 @@ export interface IAnalyticReport {
 export interface IAnalyticReportList {
 	meta: IMeta;
 	data: IAnalyticReport[];
+}
+
+export interface IDashboard {
+	id?: string;
+	title: string;
+	access_settings: {
+		owner: number;
+		editors?: number[];
+		viewers?: number[];
+	};
+	layout?: {
+		i?: number;
+		x?: number;
+		y?: number;
+		w?: number;
+		h?: number;
+		report_id: string;
+		report?: IAnalyticReport;
+		minW?: number;
+		maxW?: number;
+		minH?: number;
+		maxH?: number;
+	}[];
 }

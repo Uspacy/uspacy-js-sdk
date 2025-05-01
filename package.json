@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.122-alpha.8",
+  "version": "0.0.148-alpha.1",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "29.5.3",
     "@types/node": "20.5.0",
+    "@types/pouchdb": "^6.4.2",
     "@typescript-eslint/eslint-plugin": "6.4.0",
     "@typescript-eslint/parser": "6.4.0",
     "buffer": "6.0.3",
@@ -40,6 +41,9 @@
     "eslint-webpack-plugin": "4.0.1",
     "html-webpack-plugin": "5.5.3",
     "husky": "8.0.0",
+    "pouchdb": "^9.0.0",
+    "pouchdb-adapter-indexeddb": "^9.0.0",
+    "pouchdb-find": "^9.0.0",
     "prettier": "3.0.1",
     "reflect-metadata": "0.1.13",
     "ts-loader": "9.4.4",
@@ -63,7 +67,7 @@
     "test:ci": "cross-env CI=true yarn test",
     "eslint": "eslint --max-warnings=0",
     "format": "prettier --write \"src/**/*.ts\"",
-    "eslint:fix": "yarn eslint -- --fix",
+    "eslint:fix": "yarn eslint . --fix",
     "prepare": "husky install"
   },
   "browserslist": {
