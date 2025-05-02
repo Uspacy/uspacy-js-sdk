@@ -18,6 +18,7 @@ export interface IPortalSubscription {
 	auto_renewal: boolean;
 	first_payment_date: number;
 	created_at: number;
+	new_customer: boolean;
 }
 
 export interface IBill {
@@ -45,6 +46,16 @@ export interface IBill {
 	coupon?: string[];
 	tax_id?: string;
 	hash?: string;
+}
+
+export interface IDiscountCoupon {
+	coupon_id: string;
+	valid_from: string;
+	valid_till: string;
+	status: 'active' | 'not valid';
+	discount_type: 'relative' | 'absolute';
+	discount_percent: number;
+	discount_amount: { currency: string; value: string };
 }
 
 export interface IStripeRedirect {
