@@ -3,7 +3,7 @@ export interface IProductCategory {
 	parent_id: number;
 	name: string;
 	is_active?: number;
-	collapsed?: number;
+	collapsed?: boolean;
 	child_categories?: IProductCategory[];
 }
 
