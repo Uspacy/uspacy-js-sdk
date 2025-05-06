@@ -25,3 +25,11 @@ export interface IFilterPreset<F> {
 	soon?: boolean;
 	shadow?: boolean;
 }
+
+export interface IFilterPresetsData<T> {
+	data: {
+		presets: IFilterPreset<T>[];
+		filterFields: IFilterField[];
+		filters: T;
+	};
+}
