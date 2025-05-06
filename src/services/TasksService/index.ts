@@ -9,6 +9,7 @@ import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITasksColumnSettings } from '../../models/tasks-settings';
+import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
 import { CouchdbService } from '../CouchdbService';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
@@ -19,6 +20,7 @@ import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
+	private namespaceTransferTasks = '/tasks/v1/transfers';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -459,5 +461,36 @@ export class TasksService {
 	 */
 	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
+	}
+
+	/**
+	 * Transfer tasks
+	 * @returns transfer tasks quantity
+	 */
+	transferTasks(body: Partial<ITransferTasksData>) {
+		return this.httpClient.client.post<ITransferTasksData>(`${this.namespaceTransferTasks}/user`, body);
+	}
+
+	/**
+	 * Transfer tasks quantity
+	 * @returns transfer tasks quantity
+	 */
+	getTransferTasksQuantity(body: Partial<ITransferTasksData>) {
+		return this.httpClient.client.post<ITransferTasksData>(`${this.namespaceTransferTasks}/quantity`, body);
+	}
+
+	/**
+	 * Transfer tasks progress
+	 * @returns transfer tasks progress
+	 */
+	getTransferTasksProgress() {
+		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferTasks}/progress`);
+	}
+
+	/**
+	 * Stop transfer tasks
+	 */
+	stopTransferTasks() {
+		return this.httpClient.client.get(`${this.namespaceTransferTasks}/stop`);
 	}
 }
