@@ -526,6 +526,20 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Get entities currencies amount
+	 * @param params entities currencies amount params
+	 * @param code entity code
+	 * @param id stage id
+	 * @returns entities currencies amount
+	 */
+	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
+		return this.httpClient.client.get<IEntityAmount>(`${this.namespace}/:code/kanban/stage/:id/amount`, {
+			urlParams: { code, id },
+			params,
+		});
+	}
+
+	/**
 	 * Transfer entities
 	 * @returns transfer entities quantity
 	 */
@@ -554,19 +568,5 @@ export class CrmEntitiesService {
 	 */
 	stopTransferEntities() {
 		return this.httpClient.client.get(`${this.namespaceTransferEntities}/stop`);
-	}
-
-	/**
-	 * Get entities currencies amount
-	 * @param params entities currencies amount params
-	 * @param code entity code
-	 * @param id stage id
-	 * @returns entities currencies amount
-	 */
-	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
-		return this.httpClient.client.get<IEntityAmount>(`${this.namespace}/:code/kanban/stage/:id/amount`, {
-			urlParams: { code, id },
-			params,
-		});
 	}
 }
