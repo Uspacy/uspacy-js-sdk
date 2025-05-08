@@ -420,6 +420,32 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Mass editing entity stage items
+	 * @param code entity code
+	 * @param entityIds entity items ids to edit
+	 * @param exceptIds entity items ids to exclude from editing
+	 * @param all should edit all entity items
+	 * @param params query params if editing all entity items
+	 * @param payload editing payload
+	 * @param settings editing settings
+	 */
+	massEntityItemsStageEditing(code: string, { entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
+		const data = {
+			all,
+			entity_ids: entityIds,
+			except_ids: exceptIds,
+			payload,
+			settings,
+		};
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+
+		return this.httpClient.client.patch(`${this.namespace}/:code/mass_stage_change${suffix}`, data, {
+			urlParams: { code },
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
 	 * Move entity item from stage to stage
 	 * @param code entity code
 	 * @param entityId entity item id
