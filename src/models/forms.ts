@@ -18,6 +18,7 @@ export interface IFormField {
 }
 
 export interface IFormOther {
+	isOther: boolean;
 	fieldCode: FormFieldCode;
 	order?: number;
 	ico?: any;
