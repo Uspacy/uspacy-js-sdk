@@ -18,8 +18,8 @@ export interface IFormField {
 }
 
 export interface IFormOther {
-	isOther: boolean;
 	fieldCode: FormFieldCode;
+	isOther?: boolean;
 	order?: number;
 	ico?: any;
 	value?: string;
