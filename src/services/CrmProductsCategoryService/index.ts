@@ -50,7 +50,7 @@ export class CrmProductsCategoryService {
 		return this.httpClient.client.delete(`${this.namespace}/:id`, {
 			urlParams: { id },
 			params: {
-				child_categories: removeWithChild ? 'delete' : 'save',
+				...(removeWithChild && { child_categories: 'delete' }),
 			},
 		});
 	}
