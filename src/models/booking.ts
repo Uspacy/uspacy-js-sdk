@@ -63,6 +63,7 @@ export interface IBooking {
 		participants: IUser['id'][];
 		showPicture: boolean;
 		canEditOthers: boolean;
+		responsible: IUser;
 	};
 	userData: {
 		formName: string;
