@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.150-alpha.7",
+  "version": "0.0.150-alpha.8",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -13,7 +13,7 @@
     "lib"
   ],
   "dependencies": {
-    "axios": "^1.7.2",
+    "axios": "^1.9.0",
     "js-cookie": "3.0.5",
     "jwt-decode": "3.1.2",
     "lint-staged": "15.2.10",
