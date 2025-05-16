@@ -9,6 +9,7 @@ import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
+import { ITransferEntitiesData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 
 /**
  * CrmEntities service
@@ -18,6 +19,7 @@ export class CrmEntitiesService {
 	private namespace = '/crm/v1/entities';
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
+	private namespaceTransferEntities = '/crm/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -509,5 +511,36 @@ export class CrmEntitiesService {
 			urlParams: { code, id },
 			params,
 		});
+	}
+
+	/**
+	 * Transfer entities
+	 * @returns transfer entities quantity
+	 */
+	transferEntities(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/user`, body);
+	}
+
+	/**
+	 * Transfer entities quantity
+	 * @returns transfer entities quantity
+	 */
+	getTransferEntitiesQuantity(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/quantity`, body);
+	}
+
+	/**
+	 * Transfer entities progress
+	 * @returns transfer entities progress
+	 */
+	getTransferEntitiesProgress() {
+		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferEntities}/progress`);
+	}
+
+	/**
+	 * Stop transfer entities
+	 */
+	stopTransferEntities() {
+		return this.httpClient.client.get(`${this.namespaceTransferEntities}/stop`);
 	}
 }

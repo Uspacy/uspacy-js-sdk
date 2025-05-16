@@ -3,6 +3,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IGroup } from '../../models/groups';
 import { IResponseWithMeta } from '../../models/response';
+import { ITransferGroupsData } from '../../models/transferOfCases';
 import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
 
 /**
@@ -12,6 +13,7 @@ import { IGroupDto, IInviteUsersDto } from './dto/create-update-groups.dto';
 export class GroupsService {
 	private namespace = '/groups/v1/groups';
 	private namespacev1 = '/groups/v1';
+	private namespaceTransferGroups = '/groups/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -175,5 +177,21 @@ export class GroupsService {
 	 */
 	checkIfUserSendJoinRequest(groupId: string, userId: number) {
 		return this.httpClient.client.get(`${this.namespacev1}/join/:groupId/request/:userId`, { urlParams: { groupId, userId } });
+	}
+
+	/**
+	 * Transfer groups
+	 * @returns transfer groups quantity
+	 */
+	transferGroups(body: Partial<ITransferGroupsData>) {
+		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/user`, body);
+	}
+
+	/**
+	 * Transfer groups quantity
+	 * @returns transfer groups quantity
+	 */
+	getTransferGroupsQuantity(body: Partial<ITransferGroupsData>) {
+		return this.httpClient.client.post<ITransferGroupsData>(`${this.namespaceTransferGroups}/quantity`, body);
 	}
 }
