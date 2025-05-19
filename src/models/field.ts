@@ -47,6 +47,7 @@ export type FieldTypes =
 	| 'call_record'
 	| 'call_entity_reference'
 	| 'call_phone'
+	| 'call_duration'
 	| 'deals_filter'
 	| 'tasks_filter'
 	| 'id_column'
