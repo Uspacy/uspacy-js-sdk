@@ -1,4 +1,4 @@
-export interface ITemplateFilter {
+export interface IEmailTemplateFilter {
 	sections: string[];
 	created_by: number[];
 	user_ids: number[];
