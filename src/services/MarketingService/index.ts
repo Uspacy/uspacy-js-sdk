@@ -15,8 +15,8 @@ export class MarketingService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getEmailTemplates(params: ITemplateFilter) {
-		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespace}/letters`, { params });
+	getEmailTemplates(params: ITemplateFilter, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespace}/letters`, { params, signal });
 	}
 
 	getEmailTemplate(id: number) {
