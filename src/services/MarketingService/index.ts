@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { IEmailTemplate } from '../../models/email-template';
-import { ITemplateFilter } from '../../models/email-template-filter';
+import { IEmailTemplateFilter } from '../../models/email-template-filter';
 import { IResponseWithMeta } from '../../models/response';
 
 /**
@@ -15,7 +15,7 @@ export class MarketingService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getEmailTemplates(params: ITemplateFilter, signal?: AbortSignal) {
+	getEmailTemplates(params: Partial<IEmailTemplateFilter>, signal?: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespace}/letters`, { params, signal });
 	}
 
