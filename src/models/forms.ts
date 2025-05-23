@@ -72,4 +72,5 @@ export interface IForm {
 	portal?: string;
 	type?: string;
 	userId?: number;
+	order?: number;
 }
