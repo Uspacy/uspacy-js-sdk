@@ -44,10 +44,16 @@ export class CrmProductsCategoryService {
 	/**
 	 * Delete product category
 	 * @param id product category id
+	 * @param parentId id category where to move the products
+	 * @param removeWithChild
 	 */
-	deleteProductCategory(id: number) {
+	deleteProductCategory(id: number, parentId: number, removeWithChild = false) {
 		return this.httpClient.client.delete(`${this.namespace}/:id`, {
 			urlParams: { id },
+			params: {
+				category_for_products: parentId,
+				...(removeWithChild && { child_categories: 'delete' }),
+			},
 		});
 	}
 }
