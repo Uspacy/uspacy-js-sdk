@@ -13,6 +13,7 @@ export type FormFieldCode =
 	| 'submitButton'
 	| 'companyLogo'
 	| 'banner'
+	| 'divider'
 	| (string & {});
 
 export interface IFormField {
