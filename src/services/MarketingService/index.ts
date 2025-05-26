@@ -68,8 +68,8 @@ export class MarketingService {
 	 * @param all all email templates flag
 	 * @param params email templates list filter params
 	 */
-	massEditingEmailTemplates(id: number[], payload: Partial<IEmailTemplate>, all: boolean, params?: Partial<IEmailTemplateFilter>) {
-		return this.httpClient.client.post(`${this.namespace}/letters/mass_edit`, { id, all, payload, ...(all && params) });
+	massEditingEmailTemplates(id: number[], payload: Partial<IEmailTemplate>, all: boolean, params: Partial<IEmailTemplateFilter>) {
+		return this.httpClient.client.post(`${this.namespace}/letters/mass_edit`, { id, all, payload, ...params });
 	}
 
 	/**
@@ -78,7 +78,7 @@ export class MarketingService {
 	 * @param all all email templates flag
 	 * @param params email templates list filter params
 	 */
-	massDeletionEmailTemplates(id: number[], all?: boolean, params?: Partial<IEmailTemplateFilter>) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/mass_deletion`, { data: { id, all, ...(all && params) } });
+	massDeletionEmailTemplates(id: number[], all: boolean, params: Partial<IEmailTemplateFilter>) {
+		return this.httpClient.client.delete(`${this.namespace}/letters/mass_deletion`, { data: { id, all, ...params } });
 	}
 }
