@@ -60,6 +60,7 @@ export interface IForm {
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
+		after?: IFormAfterSubmit;
 	};
 	creared_at?: number;
 	updated_at?: number;
