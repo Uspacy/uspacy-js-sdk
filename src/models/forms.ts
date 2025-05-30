@@ -52,6 +52,13 @@ export interface IFormOther {
 	};
 }
 
+export interface IFormAfterSubmit {
+	showMessage: boolean;
+	fields: IFormOther[];
+	redirectUrl: string | null;
+	timeBeforeRedirect: number | null;
+}
+
 export interface IPredefinedField {
 	type: string;
 	value: string | number;
