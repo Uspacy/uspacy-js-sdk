@@ -536,6 +536,17 @@ export class TasksService {
 	}
 
 	/**
+	 * Delete tasks list values
+	 * @param fieldCode tasks field code
+	 * @param value tasks list value
+	 */
+	deleteTasksListValues(fieldCode: string, value: string) {
+		return this.httpClient.client.delete(`${this.fields_namespace}/lists/:fieldCode/:value`, {
+			urlParams: { fieldCode, value },
+		});
+	}
+
+	/**
 	 * Delete tasks field
 	 * @param fieldCode field code
 	 */
