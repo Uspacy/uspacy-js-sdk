@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IComment } from './comment';
 import { ITask as IActivity } from './crm-tasks';
 import { IFile } from './files';
@@ -93,6 +94,7 @@ export interface ITask {
 	activitiesInfo?: IActivitiesInfo;
 	subtasksInfo?: ISubTasksInfo;
 	tableName?: string;
+	[key: string]: any;
 }
 
 export interface IMeta {
@@ -150,6 +152,7 @@ export interface IFilterTasks {
 	sort_by?: {
 		[key: string]: 'asc' | 'desc';
 	};
+	[key: string]: any;
 }
 
 export interface ITasksParams {
@@ -184,4 +187,5 @@ export interface ITasksParams {
 	sort_by?: {
 		[key: string]: 'asc' | 'desc';
 	};
+	[key: string]: any;
 }
