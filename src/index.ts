@@ -25,6 +25,7 @@ import { CrmLeadsService } from './services/CrmLeadsService';
 import { CrmLeadsStagesService } from './services/CrmLeadsStagesService';
 import { CrmProductsCategoryService } from './services/CrmProductsCategoryService';
 import { CrmProductsForEntityService } from './services/CrmProductsForEntityService';
+import { CrmProductsPriceTypesService } from './services/CrmProductsPriceTypesService';
 import { CrmProductsService } from './services/CrmProductsService';
 import { CrmProductsTaxesService } from './services/CrmProductsTaxesService';
 import { CrmProductsUnitService } from './services/CrmProductsUnitService';
@@ -92,6 +93,7 @@ class Uspacy {
 		public readonly crmProductTaxesService: CrmProductsTaxesService,
 		public readonly crmProductUnitService: CrmProductsUnitService,
 		public readonly crmProductsCategoryService: CrmProductsCategoryService,
+		public readonly crmProductsPriceTypes: CrmProductsPriceTypesService,
 		public readonly crmProductsForEntityService: CrmProductsForEntityService,
 		public readonly crmDocumentTemplatesService: CrmDocumentTemplatesService,
 		public readonly crmRequisitesService: CrmRequisitesService,
