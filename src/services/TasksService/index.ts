@@ -500,7 +500,7 @@ export class TasksService {
 	 * @returns tasks fields
 	 */
 	getTasksFields() {
-		return this.httpClient.client.get<IField[]>(`${this.fields_namespace}/fields`);
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.fields_namespace}/fields`);
 	}
 
 	/**
