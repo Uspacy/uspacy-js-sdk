@@ -5,6 +5,7 @@ export interface IPriceType {
 	code?: string;
 	sort: number;
 	default: boolean;
+	active: boolean;
 }
 
 export interface IPriceTypes {
