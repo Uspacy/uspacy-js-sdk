@@ -39,6 +39,7 @@ export interface IFormOther {
 	selected?: boolean;
 	formLogoValue?: string;
 	isOutsideSort?: boolean;
+	formLogoColor?: string;
 	privacyPolicySettings?: {
 		value: string;
 		required: boolean;
@@ -59,6 +60,31 @@ export interface IFormAfterSubmit {
 	timeBeforeRedirect: number | null;
 }
 
+export interface IFormDesign {
+	generalColors: {
+		pageBg: string;
+		formBg: string | null;
+	};
+	button: {
+		style: 'contained' | 'outlined' | 'text';
+		borderRadius: number;
+		size: 'small' | 'medium' | 'large';
+		textSize: number;
+		textLetterSpacing: 'standard' | 'wide';
+	};
+	fields: {
+		style: 'outlined' | 'standard';
+		borderRadius: number;
+		size: 'small' | 'medium';
+		textSize: number;
+		hideFieldLabel: boolean;
+	};
+	additional: {
+		formPosition: 'top' | 'center';
+		showUspacyBrand: boolean;
+	};
+}
+
 export interface IPredefinedField {
 	type: string;
 	value: string | number;
@@ -74,6 +100,7 @@ export interface IForm {
 		fields: IFormField[];
 		other: IFormOther[];
 		after?: IFormAfterSubmit;
+		design?: IFormDesign;
 	};
 	creared_at?: number;
 	updated_at?: number;
