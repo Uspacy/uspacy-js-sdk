@@ -70,6 +70,7 @@ export interface IBooking {
 		entity: ECreateEntity;
 		source: string;
 		fields: IFormField[];
+		language: string;
 	};
 	meetHours: {
 		active: boolean;
