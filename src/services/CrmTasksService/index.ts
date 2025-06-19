@@ -124,7 +124,7 @@ export class CrmTasksService {
 	massTasksEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
 		const data = {
 			all,
-			entity_ids: entityIds,
+			id: entityIds,
 			except_ids: exceptIds,
 			payload,
 			settings,
