@@ -21,6 +21,7 @@ export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
+	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -492,5 +493,48 @@ export class TasksService {
 	 */
 	stopTransferTasks() {
 		return this.httpClient.client.get(`${this.namespaceTransferTasks}/stop`);
+	}
+
+	/**
+	 * Get deleted(trash) task
+	 * @param id item id
+	 * @returns activity item
+	 */
+	getTrashTask(id: number) {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTrashTasks}`, {
+			params: {
+				id,
+			},
+		});
+	}
+
+	/**
+	 * Restore tasks
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 */
+	restoreTrashTasks({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+		return this.httpClient.client.patch(`${this.namespaceTrashTasks}/restore`, {
+			id: itemIds,
+			all,
+			except_ids: exceptIds,
+		});
+	}
+
+	/**
+	 * Remove from basket tasks
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 */
+	deleteTrashTasks({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+		return this.httpClient.client.delete(`${this.namespaceTrashTasks}`, {
+			data: {
+				entity_id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+		});
 	}
 }

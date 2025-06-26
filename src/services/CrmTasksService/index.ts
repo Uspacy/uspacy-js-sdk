@@ -20,6 +20,7 @@ import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 @injectable()
 export class CrmTasksService {
 	private namespace = '/activities/v1/activities';
+	private trashNamespace = '/activities/v1/trash/activities';
 	private calendarsNamespace = '/activities/v1/calendars';
 	private oauthIntegrationsNamespace = '/activities/v1/integrations';
 	private namespaceTransferActivities = '/activities/v1/transfers';
@@ -242,5 +243,62 @@ export class CrmTasksService {
 	 */
 	stopTransferActivities() {
 		return this.httpClient.client.get(`${this.namespaceTransferActivities}/stop`);
+	}
+
+	/**
+	 * Get deleted(trash) activities
+	 * @param params activity list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns activity list
+	 */
+	getTrashActivities(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.trashNamespace}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
+	 * Get deleted(trash) activity
+	 * @param id item id
+	 * @returns activity item
+	 */
+	getTrashActivity(id: number) {
+		return this.httpClient.client.get<ITask>(`${this.trashNamespace}`, {
+			params: {
+				id,
+			},
+		});
+	}
+
+	/**
+	 * Restore activities
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 */
+	restoreTrashActivities({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+		return this.httpClient.client.patch(`${this.trashNamespace}/restore`, {
+			id: itemIds,
+			all,
+			except_ids: exceptIds,
+		});
+	}
+
+	/**
+	 * Remove from basket tasks
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 */
+	deleteTrashActivities({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+		return this.httpClient.client.delete(`${this.trashNamespace}`, {
+			data: {
+				entity_id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+		});
 	}
 }
