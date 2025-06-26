@@ -22,6 +22,7 @@ export class TasksService {
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
 	private fields_namespace = '/tasks/v1/custom_fields/tasks';
+	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
