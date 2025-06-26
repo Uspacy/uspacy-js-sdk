@@ -7,6 +7,7 @@ export enum EFirebaseDbId {
 export enum EFirabaseService {
 	CRM = 'crm',
 	TASKS = 'tasks',
+	MARKETING = 'marketing',
 	USERS = 'users',
 }
 
