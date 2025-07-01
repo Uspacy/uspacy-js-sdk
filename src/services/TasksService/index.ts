@@ -558,6 +558,20 @@ export class TasksService {
 	}
 
 	/**
+	 * Get deleted(trash) tasks
+	 * @param params task list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns tasks list
+	 */
+	getTrashTasks(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.namespaceTrashTasks}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
 	 * Get deleted(trash) task
 	 * @param id item id
 	 * @returns activity item
