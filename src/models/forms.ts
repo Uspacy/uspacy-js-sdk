@@ -52,6 +52,13 @@ export interface IFormOther {
 	};
 }
 
+export interface IFormAfterSubmit {
+	showMessage: boolean;
+	fields: IFormOther[];
+	redirectUrl: string | null;
+	timeBeforeRedirect: number | null;
+}
+
 export interface IPredefinedField {
 	type: string;
 	value: string | number;
@@ -66,6 +73,7 @@ export interface IForm {
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
+		after?: IFormAfterSubmit;
 	};
 	creared_at?: number;
 	updated_at?: number;
