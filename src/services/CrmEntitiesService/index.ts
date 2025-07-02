@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
@@ -20,7 +20,6 @@ export class CrmEntitiesService {
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
 	private namespaceTransferEntities = '/crm/v1/transfers';
-
 	constructor(private httpClient: HttpClient) {}
 
 	/**
@@ -542,5 +541,79 @@ export class CrmEntitiesService {
 	 */
 	stopTransferEntities() {
 		return this.httpClient.client.get(`${this.namespaceTransferEntities}/stop`);
+	}
+
+	/**
+	 * Get deleted(trash) entities
+	 * @param params entity list filter params
+	 * @param code entity code
+	 * @param signal AbortSignal for cancelling request
+	 * @returns entity list
+	 */
+	getTrashEntities(params: string | object, code: string, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<IEntity>(`${this.namespace}/:code/trash${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get deleted(trash) entity
+	 * @param id item id
+	 * @param code entity code
+	 * @returns entity item
+	 */
+	getTrashActivity(id: number, code: string) {
+		return this.httpClient.client.get<IEntityData>(`${this.namespace}/:code/trash`, {
+			params: {
+				id,
+				code,
+			},
+		});
+	}
+
+	/**
+	 * Restore entities
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 * @param code entity code
+	 */
+	restoreTrashEntities({ itemIds, all, exceptIds, code }: { itemIds: number[]; all: boolean; exceptIds: number[]; code: string }) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/:code/trash/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					code,
+				},
+			},
+		);
+	}
+
+	/**
+	 * Remove from basket entities
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 * @param code entity code
+	 */
+	deleteTrashEntities({ itemIds, all, exceptIds, code }: { itemIds: number[]; all: boolean; exceptIds: number[]; code: string }) {
+		return this.httpClient.client.delete(`${this.namespace}`, {
+			data: {
+				entity_id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			params: {
+				code,
+			},
+		});
 	}
 }
