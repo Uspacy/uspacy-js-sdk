@@ -295,7 +295,7 @@ export class CrmTasksService {
 	deleteTrashActivities({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
 		return this.httpClient.client.delete(`${this.trashNamespace}`, {
 			data: {
-				entity_id: itemIds,
+				id: itemIds,
 				all,
 				except_ids: exceptIds,
 			},
