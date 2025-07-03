@@ -12,4 +12,5 @@ export interface ITrashFilter {
 	certainDateOrPeriod_created_at: number[];
 	certainDateOrPeriod_deleted_at: number[];
 	openCalendar: boolean;
+	sortModel?: { [key: string]: string }[];
 }
