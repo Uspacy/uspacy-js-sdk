@@ -589,13 +589,22 @@ export class TasksService {
 	 * @param itemIds restore items by ids
 	 * @param all all items restore
 	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
 	 */
-	restoreTrashTasks({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
-		return this.httpClient.client.patch(`${this.namespaceTrashTasks}/restore`, {
-			id: itemIds,
-			all,
-			except_ids: exceptIds,
-		});
+	restoreTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
+		return this.httpClient.client.patch(
+			`${this.namespaceTrashTasks}/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+			},
+		);
 	}
 
 	/**
@@ -603,13 +612,17 @@ export class TasksService {
 	 * @param itemIds delete items by ids
 	 * @param all all items delete
 	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
 	 */
-	deleteTrashTasks({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+	deleteTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
 		return this.httpClient.client.delete(`${this.namespaceTrashTasks}`, {
 			data: {
 				id: itemIds,
 				all,
 				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
 			},
 		});
 	}

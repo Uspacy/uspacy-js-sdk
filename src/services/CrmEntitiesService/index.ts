@@ -591,7 +591,7 @@ export class CrmEntitiesService {
 	 * @param code entity code
 	 * @returns entity item
 	 */
-	getTrashActivity(id: number, code: string) {
+	getTrashEntity(id: number, code: string) {
 		return this.httpClient.client.get<IEntityData>(`${this.namespace}/:code/trash`, {
 			params: {
 				id,
@@ -605,9 +605,22 @@ export class CrmEntitiesService {
 	 * @param itemIds restore items by ids
 	 * @param all all items restore
 	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
 	 * @param code entity code
 	 */
-	restoreTrashEntities({ itemIds, all, exceptIds, code }: { itemIds: number[]; all: boolean; exceptIds: number[]; code: string }) {
+	restoreTrashEntities({
+		itemIds,
+		all,
+		exceptIds,
+		code,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		code: string;
+		filterParams?: object;
+	}) {
 		return this.httpClient.client.patch(
 			`${this.namespace}/:code/trash/restore`,
 			{
@@ -618,6 +631,7 @@ export class CrmEntitiesService {
 			{
 				params: {
 					code,
+					...(filterParams || {}),
 				},
 			},
 		);
@@ -628,9 +642,22 @@ export class CrmEntitiesService {
 	 * @param itemIds delete items by ids
 	 * @param all all items delete
 	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
 	 * @param code entity code
 	 */
-	deleteTrashEntities({ itemIds, all, exceptIds, code }: { itemIds: number[]; all: boolean; exceptIds: number[]; code: string }) {
+	deleteTrashEntities({
+		itemIds,
+		all,
+		exceptIds,
+		code,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		code: string;
+		filterParams?: object;
+	}) {
 		return this.httpClient.client.delete(`${this.namespace}`, {
 			data: {
 				entity_id: itemIds,
@@ -639,6 +666,7 @@ export class CrmEntitiesService {
 			},
 			params: {
 				code,
+				...(filterParams || {}),
 			},
 		});
 	}

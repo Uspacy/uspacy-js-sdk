@@ -277,27 +277,60 @@ export class CrmTasksService {
 	 * @param itemIds restore items by ids
 	 * @param all all items restore
 	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
 	 */
-	restoreTrashActivities({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
-		return this.httpClient.client.patch(`${this.trashNamespace}/restore`, {
-			id: itemIds,
-			all,
-			except_ids: exceptIds,
-		});
+	restoreTrashActivities({
+		itemIds,
+		all,
+		exceptIds,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		filterParams?: object;
+	}) {
+		return this.httpClient.client.patch(
+			`${this.trashNamespace}/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+			},
+		);
 	}
 
 	/**
-	 * Remove from basket tasks
+	 * Remove from basket activities
 	 * @param itemIds delete items by ids
 	 * @param all all items delete
 	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
 	 */
-	deleteTrashActivities({ itemIds, all, exceptIds }: { itemIds: number[]; all: boolean; exceptIds: number[] }) {
+	deleteTrashActivities({
+		itemIds,
+		all,
+		exceptIds,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		filterParams?: object;
+	}) {
 		return this.httpClient.client.delete(`${this.trashNamespace}`, {
 			data: {
 				id: itemIds,
 				all,
 				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
 			},
 		});
 	}
