@@ -593,7 +593,7 @@ export class CrmEntitiesService {
 	 */
 	getTrashEntity(id: number, code: string) {
 		return this.httpClient.client.get<IEntityData>(`${this.namespace}/:code/trash`, {
-			params: {
+			urlParams: {
 				id,
 				code,
 			},
@@ -630,8 +630,10 @@ export class CrmEntitiesService {
 			},
 			{
 				params: {
-					code,
 					...(filterParams || {}),
+				},
+				urlParams: {
+					code,
 				},
 			},
 		);
@@ -665,8 +667,10 @@ export class CrmEntitiesService {
 				except_ids: exceptIds,
 			},
 			params: {
-				code,
 				...(filterParams || {}),
+			},
+			urlParams: {
+				code,
 			},
 		});
 	}
