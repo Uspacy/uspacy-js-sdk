@@ -81,6 +81,15 @@ export class CrmProductsForEntityService {
 	}
 
 	/**
+	 * Create entity products
+	 * @param data array of entity products
+	 * @returns entity products list
+	 */
+	createProductsForEntity(data: Partial<IProductForEntity>[]) {
+		return this.httpClient.client.post<IProductForEntity[]>(`${this.namespace}/bulk`, { list_products: data });
+	}
+
+	/**
 	 * Update entity products
 	 * @param data array of entity products
 	 * @returns entity products list

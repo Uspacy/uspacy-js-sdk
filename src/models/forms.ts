@@ -2,7 +2,19 @@
 import { EntityType } from './entity';
 import { FieldTypes, IField } from './field';
 
-export type FormFieldCode = 'title' | 'email' | 'phone' | 'logo' | 'header' | 'subheader' | 'privacyPolicy' | 'submitButton' | (string & {});
+export type FormFieldCode =
+	| 'title'
+	| 'email'
+	| 'phone'
+	| 'logo'
+	| 'header'
+	| 'subheader'
+	| 'privacyPolicy'
+	| 'submitButton'
+	| 'companyLogo'
+	| 'banner'
+	| 'divider'
+	| (string & {});
 
 export interface IFormField {
 	fieldCode: FormFieldCode;
@@ -26,6 +38,7 @@ export interface IFormOther {
 	previewTitle?: string;
 	selected?: boolean;
 	formLogoValue?: string;
+	isOutsideSort?: boolean;
 	privacyPolicySettings?: {
 		value: string;
 		required: boolean;
@@ -37,6 +50,13 @@ export interface IFormOther {
 		ico: string;
 		background: string;
 	};
+}
+
+export interface IFormAfterSubmit {
+	showMessage: boolean;
+	fields: IFormOther[];
+	redirectUrl: string | null;
+	timeBeforeRedirect: number | null;
 }
 
 export interface IPredefinedField {
@@ -53,6 +73,7 @@ export interface IForm {
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
+		after?: IFormAfterSubmit;
 	};
 	creared_at?: number;
 	updated_at?: number;
