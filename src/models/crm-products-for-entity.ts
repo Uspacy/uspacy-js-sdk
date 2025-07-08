@@ -31,6 +31,7 @@ export interface IProductForEntity {
 	updated_at: number;
 	product: IProduct | null;
 	product_id?: number;
+	price_type_id: number;
 }
 
 export interface IProductForEntityCreate {
@@ -47,4 +48,5 @@ export interface IProductForEntityCreate {
 	tax_rate: number;
 	is_tax_included: number;
 	amount: number;
+	price_type_id: number;
 }

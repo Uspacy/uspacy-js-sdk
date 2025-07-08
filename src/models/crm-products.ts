@@ -12,6 +12,7 @@ export interface IProductPrice {
 	currency: string;
 	tax_id: number;
 	is_tax_included: number;
+	price_type_id: number;
 	tax?: {
 		id: number;
 		name: string;
