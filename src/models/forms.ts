@@ -38,8 +38,8 @@ export interface IFormOther {
 	previewTitle?: string;
 	selected?: boolean;
 	formLogoValue?: string;
-	isOutsideSort?: boolean;
 	formLogoColor?: string;
+	isOutsideSort?: boolean;
 	privacyPolicySettings?: {
 		value: string;
 		required: boolean;
