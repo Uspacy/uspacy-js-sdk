@@ -2,7 +2,19 @@
 import { EntityType } from './entity';
 import { FieldTypes, IField } from './field';
 
-export type FormFieldCode = 'title' | 'email' | 'phone' | 'logo' | 'header' | 'subheader' | 'privacyPolicy' | 'submitButton' | (string & {});
+export type FormFieldCode =
+	| 'title'
+	| 'email'
+	| 'phone'
+	| 'logo'
+	| 'header'
+	| 'subheader'
+	| 'privacyPolicy'
+	| 'submitButton'
+	| 'companyLogo'
+	| 'banner'
+	| 'divider'
+	| (string & {});
 
 export interface IFormField {
 	fieldCode: FormFieldCode;
@@ -27,6 +39,7 @@ export interface IFormOther {
 	selected?: boolean;
 	formLogoValue?: string;
 	formLogoColor?: string;
+	isOutsideSort?: boolean;
 	privacyPolicySettings?: {
 		value: string;
 		required: boolean;
