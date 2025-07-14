@@ -12,6 +12,8 @@ export interface IColumnSorting {
 }
 
 export interface IColumnSettings {
+	id?: string;
+	type?: string;
 	column_visibility: IColumnVisibility;
 	column_sizes: IColumnSizes;
 	column_ordering: string[];
