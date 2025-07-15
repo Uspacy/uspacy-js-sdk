@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
-import { IFields } from '../../models/field';
+import { IField, IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
@@ -22,6 +22,7 @@ export class TasksService {
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
 	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
+	private fields_namespace = '/tasks/v1/custom_fields/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -493,6 +494,67 @@ export class TasksService {
 	 */
 	stopTransferTasks() {
 		return this.httpClient.client.get(`${this.namespaceTransferTasks}/stop`);
+	}
+
+	/**
+	 * Get tasks fields
+	 * @returns tasks fields
+	 */
+	getTasksFields() {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.fields_namespace}/fields`);
+	}
+
+	/**
+	 * Update tasks field
+	 * @param fieldCode field code
+	 * @param data field data
+	 * @returns entity field
+	 */
+	updateTasksField(fieldCode: string, data: IField) {
+		return this.httpClient.client.patch<IField>(`${this.fields_namespace}/fields/:fieldCode`, data, {
+			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Update tasks list values
+	 * @param data field values data
+	 * @returns values of tasks field
+	 */
+	updateTasksListValues(data: IField) {
+		return this.httpClient.client.post<IField['values']>(`${this.fields_namespace}/lists/:fieldCode`, data.values, {
+			urlParams: { fieldCode: data.code },
+		});
+	}
+
+	/**
+	 * Create tasks field
+	 * @param data field data
+	 * @returns tasks field
+	 */
+	createTasksField(data: Partial<IField>) {
+		return this.httpClient.client.post<IField>(`${this.fields_namespace}/fields`, data);
+	}
+
+	/**
+	 * Delete tasks list values
+	 * @param fieldCode tasks field code
+	 * @param value tasks list value
+	 */
+	deleteTasksListValues(fieldCode: string, value: string) {
+		return this.httpClient.client.delete(`${this.fields_namespace}/lists/:fieldCode/:value`, {
+			urlParams: { fieldCode, value },
+		});
+	}
+
+	/**
+	 * Delete tasks field
+	 * @param fieldCode field code
+	 */
+	deleteTasksField(fieldCode: string) {
+		return this.httpClient.client.delete(`${this.fields_namespace}/fields/:fieldCode`, {
+			urlParams: { fieldCode },
+		});
 	}
 
 	/**
