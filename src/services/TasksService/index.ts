@@ -21,6 +21,7 @@ export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
+	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 	private fields_namespace = '/tasks/v1/custom_fields/tasks';
 
 	constructor(
@@ -553,6 +554,76 @@ export class TasksService {
 	deleteTasksField(fieldCode: string) {
 		return this.httpClient.client.delete(`${this.fields_namespace}/fields/:fieldCode`, {
 			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Get deleted(trash) tasks
+	 * @param params task list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns activity list
+	 */
+	getTrashTasks(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.namespaceTrashTasks}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
+	 * Get deleted(trash) task
+	 * @param id item id
+	 * @returns activity item
+	 */
+	getTrashTask(id: number) {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTrashTasks}`, {
+			params: {
+				id,
+			},
+		});
+	}
+
+	/**
+	 * Restore tasks
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
+	 */
+	restoreTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
+		return this.httpClient.client.patch(
+			`${this.namespaceTrashTasks}/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+			},
+		);
+	}
+
+	/**
+	 * Remove from basket tasks
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
+	 */
+	deleteTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
+		return this.httpClient.client.delete(`${this.namespaceTrashTasks}`, {
+			data: {
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
+			},
 		});
 	}
 }
