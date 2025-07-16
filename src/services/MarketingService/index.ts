@@ -3,6 +3,8 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IEmailTemplate } from '../../models/email-template';
 import { IEmailTemplateFilter } from '../../models/email-template-filter';
+import { IDomain } from '../../models/newsletters-domain';
+import { ISender } from '../../models/newsletters-sender';
 import { IResponseWithMeta } from '../../models/response';
 
 /**
@@ -11,7 +13,8 @@ import { IResponseWithMeta } from '../../models/response';
 
 @injectable()
 export class MarketingService {
-	private namespace = '/marketing/v1/templates';
+	private namespaceTemplates = '/marketing/v1/templates';
+	private namespaceNewsletters = '/marketing/v1/newsletters';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -22,7 +25,7 @@ export class MarketingService {
 	 * @returns Array email templates entity
 	 */
 	getEmailTemplates(params: Partial<IEmailTemplateFilter>, signal?: AbortSignal) {
-		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespace}/letters`, { params, signal });
+		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespaceTemplates}/letters`, { params, signal });
 	}
 
 	/**
@@ -31,7 +34,7 @@ export class MarketingService {
 	 * @returns Email template entity
 	 */
 	getEmailTemplate(id: number) {
-		return this.httpClient.client.get<IEmailTemplate>(`${this.namespace}/letters/${id}`);
+		return this.httpClient.client.get<IEmailTemplate>(`${this.namespaceTemplates}/letters/${id}`);
 	}
 
 	/**
@@ -40,7 +43,7 @@ export class MarketingService {
 	 * @returns Email template entity
 	 */
 	createEmailTemplate(data: Partial<IEmailTemplate>) {
-		return this.httpClient.client.post<IEmailTemplate>(`${this.namespace}/letters`, data);
+		return this.httpClient.client.post<IEmailTemplate>(`${this.namespaceTemplates}/letters`, data);
 	}
 
 	/**
@@ -50,7 +53,7 @@ export class MarketingService {
 	 * @returns Email template entity
 	 */
 	updateEmailTemplate(id: number, data: Partial<IEmailTemplate>) {
-		return this.httpClient.client.patch<IEmailTemplate>(`${this.namespace}/letters/${id}`, data);
+		return this.httpClient.client.patch<IEmailTemplate>(`${this.namespaceTemplates}/letters/${id}`, data);
 	}
 
 	/**
@@ -58,7 +61,7 @@ export class MarketingService {
 	 * @param id email template id
 	 */
 	deleteEmailTemplate(id: number) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/${id}`);
+		return this.httpClient.client.delete(`${this.namespaceTemplates}/letters/${id}`);
 	}
 
 	/**
@@ -69,7 +72,12 @@ export class MarketingService {
 	 * @param params email templates list filter params
 	 */
 	massEditingEmailTemplates(id: number[], payload: Partial<IEmailTemplate>, all: boolean, params: Partial<IEmailTemplateFilter>) {
-		return this.httpClient.client.post(`${this.namespace}/letters/mass_edit`, { all, payload, ...(id && { id }), ...(params && params) });
+		return this.httpClient.client.post(`${this.namespaceTemplates}/letters/mass_edit`, {
+			all,
+			payload,
+			...(id && { id }),
+			...(params && params),
+		});
 	}
 
 	/**
@@ -79,6 +87,95 @@ export class MarketingService {
 	 * @param params email templates list filter params
 	 */
 	massDeletionEmailTemplates(id: number[], all: boolean, params: Partial<IEmailTemplateFilter>) {
-		return this.httpClient.client.delete(`${this.namespace}/letters/mass_deletion`, { data: { all, ...(id && { id }), ...(params && params) } });
+		return this.httpClient.client.delete(`${this.namespaceTemplates}/letters/mass_deletion`, {
+			data: { all, ...(id && { id }), ...(params && params) },
+		});
+	}
+
+	/**
+	 * Get domains list
+	 * @returns Array domains entity
+	 */
+	getDomains() {
+		return this.httpClient.client.get<IDomain[]>(`${this.namespaceNewsletters}/domains`);
+	}
+
+	/**
+	 * Get domain by id
+	 * @param id domain id
+	 * @returns Domain entity
+	 */
+	getDomain(id: number) {
+		return this.httpClient.client.get<IDomain>(`${this.namespaceNewsletters}/domains/${id}`);
+	}
+
+	/**
+	 * Get domain status
+	 * @param id domain id
+	 * @returns Domain entity
+	 */
+	getDomainStatus(id: number) {
+		return this.httpClient.client.get<IDomain>(`${this.namespaceNewsletters}/domains/status/${id}`);
+	}
+
+	/**
+	 * Create domain
+	 * @param data domain payload
+	 * @returns Domain entity
+	 */
+	createDomain(data: { domain: string }) {
+		return this.httpClient.client.post<IDomain>(`${this.namespaceNewsletters}/domains`, data);
+	}
+
+	/**
+	 * Delete domain
+	 * @param id domain id
+	 */
+	deleteDomain(id: number) {
+		return this.httpClient.client.delete(`${this.namespaceNewsletters}/domains/${id}`);
+	}
+
+	/**
+	 * Get senders list
+	 * @returns Array senders entity
+	 */
+	getSenders() {
+		return this.httpClient.client.get<ISender[]>(`${this.namespaceNewsletters}/senders`);
+	}
+
+	/**
+	 * Get sender by id
+	 * @param id sender id
+	 * @returns Sender entity
+	 */
+	getSender(id: number) {
+		return this.httpClient.client.get<ISender>(`${this.namespaceNewsletters}/senders/${id}`);
+	}
+
+	/**
+	 * Create sender
+	 * @param data sender payload
+	 * @returns Sender entity
+	 */
+	createSender(data: Partial<ISender>) {
+		return this.httpClient.client.post<ISender>(`${this.namespaceNewsletters}/senders`, data);
+	}
+
+	/**
+	 * Update sender
+	 * @param id sender id
+	 * @param data sender payload
+	 * @returns Sender entity
+	 */
+	updateSender(id: number, data: Partial<ISender>) {
+		return this.httpClient.client.patch<ISender>(`${this.namespaceNewsletters}/senders/${id}`, data);
+	}
+
+	/**
+	 * Delete sender
+	 * @param id sender id
+	 */
+	deleteSender(id: number) {
+		return this.httpClient.client.delete(`${this.namespaceNewsletters}/senders/${id}`);
 	}
 }
