@@ -21,8 +21,8 @@ export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
-	private fields_namespace = '/tasks/v1/custom_fields/tasks';
 	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
+	private fields_namespace = '/tasks/v1/custom_fields/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
