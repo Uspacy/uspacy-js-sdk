@@ -662,7 +662,7 @@ export class CrmEntitiesService {
 	}) {
 		return this.httpClient.client.delete(`${this.namespace}/:code/trash/`, {
 			data: {
-				entity_id: itemIds,
+				id: itemIds,
 				all,
 				except_ids: exceptIds,
 			},
