@@ -7,4 +7,5 @@ export interface ISender {
 	reply_to_email: string;
 	created_at: number;
 	updated_at: number;
+	domain?: string;
 }
