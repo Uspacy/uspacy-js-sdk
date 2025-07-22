@@ -43,9 +43,6 @@ export interface ILegalEntityFormErrors {
 	contactPersonPhoneErr: boolean;
 	contactPersonEmailErr: boolean;
 	itinCodeErr: boolean;
-	companyNameErr: boolean;
-	legalAddressErr: boolean;
-	directorsFullNameErr: boolean;
 }
 
 export interface ILegalEntityFormEuComErrors {
