@@ -17,11 +17,6 @@ export interface IIndividualPayload extends ISubscriptionPayload {
 
 export interface ILegalPayload extends ISubscriptionPayload {
 	edruofop: string;
-	name: string;
-	full_name_organization: string;
-	short_name_organization: string;
-	director_pib: string;
-	legal_address: string;
 }
 
 export interface ISubscriptionStripePayload extends ISubscriptionPayload {
