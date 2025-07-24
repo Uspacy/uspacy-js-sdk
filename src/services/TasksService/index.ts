@@ -22,7 +22,6 @@ export class TasksService {
 	private namespaceTemplates = '/tasks/v1/templates';
 	private namespaceTransferTasks = '/tasks/v1/transfers';
 	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
-	private fields_namespace = '/tasks/v1/custom_fields/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -501,7 +500,7 @@ export class TasksService {
 	 * @returns tasks fields
 	 */
 	getTasksFields() {
-		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.fields_namespace}/fields`);
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/fields`);
 	}
 
 	/**
@@ -511,7 +510,7 @@ export class TasksService {
 	 * @returns entity field
 	 */
 	updateTasksField(fieldCode: string, data: IField) {
-		return this.httpClient.client.patch<IField>(`${this.fields_namespace}/fields/:fieldCode`, data, {
+		return this.httpClient.client.patch<IField>(`${this.namespace}/fields/:fieldCode`, data, {
 			urlParams: { fieldCode },
 		});
 	}
@@ -522,7 +521,7 @@ export class TasksService {
 	 * @returns values of tasks field
 	 */
 	updateTasksListValues(data: IField) {
-		return this.httpClient.client.post<IField['values']>(`${this.fields_namespace}/lists/:fieldCode`, data.values, {
+		return this.httpClient.client.post<IField['values']>(`${this.namespace}/fields/lists/:fieldCode`, data.values, {
 			urlParams: { fieldCode: data.code },
 		});
 	}
@@ -533,7 +532,7 @@ export class TasksService {
 	 * @returns tasks field
 	 */
 	createTasksField(data: Partial<IField>) {
-		return this.httpClient.client.post<IField>(`${this.fields_namespace}/fields`, data);
+		return this.httpClient.client.post<IField>(`${this.namespace}/fields`, data);
 	}
 
 	/**
@@ -542,7 +541,7 @@ export class TasksService {
 	 * @param value tasks list value
 	 */
 	deleteTasksListValues(fieldCode: string, value: string) {
-		return this.httpClient.client.delete(`${this.fields_namespace}/lists/:fieldCode/:value`, {
+		return this.httpClient.client.delete(`${this.namespace}/fields/lists/:fieldCode/:value`, {
 			urlParams: { fieldCode, value },
 		});
 	}
@@ -552,7 +551,7 @@ export class TasksService {
 	 * @param fieldCode field code
 	 */
 	deleteTasksField(fieldCode: string) {
-		return this.httpClient.client.delete(`${this.fields_namespace}/fields/:fieldCode`, {
+		return this.httpClient.client.delete(`${this.namespace}/fields/:fieldCode`, {
 			urlParams: { fieldCode },
 		});
 	}
