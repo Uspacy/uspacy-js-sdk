@@ -521,7 +521,7 @@ export class TasksService {
 	 * @returns values of tasks field
 	 */
 	updateTasksListValues(data: IField) {
-		return this.httpClient.client.post<IField['values']>(`${this.namespace}/lists/:fieldCode`, data.values, {
+		return this.httpClient.client.post<IField['values']>(`${this.namespace}/fields/lists/:fieldCode`, data.values, {
 			urlParams: { fieldCode: data.code },
 		});
 	}
@@ -541,7 +541,7 @@ export class TasksService {
 	 * @param value tasks list value
 	 */
 	deleteTasksListValues(fieldCode: string, value: string) {
-		return this.httpClient.client.delete(`${this.namespace}/lists/:fieldCode/:value`, {
+		return this.httpClient.client.delete(`${this.namespace}/fields/lists/:fieldCode/:value`, {
 			urlParams: { fieldCode, value },
 		});
 	}
