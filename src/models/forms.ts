@@ -15,6 +15,7 @@ export interface IFormField {
 	selected?: boolean;
 	required?: boolean;
 	secondHintText?: string;
+	multiple?: boolean;
 }
 
 export interface IFormOther {
