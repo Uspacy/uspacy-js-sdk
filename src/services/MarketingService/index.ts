@@ -1,8 +1,9 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { IEmailNewsletter } from '../../models/email-newsletter';
 import { IEmailTemplate } from '../../models/email-template';
-import { IEmailTemplateFilter } from '../../models/email-template-filter';
+import { IMarketingFilter } from '../../models/marketing-filter';
 import { IDomain } from '../../models/newsletters-domain';
 import { ISender } from '../../models/newsletters-sender';
 import { IResponseWithMeta } from '../../models/response';
@@ -24,7 +25,7 @@ export class MarketingService {
 	 * @param signal abort signal
 	 * @returns Array email templates entity
 	 */
-	getEmailTemplates(params: Partial<IEmailTemplateFilter>, signal?: AbortSignal) {
+	getEmailTemplates(params: Partial<IMarketingFilter>, signal?: AbortSignal) {
 		return this.httpClient.client.get<IResponseWithMeta<IEmailTemplate>>(`${this.namespaceTemplates}/letters`, { params, signal });
 	}
 
@@ -71,7 +72,7 @@ export class MarketingService {
 	 * @param all all email templates flag
 	 * @param params email templates list filter params
 	 */
-	massEditingEmailTemplates(id: number[], payload: Partial<IEmailTemplate>, all: boolean, params: Partial<IEmailTemplateFilter>) {
+	massEditingEmailTemplates(id: number[], payload: Partial<IEmailTemplate>, all: boolean, params: Partial<IMarketingFilter>) {
 		return this.httpClient.client.post(`${this.namespaceTemplates}/letters/mass_edit`, {
 			all,
 			payload,
@@ -86,10 +87,64 @@ export class MarketingService {
 	 * @param all all email templates flag
 	 * @param params email templates list filter params
 	 */
-	massDeletionEmailTemplates(id: number[], all: boolean, params: Partial<IEmailTemplateFilter>) {
+	massDeletionEmailTemplates(id: number[], all: boolean, params: Partial<IMarketingFilter>) {
 		return this.httpClient.client.delete(`${this.namespaceTemplates}/letters/mass_deletion`, {
 			data: { all, ...(id && { id }), ...(params && params) },
 		});
+	}
+
+	/**
+	 * Get email newsletters list with filters
+	 * @param params email newsletters list filter params
+	 * @param signal abort signal
+	 * @returns Array email newsletters entity
+	 */
+	getEmailNewsletters(params: Partial<IMarketingFilter>, signal?: AbortSignal) {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailNewsletter>>(`${this.namespaceNewsletters}/mailings`, { params, signal });
+	}
+
+	/**
+	 * Get email newsletter by id
+	 * @param id email newsletter id
+	 * @returns Email newsletter entity
+	 */
+	getEmailNewsletter(id: number) {
+		return this.httpClient.client.get<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}`);
+	}
+
+	/**
+	 * Create email newsletter
+	 * @param data email newsletter payload
+	 * @returns Email newsletter entity
+	 */
+	createEmailNewsletter(data: Partial<IEmailNewsletter>) {
+		return this.httpClient.client.post<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings`, data);
+	}
+
+	/**
+	 * Update email newsletter
+	 * @param id email newsletter id
+	 * @param data email newsletter payload
+	 * @returns Email newsletter entity
+	 */
+	updateEmailNewsletter(id: number, data: Partial<IEmailNewsletter>) {
+		return this.httpClient.client.put<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}`, data);
+	}
+
+	/**
+	 * Delete email newsletter
+	 * @param id email newsletter id
+	 */
+	deleteEmailNewsletter(id: number) {
+		return this.httpClient.client.delete(`${this.namespaceNewsletters}/mailings/${id}`);
+	}
+
+	/**
+	 * Send email newsletter
+	 * @param id email newsletter id
+	 */
+	sendEmailNewsletter(id: number) {
+		return this.httpClient.client.post(`${this.namespaceNewsletters}/mailings/send/${id}`);
 	}
 
 	/**
