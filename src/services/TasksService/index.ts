@@ -4,11 +4,12 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
-import { IFields } from '../../models/field';
+import { IField, IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
 import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITasksColumnSettings } from '../../models/tasks-settings';
+import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
 import { CouchdbService } from '../CouchdbService';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
@@ -19,6 +20,8 @@ import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 export class TasksService {
 	private namespace = '/tasks/v1/tasks';
 	private namespaceTemplates = '/tasks/v1/templates';
+	private namespaceTransferTasks = '/tasks/v1/transfers';
+	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 
 	constructor(
 		private httpClient: HttpClient,
@@ -459,5 +462,167 @@ export class TasksService {
 	 */
 	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
 		return this.couchdbService.update('tasks-settings', id, rev, body);
+	}
+
+	/**
+	 * Transfer tasks
+	 * @returns transfer tasks quantity
+	 */
+	transferTasks(body: Partial<ITransferTasksData>) {
+		return this.httpClient.client.post<ITransferTasksData>(`${this.namespaceTransferTasks}/user`, body);
+	}
+
+	/**
+	 * Transfer tasks quantity
+	 * @returns transfer tasks quantity
+	 */
+	getTransferTasksQuantity(body: Partial<ITransferTasksData>) {
+		return this.httpClient.client.post<ITransferTasksData>(`${this.namespaceTransferTasks}/quantity`, body);
+	}
+
+	/**
+	 * Transfer tasks progress
+	 * @returns transfer tasks progress
+	 */
+	getTransferTasksProgress() {
+		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferTasks}/progress`);
+	}
+
+	/**
+	 * Stop transfer tasks
+	 */
+	stopTransferTasks() {
+		return this.httpClient.client.get(`${this.namespaceTransferTasks}/stop`);
+	}
+
+	/**
+	 * Get tasks fields
+	 * @returns tasks fields
+	 */
+	getTasksFields() {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/fields`);
+	}
+
+	/**
+	 * Update tasks field
+	 * @param fieldCode field code
+	 * @param data field data
+	 * @returns entity field
+	 */
+	updateTasksField(fieldCode: string, data: IField) {
+		return this.httpClient.client.patch<IField>(`${this.namespace}/fields/:fieldCode`, data, {
+			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Update tasks list values
+	 * @param data field values data
+	 * @returns values of tasks field
+	 */
+	updateTasksListValues(data: IField) {
+		return this.httpClient.client.post<IField['values']>(`${this.namespace}/fields/lists/:fieldCode`, data.values, {
+			urlParams: { fieldCode: data.code },
+		});
+	}
+
+	/**
+	 * Create tasks field
+	 * @param data field data
+	 * @returns tasks field
+	 */
+	createTasksField(data: Partial<IField>) {
+		return this.httpClient.client.post<IField>(`${this.namespace}/fields`, data);
+	}
+
+	/**
+	 * Delete tasks list values
+	 * @param fieldCode tasks field code
+	 * @param value tasks list value
+	 */
+	deleteTasksListValues(fieldCode: string, value: string) {
+		return this.httpClient.client.delete(`${this.namespace}/fields/lists/:fieldCode/:value`, {
+			urlParams: { fieldCode, value },
+		});
+	}
+
+	/**
+	 * Delete tasks field
+	 * @param fieldCode field code
+	 */
+	deleteTasksField(fieldCode: string) {
+		return this.httpClient.client.delete(`${this.namespace}/fields/:fieldCode`, {
+			urlParams: { fieldCode },
+		});
+	}
+
+	/**
+	 * Get deleted(trash) tasks
+	 * @param params task list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns activity list
+	 */
+	getTrashTasks(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.namespaceTrashTasks}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
+	 * Get deleted(trash) task
+	 * @param id item id
+	 * @returns activity item
+	 */
+	getTrashTask(id: number) {
+		return this.httpClient.client.get<ITask>(`${this.namespaceTrashTasks}`, {
+			params: {
+				id,
+			},
+		});
+	}
+
+	/**
+	 * Restore tasks
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
+	 */
+	restoreTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
+		return this.httpClient.client.patch(
+			`${this.namespaceTrashTasks}/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+			},
+		);
+	}
+
+	/**
+	 * Remove from basket tasks
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
+	 */
+	deleteTrashTasks({ itemIds, all, exceptIds, filterParams }: { itemIds: number[]; all: boolean; exceptIds: number[]; filterParams?: object }) {
+		return this.httpClient.client.delete(`${this.namespaceTrashTasks}`, {
+			data: {
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
+			},
+		});
 	}
 }

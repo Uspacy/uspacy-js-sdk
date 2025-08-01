@@ -1,13 +1,15 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
+import { ITransferEntitiesData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 
 /**
  * CrmEntities service
@@ -17,7 +19,7 @@ export class CrmEntitiesService {
 	private namespace = '/crm/v1/entities';
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
-
+	private namespaceTransferEntities = '/crm/v1/transfers';
 	constructor(private httpClient: HttpClient) {}
 
 	/**
@@ -493,6 +495,157 @@ export class CrmEntitiesService {
 	deleteDependenciesLists(code: string, id: number) {
 		return this.httpClient.client.delete<IDependenciesList[]>(`${this.namespace}/:code/lists/dependencies/:id`, {
 			urlParams: { code, id },
+		});
+	}
+
+	/**
+	 * Get entities currencies amount
+	 * @param params entities currencies amount params
+	 * @param code entity code
+	 * @param id stage id
+	 * @returns entities currencies amount
+	 */
+	getEntitiesCurrenciesAmount(params: IFilterCurrenciesAmount, code: string, id: number) {
+		return this.httpClient.client.get<IEntityAmount>(`${this.namespace}/:code/kanban/stage/:id/amount`, {
+			urlParams: { code, id },
+			params,
+		});
+	}
+
+	/**
+	 * Transfer entities
+	 * @returns transfer entities quantity
+	 */
+	transferEntities(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/user`, body);
+	}
+
+	/**
+	 * Transfer entities quantity
+	 * @returns transfer entities quantity
+	 */
+	getTransferEntitiesQuantity(body: Partial<ITransferEntitiesData>) {
+		return this.httpClient.client.post<ITransferEntitiesData>(`${this.namespaceTransferEntities}/quantity`, body);
+	}
+
+	/**
+	 * Transfer entities progress
+	 * @returns transfer entities progress
+	 */
+	getTransferEntitiesProgress() {
+		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferEntities}/progress`);
+	}
+
+	/**
+	 * Stop transfer entities
+	 */
+	stopTransferEntities() {
+		return this.httpClient.client.get(`${this.namespaceTransferEntities}/stop`);
+	}
+
+	/**
+	 * Get deleted(trash) entities
+	 * @param params entity list filter params
+	 * @param code entity code
+	 * @param signal AbortSignal for cancelling request
+	 * @returns entity list
+	 */
+	getTrashEntities(params: string | object, code: string, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<IEntity>(`${this.namespace}/:code/trash${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get deleted(trash) entity
+	 * @param id item id
+	 * @param code entity code
+	 * @returns entity item
+	 */
+	getTrashEntity(id: number, code: string) {
+		return this.httpClient.client.get<IEntityData>(`${this.namespace}/:code/trash`, {
+			urlParams: {
+				id,
+				code,
+			},
+		});
+	}
+
+	/**
+	 * Restore entities
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
+	 * @param code entity code
+	 */
+	restoreTrashEntities({
+		itemIds,
+		all,
+		exceptIds,
+		code,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		code: string;
+		filterParams?: object;
+	}) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/:code/trash/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+				urlParams: {
+					code,
+				},
+			},
+		);
+	}
+
+	/**
+	 * Remove from basket entities
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
+	 * @param code entity code
+	 */
+	deleteTrashEntities({
+		itemIds,
+		all,
+		exceptIds,
+		code,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		code: string;
+		filterParams?: object;
+	}) {
+		return this.httpClient.client.delete(`${this.namespace}/:code/trash/`, {
+			data: {
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
+			},
+			urlParams: {
+				code,
+			},
 		});
 	}
 }

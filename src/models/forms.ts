@@ -2,7 +2,19 @@
 import { EntityType } from './entity';
 import { FieldTypes, IField } from './field';
 
-export type FormFieldCode = 'title' | 'email' | 'phone' | 'logo' | 'header' | 'subheader' | 'privacyPolicy' | 'submitButton' | (string & {});
+export type FormFieldCode =
+	| 'title'
+	| 'email'
+	| 'phone'
+	| 'logo'
+	| 'header'
+	| 'subheader'
+	| 'privacyPolicy'
+	| 'submitButton'
+	| 'companyLogo'
+	| 'banner'
+	| 'divider'
+	| (string & {});
 
 export interface IFormField {
 	fieldCode: FormFieldCode;
@@ -20,12 +32,15 @@ export interface IFormField {
 
 export interface IFormOther {
 	fieldCode: FormFieldCode;
+	isOther?: boolean;
 	order?: number;
 	ico?: any;
 	value?: string;
 	previewTitle?: string;
 	selected?: boolean;
 	formLogoValue?: string;
+	formLogoColor?: string;
+	isOutsideSort?: boolean;
 	privacyPolicySettings?: {
 		value: string;
 		required: boolean;
@@ -36,6 +51,38 @@ export interface IFormOther {
 		showIco: boolean;
 		ico: string;
 		background: string;
+	};
+}
+
+export interface IFormAfterSubmit {
+	showMessage: boolean;
+	fields: IFormOther[];
+	redirectUrl: string | null;
+	timeBeforeRedirect: number | null;
+}
+
+export interface IFormDesign {
+	generalColors: {
+		pageBg: string;
+		formBg: string | null;
+	};
+	button: {
+		style: 'contained' | 'outlined' | 'text';
+		borderRadius: number;
+		size: 'small' | 'medium' | 'large';
+		textSize: number;
+		textLetterSpacing: 'standard' | 'wide';
+	};
+	fields: {
+		style: 'outlined' | 'standard';
+		borderRadius: number;
+		size: 'small' | 'medium';
+		textSize: number;
+		hideFieldLabel: boolean;
+	};
+	additional: {
+		formPosition: 'top' | 'center';
+		showUspacyBrand: boolean;
 	};
 }
 
@@ -53,6 +100,8 @@ export interface IForm {
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
+		after?: IFormAfterSubmit;
+		design?: IFormDesign;
 	};
 	creared_at?: number;
 	updated_at?: number;

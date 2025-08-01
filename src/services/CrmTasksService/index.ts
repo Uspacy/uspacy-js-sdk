@@ -11,6 +11,7 @@ import {
 	oauthProvider,
 	oauthType,
 } from '../../models/oauthIntegrations';
+import { ITransferActivitiesData, ITransferOfCasesProgress } from '../../models/transferOfCases';
 import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 
 /**
@@ -19,8 +20,10 @@ import { ICalendarSettings, ISyncSettings } from './calendars-settings.dto';
 @injectable()
 export class CrmTasksService {
 	private namespace = '/activities/v1/activities';
+	private trashNamespace = '/activities/v1/trash/activities';
 	private calendarsNamespace = '/activities/v1/calendars';
 	private oauthIntegrationsNamespace = '/activities/v1/integrations';
+	private namespaceTransferActivities = '/activities/v1/transfers';
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -122,7 +125,7 @@ export class CrmTasksService {
 	massTasksEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
 		const data = {
 			all,
-			entity_ids: entityIds,
+			id: entityIds,
 			except_ids: exceptIds,
 			payload,
 			settings,
@@ -209,5 +212,126 @@ export class CrmTasksService {
 		return this.httpClient.client.delete<ICalendarsSuccessResponse>(
 			`${this.oauthIntegrationsNamespace}/accounts/${providerId}/integrations/${integrationId}`,
 		);
+	}
+
+	/**
+	 * Transfer activities
+	 * @returns transfer activities quantity
+	 */
+	transferActivities(body: Partial<ITransferActivitiesData>) {
+		return this.httpClient.client.post<ITransferActivitiesData>(`${this.namespaceTransferActivities}/user`, body);
+	}
+
+	/**
+	 * Transfer activities quantity
+	 * @returns transfer activities quantity
+	 */
+	getTransferActivitiesQuantity(body: Partial<ITransferActivitiesData>) {
+		return this.httpClient.client.post<ITransferActivitiesData>(`${this.namespaceTransferActivities}/quantity`, body);
+	}
+
+	/**
+	 * Transfer activities
+	 * @returns transfer activities progress
+	 */
+	getTransferActivitiesProgress() {
+		return this.httpClient.client.get<ITransferOfCasesProgress>(`${this.namespaceTransferActivities}/progress`);
+	}
+
+	/**
+	 * Stop transfer activities
+	 */
+	stopTransferActivities() {
+		return this.httpClient.client.get(`${this.namespaceTransferActivities}/stop`);
+	}
+
+	/**
+	 * Get deleted(trash) activities
+	 * @param params activity list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns activity list
+	 */
+	getTrashActivities(params: string | object, signal?: AbortSignal) {
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.get<ITasks>(`${this.trashNamespace}${suffix}`, {
+			signal,
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
+	 * Get deleted(trash) activity
+	 * @param id item id
+	 * @returns activity item
+	 */
+	getTrashActivity(id: number) {
+		return this.httpClient.client.get<ITask>(`${this.trashNamespace}`, {
+			params: {
+				id,
+			},
+		});
+	}
+
+	/**
+	 * Restore activities
+	 * @param itemIds restore items by ids
+	 * @param all all items restore
+	 * @param exceptIds items that don't need to be restored
+	 * @param filterParams filters
+	 */
+	restoreTrashActivities({
+		itemIds,
+		all,
+		exceptIds,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		filterParams?: object;
+	}) {
+		return this.httpClient.client.patch(
+			`${this.trashNamespace}/restore`,
+			{
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			{
+				params: {
+					...(filterParams || {}),
+				},
+			},
+		);
+	}
+
+	/**
+	 * Remove from basket activities
+	 * @param itemIds delete items by ids
+	 * @param all all items delete
+	 * @param exceptIds items that don't need to be delete
+	 * @param filterParams filters
+	 */
+	deleteTrashActivities({
+		itemIds,
+		all,
+		exceptIds,
+		filterParams,
+	}: {
+		itemIds: number[];
+		all: boolean;
+		exceptIds: number[];
+		filterParams?: object;
+	}) {
+		return this.httpClient.client.delete(`${this.trashNamespace}`, {
+			data: {
+				id: itemIds,
+				all,
+				except_ids: exceptIds,
+			},
+			params: {
+				...(filterParams || {}),
+			},
+		});
 	}
 }
