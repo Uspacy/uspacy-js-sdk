@@ -137,7 +137,7 @@ export class MarketingService {
 	 * @returns Email newsletter entity
 	 */
 	updateEmailNewsletter(id: number, data: Partial<IEmailNewsletter>) {
-		return this.httpClient.client.put<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}`, data);
+		return this.httpClient.client.patch<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}`, data);
 	}
 
 	/**
