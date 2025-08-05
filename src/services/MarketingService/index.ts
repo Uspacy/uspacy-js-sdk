@@ -144,7 +144,14 @@ export class MarketingService {
 	 * @param id email newsletter id
 	 */
 	sendEmailNewsletter(id: number) {
-		return this.httpClient.client.post(`${this.namespaceNewsletters}/mailings/send/${id}`);
+		return this.httpClient.client.get(`${this.namespaceNewsletters}/mailings/send/${id}`);
+	}
+
+	/**
+	 * Start email newsletter mailings
+	 */
+	startEmailNewsletterMailings() {
+		return this.httpClient.client.get(`${this.namespaceNewsletters}/mailings/start`);
 	}
 
 	/**
