@@ -15,10 +15,22 @@ export interface INewsletterPreset {
 	uuid: string[];
 }
 
+export interface INewsletterStatistics {
+	unique_opens: number;
+	total_opens: number;
+	unique_clicks: number;
+	total_clicks: number;
+	delivered: number;
+	not_delivered: number;
+	unsubscribed: number;
+	spam: number;
+}
+
 export interface IEmailNewsletter {
 	id: number;
 	title: string;
 	status: ENewsletterStatus;
+	total_recipients: number;
 	created_by: number;
 	sender_id: number;
 	next_run: number;
@@ -36,4 +48,5 @@ export interface IEmailNewsletter {
 	sent?: INewsletterProgress;
 	read?: INewsletterProgress;
 	follow_the_link?: INewsletterProgress;
+	statistics?: INewsletterStatistics;
 }
