@@ -113,6 +113,15 @@ export class MarketingService {
 	}
 
 	/**
+	 * Get email newsletter by id with statistics
+	 * @param id email newsletter id
+	 * @returns Email newsletter entity with statistics
+	 */
+	getEmailNewsletterStatistics(id: number) {
+		return this.httpClient.client.get<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}/statistics`);
+	}
+
+	/**
 	 * Create email newsletter
 	 * @param data email newsletter payload
 	 * @returns Email newsletter entity
