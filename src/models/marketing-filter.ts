@@ -1,3 +1,12 @@
+export enum ENewsletterRecipientsEvent {
+	DELIVERED = 'delivered',
+	NOT_DELIVERED = 'not_delivered',
+	UNSUBSCRIBED = 'unsubscribed',
+	OPEN = 'open',
+	CLICK = 'click',
+	SPAM = 'spam',
+}
+
 export interface IMarketingFilter {
 	page: number;
 	list: number;
@@ -19,4 +28,13 @@ export interface IMarketingFilter {
 	certainDateOrPeriod_updated_at: number[];
 	certainDateOrPeriod_next_run: number[];
 	openCalendar: boolean;
+}
+
+export interface INewsletterRecipientsFilter {
+	page: number;
+	list: number;
+	event: ENewsletterRecipientsEvent[];
+	sort_by?: {
+		name: string;
+	};
 }

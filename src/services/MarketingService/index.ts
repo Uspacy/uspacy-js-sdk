@@ -1,9 +1,9 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailNewsletter } from '../../models/email-newsletter';
+import { IEmailNewsletter, INewsletterRecipients } from '../../models/email-newsletter';
 import { IEmailTemplate } from '../../models/email-template';
-import { IMarketingFilter } from '../../models/marketing-filter';
+import { IMarketingFilter, INewsletterRecipientsFilter } from '../../models/marketing-filter';
 import { IDomain } from '../../models/newsletters-domain';
 import { ISender } from '../../models/newsletters-sender';
 import { IResponseWithMeta } from '../../models/response';
@@ -119,6 +119,18 @@ export class MarketingService {
 	 */
 	getEmailNewsletterStatistics(id: number) {
 		return this.httpClient.client.get<IEmailNewsletter>(`${this.namespaceNewsletters}/mailings/${id}/statistics`);
+	}
+
+	/**
+	 * Get email newsletter recipients
+	 * @param id email newsletter id
+	 * @param params email newsletter recipients filter params
+	 * @returns Array email newsletter recipients entity
+	 */
+	getEmailNewsletterRecipients(id: number, params: Partial<INewsletterRecipientsFilter>) {
+		return this.httpClient.client.get<IResponseWithMeta<INewsletterRecipients>>(`${this.namespaceNewsletters}/mailings/${id}/recipients`, {
+			params,
+		});
 	}
 
 	/**
