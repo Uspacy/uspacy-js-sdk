@@ -50,3 +50,12 @@ export interface IEmailNewsletter {
 	follow_the_link?: INewsletterProgress;
 	statistics?: INewsletterStatistics;
 }
+
+export interface INewsletterRecipients {
+	id: number;
+	email: string;
+	contact_id: number;
+	name: string;
+	delivered: number;
+	last_event_date: number;
+}
