@@ -33,8 +33,8 @@ export interface IMarketingFilter {
 export interface INewsletterRecipientsFilter {
 	page: number;
 	list: number;
-	event: ENewsletterRecipientsEvent[];
+	event: ENewsletterRecipientsEvent;
 	sort_by?: {
-		name: string;
+		[key: string]: string;
 	};
 }
