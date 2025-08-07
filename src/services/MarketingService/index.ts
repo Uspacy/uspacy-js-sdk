@@ -176,6 +176,28 @@ export class MarketingService {
 	}
 
 	/**
+	 * Mass send email newsletters
+	 * @param id email newsletter ids array
+	 * @param params email newsletters list filter params
+	 */
+	massSendingEmailNewsletters(id: number[], all: boolean, params: Partial<IMarketingFilter>) {
+		return this.httpClient.client.post(`${this.namespaceNewsletters}/mailings/mass_send`, {
+			data: { all, ...(id && { id }), ...(params && params) },
+		});
+	}
+
+	/**
+	 * Mass deletion email newsletters
+	 * @param id email newsletter ids array
+	 * @param params email newsletters list filter params
+	 */
+	massDeletionEmailNewsletters(id: number[], all: boolean, params: Partial<IMarketingFilter>) {
+		return this.httpClient.client.delete(`${this.namespaceNewsletters}/mailings/mass_deletion`, {
+			data: { all, ...(id && { id }), ...(params && params) },
+		});
+	}
+
+	/**
 	 * Get domains list
 	 * @returns Array domains entity
 	 */
