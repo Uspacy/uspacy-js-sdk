@@ -45,6 +45,7 @@ export interface IFormOther {
 		value: string;
 		required: boolean;
 		defaultCheck: boolean;
+		color: string;
 	};
 	buttonSettings?: {
 		text: string;
