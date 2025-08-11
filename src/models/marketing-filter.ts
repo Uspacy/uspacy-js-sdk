@@ -28,6 +28,9 @@ export interface IMarketingFilter {
 	certainDateOrPeriod_updated_at: number[];
 	certainDateOrPeriod_next_run: number[];
 	openCalendar: boolean;
+	sort_by?: {
+		[key: string]: string;
+	};
 }
 
 export interface INewsletterRecipientsFilter {
