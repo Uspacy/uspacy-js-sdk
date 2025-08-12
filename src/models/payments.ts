@@ -26,9 +26,6 @@ export interface ILegalEntityForm {
 	contactPersonPhone: string;
 	contactPersonEmail: string;
 	itinCode: string;
-	companyName: string;
-	legalAddress: string;
-	directorsFullName: string;
 	token: string;
 }
 
@@ -43,9 +40,6 @@ export interface ILegalEntityFormErrors {
 	contactPersonPhoneErr: boolean;
 	contactPersonEmailErr: boolean;
 	itinCodeErr: boolean;
-	companyNameErr: boolean;
-	legalAddressErr: boolean;
-	directorsFullNameErr: boolean;
 }
 
 export interface ILegalEntityFormEuComErrors {
