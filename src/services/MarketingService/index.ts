@@ -181,9 +181,7 @@ export class MarketingService {
 	 * @param params email newsletters list filter params
 	 */
 	massSendingEmailNewsletters(ids: number[], all: boolean, params: Partial<IMarketingFilter>) {
-		return this.httpClient.client.post(`${this.namespaceNewsletters}/mailings/mass_send`, {
-			data: { all, ...(ids && { ids }), ...(params && params) },
-		});
+		return this.httpClient.client.post(`${this.namespaceNewsletters}/mailings/mass_send`, { all, ...(ids && { ids }), ...(params && params) });
 	}
 
 	/**
