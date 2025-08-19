@@ -51,11 +51,12 @@ export interface IEmailNewsletter {
 	statistics?: INewsletterStatistics;
 }
 
-export interface INewsletterRecipients {
+export interface INewsletterRecipient {
 	id: number;
 	email: string;
 	contact_id: number;
 	name: string;
+	title: string;
 	delivered: number;
 	last_event_date: number;
 }
