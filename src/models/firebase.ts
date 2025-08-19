@@ -20,4 +20,7 @@ export enum EFirabaseDbName {
 	TASKS_SETTINGS = 'tasks-settings',
 	TASKS_PRESETS = 'tasks-presets',
 	TASKS_KANBAN_COLUMN_VISIBILITIES = 'tasks-kanban-column-visibilities',
+	MARKETING_SETTINGS = 'marketing-settings',
+	MARKETING_FILTERS = 'marketing-filters',
+	MARKETING_KANBAN_COLUMN_VISIBILITIES = 'marketing-kanban-column-visibilities',
 }
