@@ -6,6 +6,7 @@ import { ConfigService, IConfig } from './core/ConfigService';
 import { HttpClient } from './core/HttpClient';
 import { SessionService } from './core/SessionService';
 import { TokensService } from './core/TokensService';
+import { AIService } from './services/AIService';
 import { AnalyticsService } from './services/AnalyticsService';
 import { AnnouncersService } from './services/AnnouncersService';
 import { AppsService } from './services/AppsService';
@@ -76,6 +77,7 @@ class Uspacy {
 		public readonly newsFeedService: NewsFeedService,
 		public readonly migrationsService: MigrationsService,
 		public readonly messengerService: MessengerService,
+		public readonly aiService: AIService,
 		public readonly emailService: EmailService,
 		public readonly automationsService: AutomationsService,
 		public readonly crmEntitiesService: CrmEntitiesService,
