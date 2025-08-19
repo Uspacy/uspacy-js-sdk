@@ -1,3 +1,4 @@
+import { IFile } from '../models/files';
 import { IEntityData, IMeta } from './crm-entities';
 import { INotify } from './notify';
 
@@ -45,6 +46,8 @@ export interface ITask {
 	calendar_provider?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	entities?: any;
+	file_ids?: number[];
+	files?: IFile[];
 }
 
 export interface ICall extends ITask {
