@@ -78,7 +78,7 @@ export class AutomationsService {
 	 * @param data workflow data
 	 */
 	updateWorkflow(data: Partial<IWorkflow>) {
-		return this.httpClient.client.post<IWorkflow>(`${this.namespace_workflows}:id`, data, { urlParams: { id: data?.id } });
+		return this.httpClient.client.patch<IWorkflow>(`${this.namespace_workflows}:id`, data, { urlParams: { id: data?.id } });
 	}
 
 	/**
