@@ -150,21 +150,52 @@ export interface ICreateAction {
 	body: IFieldChange[];
 }
 
+export enum NodeType {
+	trigger = 'trigger',
+	action = 'action',
+	condition = 'condition',
+	newItem = 'newItem',
+	mainCondition = 'mainCondition',
+	closeMainCondition = 'closeMainCondition',
+}
+
+export type ComponentData = {
+	value?: number;
+	type?: NodeType;
+	description?: string;
+	name?: string;
+	mainConditionId?: string;
+	order?: number;
+	fromParentId?: string;
+	isChildConditionOfMain?: boolean;
+	entity?: string;
+	actionType?: string;
+};
+
 export interface IWorkflow {
 	id?: number;
 	portal_id: number;
 	title: string;
 	active: boolean;
 	description: string;
-	trigger: ITrigger;
-	conditions: {
-		node_id: string;
-		condition: ICondition[];
-	}[];
-	actions: {
-		node_id: string;
-		action: any; // IACTION
-	}[];
+	automations_data: {
+		trigger: ITrigger;
+		conditions: {
+			node_id: string;
+			condition: ICondition[];
+		}[];
+		actions: {
+			node_id: string;
+			action: any; // IACTION
+		}[];
+	};
+	created_at?: number;
+	updated_at?: number;
+	created_by?: number;
+	updated_by?: number;
+	nodes: any;
+	edges: any;
+	tree: any;
 }
 
 export interface IWorkflowsResponse {

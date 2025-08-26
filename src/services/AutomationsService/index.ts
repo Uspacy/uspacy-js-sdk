@@ -4,7 +4,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { IApp } from '../../models/app';
 import { IAutomation } from '../../models/automations';
 import { IResponseWithMeta } from '../../models/response';
-import { IWorkflowsResponse } from '../../models/workflows';
+import { IWorkflow, IWorkflowsResponse } from '../../models/workflows';
 
 /**
  * Automations service
@@ -66,11 +66,27 @@ export class AutomationsService {
 	}
 
 	/**
+	 * Create workflow
+	 * @param data workflow data
+	 */
+	createWorkflow(data: Partial<IWorkflow>) {
+		return this.httpClient.client.post<IWorkflow>(this.namespace_workflows, data);
+	}
+
+	/**
+	 * Update workflow
+	 * @param data workflow data
+	 */
+	updateWorkflow(data: Partial<IWorkflow>) {
+		return this.httpClient.client.post<IWorkflow>(`${this.namespace_workflows}:id`, data, { urlParams: { id: data?.id } });
+	}
+
+	/**
 	 * Delete workflow
 	 * @param id workflow id
 	 */
 	deleteWorkflow(id: number) {
-		return this.httpClient.client.delete<number>(`${this.namespace_workflows}:id`, { urlParams: { id } });
+		return this.httpClient.client.patch<number>(`${this.namespace_workflows}:id`, { urlParams: { id } });
 	}
 
 	/**
