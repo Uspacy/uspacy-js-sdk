@@ -37,7 +37,7 @@ export class AutomationsService {
 	 * @param id automation id
 	 */
 	deleteAutomation(id: number) {
-		return this.httpClient.client.delete<number>(`${this.namespace_workers}:id`, { urlParams: { id } });
+		return this.httpClient.client.delete<number>(`${this.namespace_workers}/:id`, { urlParams: { id } });
 	}
 
 	/**
@@ -46,7 +46,7 @@ export class AutomationsService {
 	 * @param body request body
 	 */
 	toggleAutomation(id: number, body: IAutomation) {
-		return this.httpClient.client.patch(`${this.namespace_workers}:id`, body, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace_workers}/:id`, body, { urlParams: { id } });
 	}
 
 	/**
@@ -78,7 +78,7 @@ export class AutomationsService {
 	 * @param data workflow data
 	 */
 	updateWorkflow(data: Partial<IWorkflow>) {
-		return this.httpClient.client.patch<IWorkflow>(`${this.namespace_workflows}:id`, data, { urlParams: { id: data?.id } });
+		return this.httpClient.client.patch<IWorkflow>(`${this.namespace_workflows}/:id`, data, { urlParams: { id: data?.id } });
 	}
 
 	/**
@@ -86,7 +86,7 @@ export class AutomationsService {
 	 * @param id workflow id
 	 */
 	deleteWorkflow(id: number) {
-		return this.httpClient.client.patch<number>(`${this.namespace_workflows}:id`, { urlParams: { id } });
+		return this.httpClient.client.patch<number>(`${this.namespace_workflows}/:id`, { urlParams: { id } });
 	}
 
 	/**
@@ -95,6 +95,6 @@ export class AutomationsService {
 	 * @param body request body
 	 */
 	toggleWorkflow(id: number, body: IAutomation) {
-		return this.httpClient.client.patch(`${this.namespace_workflows}:id`, body, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace_workflows}/:id`, body, { urlParams: { id } });
 	}
 }
