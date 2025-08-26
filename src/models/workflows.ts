@@ -171,3 +171,10 @@ export interface IWorkflowsResponse {
 	meta: IMeta;
 	data: IWorkflow[];
 }
+
+export interface IWorkflowFilter {
+	page: number;
+	list: number;
+	q: string;
+	sortModel?: { [key: string]: string }[];
+}
