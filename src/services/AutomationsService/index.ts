@@ -86,7 +86,7 @@ export class AutomationsService {
 	 * @param id workflow id
 	 */
 	deleteWorkflow(id: number) {
-		return this.httpClient.client.patch<number>(`${this.namespace_workflows}/:id`, { urlParams: { id } });
+		return this.httpClient.client.delete<number>(`${this.namespace_workflows}/:id`, { urlParams: { id } });
 	}
 
 	/**
