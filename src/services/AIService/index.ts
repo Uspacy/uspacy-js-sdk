@@ -27,4 +27,13 @@ export class AIService {
 	async getTaskByMessages({ text }: { text: string }): Promise<{ data: { title: string; description: string } }> {
 		return this.httpClient.client.post(`${this.namespace}/tasks/create`, { chat_messages: text });
 	}
+
+	/**
+	 * Get transcript for audio file
+	 * @param audioUrl url for audio file
+	 * @returns transcript text
+	 */
+	async getCallTranscribe({ audioUrl }: { audioUrl: string }): Promise<{ data: { transcript: string } }> {
+		return this.httpClient.client.post(`${this.namespace}/transcribe/`, { audio_url: audioUrl });
+	}
 }
