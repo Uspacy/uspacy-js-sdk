@@ -36,4 +36,13 @@ export class AIService {
 	async getCallTranscribe({ audioUrl }: { audioUrl: string }): Promise<{ data: { transcript: string } }> {
 		return this.httpClient.client.post(`${this.namespace}/transcribe/`, { audio_url: audioUrl });
 	}
+
+	/**
+	 * Get summary for audio file
+	 * @param text text audio file
+	 * @returns summary text
+	 */
+	async getCallSummary({ text }: { text: string }): Promise<{ data: { summary: string } }> {
+		return this.httpClient.client.post(`${this.namespace}/summarize/`, { text });
+	}
 }
