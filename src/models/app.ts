@@ -16,3 +16,14 @@ export interface IApp {
 	developer_link: string;
 	integration_token: string;
 }
+
+export interface IAppsFilter {
+	page: number;
+	list: number;
+	categories?: string[];
+	q?: string;
+	[key: `sort_by[${string}]`]: 'asc' | 'desc';
+	is_local?: boolean;
+	is_installed?: boolean;
+	installs_count_range?: string[];
+}
