@@ -93,6 +93,7 @@ export interface IMessage {
 		type: EMetaType;
 		accountName: string;
 		accountImage: string;
+		eventType?: string;
 		body: {
 			text: string;
 			attachedFiles: { url: string; type: string }[];
