@@ -210,3 +210,13 @@ export interface ILettersCrmEntities {
 	leads?: IEntityData[];
 	deals?: IEntityData[];
 }
+
+export enum EMailTone {
+	Neutral = 'Neutral',
+	Friendly = 'Friendly',
+	Formal = 'Formal',
+	Casual = 'Casual',
+	Excited = 'Excited',
+	Grateful = 'Grateful',
+	Sad = 'Sad',
+}
