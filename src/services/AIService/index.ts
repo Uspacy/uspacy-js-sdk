@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { EMailTone } from '../../models/email';
 
 /**
  * AI service
@@ -44,5 +45,14 @@ export class AIService {
 	 */
 	async getCallSummary({ text }: { text: string }): Promise<{ data: { summary: string } }> {
 		return this.httpClient.client.post(`${this.namespace}/summarize/`, { text });
+	}
+
+	/**
+	 * Get email follow up
+	 * @param text text audio file
+	 * @returns summary text
+	 */
+	async getEmailFollowUp({ text, tone }: { text: string; tone: EMailTone }): Promise<{ data: { email_text: string; subject: string } }> {
+		return this.httpClient.client.post(`${this.namespace}/email/followup/`, { text, tone });
 	}
 }
