@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IApp } from '../../models/app';
+import { IApp, IAppsFilter } from '../../models/app';
 import { IResponseWithMeta } from '../../models/response';
 
 /**
@@ -23,6 +23,20 @@ export class AppsService {
 				page,
 				list,
 			},
+			headers: {
+				'Accept-Language': lang,
+			},
+		});
+	}
+
+	/**
+	 * Get apps
+	 * @param filters filter params by IAppsFilter
+	 * @param lang language
+	 */
+	async getAppsWithFilters(filters: IAppsFilter, lang: string) {
+		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
+			params: filters,
 			headers: {
 				'Accept-Language': lang,
 			},
