@@ -60,3 +60,11 @@ export interface INewsletterRecipient {
 	delivered: number;
 	last_event_date: number;
 }
+
+export interface IRecipientsCountsBySegments {
+	[key: string]: number;
+}
+
+export interface IEmailNewslettersCredits {
+	credits: number;
+}

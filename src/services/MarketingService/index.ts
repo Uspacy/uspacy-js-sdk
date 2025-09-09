@@ -1,7 +1,13 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IEmailNewsletter, INewsletterRecipient } from '../../models/email-newsletter';
+import {
+	IEmailNewsletter,
+	IEmailNewslettersCredits,
+	INewsletterPreset,
+	INewsletterRecipient,
+	IRecipientsCountsBySegments,
+} from '../../models/email-newsletter';
 import { IEmailTemplate } from '../../models/email-template';
 import { IMarketingFilter, INewsletterRecipientsFilter } from '../../models/marketing-filter';
 import { IDomain } from '../../models/newsletters-domain';
@@ -173,6 +179,23 @@ export class MarketingService {
 	 */
 	startEmailNewsletterMailings() {
 		return this.httpClient.client.get(`${this.namespaceNewsletters}/mailings/start`);
+	}
+
+	/**
+	 * Get recipients counts by segments
+	 * @param presets email newsletter presets
+	 * @returns Recipients counts by segments ids
+	 */
+	getRecipientsCountsBySegments(data: INewsletterPreset) {
+		return this.httpClient.client.post<IRecipientsCountsBySegments>(`${this.namespaceNewsletters}/mailings/recipients`, { presets: data });
+	}
+
+	/**
+	 * Get email newsletters credits
+	 * @returns Email newsletters credits
+	 */
+	getEmailNewslettersCredits() {
+		return this.httpClient.client.get<IEmailNewslettersCredits>(`${this.namespaceNewsletters}/mailings/credits`);
 	}
 
 	/**
