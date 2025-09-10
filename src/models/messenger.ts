@@ -147,6 +147,7 @@ export interface IChat {
 	unreadMentions: string[];
 	isInviteChat?: boolean;
 	assigned?: boolean;
+	customer_contact?: ICrmConnectEntity;
 }
 
 export interface IMessagesGroup {
@@ -206,4 +207,11 @@ export interface ICreateWidgetData {
 		backgroundColor?: string;
 		operatorAvatar?: string;
 	};
+}
+
+export interface ICrmConnectEntity {
+	entity: 'leads' | 'contacts' | 'companies' | 'deals';
+	id: number;
+	owner: number;
+	title: string;
 }
