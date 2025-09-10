@@ -15,9 +15,9 @@ export class MessengerService {
 	 * Get chats
 	 * @returns list of chats
 	 */
-	async getChats({ type, all, include }: { type?: 'EXTERNAL'; all?: boolean; include?: string }) {
+	async getChats(props: { type?: 'EXTERNAL'; all?: boolean; include?: string; page?: number; list?: number }) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
-			params: { type, all, include },
+			params: { ...props },
 		});
 	}
 
@@ -29,9 +29,9 @@ export class MessengerService {
 	 * @param firstTimestamp for :id urlParams
 	 * @returns list of messages for chat
 	 */
-	async getMessages({ chatId, limit, lastTimestamp, firstTimestamp, unreadFirst }: FetchMessagesRequest) {
+	async getMessages(props: FetchMessagesRequest) {
 		return this.httpClient.client.get(`${this.namespace}/messages/`, {
-			params: { chatId, limit, lastTimestamp, firstTimestamp, unreadFirst },
+			params: { ...props },
 		});
 	}
 
