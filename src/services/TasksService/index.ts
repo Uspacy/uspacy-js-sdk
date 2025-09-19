@@ -88,11 +88,9 @@ export class TasksService {
 	 * @returns Array subtasks entity
 	 */
 	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
-		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, { params: { template_id: id, ...params } });
-		}
-
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, { params: { parent_id: id, ...params } });
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
+			params: { [isTemplate ? 'template_id' : 'parent_id']: id, ...params },
+		});
 	}
 
 	/**
@@ -614,24 +612,13 @@ export class TasksService {
 	}
 
 	/**
-	 * Get checklist entity
-	 * @param id task id
-	 * @returns checklist entity
-	 */
-	getChecklist(id: number) {
-		return this.httpClient.client.get<IChecklist>(`${this.namespace}/checklists/:id`, {
-			urlParams: { id },
-		});
-	}
-
-	/**
 	 * Create checklist
 	 * @param id task id
 	 * @param checklist checklist entity
 	 * @returns checklist entity
 	 */
 	createChecklist(taskId: string, body: Partial<IChecklist>) {
-		return this.httpClient.client.post<IChecklist>(`${this.namespace}/:taskId/checklists/`, body, {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/:taskId/checklists/`, body, {
 			urlParams: { taskId },
 		});
 	}
@@ -643,7 +630,7 @@ export class TasksService {
 	 * @returns checklist entity
 	 */
 	updateChecklist(id: number, body: Partial<IChecklist>) {
-		return this.httpClient.client.patch<IChecklist>(`${this.namespace}/checklists/:id`, body, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id`, body, {
 			urlParams: { id },
 		});
 	}
@@ -653,20 +640,8 @@ export class TasksService {
 	 * @param id checklist id
 	 */
 	deleteChecklist(id: number) {
-		return this.httpClient.client.delete<IChecklist>(`${this.namespace}/checklists/:id`, {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id`, {
 			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Get checklist item
-	 * @param id checklist id
-	 * @param itemId checklist item id
-	 * @returns checklist item entity
-	 */
-	getChecklistItem(id: number, itemId: number) {
-		return this.httpClient.client.get<IChecklistItem>(`${this.namespace}/checklists/:id/items/:itemId`, {
-			urlParams: { id, itemId },
 		});
 	}
 
@@ -677,7 +652,7 @@ export class TasksService {
 	 * @returns checklist item entity
 	 */
 	createChecklistItem(id: number, body: Partial<IChecklistItem>) {
-		return this.httpClient.client.post<IChecklistItem>(`${this.namespace}/checklists/:id/items`, body, {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/checklists/:id/items`, body, {
 			urlParams: { id },
 		});
 	}
@@ -690,7 +665,7 @@ export class TasksService {
 	 * @returns checklist item entity
 	 */
 	updateChecklistItem(id: number, itemId: number, body: Partial<IChecklistItem>) {
-		return this.httpClient.client.patch<IChecklistItem>(`${this.namespace}/checklists/:id/items/:itemId`, body, {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, body, {
 			urlParams: { id, itemId },
 		});
 	}
@@ -702,7 +677,7 @@ export class TasksService {
 	 * @returns checklist item entity
 	 */
 	deleteChecklistItem(id: number, itemId: number) {
-		return this.httpClient.client.delete<IChecklistItem>(`${this.namespace}/checklists/:id/items/:itemId`, {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, {
 			urlParams: { id, itemId },
 		});
 	}
