@@ -83,29 +83,16 @@ export class TasksService {
 	/**
 	 * Get subtasks list
 	 * @param id parent task/template id
-	 * @param page page number
-	 * @param list elements count
 	 * @param isTemplate template param
+	 * @param params subtasks list filter params
 	 * @returns Array subtasks entity
 	 */
-	getSubtasks(id: string, page: number, list: number, isTemplate: boolean) {
+	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
 		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, {
-				params: {
-					template_id: id,
-					page,
-					list,
-				},
-			});
+			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, { params: { template_id: id, ...params } });
 		}
 
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
-			params: {
-				parent_id: id,
-				page,
-				list,
-			},
-		});
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, { params: { parent_id: id, ...params } });
 	}
 
 	/**
