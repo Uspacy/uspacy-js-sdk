@@ -88,11 +88,9 @@ export class TasksService {
 	 * @returns Array subtasks entity
 	 */
 	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
-		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, { params: { template_id: id, ...params } });
-		}
-
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, { params: { parent_id: id, ...params } });
+		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
+			params: { [isTemplate ? 'template_id' : 'parent_id']: id, ...params },
+		});
 	}
 
 	/**
