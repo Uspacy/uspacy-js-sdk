@@ -7,7 +7,7 @@ import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
 import { IField, IFields } from '../../models/field';
 import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
-import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { IChecklist, IChecklistItem, IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITasksColumnSettings } from '../../models/tasks-settings';
 import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
 import { CouchdbService } from '../CouchdbService';
@@ -83,28 +83,13 @@ export class TasksService {
 	/**
 	 * Get subtasks list
 	 * @param id parent task/template id
-	 * @param page page number
-	 * @param list elements count
 	 * @param isTemplate template param
+	 * @param params subtasks list filter params
 	 * @returns Array subtasks entity
 	 */
-	getSubtasks(id: string, page: number, list: number, isTemplate: boolean) {
-		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, {
-				params: {
-					template_id: id,
-					page,
-					list,
-				},
-			});
-		}
-
+	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
 		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
-			params: {
-				parent_id: id,
-				page,
-				list,
-			},
+			params: { [isTemplate ? 'template_id' : 'parent_id']: id, ...params },
 		});
 	}
 
@@ -623,6 +608,77 @@ export class TasksService {
 			params: {
 				...(filterParams || {}),
 			},
+		});
+	}
+
+	/**
+	 * Create checklist
+	 * @param id task id
+	 * @param checklist checklist entity
+	 * @returns checklist entity
+	 */
+	createChecklist(taskId: string, body: Partial<IChecklist>) {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/:taskId/checklists/`, body, {
+			urlParams: { taskId },
+		});
+	}
+
+	/**
+	 * Update checklist
+	 * @param id checklist id
+	 * @param body checklist entity
+	 * @returns checklist entity
+	 */
+	updateChecklist(id: number, body: Partial<IChecklist>) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Delete checklist
+	 * @param id checklist id
+	 */
+	deleteChecklist(id: number) {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Create checklist item
+	 * @param id checklist id
+	 * @param body checklist item entity
+	 * @returns checklist item entity
+	 */
+	createChecklistItem(id: number, body: Partial<IChecklistItem>) {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/checklists/:id/items`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Update checklist item
+	 * @param id checklist id
+	 * @param itemId checklist item id
+	 * @param body checklist item entity
+	 * @returns checklist item entity
+	 */
+	updateChecklistItem(id: number, itemId: number, body: Partial<IChecklistItem>) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, body, {
+			urlParams: { id, itemId },
+		});
+	}
+
+	/**
+	 * Delete checklist item
+	 * @param id checklist id
+	 * @param itemId checklist item id
+	 * @returns checklist item entity
+	 */
+	deleteChecklistItem(id: number, itemId: number) {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, {
+			urlParams: { id, itemId },
 		});
 	}
 }
