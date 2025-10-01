@@ -173,7 +173,7 @@ export class MigrationsService {
 	stopImport(system: string) {
 		switch (system) {
 			case 'trello':
-				return this.httpClient.client.post(`${this.importNamespace}/v1/trello/stop/`);
+				return this.httpClient.client.post(`${this.importNamespace}/v1/trello/stop`);
 			default:
 				return this.httpClient.client.post(`${this.importNamespace}/stop`, system);
 		}
