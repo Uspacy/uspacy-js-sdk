@@ -1,6 +1,5 @@
 export interface IPrice {
-	standard: number;
-	professional: number;
+	[key: string]: number;
 }
 
 export interface IDiscounts {
