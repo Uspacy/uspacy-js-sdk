@@ -175,7 +175,12 @@ export class MigrationsService {
 			case 'trello':
 				return this.httpClient.client.post(`${this.importNamespace}/v1/trello/stop`);
 			default:
-				return this.httpClient.client.post(`${this.importNamespace}/stop`, system);
+				return this.httpClient.client.get(`${this.importNamespace}/stop`, {
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					params: { system },
+				});
 		}
 	}
 }
