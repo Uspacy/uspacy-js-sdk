@@ -17,6 +17,20 @@ export interface IActivitiesInfo {
 	activities: Partial<IActivity>[];
 }
 
+export interface IChecklistItem {
+	id: number;
+	title: string;
+	done: boolean;
+	sort?: number;
+}
+
+export interface IChecklist {
+	id: number;
+	name: string;
+	items: IChecklistItem[];
+	sort?: number;
+}
+
 export interface ITask {
 	id: string;
 	parentId: null | number;
@@ -93,6 +107,7 @@ export interface ITask {
 	quantityOfComments?: string[];
 	activitiesInfo?: IActivitiesInfo;
 	subtasksInfo?: ISubTasksInfo;
+	checklists?: IChecklist[];
 	tableName?: string;
 	[key: string]: any;
 }
