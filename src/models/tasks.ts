@@ -129,34 +129,11 @@ export interface ITasks {
 }
 
 export interface ITasksParams {
-	id?: string[];
-	status?: string[];
-	priority?: string[];
-	setter_id?: number[];
-	responsible_id?: number[];
-	accomplices_ids?: number[];
-	auditors_ids?: number[];
-	deadline?: number[][];
-	search?: string;
 	q?: string;
-	accept_result?: boolean[];
-	time_tracking?: boolean[];
-	closed_by?: number[];
-	closed_date?: number[][];
-	created_date?: number[][];
-	group_id?: number[];
-	parent_id?: number[];
 	page?: number;
 	list?: number;
-	template?: boolean | number;
 	boolean_operator?: string;
-	use_search?: boolean;
-	accomplices?: number[];
-	auditors?: number[];
-	groupId?: number;
-	child_list?: number;
-	child_page?: number;
-	kanban_fields?: string[];
+	openCalendar?: boolean;
 	sort_by?: {
 		[key: string]: 'asc' | 'desc';
 	};
