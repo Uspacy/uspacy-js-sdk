@@ -7,34 +7,29 @@ export type FilterOperator =
 	| 'not_eq'
 	| 'like'
 	| 'not_like'
-	| 'lte-gte'
-	| 'gt'
+	| 'gte-lte'
+	| 'gt-lt'
+	| 'gte-lt'
+	| 'gt-lte'
 	| 'gte'
 	| 'lte'
+	| 'gt'
+	| 'lt'
+	| 'in'
 	| 'startswith'
 	| 'endswith'
 	| 'exist'
 	| 'empty';
 
-export interface IFilterValuesWithFromTo {
-	from: number | string;
-	to: number | string;
-}
-
 export interface ISmartFiltersItem {
 	field: string;
 	operator: FilterOperator;
-	values: IFilterValuesWithFromTo | any;
-}
-
-export interface IFilterGroups {
-	condition: FilterCondition;
-	filters?: ISmartFiltersItem[];
-	groups?: IFilterGroups[];
+	currencies?: string[];
+	values: any;
 }
 
 export interface ISmartFilters {
 	condition: FilterCondition;
 	filters?: ISmartFiltersItem[];
-	groups?: IFilterGroups[];
+	groups?: ISmartFilters[];
 }
