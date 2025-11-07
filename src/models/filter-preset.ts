@@ -24,6 +24,7 @@ export interface IFilterPreset<F> {
 	currentFilterFields?: IFilterField[];
 	soon?: boolean;
 	shadow?: boolean;
+	sort?: number;
 }
 
 export interface IFilterPresetsData<T> {
