@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type FilterCondition = 'and' | 'or';
+export type FilterTemplate = 'base';
 export type FilterOperator =
 	| 'is'
 	| 'eq'
@@ -29,7 +30,8 @@ export interface ISmartFiltersItem {
 }
 
 export interface ISmartFilters {
-	condition: FilterCondition;
+	condition?: FilterCondition;
+	template?: FilterTemplate;
 	filters?: ISmartFiltersItem[];
 	groups?: ISmartFilters[];
 }
