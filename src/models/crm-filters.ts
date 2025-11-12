@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface IBaseFilter {
 	search?: string;
 	page?: number;
@@ -134,6 +135,7 @@ export interface IDocumentTemplateFieldFilters {
 export interface IFilterCurrenciesAmount {
 	currency: string;
 	field: string;
+	[key: string]: any;
 }
 
 export type IFilter = ILeadFilters & IDealFilters & IContactFilters & ICompanyFilters & IProductFilters & IEntityFilters;
