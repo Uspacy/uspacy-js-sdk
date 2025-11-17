@@ -3,6 +3,7 @@ import { IComment } from './comment';
 import { ITask as IActivity } from './crm-tasks';
 import { IFile } from './files';
 import { IGroup } from './groups';
+import { ISmartFilters } from './smart-filters';
 import { ITaskTimerList } from './timer';
 
 export type taskType = 'task' | 'recurring' | 'one_time';
@@ -127,80 +128,15 @@ export interface ITasks {
 	meta: IMeta;
 }
 
-export interface IFilterTasks {
-	total?: number;
-	page?: number;
-	perPage?: number;
-	status?: string[];
-	priority?: string[];
-	time_label_deadline?: string[];
-	time_label_closed_date?: string[];
-	time_label_created_date?: string[];
-	certainDateOrPeriod?: number[];
-	certainDateOrPeriod_deadline?: number[];
-	certainDateOrPeriod_closed_date?: number[];
-	certainDateOrPeriod_created_date?: number[];
-	createdBy?: number[];
-	responsible?: number[];
-	accomplices_ids?: number[];
-	auditors_ids?: number[];
-	deadline?: number[][];
-	period?: string[][];
-	accept_result?: boolean[];
-	time_tracking?: boolean[];
-	closed_by?: number[];
-	closed_date?: number[][];
-	created_date?: number[][];
-	group_id?: number[];
-	parent_id?: number[];
-	openCalendar?: boolean;
-	search?: string;
-	sortModel?: { id: string; desc: boolean }[];
-	boolean_operator?: string;
-	time_label?: string[];
-	accomplices?: number[];
-	auditors?: number[];
-	groupId?: number;
-	child_list?: number;
-	child_page?: number;
-	kanban_fields?: string[];
-	sort_by?: {
-		[key: string]: 'asc' | 'desc';
-	};
-	[key: string]: any;
-}
-
 export interface ITasksParams {
-	id?: string[];
-	status?: string[];
-	priority?: string[];
-	setter_id?: number[];
-	responsible_id?: number[];
-	accomplices_ids?: number[];
-	auditors_ids?: number[];
-	deadline?: number[][];
-	search?: string;
 	q?: string;
-	accept_result?: boolean[];
-	time_tracking?: boolean[];
-	closed_by?: number[];
-	closed_date?: number[][];
-	created_date?: number[][];
-	group_id?: number[];
-	parent_id?: number[];
 	page?: number;
 	list?: number;
-	template?: boolean | number;
 	boolean_operator?: string;
-	use_search?: boolean;
-	accomplices?: number[];
-	auditors?: number[];
-	groupId?: number;
-	child_list?: number;
-	child_page?: number;
-	kanban_fields?: string[];
+	openCalendar?: boolean;
 	sort_by?: {
 		[key: string]: 'asc' | 'desc';
 	};
+	filters?: ISmartFilters;
 	[key: string]: any;
 }
