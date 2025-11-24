@@ -324,7 +324,7 @@ export class CrmEntitiesService {
 		signal?: AbortSignal,
 		relatedEntityId?: string,
 		relatedEntityType?: string,
-		isContactsOrCompaniesKanban?: boolean,
+		isContactsOrCompaniesKanban = false,
 	) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
