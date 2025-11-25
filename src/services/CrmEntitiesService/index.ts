@@ -692,7 +692,7 @@ export class CrmEntitiesService {
 	uploadAvatar(body: { file: null | File; code: string; id: number }) {
 		const { file, code, id } = body;
 		const formData = new FormData();
-		formData.append('avatar', file ? file : '');
+		formData.append('crm_avatar', file ? file : '');
 		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/upload_avatar/`, formData, {
 			urlParams: { code, id },
 		});
