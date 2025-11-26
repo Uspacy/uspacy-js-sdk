@@ -21,6 +21,7 @@ interface IPhone {
 export enum MainRoles {
 	ADMIN = 'ADMIN',
 	OWNER = 'OWNER',
+	EXTERNAL_GUEST = 'EXTERNAL_GUEST',
 }
 
 export type UserRole = MainRoles | string;
