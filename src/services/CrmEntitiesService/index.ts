@@ -315,14 +315,25 @@ export class CrmEntitiesService {
 	 * @param signal AbortSignal for cancelling request
 	 * @param relatedEntityId related entity id if fetching related to entity  items
 	 * @param relatedEntityType related entity type if fetching related to entity  items
+	 * @param isContactsOrCompaniesKanban is fetching contacts or companies kanban
 	 * @returns Array crm entity items list
 	 */
-	getEntityItemsWithFilters(code: string, params: object, signal?: AbortSignal, relatedEntityId?: string, relatedEntityType?: string) {
+	getEntityItemsWithFilters(
+		code: string,
+		params: object,
+		signal?: AbortSignal,
+		relatedEntityId?: string,
+		relatedEntityType?: string,
+		isContactsOrCompaniesKanban = false,
+	) {
 		const getLink = () => {
 			const isFetchingRelated = relatedEntityId && relatedEntityType;
 
 			if (isFetchingRelated) {
 				return `${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code/`;
+			}
+			if (isContactsOrCompaniesKanban) {
+				return `${this.namespace}/:code/board/`;
 			}
 			return `${this.namespace}/:code/`;
 		};
