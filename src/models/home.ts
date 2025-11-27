@@ -6,6 +6,8 @@ export interface IWorkday {
 	message: string;
 	deadline: number;
 	isEmpty?: boolean;
+	entity_id: number;
+	guid: string;
 }
 
 export interface IInsight {
