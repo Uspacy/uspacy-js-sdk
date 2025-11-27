@@ -2,6 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { EMailTone } from '../../models/email';
+import { IHomeGeneralData } from '../../models/home';
 
 /**
  * AI service
@@ -54,5 +55,13 @@ export class AIService {
 	 */
 	async getEmailFollowUp({ text, tone }: { text: string; tone: EMailTone }): Promise<{ data: { email_text: string; subject: string } }> {
 		return this.httpClient.client.post(`${this.namespace}/email/followup/`, { text, tone });
+	}
+
+	/**
+	 * Get home data
+	 * @returns home data
+	 */
+	async getHomeData(): Promise<{ data: { data: IHomeGeneralData } }> {
+		return this.httpClient.client.get(`${this.namespace}/main/desktop`);
 	}
 }
