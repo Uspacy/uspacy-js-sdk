@@ -109,7 +109,13 @@ export class MigrationsService {
 	 * @returns entities list
 	 */
 	async getMigrationEntities(apiKey: string, systemName: string) {
-		return this.httpClient.client.post<IEntity>(`${this.calculateNamespace}/${systemName}`, { ApiKey: apiKey });
+		switch (systemName) {
+			case 'pipedrive': {
+				return this.httpClient.client.post<IEntity>(`${this.importNamespace}/v1/${systemName}/calculate`, { ApiKey: apiKey });
+			}
+			default:
+				return this.httpClient.client.post<IEntity>(`${this.calculateNamespace}/${systemName}`, { ApiKey: apiKey });
+		}
 	}
 
 	/**
@@ -121,7 +127,13 @@ export class MigrationsService {
 	 */
 	async importMigrationEntities(apiKey: string, data: IMigrationData[], systemName: string, body?: IMigrationBody) {
 		const responseBody = systemName === 'monday' ? body : { Entities: data, ApiKey: apiKey };
-		return this.httpClient.client.post(`${this.importNamespace}/${systemName}`, responseBody);
+		switch (systemName) {
+			case 'pipedrive': {
+				return this.httpClient.client.post(`${this.importNamespace}/v1/${systemName}/import`, responseBody);
+			}
+			default:
+				return this.httpClient.client.post(`${this.importNamespace}/${systemName}`, responseBody);
+		}
 	}
 
 	/**
