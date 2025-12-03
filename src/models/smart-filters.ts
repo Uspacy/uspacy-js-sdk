@@ -3,7 +3,6 @@
 export type FilterCondition = 'and' | 'or';
 export type FilterTemplate = 'base';
 export type FilterOperator =
-	| 'is'
 	| 'eq'
 	| 'not_eq'
 	| 'like'
@@ -16,11 +15,14 @@ export type FilterOperator =
 	| 'lte'
 	| 'gt'
 	| 'lt'
+	| 'is'
 	| 'in'
 	| 'startswith'
 	| 'endswith'
 	| 'exist'
-	| 'empty';
+	| 'part'
+	| 'empty'
+	| 'not_empty';
 
 export interface ISmartFiltersItem {
 	field: string;
