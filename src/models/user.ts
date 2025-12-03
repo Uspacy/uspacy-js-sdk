@@ -21,7 +21,6 @@ interface IPhone {
 export enum MainRoles {
 	ADMIN = 'ADMIN',
 	OWNER = 'OWNER',
-	EXTERNAL_GUEST = 'EXTERNAL_GUEST',
 }
 
 export type UserRole = MainRoles | string;
@@ -50,6 +49,7 @@ export interface IUser {
 	socialMedia: ISocialMediaLinks[];
 	emailInvitation: boolean;
 	dateOfInvitation: number;
+	external_user: boolean;
 	[key: string]: any;
 }
 
