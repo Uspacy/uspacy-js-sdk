@@ -25,13 +25,16 @@ export type FilterOperator =
 	| 'not_empty';
 
 export interface ISmartFiltersItem {
+	id?: string;
 	field: string;
 	operator: FilterOperator;
+	operatorLabel?: string;
 	currencies?: string[];
 	values: any;
 }
 
 export interface ISmartFilters {
+	id?: string;
 	condition?: FilterCondition;
 	template?: FilterTemplate;
 	filters?: ISmartFiltersItem[];
