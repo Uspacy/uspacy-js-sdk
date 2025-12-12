@@ -89,7 +89,7 @@ export interface IFormDesign {
 
 export interface IPredefinedField {
 	type: string;
-	value: string | number;
+	value: any;
 }
 
 export interface IForm {
