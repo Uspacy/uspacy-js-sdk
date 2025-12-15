@@ -23,12 +23,28 @@ export type FilterOperator =
 	| 'part'
 	| 'empty'
 	| 'not_empty';
+export type FilterOperatorLabel =
+	| 'equalOperator'
+	| 'notEqualOperator'
+	| 'containsOperator'
+	| 'notContainsOperator'
+	| 'startsWithOperator'
+	| 'endsWithOperator'
+	| 'greatThanOperator'
+	| 'lessThanOperator'
+	| 'greatThenEqualOperator'
+	| 'lessThanEqualOperator'
+	| 'rangeOperator'
+	| 'beforeOperator'
+	| 'afterOperator'
+	| 'fillOperator'
+	| 'notFillOperator';
 
 export interface ISmartFiltersItem {
 	id?: string;
 	field: string;
 	operator: FilterOperator;
-	operatorLabel?: string;
+	operatorLabel?: FilterOperatorLabel;
 	currencies?: string[];
 	values: any;
 }
