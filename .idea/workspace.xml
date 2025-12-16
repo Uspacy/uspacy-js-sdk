@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5fa08d4-55da-467a-b4a4-3385ea0b525b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/models/filter-preset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/filter-preset.ts" afterDir="false" />
-    </list>
+    <list default="true" id="d5fa08d4-55da-467a-b4a4-3385ea0b525b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +13,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat/5064_permission_department" />
+        <entry key="$PROJECT_DIR$" value="stage" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,13 +40,13 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "stage",
+    "git-widget-placeholder": "feat/6362__analytics__custom__tasks__fields",
     "last_opened_file_path": "/Users/mishamysik/work/uspacy/uspacy-js-sdk",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/mishamysik/work/uspacy/uspacy-js-sdk/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -80,6 +78,8 @@
       <workItem from="1743608125245" duration="988000" />
       <workItem from="1743748359419" duration="541000" />
       <workItem from="1743758683258" duration="752000" />
+      <workItem from="1765531610156" duration="1827000" />
+      <workItem from="1765893479758" duration="1615000" />
     </task>
     <servers />
   </component>
