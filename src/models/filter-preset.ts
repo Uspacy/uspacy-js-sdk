@@ -1,5 +1,3 @@
-import { ISmartFilters } from './smart-filters';
-
 export interface IFilterField {
 	id: number;
 	title: string;
@@ -15,10 +13,10 @@ export interface IFilterPreset<F> {
 	title: string;
 	type: string;
 	filters?: F;
-	smartFilters?: ISmartFilters;
+	smartFilters?: F;
 	// This is necessary to compare the current filters and the filters in the preset itself.
 	currentFilters?: F;
-	currentSmartFilters?: ISmartFilters;
+	currentSmartFilters?: F;
 	current: boolean;
 	pinned: boolean;
 	default: boolean;
