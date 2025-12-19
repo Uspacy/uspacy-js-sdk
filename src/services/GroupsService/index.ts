@@ -76,6 +76,11 @@ export class GroupsService {
 					formData.append('usersIds[]', el);
 			  })
 			: '';
+		body.externalUserIds.length > 0
+			? body.externalUserIds.map((el) => {
+					formData.append('externalUserIds[]', el);
+			  })
+			: '';
 
 		return this.httpClient.client.post(`${this.namespace}`, formData);
 	}
