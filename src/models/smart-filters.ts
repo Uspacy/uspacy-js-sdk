@@ -19,7 +19,7 @@ export type FilterOperator =
 	| 'in'
 	| 'startswith'
 	| 'endswith'
-	| 'exist'
+	| 'exists'
 	| 'part'
 	| 'empty'
 	| 'not_empty';
