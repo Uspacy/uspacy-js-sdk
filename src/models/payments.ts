@@ -14,25 +14,32 @@ export interface IIndividualPersonForm {
 	email: string;
 }
 
+export interface ILegalEntityForm {
+	contactPersonPhone: string;
+	contactPersonEmail: string;
+	itinCode: string;
+}
+
+export interface IIndividualPersonFormEu {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+}
+
+export interface ILegalEntityFormEu {
+	firstName?: string;
+	email: string;
+	registryCode: string;
+	country: string;
+	vatNumber?: string;
+}
+
 export interface IIndividualPersonFormErrors {
 	firstNameErr: boolean;
 	lastNameErr: boolean;
 	phoneErr: boolean;
 	emailErr: boolean;
-}
-
-export interface ILegalEntityForm {
-	contactPersonPhone: string;
-	contactPersonEmail: string;
-	itinCode: string;
-	token: string;
-}
-
-export interface ILegalEntityFormEuCom {
-	firstName: string;
-	lastName: string;
-	email: string;
-	phone: string;
 }
 
 export interface ILegalEntityFormErrors {
@@ -41,9 +48,17 @@ export interface ILegalEntityFormErrors {
 	itinCodeErr: boolean;
 }
 
-export interface ILegalEntityFormEuComErrors {
+export interface IIndividualPersonFormErrorsEu {
 	firstNameErr: boolean;
 	lastNameErr: boolean;
 	emailErr: boolean;
 	phoneErr: boolean;
+}
+
+export interface ILegalEntityFormErrorsEu {
+	firstNameErr?: boolean;
+	emailErr: boolean;
+	registryCodeErr: boolean;
+	countryErr: boolean;
+	vatNumberErr?: boolean;
 }
