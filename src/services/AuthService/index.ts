@@ -16,7 +16,7 @@ import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { IResponseOauthData } from './dto/response-oauth-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { IIndividualPayload, ILegalEuPayload, ILegalPayload, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
+import { IIndividualPayload, ILegalPayload, ILegalPayloadEu, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
 import { IVatValidationPayload } from './dto/vat-validation.dto';
 
 /**
@@ -170,7 +170,7 @@ export class AuthService {
 	 * Create subscription individual
 	 * @returns Object invoice entity
 	 */
-	createSubscriptionInvdividual(body: IIndividualPayload) {
+	createSubscriptionInvdividual(body: Partial<IIndividualPayload>) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/individual`, body);
 	}
 
@@ -178,7 +178,7 @@ export class AuthService {
 	 * Create subscription legal
 	 * @returns Object invoice entity
 	 */
-	createSubscriptionLegal(body: ILegalPayload) {
+	createSubscriptionLegal(body: Partial<ILegalPayload>) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal`, body);
 	}
 
@@ -186,7 +186,7 @@ export class AuthService {
 	 * Create subscription legal EU
 	 * @returns Object invoice entity
 	 */
-	createSubscriptionLegalEU(body: ILegalEuPayload) {
+	createSubscriptionLegalEu(body: Partial<ILegalPayloadEu>) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal_eu`, body);
 	}
 
@@ -194,7 +194,7 @@ export class AuthService {
 	 * Redirect to stripe buy
 	 * @returns url to stripe redirecting
 	 */
-	redirectToStripe(body: ISubscriptionStripePayload) {
+	redirectToStripe(body: Partial<ISubscriptionStripePayload>) {
 		return this.httpClient.client.post<IStripeRedirect>(`${this.namespace}/tariffs/stripe/buy`, body);
 	}
 
