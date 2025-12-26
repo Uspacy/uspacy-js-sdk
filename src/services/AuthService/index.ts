@@ -16,7 +16,8 @@ import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { IResponseOauthData } from './dto/response-oauth-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { IIndividualPayload, ILegalPayload, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
+import { IIndividualPayload, ILegalEuPayload, ILegalPayload, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
+import { IVatValidationPayload } from './dto/vat-validation.dto';
 
 /**
  * Auth service
@@ -182,6 +183,14 @@ export class AuthService {
 	}
 
 	/**
+	 * Create subscription legal EU
+	 * @returns Object invoice entity
+	 */
+	createSubscriptionLegalEU(body: ILegalEuPayload) {
+		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal_eu`, body);
+	}
+
+	/**
 	 * Redirect to stripe buy
 	 * @returns url to stripe redirecting
 	 */
@@ -217,5 +226,26 @@ export class AuthService {
 	 */
 	getDiscountCoupon(couponCode: string) {
 		return this.httpClient.client.get<IDiscountCoupon>(`${this.namespace}/tariffs/coupons/${couponCode}`);
+	}
+
+	/**
+	 * Check VAT validity
+	 * @param country
+	 * @param vatNumber
+	 * @param region
+	 * @returns Object with isValid field
+	 */
+	vatValidation({ country, vatNumber, region }: IVatValidationPayload) {
+		return this.httpClient.client.get<{ isValid: boolean }>(`${this.namespace}/tariffs/legal/check_vat`, {
+			params: { country, vatNumber, ...(region && { region }) },
+		});
+	}
+
+	/**
+	 * Get countries list
+	 * @returns Array of countries
+	 */
+	getCountriesList() {
+		return this.httpClient.client.get<{ title: string; code: string }>(`${this.namespace}/tariffs/country`);
 	}
 }
