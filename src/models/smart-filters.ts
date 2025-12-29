@@ -47,6 +47,7 @@ export interface ISmartFiltersItem {
 	operatorLabel?: FilterOperatorLabel;
 	currencies?: string[];
 	values: any;
+	condition?: FilterCondition;
 }
 
 export interface ISmartFilters {
