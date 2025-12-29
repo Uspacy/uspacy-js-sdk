@@ -38,7 +38,9 @@ export type FilterOperatorLabel =
 	| 'beforeOperator'
 	| 'afterOperator'
 	| 'fillOperator'
-	| 'notFillOperator';
+	| 'notFillOperator'
+	| 'containsAnyOperator'
+	| 'notContainsAnyOperator';
 
 export interface ISmartFiltersItem {
 	id?: string;
