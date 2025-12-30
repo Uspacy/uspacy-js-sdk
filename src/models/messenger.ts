@@ -214,3 +214,35 @@ export interface ICrmConnectEntity {
 	owner: number;
 	title: string;
 }
+
+export interface IQuickAnswer {
+	name: string;
+	message: string;
+	availableForUsers: number[];
+	availableInExternalLines: [];
+	ownerId: number;
+	portal: string;
+	status: string;
+	createdAt: number;
+	updatedAt: number;
+	id: string;
+}
+
+export interface IGetQuickAnswerParams {
+	page?: number;
+	availableInExternalLines?: number[];
+	statuses?: string[];
+	availableForUsers?: number[];
+	list?: number;
+	createdAt?: number[][];
+	ownerId?: number[];
+	boolean_operator?: 'AND' | 'OR';
+	q?: string;
+}
+
+export interface ICreateQuickAnswerDTO {
+	name: string;
+	message?: string;
+	availableForUsers?: number[];
+	availableInExternalLines?: [];
+}
