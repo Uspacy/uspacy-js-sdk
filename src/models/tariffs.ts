@@ -61,3 +61,10 @@ export interface IDiscountCoupon {
 export interface IStripeRedirect {
 	url: string;
 }
+
+export interface IVatInfo {
+	isValid: boolean;
+	company_name: string;
+	address: string;
+	vatNumber: string;
+}

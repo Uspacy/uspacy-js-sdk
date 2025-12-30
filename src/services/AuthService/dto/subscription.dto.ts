@@ -20,11 +20,10 @@ export interface ILegalPayload extends ISubscriptionPayload {
 }
 
 export interface ILegalPayloadEu extends ISubscriptionPayload {
-	first_name: string;
 	registry_code: string;
 	country: string;
 	vat_number: string;
-	region: string;
+	region?: string;
 }
 
 export interface ISubscriptionStripePayload extends ISubscriptionPayload {
