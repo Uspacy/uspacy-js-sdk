@@ -8,7 +8,7 @@ import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff } from '../../models/tariffs';
+import { IBill, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff, IVatInfo } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
@@ -232,12 +232,11 @@ export class AuthService {
 	 * Check VAT validity
 	 * @param country
 	 * @param vatNumber
-	 * @param region
 	 * @returns Object with isValid field
 	 */
-	vatValidation({ country, vatNumber, region }: IVatValidationPayload) {
-		return this.httpClient.client.get<{ isValid: boolean }>(`${this.namespace}/tariffs/legal/check_vat`, {
-			params: { country, vatNumber, ...(region && { region }) },
+	vatValidation({ country, vatNumber }: IVatValidationPayload) {
+		return this.httpClient.client.get<IVatInfo>(`${this.namespace}/tariffs/legal/check_vat`, {
+			params: { country, vatNumber },
 		});
 	}
 
