@@ -245,6 +245,6 @@ export class AuthService {
 	 * @returns Array of countries
 	 */
 	getCountriesList() {
-		return this.httpClient.client.get<{ title: string; code: string }>(`${this.namespace}/tariffs/country`);
+		return this.httpClient.client.get<{ title: string; code: string }[]>(`${this.namespace}/tariffs/country`);
 	}
 }
