@@ -239,6 +239,7 @@ export interface IGetQuickAnswerParams {
 	ownerId?: number[];
 	boolean_operator?: 'AND' | 'OR';
 	q?: string;
+	isOutOfQuota?: boolean;
 }
 
 export interface ICreateQuickAnswerDTO {
