@@ -3,7 +3,6 @@
 export type FilterCondition = 'and' | 'or';
 export type FilterTemplate = 'base';
 export type FilterOperator =
-	| 'is'
 	| 'eq'
 	| 'not_eq'
 	| 'like'
@@ -16,20 +15,45 @@ export type FilterOperator =
 	| 'lte'
 	| 'gt'
 	| 'lt'
+	| 'is'
 	| 'in'
 	| 'startswith'
 	| 'endswith'
-	| 'exist'
-	| 'empty';
+	| 'exists'
+	| 'part'
+	| 'empty'
+	| 'not_empty';
+export type FilterOperatorLabel =
+	| 'equalOperator'
+	| 'notEqualOperator'
+	| 'containsOperator'
+	| 'notContainsOperator'
+	| 'startsWithOperator'
+	| 'endsWithOperator'
+	| 'greatThanOperator'
+	| 'lessThanOperator'
+	| 'greatThenEqualOperator'
+	| 'lessThanEqualOperator'
+	| 'rangeOperator'
+	| 'beforeOperator'
+	| 'afterOperator'
+	| 'fillOperator'
+	| 'notFillOperator'
+	| 'containsAnyOperator'
+	| 'notContainsAnyOperator';
 
 export interface ISmartFiltersItem {
+	id?: string;
 	field: string;
 	operator: FilterOperator;
+	operatorLabel?: FilterOperatorLabel;
 	currencies?: string[];
 	values: any;
+	condition?: FilterCondition;
 }
 
 export interface ISmartFilters {
+	id?: string;
 	condition?: FilterCondition;
 	template?: FilterTemplate;
 	filters?: ISmartFiltersItem[];
