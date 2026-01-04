@@ -1,3 +1,8 @@
+export interface ICountry {
+	title: string;
+	code: string;
+}
+
 export interface ITariff {
 	title: string;
 	plan_code: string;
