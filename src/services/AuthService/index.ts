@@ -8,7 +8,7 @@ import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff } from '../../models/tariffs';
+import { IBill, ICountry, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
@@ -217,5 +217,13 @@ export class AuthService {
 	 */
 	getDiscountCoupon(couponCode: string) {
 		return this.httpClient.client.get<IDiscountCoupon>(`${this.namespace}/tariffs/coupons/${couponCode}`);
+	}
+
+	/**
+	 * Get countries list
+	 * @returns Array of countries
+	 */
+	getCountriesList() {
+		return this.httpClient.client.get<ICountry[]>(`${this.namespace}/tariffs/country`);
 	}
 }

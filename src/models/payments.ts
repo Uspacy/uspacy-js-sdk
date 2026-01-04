@@ -33,6 +33,7 @@ export interface ILegalEntityFormEuCom {
 	lastName: string;
 	email: string;
 	phone: string;
+	country: string;
 }
 
 export interface ILegalEntityFormErrors {
@@ -46,4 +47,5 @@ export interface ILegalEntityFormEuComErrors {
 	lastNameErr: boolean;
 	emailErr: boolean;
 	phoneErr: boolean;
+	countryErr: boolean;
 }

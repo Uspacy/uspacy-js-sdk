@@ -22,6 +22,7 @@ export interface ILegalPayload extends ISubscriptionPayload {
 export interface ISubscriptionStripePayload extends ISubscriptionPayload {
 	first_name: string;
 	last_name: string;
+	country: string;
 	url: string;
 	success_url: string;
 	cancel_url: string;
