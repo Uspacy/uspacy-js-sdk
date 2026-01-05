@@ -235,7 +235,7 @@ export interface IGetQuickAnswerParams {
 	availableInExternalLines?: number[];
 	statuses?: string[];
 	availableForUsers?: number[];
-	list?: number;
+	list?: number | 'all';
 	createdAt?: number[][];
 	ownerId?: number[];
 	boolean_operator?: 'AND' | 'OR';
