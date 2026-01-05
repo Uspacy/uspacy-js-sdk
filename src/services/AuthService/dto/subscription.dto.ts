@@ -22,6 +22,7 @@ export interface ILegalPayload extends ISubscriptionPayload {
 export interface ILegalPayloadEu extends ISubscriptionPayload {
 	registry_code: string;
 	country: string;
+	company_name: string;
 	vat_number: string;
 	region?: string;
 }
