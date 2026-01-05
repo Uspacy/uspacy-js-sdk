@@ -8,7 +8,7 @@ import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff, IVatInfo } from '../../models/tariffs';
+import { IBill, ICountry, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff, IVatInfo } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
@@ -183,19 +183,19 @@ export class AuthService {
 	}
 
 	/**
-	 * Create subscription legal EU
-	 * @returns Object invoice entity
-	 */
-	createSubscriptionLegalEu(body: Partial<ILegalPayloadEu>) {
-		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal_eu`, body);
-	}
-
-	/**
 	 * Redirect to stripe buy
 	 * @returns url to stripe redirecting
 	 */
 	redirectToStripe(body: Partial<ISubscriptionStripePayload>) {
 		return this.httpClient.client.post<IStripeRedirect>(`${this.namespace}/tariffs/stripe/buy`, body);
+	}
+
+	/**
+	 * Create subscription legal EU
+	 * @returns Object invoice entity
+	 */
+	createSubscriptionLegalEu(body: Partial<ILegalPayloadEu>) {
+		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal_eu`, body);
 	}
 
 	/**
@@ -245,6 +245,6 @@ export class AuthService {
 	 * @returns Array of countries
 	 */
 	getCountriesList() {
-		return this.httpClient.client.get<{ title: string; code: string }[]>(`${this.namespace}/tariffs/country`);
+		return this.httpClient.client.get<ICountry[]>(`${this.namespace}/tariffs/country`);
 	}
 }
