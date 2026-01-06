@@ -1,8 +1,3 @@
-export interface ICountry {
-	title: string;
-	code: string;
-}
-
 export interface ITariff {
 	title: string;
 	plan_code: string;
@@ -70,6 +65,12 @@ export interface IStripeRedirect {
 export interface IVatInfo {
 	isValid: boolean;
 	company_name: string;
+	registry_code: string;
 	address: string;
 	vatNumber: string;
+}
+
+export interface ICountry {
+	title: string;
+	code: string;
 }
