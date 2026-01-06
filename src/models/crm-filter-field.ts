@@ -13,12 +13,14 @@ export interface IFilterPreset {
 	id: number;
 	title: string;
 	filters: IFilter;
+	smartFilters?: IFilter;
 	pinned: boolean;
 	default: boolean;
 	current: boolean;
 	soon?: boolean;
 	shadow?: boolean;
 	filterFields: IFilterField[];
+	sort?: number;
 }
 
 export interface IFiltersPreset {
@@ -33,5 +35,6 @@ export interface IFilterPresetsData {
 		presets: IFilterPreset[];
 		filterFields: IFilterField[];
 		filters: IFilter;
+		smartFilters?: IFilter;
 	};
 }
