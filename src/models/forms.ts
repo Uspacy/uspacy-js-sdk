@@ -85,6 +85,7 @@ export interface IFormDesign {
 		formPosition: 'top' | 'center';
 		showUspacyBrand: boolean;
 	};
+	logoIsInTheFormHeader?: boolean;
 }
 
 export interface IPredefinedField {
