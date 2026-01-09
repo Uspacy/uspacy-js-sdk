@@ -73,7 +73,7 @@ export class CommentsService {
 	 * @returns
 	 */
 	deleteComment(id: number, body?: Pick<ICreateCommentDto, 'mentioned' | 'notify' | 'root_parent'>) {
-		return this.httpClient.client.delete(`${this.namespace}/comments/:id/`, { urlParams: { id }, params: { ...body } });
+		return this.httpClient.client.delete(`${this.namespace}/comments/:id/`, { urlParams: { id }, data: { ...body } });
 	}
 
 	/**
