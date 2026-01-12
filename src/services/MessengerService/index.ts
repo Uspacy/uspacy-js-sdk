@@ -145,7 +145,7 @@ export class MessengerService {
 	 * @returns updated quick answer
 	 */
 	updateQuickAnswerStatus(id: string, status: string): Promise<{ data: IQuickAnswer }> {
-		return this.httpClient.client.patch(`${this.namespace}/messenger/v1/quick-replies/${id}/status/${status}`);
+		return this.httpClient.client.patch(`${this.namespace}/quick-replies/${id}/status/${status}`);
 	}
 
 	/**
