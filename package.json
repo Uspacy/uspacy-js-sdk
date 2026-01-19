@@ -1,6 +1,6 @@
 {
   "name": "@uspacy/sdk",
-  "version": "0.0.196",
+  "version": "0.0.198",
   "repository": "git@github.com:Uspacy/uspacy-js-sdk.git",
   "homepage": "https://uspacy.github.io/uspacy-js-sdk",
   "keywords": [],
@@ -16,7 +16,9 @@
     "axios": "^1.9.0",
     "js-cookie": "3.0.5",
     "jwt-decode": "3.1.2",
-    "localforage": "1.10.0"
+    "localforage": "1.10.0",
+    "pidtree": "^0.6.0",
+    "rfdc": "^1.4.1"
   },
   "devDependencies": {
     "@types/jest": "29.5.3",
