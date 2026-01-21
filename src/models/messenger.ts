@@ -146,6 +146,7 @@ export interface IChat {
 	unreadMentions: string[];
 	isInviteChat?: boolean;
 	assigned?: boolean;
+	customer_contact?: ICrmConnectEntity;
 }
 
 export interface IMessagesGroup {
@@ -205,4 +206,45 @@ export interface ICreateWidgetData {
 		backgroundColor?: string;
 		operatorAvatar?: string;
 	};
+}
+
+export interface ICrmConnectEntity {
+	entity: 'leads' | 'contacts' | 'companies' | 'deals';
+	id: number;
+	owner: number;
+	title: string;
+}
+
+export interface IQuickAnswer {
+	name: string;
+	message: string;
+	availableForUsers: number[];
+	availableInExternalLines: [];
+	ownerId: number;
+	portal: string;
+	status: string;
+	createdAt: number;
+	updatedAt: number;
+	id: string;
+	isOutOfQuota?: boolean;
+}
+
+export interface IGetQuickAnswerParams {
+	page?: number;
+	availableInExternalLines?: number[];
+	statuses?: string[];
+	availableForUsers?: number[];
+	list?: number | 'all';
+	createdAt?: number[][];
+	ownerId?: number[];
+	boolean_operator?: 'AND' | 'OR';
+	q?: string;
+	includeOutOfQuota?: boolean;
+}
+
+export interface ICreateQuickAnswerDTO {
+	name: string;
+	message?: string;
+	availableForUsers?: number[];
+	availableInExternalLines?: [];
 }
