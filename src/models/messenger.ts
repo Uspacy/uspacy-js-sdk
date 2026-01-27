@@ -226,6 +226,7 @@ export interface IQuickAnswer {
 	createdAt: number;
 	updatedAt: number;
 	id: string;
+	isOutOfQuota?: boolean;
 }
 
 export interface IGetQuickAnswerParams {
@@ -233,11 +234,12 @@ export interface IGetQuickAnswerParams {
 	availableInExternalLines?: number[];
 	statuses?: string[];
 	availableForUsers?: number[];
-	list?: number;
+	list?: number | 'all';
 	createdAt?: number[][];
 	ownerId?: number[];
 	boolean_operator?: 'AND' | 'OR';
 	q?: string;
+	includeOutOfQuota?: boolean;
 }
 
 export interface ICreateQuickAnswerDTO {
