@@ -17,6 +17,7 @@ export interface IIndividualPayload extends ISubscriptionPayload {
 
 export interface ILegalPayload extends ISubscriptionPayload {
 	edruofop: string;
+	edo_email: string;
 }
 
 export interface ILegalPayloadEu extends ISubscriptionPayload {
