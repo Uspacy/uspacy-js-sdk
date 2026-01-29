@@ -17,7 +17,7 @@ export interface IIndividualPayload extends ISubscriptionPayload {
 
 export interface ILegalPayload extends ISubscriptionPayload {
 	edruofop: string;
-	edo_email?: string;
+	edo_email: string;
 }
 
 export interface ILegalPayloadEu extends ISubscriptionPayload {
@@ -25,7 +25,7 @@ export interface ILegalPayloadEu extends ISubscriptionPayload {
 	country: string;
 	company_name: string;
 	vat_number: string;
-	region?: string;
+	region: string;
 }
 
 export interface ISubscriptionStripePayload extends ISubscriptionPayload {
