@@ -87,6 +87,7 @@ export interface IFormDesign {
 	};
 	otherSettings?: {
 		logoIsInTheFormHeader: boolean;
+		currenciesOptions?: string[];
 	};
 }
 
