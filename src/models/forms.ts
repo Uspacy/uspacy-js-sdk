@@ -94,6 +94,7 @@ export interface IFormDesign {
 export interface IPredefinedField {
 	type: string;
 	value: any;
+	multiple?: boolean;
 }
 
 export interface IForm {
