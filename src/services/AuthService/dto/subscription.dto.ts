@@ -25,7 +25,7 @@ export interface ILegalPayloadEu extends ISubscriptionPayload {
 	country: string;
 	company_name: string;
 	vat_number: string;
-	region: string;
+	region?: string;
 }
 
 export interface ISubscriptionStripePayload extends ISubscriptionPayload {
