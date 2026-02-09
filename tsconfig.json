@@ -18,8 +18,7 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "types": ["node"]
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"],
   "exclude": ["./lib", "node_modules"]
