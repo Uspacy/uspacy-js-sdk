@@ -242,4 +242,13 @@ export class UsersService {
 			signal,
 		});
 	}
+
+	/**
+	 * get user register link
+	 * @param id user id
+	 * @returns user register link
+	 */
+	getUserRegisterLink(id: IUser['id']) {
+		return this.httpClient.client.get<{ link: string }>(`${this.namespace}/:id/register_link`, { urlParams: { id } });
+	}
 }
