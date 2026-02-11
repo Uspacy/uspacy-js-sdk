@@ -16,6 +16,15 @@ interface IEntityInfo {
 	noAccess?: boolean;
 }
 
+export interface IReminder {
+	time_before: number;
+	date_start: string;
+	hour_start: number;
+	timezone_offset: number;
+	letter: boolean;
+	notification: boolean;
+}
+
 export interface ITask {
 	id: number;
 	created_by: number;
@@ -48,6 +57,7 @@ export interface ITask {
 	entities?: any;
 	file_ids?: number[];
 	files?: IFile[];
+	reminders?: IReminder[];
 }
 
 export interface ICall extends ITask {
