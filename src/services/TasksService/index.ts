@@ -3,14 +3,10 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
 import { IField, IFields } from '../../models/field';
-import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
-import { IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
-import { ITasksColumnSettings } from '../../models/tasks-settings';
+import { IChecklist, IChecklistItem, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
-import { CouchdbService } from '../CouchdbService';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
 /**
@@ -23,10 +19,7 @@ export class TasksService {
 	private namespaceTransferTasks = '/tasks/v1/transfers';
 	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 
-	constructor(
-		private httpClient: HttpClient,
-		private readonly couchdbService: CouchdbService,
-	) {}
+	constructor(private httpClient: HttpClient) {}
 
 	/**
 	 * Get tasks list with filters
@@ -83,28 +76,13 @@ export class TasksService {
 	/**
 	 * Get subtasks list
 	 * @param id parent task/template id
-	 * @param page page number
-	 * @param list elements count
 	 * @param isTemplate template param
+	 * @param params subtasks list filter params
 	 * @returns Array subtasks entity
 	 */
-	getSubtasks(id: string, page: number, list: number, isTemplate: boolean) {
-		if (isTemplate) {
-			return this.httpClient.client.get<IResponseWithMeta<ITask>>(this.namespace, {
-				params: {
-					template_id: id,
-					page,
-					list,
-				},
-			});
-		}
-
+	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
 		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
-			params: {
-				parent_id: id,
-				page,
-				list,
-			},
+			params: { [isTemplate ? 'template_id' : 'parent_id']: id, ...params },
 		});
 	}
 
@@ -391,80 +369,6 @@ export class TasksService {
 	}
 
 	/**
-	 * Get tasks filters presets
-	 * @returns tasks filters presets
-	 */
-	getFiltersPresets(type: string) {
-		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', type);
-	}
-
-	/**
-	 * Get tasks filters preset
-	 * @param id preset id
-	 */
-	getFiltersPreset(id: string) {
-		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', '', id);
-	}
-
-	/**
-	 * Create tasks filters preset
-	 * @param body preset body
-	 */
-	createFilterPreset(body: ICouchItemData<IFilterPreset<IFilterTasks>>, type: string) {
-		return this.couchdbService.create('tasks-presets', body, type);
-	}
-
-	/**
-	 * Update tasks filters preset
-	 * @param id preset id
-	 * @param rev preset revision
-	 * @param body preset body
-	 */
-	updateFilterPreset(id: string, rev: string, body: ICouchItemData<IFilterPreset<IFilterTasks>>) {
-		return this.couchdbService.update('tasks-presets', id, rev, body);
-	}
-
-	/**
-	 * Bulk update tasks filters presets
-	 * @param body preset body
-	 */
-	bulkUpdateFiltersPresets(body: ICouchItemData<IFilterPreset<IFilterTasks>>[]) {
-		return this.couchdbService.bulkUpdate('tasks-presets', body);
-	}
-
-	/**
-	 * Delete tasks filters preset
-	 * @param id preset id
-	 * @param rev preset revision
-	 */
-	deleteFilterPreset(id: string, rev: string) {
-		return this.couchdbService.delete('tasks-presets', id, rev);
-	}
-
-	/**
-	 * Create tasks settings
-	 */
-	createSettings(body: ITasksColumnSettings, type: string) {
-		return this.couchdbService.create('tasks-settings', body, type);
-	}
-
-	/**
-	 * Get tasks settings
-	 * @returns tasks settings
-	 */
-	getTasksSettings(type: string) {
-		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type);
-	}
-
-	/**
-	 * Update tasks settings
-	 * @returns tasks settings
-	 */
-	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
-		return this.couchdbService.update('tasks-settings', id, rev, body);
-	}
-
-	/**
 	 * Transfer tasks
 	 * @returns transfer tasks quantity
 	 */
@@ -623,6 +527,77 @@ export class TasksService {
 			params: {
 				...(filterParams || {}),
 			},
+		});
+	}
+
+	/**
+	 * Create checklist
+	 * @param id task id
+	 * @param checklist checklist entity
+	 * @returns checklist entity
+	 */
+	createChecklist(taskId: string, body: Partial<IChecklist>) {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/:taskId/checklists/`, body, {
+			urlParams: { taskId },
+		});
+	}
+
+	/**
+	 * Update checklist
+	 * @param id checklist id
+	 * @param body checklist entity
+	 * @returns checklist entity
+	 */
+	updateChecklist(id: number, body: Partial<IChecklist>) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Delete checklist
+	 * @param id checklist id
+	 */
+	deleteChecklist(id: number) {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Create checklist item
+	 * @param id checklist id
+	 * @param body checklist item entity
+	 * @returns checklist item entity
+	 */
+	createChecklistItem(id: number, body: Partial<IChecklistItem>) {
+		return this.httpClient.client.post<ITask>(`${this.namespace}/checklists/:id/items`, body, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Update checklist item
+	 * @param id checklist id
+	 * @param itemId checklist item id
+	 * @param body checklist item entity
+	 * @returns checklist item entity
+	 */
+	updateChecklistItem(id: number, itemId: number, body: Partial<IChecklistItem>) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, body, {
+			urlParams: { id, itemId },
+		});
+	}
+
+	/**
+	 * Delete checklist item
+	 * @param id checklist id
+	 * @param itemId checklist item id
+	 * @returns checklist item entity
+	 */
+	deleteChecklistItem(id: number, itemId: number) {
+		return this.httpClient.client.delete<ITask>(`${this.namespace}/checklists/:id/items/:itemId`, {
+			urlParams: { id, itemId },
 		});
 	}
 }

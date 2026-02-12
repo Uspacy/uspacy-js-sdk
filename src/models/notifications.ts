@@ -30,6 +30,7 @@ export interface INotificationMessage {
 		service: string;
 		timestamp: string;
 		action: NotificationAction;
+		show: boolean;
 	};
 }
 

@@ -1,7 +1,15 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { FetchMessagesRequest, GoToMessageRequest, IChat, ICreateWidgetData } from '../../models/messenger';
+import {
+	FetchMessagesRequest,
+	GoToMessageRequest,
+	IChat,
+	ICreateQuickAnswerDTO,
+	ICreateWidgetData,
+	IGetQuickAnswerParams,
+	IQuickAnswer,
+} from '../../models/messenger';
 
 /**
  * Messenger service
@@ -15,9 +23,9 @@ export class MessengerService {
 	 * Get chats
 	 * @returns list of chats
 	 */
-	async getChats({ type }: { type?: 'EXTERNAL' }) {
+	async getChats(props: { type?: 'EXTERNAL'; all?: boolean; include?: string; page?: number; list?: number }) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
-			params: { type },
+			params: { ...props },
 		});
 	}
 
@@ -29,9 +37,9 @@ export class MessengerService {
 	 * @param firstTimestamp for :id urlParams
 	 * @returns list of messages for chat
 	 */
-	async getMessages({ chatId, limit, lastTimestamp, firstTimestamp, unreadFirst }: FetchMessagesRequest) {
+	async getMessages(props: FetchMessagesRequest) {
 		return this.httpClient.client.get(`${this.namespace}/messages/`, {
-			params: { chatId, limit, lastTimestamp, firstTimestamp, unreadFirst },
+			params: { ...props },
 		});
 	}
 
@@ -96,5 +104,54 @@ export class MessengerService {
 	 */
 	updateWidget(data: ICreateWidgetData) {
 		return this.httpClient.client.patch(`${this.namespace}/widgets/${data.id}`, data);
+	}
+
+	/**
+	 * get quick answers
+	 * @returns list of quick answers
+	 */
+	getQuickAnswers(reqParams: IGetQuickAnswerParams) {
+		return this.httpClient.client.get(`${this.namespace}/quick-replies`, {
+			params: { ...reqParams },
+		});
+	}
+
+	/**
+	 * get quick answer by id
+	 * @returns quick answer
+	 */
+	getQuickAnswerById(id: string): Promise<{ data: IQuickAnswer }> {
+		return this.httpClient.client.get(`${this.namespace}/quick-replies/${id}`);
+	}
+
+	/**
+	 * create quick answer
+	 * @returns created quick answer
+	 */
+	createQuickAnswer(data: ICreateQuickAnswerDTO) {
+		return this.httpClient.client.post(`${this.namespace}/quick-replies`, data);
+	}
+
+	/**
+	 * update quick answer
+	 * @returns updated quick answer
+	 */
+	updateQuickAnswer(id: string, data: Partial<IQuickAnswer>): Promise<{ data: IQuickAnswer }> {
+		return this.httpClient.client.patch(`${this.namespace}/quick-replies/${id}`, data);
+	}
+
+	/**
+	 * update status
+	 * @returns updated quick answer
+	 */
+	updateQuickAnswerStatus(id: string, status: string): Promise<{ data: IQuickAnswer }> {
+		return this.httpClient.client.patch(`${this.namespace}/quick-replies/${id}/status/${status}`);
+	}
+
+	/**
+	 * delete quick answer
+	 */
+	deleteQuickAnswer(id: string) {
+		return this.httpClient.client.delete(`${this.namespace}/quick-replies/${id}`);
 	}
 }
