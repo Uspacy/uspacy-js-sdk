@@ -230,10 +230,11 @@ export class EmailService {
 	/**
 	 * Connect emailbox after OAuth 2 auth
 	 * @param code code for mail box auth
+	 * @param state state for mail box auth
 	 * @param service microsoft, google and etc
 	 */
-	receiveToOauthLink(code: string, service: string) {
-		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code });
+	receiveToOauthLink(code: string, service: string, state?: string) {
+		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code, ...(state && { state }) });
 	}
 
 	/**
