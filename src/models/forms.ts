@@ -87,12 +87,14 @@ export interface IFormDesign {
 	};
 	otherSettings?: {
 		logoIsInTheFormHeader: boolean;
+		currenciesOptions?: string[];
 	};
 }
 
 export interface IPredefinedField {
 	type: string;
-	value: string | number;
+	value: any;
+	multiple?: boolean;
 }
 
 export interface IForm {
