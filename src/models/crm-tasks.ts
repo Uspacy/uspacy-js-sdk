@@ -1,6 +1,7 @@
 import { IFile } from '../models/files';
 import { IEntityData, IMeta } from './crm-entities';
 import { INotify } from './notify';
+import { IReminder } from './reminders';
 
 export interface ITasks {
 	data: ITask[];
@@ -14,15 +15,6 @@ interface IEntityInfo {
 	source: string;
 	avatar?: string;
 	noAccess?: boolean;
-}
-
-export interface IReminder {
-	time_before: number;
-	date_start: string;
-	hour_start: number;
-	timezone_offset: number;
-	letter: boolean;
-	notification: boolean;
 }
 
 export interface ITask {
