@@ -9,7 +9,9 @@ import {
 	ICreateWidgetData,
 	IGetQuickAnswerParams,
 	IQuickAnswer,
+	IRelatedChatItem,
 } from '../../models/messenger';
+import { ITask } from '../../models/tasks';
 
 /**
  * Messenger service
@@ -153,5 +155,56 @@ export class MessengerService {
 	 */
 	deleteQuickAnswer(id: string) {
 		return this.httpClient.client.delete(`${this.namespace}/quick-replies/${id}`);
+	}
+
+	/**
+	 * get chat relations
+	 * @param chatId chat id
+	 * @returns list of related entities
+	 */
+	getChatRelations(props: { chatId: IChat['id'] }): Promise<{ data: IRelatedChatItem[] }> {
+		return this.httpClient.client.get(`${this.namespace}/chat-entity-relations`, {
+			params: { ...props, entityType: 'task' },
+		});
+	}
+
+	/**
+	 * get task relations
+	 * @param entityId task id
+	 * @returns list of related chats
+	 */
+	getTaskRelations(props: { entityId: ITask['id'] }): Promise<{ data: IChat[] }> {
+		return this.httpClient.client.get(`${this.namespace}/chat-entity-relations/chats-by-entity`, {
+			params: { ...props, entityType: 'task' },
+		});
+	}
+
+	/**
+	 * create chat relation
+	 * @param chatId chat id
+	 * @param entityId task id
+	 * @returns created relation
+	 */
+	createChatRelation(props: { chatId: IChat['id']; entityId: ITask['id'] }): Promise<{ data: IRelatedChatItem }> {
+		return this.httpClient.client.post(`${this.namespace}/chat-entity-relations`, {
+			...props,
+			entityType: 'task',
+		});
+	}
+
+	// /chat-entity-relations/by-entity?entityType=task&entityId=123
+	/**
+	 * delete chat relation
+	 * @param chatId chat id
+	 * @param entityId task id
+	 */
+
+	deleteChatRelation(props: { chatId: IChat['id']; entityId: ITask['id'] }): Promise<{ data: IRelatedChatItem }> {
+		return this.httpClient.client.delete(`${this.namespace}/chat-entity-relations/by-entity`, {
+			params: {
+				...props,
+				entityType: 'task',
+			},
+		});
 	}
 }

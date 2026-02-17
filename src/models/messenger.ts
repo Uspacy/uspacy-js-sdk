@@ -249,3 +249,13 @@ export interface ICreateQuickAnswerDTO {
 	availableForUsers?: number[];
 	availableInExternalLines?: [];
 }
+
+export interface IRelatedChatItem {
+	chatId: string;
+	createdAt: number;
+	createdBy: number;
+	entityId: string;
+	entityType: 'task';
+	id: string;
+	portal: string;
+}
