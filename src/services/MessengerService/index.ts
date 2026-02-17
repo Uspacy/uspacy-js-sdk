@@ -192,7 +192,6 @@ export class MessengerService {
 		});
 	}
 
-	// /chat-entity-relations/by-entity?entityType=task&entityId=123
 	/**
 	 * delete chat relation
 	 * @param chatId chat id
