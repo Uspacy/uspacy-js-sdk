@@ -4,6 +4,7 @@ import { IFile } from './files';
 export type LetterStatus = 'pending' | 'error' | 'succseed';
 export type AccessLevel = 'personal' | 'shared';
 export type AccessRoles = 'viewer' | 'destroyer' | 'setter';
+export type SyncFromPeriod = '7 days' | '1 month' | '3 months' | '1 year';
 
 export interface IThreads {
 	email_id: number;
@@ -128,6 +129,11 @@ export interface IEmailBox {
 	crm_integration_enabled: number;
 	oauth_provider?: string;
 	access_roles: IAccessRoles[];
+	roles?: IAccessRoles[];
+	sync_from?: {
+		period: SyncFromPeriod;
+	};
+	folders_remove?: number[];
 }
 
 export interface ISignature {
