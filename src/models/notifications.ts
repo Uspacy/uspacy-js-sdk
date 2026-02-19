@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export enum NotificationAction {
 	CREATE = 'create',
 	UPDATE = 'update',
@@ -23,7 +24,6 @@ export interface INotificationMessage {
 	read?: boolean;
 	createdAt: number;
 	data: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		entity: any;
 		root_parent: IRootParent;
 		user_id: number;
@@ -31,6 +31,7 @@ export interface INotificationMessage {
 		timestamp: string;
 		action: NotificationAction;
 		show: boolean;
+		old_entity?: any;
 	};
 }
 
