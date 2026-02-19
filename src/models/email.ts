@@ -127,7 +127,7 @@ export interface IEmailBox {
 	sync_freq: number;
 	sync_folders?: IFolder[];
 	folders?: IFolder[];
-	crm_integration_enabled: number;
+	crm_integration_enabled: boolean;
 	oauth_provider?: string;
 	access_roles: IAccessRoles[];
 	roles?: IAccessRoles[];
