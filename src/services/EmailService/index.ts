@@ -15,7 +15,6 @@ import {
 	IThreads,
 } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
-import { IConnectEmailBox, IUpdateEmailBox } from './connect-email-box.dto';
 import { ICreateLetterPayload } from './create-email.dto';
 import { ISignaturePayload } from './signature.dto';
 
@@ -50,7 +49,7 @@ export class EmailService {
 	 * @param data email box payload
 	 * @returns Email box entity
 	 */
-	connectEmailBox(data: IConnectEmailBox) {
+	connectEmailBox(data: Partial<IEmailBox>) {
 		return this.httpClient.client.post(`${this.namespace}/emails/credentials`, data);
 	}
 
@@ -60,7 +59,7 @@ export class EmailService {
 	 * @param data email box payload
 	 * @returns Email box entity
 	 */
-	setupEmailBox(id: number, data: IUpdateEmailBox) {
+	setupEmailBox(id: number, data: Partial<IEmailBox>) {
 		return this.httpClient.client.post(`${this.namespace}/emails/settings/:id`, data, { urlParams: { id } });
 	}
 
@@ -70,7 +69,7 @@ export class EmailService {
 	 * @param data email box payload
 	 * @returns Email box entity
 	 */
-	updateEmailBoxCredentials(id: number, data: IUpdateEmailBox) {
+	updateEmailBoxCredentials(id: number, data: Partial<IEmailBox>) {
 		return this.httpClient.client.patch(`${this.namespace}/emails/credentials/:id`, data, { urlParams: { id } });
 	}
 
@@ -80,7 +79,7 @@ export class EmailService {
 	 * @param data email box payload
 	 * @returns Email box entity
 	 */
-	updateEmailBox(id: number, data: IUpdateEmailBox) {
+	updateEmailBox(id: number, data: Partial<IEmailBox>) {
 		return this.httpClient.client.patch(`${this.namespace}/emails/settings/:id`, data, { urlParams: { id } });
 	}
 
@@ -234,7 +233,7 @@ export class EmailService {
 	 * @param service microsoft, google and etc
 	 */
 	receiveToOauthLink(code: string, service: string, state?: string) {
-		return this.httpClient.client.post(`${this.namespace}/oauth/${service}/receive`, { code, ...(state && { state }) });
+		return this.httpClient.client.post<IEmailBox>(`${this.namespace}/oauth/${service}/receive`, { code, ...(state && { state }) });
 	}
 
 	/**
