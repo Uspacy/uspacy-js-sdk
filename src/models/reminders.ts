@@ -4,6 +4,7 @@ export interface IReminder {
 	date_start?: string;
 	hour_start?: number;
 	timezone_offset?: number;
+	scheduled_at?: number;
 	letter: boolean;
 	notification: boolean;
 }
