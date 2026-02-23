@@ -51,6 +51,8 @@ export interface IUser {
 	emailInvitation: boolean;
 	dateOfInvitation: number;
 	external_user: boolean;
+	isOnline: boolean;
+	lastSeenAt: number;
 	[key: string]: any;
 }
 
