@@ -11,6 +11,7 @@ import { IResponseWithMeta } from '../../models/response';
 @injectable()
 export class AutomationsService {
 	private namespace = '/automations-backend/v1/';
+	private namespace_workers = '/automations-backend/v1/workers';
 	constructor(private readonly httpClient: HttpClient) {}
 
 	/**
@@ -20,7 +21,7 @@ export class AutomationsService {
 	 * @param search search query
 	 */
 	async getAutomations(page?: number, list?: number, search?: string) {
-		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace, {
+		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace_workers, {
 			params: {
 				page,
 				list,
@@ -34,7 +35,7 @@ export class AutomationsService {
 	 * @param id automation id
 	 */
 	deleteAutomation(id: number) {
-		return this.httpClient.client.delete<number>(`${this.namespace}:id`, { urlParams: { id } });
+		return this.httpClient.client.delete<number>(`${this.namespace_workers}/:id`, { urlParams: { id } });
 	}
 
 	/**
@@ -43,6 +44,6 @@ export class AutomationsService {
 	 * @param body request body
 	 */
 	toggleAutomation(id: number, body: IAutomation) {
-		return this.httpClient.client.patch(`${this.namespace}:id`, body, { urlParams: { id } });
+		return this.httpClient.client.patch(`${this.namespace_workers}/:id`, body, { urlParams: { id } });
 	}
 }
