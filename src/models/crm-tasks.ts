@@ -1,6 +1,7 @@
 import { IFile } from '../models/files';
 import { IEntityData, IMeta } from './crm-entities';
 import { INotify } from './notify';
+import { IReminder } from './reminders';
 
 export interface ITasks {
 	data: ITask[];
@@ -48,6 +49,7 @@ export interface ITask {
 	entities?: any;
 	file_ids?: number[];
 	files?: IFile[];
+	reminders?: IReminder[];
 }
 
 export interface ICall extends ITask {
