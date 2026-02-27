@@ -70,3 +70,12 @@ export interface IUserFilter {
 	sortModel?: { [key: string]: string }[];
 	[key: string]: any;
 }
+
+export interface IOnlineStatus {
+	isOnline: boolean;
+	lastSeenAt: number;
+}
+
+export interface IUserOnlineStatuses {
+	[userId: string]: IOnlineStatus;
+}

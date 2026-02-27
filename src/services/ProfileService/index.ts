@@ -6,7 +6,7 @@ import { IField } from '../../models/field';
 import { IRequisite, IRequisitesResponse, IRequisiteUpdate, ITemplate, ITemplateResponse, ITemplateUpdate } from '../../models/requisites';
 import { IResponseWithMessage } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
-import { IUser } from '../../models/user';
+import { IOnlineStatus, IUser } from '../../models/user';
 
 /**
  * Users service
@@ -230,5 +230,14 @@ export class ProfileService {
 		return this.httpClient.client.delete(`${this.fields_namespace}/fields/:fieldCode`, {
 			urlParams: { fieldCode },
 		});
+	}
+
+	/**
+	 * get profile online status
+	 * @returns profile online status
+	 */
+
+	getProfileOnlineStatus() {
+		return this.httpClient.client.get<IOnlineStatus>(`${this.namespace}/online`);
 	}
 }
