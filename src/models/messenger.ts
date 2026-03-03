@@ -1,4 +1,5 @@
 import { IFile } from './files';
+import { IFormField, IPredefinedField } from './forms';
 
 export interface IExternalLine {
 	externalId: string;
@@ -205,6 +206,11 @@ export interface ICreateWidgetData {
 		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
+	};
+	config?: {
+		crmEntity: 'lead' | 'contact';
+		predefinedFields: IPredefinedField[];
+		fields: IFormField[];
 	};
 }
 
