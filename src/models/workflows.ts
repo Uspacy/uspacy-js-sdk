@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IField } from './field';
 import { IFile } from './files';
 import { IMeta } from './response';
@@ -12,6 +13,7 @@ export enum TriggerEntities {
 	COMMENT = 'comment',
 	POSTS = 'posts',
 	EMAIL = 'email',
+	NOTIFICATION = 'notification',
 }
 
 export enum EntityServices {
@@ -45,6 +47,9 @@ export enum AutomationActionTypes {
 	DO_WEBHOOK = 'doWebhook',
 	WAITING = 'pause',
 	UPDATE = 'update',
+	GET = 'get',
+	MOVE_STAGE = 'moveStage',
+	NOTIFICATION = 'notification',
 }
 
 export interface IFieldWithEntity extends IField {
