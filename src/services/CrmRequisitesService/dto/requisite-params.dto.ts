@@ -6,4 +6,5 @@ export interface IRequisiteParams {
 	bank_requisite_id?: number;
 	requisite_id?: number;
 	is_reference_context?: boolean;
+	is_basic?: boolean;
 }
