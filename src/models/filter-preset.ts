@@ -32,5 +32,6 @@ export interface IFilterPresetsData<T> {
 		presets: IFilterPreset<T>[];
 		filterFields: IFilterField[];
 		filters: T;
+		smartFilters?: T;
 	};
 }
