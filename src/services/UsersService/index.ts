@@ -5,7 +5,7 @@ import { HttpClient } from '../../core/HttpClient';
 import { I2FaStatus } from '../../models/2fa';
 import { IResponseWithMessage, IResponseWithMeta } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
-import { IUser, IUserFilter, UserRole } from '../../models/user';
+import { IUser, IUserFilter, IUserOnlineStatuses, UserRole } from '../../models/user';
 import { ISearchUsersDto } from './dto/search-users.dto';
 import { IUpdateUserDto } from './dto/update-user.dto';
 import { IUploadAvatar } from './dto/upload-avatar.dto';
@@ -250,5 +250,14 @@ export class UsersService {
 	 */
 	getUserRegisterLink(id: IUser['id']) {
 		return this.httpClient.client.get<{ link: string }>(`${this.namespace}/:id/register_link`, { urlParams: { id } });
+	}
+
+	/**
+	 * get users online statuses
+	 * @returns users online statuses
+	 */
+
+	getUsersOnlineStatuses() {
+		return this.httpClient.client.get<IUserOnlineStatuses>(`${this.namespace}/online`);
 	}
 }
