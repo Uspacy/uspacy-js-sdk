@@ -71,13 +71,6 @@ export enum WaitingActionTypes {
 	DATE = 'date',
 }
 
-// export interface IAction extends IWaitingAction, IDoWebhookAction, IDeleteAction, IFieldChangeAction, ICreateAction {
-// 	id?: number;
-// 	action: AutomationActionTypes;
-// 	entityIdRef: IFieldWithEntity | number;
-// 	pending_folder_id?: string;
-// }
-
 export interface IWaitingAction {
 	waitingType: WaitingActionTypes;
 	periodValue: {
