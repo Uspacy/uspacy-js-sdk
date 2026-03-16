@@ -471,7 +471,6 @@ export class CrmEntitiesService {
 			{ reason_id: reasonId },
 			{
 				urlParams: { entityId, stageId, code },
-				useAuth: false,
 			},
 		);
 	}
