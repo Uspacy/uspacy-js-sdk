@@ -135,6 +135,23 @@ export class CrmTasksService {
 	}
 
 	/**
+	 * Mass reopen activities
+	 * @param entityIds task ids to edit
+	 * @param exceptIds task ids to exclude from editing
+	 * @param all should edit all tasks
+	 * @param params query params if editing all tasks
+	 */
+	massTasksReopen({ entityIds, exceptIds, all, params }: IMassActions) {
+		const data = {
+			all,
+			id: entityIds,
+			except_ids: exceptIds,
+		};
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+		return this.httpClient.client.patch(`${this.namespace}/mass_reopen${suffix}`, data);
+	}
+
+	/**
 	 * Get OAuth 2.0 redirect url
 	 * @returns redirect url
 	 */

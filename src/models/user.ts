@@ -21,6 +21,7 @@ interface IPhone {
 export enum MainRoles {
 	ADMIN = 'ADMIN',
 	OWNER = 'OWNER',
+	EXTERNAL_USER = 'EXTERNAL_USER',
 }
 
 export type UserRole = MainRoles | string;
@@ -49,6 +50,9 @@ export interface IUser {
 	socialMedia: ISocialMediaLinks[];
 	emailInvitation: boolean;
 	dateOfInvitation: number;
+	external_user: boolean;
+	isOnline: boolean;
+	lastSeenAt: number;
 	[key: string]: any;
 }
 
@@ -65,4 +69,13 @@ export interface IUserFilter {
 	table_fields?: string[];
 	sortModel?: { [key: string]: string }[];
 	[key: string]: any;
+}
+
+export interface IOnlineStatus {
+	isOnline: boolean;
+	lastSeenAt: number;
+}
+
+export interface IUserOnlineStatuses {
+	[userId: string]: IOnlineStatus;
 }

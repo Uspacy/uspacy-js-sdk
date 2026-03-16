@@ -27,8 +27,8 @@ export class ResourcesService {
 	 * @param type resource type
 	 * @returns resources list
 	 * */
-	getResources(type: ResourceType) {
-		return this.httpClient.client.get(`${getResourcesDomain(type)}${this.namespace}`, { params: { type } });
+	getResources(type: ResourceType, params?: Record<string, string | number>) {
+		return this.httpClient.client.get(`${getResourcesDomain(type)}${this.namespace}`, { params: { type, ...params } });
 	}
 
 	/**
