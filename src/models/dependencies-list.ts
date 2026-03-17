@@ -7,6 +7,7 @@ export interface IDependenciesList {
 	inverse_dependence: boolean;
 	show_all_options: boolean;
 	exclude_selected_options: boolean;
+	show_in_filters: boolean;
 	dependencies: {
 		parent_value: string;
 		child_value: string;
