@@ -1,4 +1,5 @@
 import { IFile } from './files';
+import { IFormField, IPredefinedField } from './forms';
 
 export interface IExternalLine {
 	externalId: string;
@@ -190,6 +191,11 @@ export interface IExternalChatsItems {
 	inactive: IChat[];
 }
 
+export enum ETimeFormShow {
+	FIRST_TIME = 'firstTime',
+	AFTER_MESSAGE = 'afterMessage',
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -205,6 +211,14 @@ export interface ICreateWidgetData {
 		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
+	};
+	config?: {
+		crmEntity: 'lead' | 'contact' | 'empty';
+		predefinedFields: IPredefinedField[];
+		fields: IFormField[];
+		showForm: boolean;
+		timeShowForm: ETimeFormShow;
+		formWelcomeMessage: string;
 	};
 }
 
