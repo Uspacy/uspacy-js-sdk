@@ -50,7 +50,10 @@ export class HttpClient {
 				}
 			}
 		}
-		if (!config.baseURL && token) {
+
+		if (process.env.REACT_APP_FORCE_API_URL) {
+			config.baseURL = process.env.REACT_APP_FORCE_API_URL;
+		} else if (!config.baseURL && token) {
 			const decodedToken = await this.tokenService.decodeToken(token);
 			config.baseURL = `https://${decodedToken.domain}`;
 		}
