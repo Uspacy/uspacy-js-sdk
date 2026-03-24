@@ -17,6 +17,7 @@ export enum MessageType {
 	VOICE = 'VOICE',
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
+	FORM_SUBMISSION = 'FORM_SUBMISSION',
 }
 
 export enum ERelationsEntity {
@@ -64,6 +65,12 @@ export enum EMessageStatus {
 	ERROR = 'error',
 }
 
+export interface IMessageFormData {
+	label: string;
+	type: string;
+	value: unknown;
+}
+
 export interface IMessage {
 	id: string;
 	timestamp: number;
@@ -100,6 +107,7 @@ export interface IMessage {
 			url: string;
 		};
 	};
+	formData?: IMessageFormData[];
 }
 
 export enum ChatType {
