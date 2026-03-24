@@ -33,6 +33,7 @@ export interface INotificationMessage {
 		show: boolean;
 		old_entity?: any;
 	};
+	metadata?: any[];
 }
 
 export enum NotificationActions {
