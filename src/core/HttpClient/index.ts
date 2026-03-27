@@ -42,6 +42,7 @@ export class HttpClient {
 		const useAuth = config.useAuth !== false;
 		await this.resolveBusy();
 		const token = await this.tokenService.getToken();
+		const apiUrlFromLocalStorage = typeof window !== 'undefined' ? JSON.parse(localStorage?.getItem('REACT_APP_FORCE_API_URL')) : null;
 
 		if (useAuth) {
 			if (token) {
@@ -51,8 +52,16 @@ export class HttpClient {
 			}
 		}
 
-		if (process.env.REACT_APP_FORCE_API_URL) {
-			config.baseURL = process.env.REACT_APP_FORCE_API_URL;
+		if (!!apiUrlFromLocalStorage) {
+			if (!!apiUrlFromLocalStorage?.allowOnlyForPaths.length) {
+				apiUrlFromLocalStorage?.allowOnlyForPaths.forEach((allowedPath: string) => {
+					if (config.url?.includes(allowedPath)) {
+						config.baseURL = apiUrlFromLocalStorage.url;
+					}
+				});
+			} else {
+				config.baseURL = apiUrlFromLocalStorage.url;
+			}
 		} else if (!config.baseURL && token) {
 			const decodedToken = await this.tokenService.decodeToken(token);
 			config.baseURL = `https://${decodedToken.domain}`;
