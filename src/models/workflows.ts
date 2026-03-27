@@ -30,6 +30,8 @@ export interface ITrigger {
 	entity: TriggerEntities;
 	action: string;
 	service: EntityServices;
+	allowWorkers?: boolean;
+	allowProcesses?: boolean;
 }
 
 export interface ICondition {
@@ -70,13 +72,6 @@ export enum WaitingActionTypes {
 	PERIOD = 'period',
 	DATE = 'date',
 }
-
-// export interface IAction extends IWaitingAction, IDoWebhookAction, IDeleteAction, IFieldChangeAction, ICreateAction {
-// 	id?: number;
-// 	action: AutomationActionTypes;
-// 	entityIdRef: IFieldWithEntity | number;
-// 	pending_folder_id?: string;
-// }
 
 export interface IWaitingAction {
 	waitingType: WaitingActionTypes;
