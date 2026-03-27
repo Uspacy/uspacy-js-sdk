@@ -30,6 +30,8 @@ export interface ITrigger {
 	entity: TriggerEntities;
 	action: string;
 	service: EntityServices;
+	allowWorkers?: boolean;
+	allowProcesses?: boolean;
 }
 
 export interface ICondition {
