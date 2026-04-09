@@ -159,6 +159,21 @@ export interface IChat {
 	customer_contact?: ICrmConnectEntity;
 }
 
+export interface IFetchChatsParams {
+	lastMessageFrom?: number;
+	lastMessageTo?: number;
+	externalLineId?: string;
+	active?: boolean;
+	assigned?: boolean;
+	members?: number[];
+	name?: string;
+	type?: 'EXTERNAL';
+	all?: boolean;
+	include?: string;
+	page?: number;
+	list?: number;
+}
+
 export interface IMessagesGroup {
 	items: IMessage[];
 	chatId: string;
