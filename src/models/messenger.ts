@@ -153,8 +153,7 @@ export interface IFetchChatsParams {
 	lastMessageFrom?: number;
 	lastMessageTo?: number;
 	externalLineIds?: string[];
-	active?: boolean;
-	assigned?: boolean;
+	externalStatuses?: 'active' | 'undistributed' | 'inactive'[];
 	members?: number[];
 	name?: string;
 	type?: 'EXTERNAL';
