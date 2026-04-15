@@ -153,7 +153,6 @@ export interface IFetchChatsParams {
 	lastMessageFrom?: number;
 	lastMessageTo?: number;
 	externalLineIds?: string[];
-	members?: number[];
 	name?: string;
 	type?: 'EXTERNAL';
 	all?: boolean;
@@ -162,6 +161,8 @@ export interface IFetchChatsParams {
 	list?: number;
 	// Filter by external statuses (comma-separated active,inactive,undistributed)
 	externalStatuses?: string;
+	// Filter by member ids (comma-separated)
+	members?: string;
 }
 
 export interface IMessagesGroup {
