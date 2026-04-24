@@ -10,6 +10,7 @@ import {
 	IGetQuickAnswerParams,
 	IQuickAnswer,
 	IRelatedChatItem,
+	IUserSettings,
 } from '../../models/messenger';
 import { ITask } from '../../models/tasks';
 
@@ -205,5 +206,22 @@ export class MessengerService {
 				entityType: 'task',
 			},
 		});
+	}
+
+	/**
+	 * get users settings
+	 * @returns users settings
+	 */
+	getSettings(): Promise<{ data: IUserSettings }> {
+		return this.httpClient.client.get(`${this.namespace}/user-settings`);
+	}
+
+	/**
+	 * update users settings
+	 * @param settings new settings
+	 * @returns updated users settings
+	 */
+	updateSettings(settings: Partial<Omit<IUserSettings, 'authUserId'>>): Promise<{ data: IUserSettings }> {
+		return this.httpClient.client.patch(`${this.namespace}/user-settings`, settings);
 	}
 }
