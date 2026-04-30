@@ -274,3 +274,10 @@ export interface IRelatedChatItem {
 	id: string;
 	portal: string;
 }
+
+export interface IUserSettings {
+	id: string;
+	authUserId: number;
+	isInternalMsgSoundEnabled: boolean;
+	isExternalMsgSoundEnabled: boolean;
+}
