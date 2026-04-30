@@ -149,6 +149,22 @@ export interface IChat {
 	customer_contact?: ICrmConnectEntity;
 }
 
+export interface IFetchChatsParams {
+	lastMessageFrom?: number;
+	lastMessageTo?: number;
+	externalLineIds?: string[];
+	name?: string;
+	type?: 'EXTERNAL';
+	all?: boolean;
+	include?: string;
+	page?: number;
+	list?: number;
+	// Filter by external statuses (comma-separated active,inactive,undistributed)
+	externalStatuses?: string;
+	// Filter by member ids (comma-separated)
+	members?: string;
+}
+
 export interface IMessagesGroup {
 	items: IMessage[];
 	chatId: string;

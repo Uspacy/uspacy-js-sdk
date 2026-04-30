@@ -7,6 +7,7 @@ import {
 	IChat,
 	ICreateQuickAnswerDTO,
 	ICreateWidgetData,
+	IFetchChatsParams,
 	IGetQuickAnswerParams,
 	IQuickAnswer,
 	IRelatedChatItem,
@@ -26,7 +27,7 @@ export class MessengerService {
 	 * Get chats
 	 * @returns list of chats
 	 */
-	async getChats(props: { type?: 'EXTERNAL'; all?: boolean; include?: string; page?: number; list?: number }) {
+	async getChats(props: IFetchChatsParams) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
 			params: { ...props },
 		});
