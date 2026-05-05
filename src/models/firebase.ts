@@ -23,4 +23,6 @@ export enum EFirabaseDbName {
 	MARKETING_SETTINGS = 'marketing-settings',
 	MARKETING_FILTERS = 'marketing-filters',
 	MARKETING_KANBAN_COLUMN_VISIBILITIES = 'marketing-kanban-column-visibilities',
+	USERS_SETTINGS = 'users-settings',
+	USERS_PRESETS = 'users-presets',
 }
