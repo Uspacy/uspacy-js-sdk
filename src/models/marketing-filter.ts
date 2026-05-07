@@ -1,3 +1,5 @@
+import { ISmartFilters } from './smart-filters';
+
 export enum ENewsletterRecipientsEvent {
 	DELIVERED = 'delivered',
 	NOT_DELIVERED = 'not_delivered',
@@ -28,6 +30,7 @@ export interface IMarketingFilter {
 	certainDateOrPeriod_updated_at: number[];
 	certainDateOrPeriod_next_run: number[];
 	openCalendar: boolean;
+	filters?: ISmartFilters;
 	sort_by?: {
 		[key: string]: string;
 	};

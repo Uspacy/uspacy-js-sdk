@@ -1,3 +1,5 @@
+import { ISmartFilters } from './smart-filters';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface IBaseFilter {
 	search?: string;
@@ -10,6 +12,7 @@ interface IBaseFilter {
 	table_fields?: string[];
 	task_type?: string[];
 	entityCode?: string;
+	filters?: ISmartFilters;
 	sortModel?: { [key: string]: string }[];
 }
 
@@ -88,6 +91,12 @@ export interface IProductFilters extends IBaseFilter {
 	balance_to?: number;
 	is_active?: string[];
 	select?: number;
+	// ! For smart filters
+	price?: {
+		from?: number;
+		to?: number;
+		currency?: string;
+	};
 }
 
 export interface IEntityFilters extends IBaseFilter {

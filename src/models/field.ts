@@ -26,6 +26,8 @@ export type FieldTypes =
 	| 'status'
 	| 'float'
 	| 'reason'
+	// entity ref task type for analytic
+	| 'entity_reference_tasks'
 	| 'productTitle'
 	| 'productPrice'
 	| 'productRemind'

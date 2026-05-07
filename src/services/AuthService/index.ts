@@ -8,7 +8,7 @@ import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
-import { IBill, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff } from '../../models/tariffs';
+import { IBill, ICountry, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff, IVatInfo } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
 import { ILoginDto } from './dto/login.dto';
@@ -16,7 +16,8 @@ import { IRegisterDto } from './dto/register.dto';
 import { IResetPassordDto } from './dto/reset-password.dto';
 import { IResponseOauthData } from './dto/response-oauth-data.dto';
 import { ISignUpDto } from './dto/sign-up.dto';
-import { IIndividualPayload, ILegalPayload, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
+import { IIndividualPayload, ILegalPayload, ILegalPayloadEu, ISubscriptionPayload, ISubscriptionStripePayload } from './dto/subscription.dto';
+import { IVatValidationPayload } from './dto/vat-validation.dto';
 
 /**
  * Auth service
@@ -169,7 +170,7 @@ export class AuthService {
 	 * Create subscription individual
 	 * @returns Object invoice entity
 	 */
-	createSubscriptionInvdividual(body: IIndividualPayload) {
+	createSubscriptionInvdividual(body: Partial<IIndividualPayload>) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/individual`, body);
 	}
 
@@ -177,7 +178,7 @@ export class AuthService {
 	 * Create subscription legal
 	 * @returns Object invoice entity
 	 */
-	createSubscriptionLegal(body: ILegalPayload) {
+	createSubscriptionLegal(body: Partial<ILegalPayload>) {
 		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal`, body);
 	}
 
@@ -185,8 +186,16 @@ export class AuthService {
 	 * Redirect to stripe buy
 	 * @returns url to stripe redirecting
 	 */
-	redirectToStripe(body: ISubscriptionStripePayload) {
+	redirectToStripe(body: Partial<ISubscriptionStripePayload>) {
 		return this.httpClient.client.post<IStripeRedirect>(`${this.namespace}/tariffs/stripe/buy`, body);
+	}
+
+	/**
+	 * Create subscription legal EU
+	 * @returns Object invoice entity
+	 */
+	createSubscriptionLegalEu(body: Partial<ILegalPayloadEu>) {
+		return this.httpClient.client.post<IBill>(`${this.namespace}/tariffs/invoices/legal_eu`, body);
 	}
 
 	/**
@@ -217,5 +226,25 @@ export class AuthService {
 	 */
 	getDiscountCoupon(couponCode: string) {
 		return this.httpClient.client.get<IDiscountCoupon>(`${this.namespace}/tariffs/coupons/${couponCode}`);
+	}
+
+	/**
+	 * Check VAT validity
+	 * @param country
+	 * @param vatNumber
+	 * @returns Object with isValid field
+	 */
+	vatValidation({ country, vatNumber }: IVatValidationPayload) {
+		return this.httpClient.client.get<IVatInfo>(`${this.namespace}/tariffs/legal/check_vat`, {
+			params: { country, vatNumber },
+		});
+	}
+
+	/**
+	 * Get countries list
+	 * @returns Array of countries
+	 */
+	getCountriesList() {
+		return this.httpClient.client.get<ICountry[]>(`${this.namespace}/tariffs/country`);
 	}
 }

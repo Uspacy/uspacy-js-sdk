@@ -22,6 +22,14 @@ export class TasksStagesService {
 	}
 
 	/**
+	 * Get stages list from all groups
+	 * @returns Array tasks kanban stages entity from all groups
+	 */
+	getTasksAllGroupsStages() {
+		return this.httpClient.client.get<IStages>(this.namespace, { params: { allGroups: true } });
+	}
+
+	/**
 	 * Create stage
 	 * @param data stage data
 	 * @returns new stage entity

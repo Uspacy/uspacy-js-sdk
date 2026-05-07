@@ -9,6 +9,7 @@ export interface IGroupDto {
 	logo?: File;
 	moderatorsIds?: string[];
 	usersIds?: string[];
+	externalUserIds?: string[];
 	groupId?: string;
 	archived?: number;
 	enableColorTheme?: boolean;

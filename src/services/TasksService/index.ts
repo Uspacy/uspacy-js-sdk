@@ -3,14 +3,10 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { ICouchItemData, ICouchQueryResponse } from '../../models/couchdb';
 import { IField, IFields } from '../../models/field';
-import { IFilterPreset } from '../../models/filter-preset';
 import { IResponseWithMeta } from '../../models/response';
-import { IChecklist, IChecklistItem, IFilterTasks, ITask, ITasks, ITasksParams } from '../../models/tasks';
-import { ITasksColumnSettings } from '../../models/tasks-settings';
+import { IChecklist, IChecklistItem, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
-import { CouchdbService } from '../CouchdbService';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
 /**
@@ -23,10 +19,7 @@ export class TasksService {
 	private namespaceTransferTasks = '/tasks/v1/transfers';
 	private namespaceTrashTasks = '/tasks/v1/trash/tasks';
 
-	constructor(
-		private httpClient: HttpClient,
-		private readonly couchdbService: CouchdbService,
-	) {}
+	constructor(private httpClient: HttpClient) {}
 
 	/**
 	 * Get tasks list with filters
@@ -373,80 +366,6 @@ export class TasksService {
 	 */
 	getTasksField() {
 		return this.httpClient.client.get<IFields>(`${this.namespace}/fields`);
-	}
-
-	/**
-	 * Get tasks filters presets
-	 * @returns tasks filters presets
-	 */
-	getFiltersPresets(type: string) {
-		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', type);
-	}
-
-	/**
-	 * Get tasks filters preset
-	 * @param id preset id
-	 */
-	getFiltersPreset(id: string) {
-		return this.couchdbService.find<ICouchItemData<IFilterPreset<IFilterTasks>>>('tasks-presets', '', id);
-	}
-
-	/**
-	 * Create tasks filters preset
-	 * @param body preset body
-	 */
-	createFilterPreset(body: ICouchItemData<IFilterPreset<IFilterTasks>>, type: string) {
-		return this.couchdbService.create('tasks-presets', body, type);
-	}
-
-	/**
-	 * Update tasks filters preset
-	 * @param id preset id
-	 * @param rev preset revision
-	 * @param body preset body
-	 */
-	updateFilterPreset(id: string, rev: string, body: ICouchItemData<IFilterPreset<IFilterTasks>>) {
-		return this.couchdbService.update('tasks-presets', id, rev, body);
-	}
-
-	/**
-	 * Bulk update tasks filters presets
-	 * @param body preset body
-	 */
-	bulkUpdateFiltersPresets(body: ICouchItemData<IFilterPreset<IFilterTasks>>[]) {
-		return this.couchdbService.bulkUpdate('tasks-presets', body);
-	}
-
-	/**
-	 * Delete tasks filters preset
-	 * @param id preset id
-	 * @param rev preset revision
-	 */
-	deleteFilterPreset(id: string, rev: string) {
-		return this.couchdbService.delete('tasks-presets', id, rev);
-	}
-
-	/**
-	 * Create tasks settings
-	 */
-	createSettings(body: ITasksColumnSettings, type: string) {
-		return this.couchdbService.create('tasks-settings', body, type);
-	}
-
-	/**
-	 * Get tasks settings
-	 * @returns tasks settings
-	 */
-	getTasksSettings(type: string) {
-		return this.couchdbService.find<ICouchQueryResponse<ITasksColumnSettings>>('tasks-settings', type);
-	}
-
-	/**
-	 * Update tasks settings
-	 * @returns tasks settings
-	 */
-	updateTasksSettings(id: string, rev: string, body: ITasksColumnSettings) {
-		return this.couchdbService.update('tasks-settings', id, rev, body);
 	}
 
 	/**

@@ -9,6 +9,7 @@ export interface IGroup {
 	logo: string;
 	moderatorsIds: string[];
 	usersIds: string[];
+	externalUserIds: string[];
 	enableColorTheme: boolean;
 	themeSettings: IThemeSettings;
 }

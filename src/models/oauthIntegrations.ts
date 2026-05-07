@@ -87,6 +87,10 @@ export interface IAfterOauthResponse {
 	domain: string;
 	provider: string;
 	integration: string;
+	message?: string;
+	payload?: {
+		back_redirect_url: string;
+	};
 }
 
 export interface ICalendarsSuccessResponse {
@@ -122,4 +126,4 @@ export enum ECalendarRoles {
 
 export type oauthProvider = 'google' | 'zoom' | 'microsoft';
 
-export type oauthType = 'meeting' | 'calendar';
+export type oauthType = 'meeting' | 'calendar' | 'email';

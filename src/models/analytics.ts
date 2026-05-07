@@ -40,6 +40,7 @@ export interface IAnalyticReport {
 		};
 		measure_for: string;
 		additional: {
+			measure_for_currency?: string;
 			is_view_percent: boolean;
 			is_view_value: boolean;
 		};

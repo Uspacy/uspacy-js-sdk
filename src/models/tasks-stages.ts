@@ -8,6 +8,7 @@ export interface IColumn {
 	sort: number;
 	afterId: string;
 	total: number;
+	kanbanStageId?: string;
 }
 
 export interface IColumns {

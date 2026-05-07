@@ -1,5 +1,11 @@
 import { UserRole } from './user';
 
+export enum Available {
+	EXTERNAL_USERS = 'EXTU',
+}
+
+export type AvailableConfigs = Available | string;
+
 export interface IJwt {
 	id: number;
 	exp: number;
@@ -12,6 +18,7 @@ export interface IJwt {
 	roles: UserRole[];
 	departments: number[];
 	tariffId: number;
+	available: AvailableConfigs[];
 	permissions: {
 		create: string[];
 		view: string[];

@@ -85,11 +85,16 @@ export interface IFormDesign {
 		formPosition: 'top' | 'center';
 		showUspacyBrand: boolean;
 	};
+	otherSettings?: {
+		logoIsInTheFormHeader: boolean;
+		currenciesOptions?: string[];
+	};
 }
 
 export interface IPredefinedField {
 	type: string;
-	value: string | number;
+	value: any;
+	multiple?: boolean;
 }
 
 export interface IForm {

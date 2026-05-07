@@ -7,4 +7,5 @@ export interface IInvateDto {
 	email: string;
 	firstName: string;
 	lastName: string;
+	external_user: boolean;
 }

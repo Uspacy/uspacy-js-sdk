@@ -12,18 +12,19 @@ export interface IFilterPreset<F> {
 	id?: string;
 	title: string;
 	type: string;
-	// ! TODO: refactor this fields
 	filters?: F;
+	smartFilters?: F;
 	// This is necessary to compare the current filters and the filters in the preset itself.
 	currentFilters?: F;
+	currentSmartFilters?: F;
 	current: boolean;
 	pinned: boolean;
 	default: boolean;
-	// ! TODO: refactor this fields
 	filterFields?: IFilterField[];
 	currentFilterFields?: IFilterField[];
 	soon?: boolean;
 	shadow?: boolean;
+	sort?: number;
 }
 
 export interface IFilterPresetsData<T> {
@@ -31,5 +32,6 @@ export interface IFilterPresetsData<T> {
 		presets: IFilterPreset<T>[];
 		filterFields: IFilterField[];
 		filters: T;
+		smartFilters?: T;
 	};
 }

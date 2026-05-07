@@ -149,6 +149,22 @@ export interface IChat {
 	customer_contact?: ICrmConnectEntity;
 }
 
+export interface IFetchChatsParams {
+	lastMessageFrom?: number;
+	lastMessageTo?: number;
+	externalLineIds?: string[];
+	name?: string;
+	type?: 'EXTERNAL';
+	all?: boolean;
+	include?: string;
+	page?: number;
+	list?: number;
+	// Filter by external statuses (comma-separated active,inactive,undistributed)
+	externalStatuses?: string;
+	// Filter by member ids (comma-separated)
+	members?: string;
+}
+
 export interface IMessagesGroup {
 	items: IMessage[];
 	chatId: string;
@@ -213,4 +229,55 @@ export interface ICrmConnectEntity {
 	id: number;
 	owner: number;
 	title: string;
+}
+
+export interface IQuickAnswer {
+	name: string;
+	message: string;
+	availableForUsers: number[];
+	availableInExternalLines: [];
+	ownerId: number;
+	portal: string;
+	status: string;
+	createdAt: number;
+	updatedAt: number;
+	id: string;
+	isOutOfQuota?: boolean;
+}
+
+export interface IGetQuickAnswerParams {
+	page?: number;
+	availableInExternalLines?: number[];
+	statuses?: string[];
+	availableForUsers?: number[];
+	list?: number | 'all';
+	createdAt?: number[][];
+	ownerId?: number[];
+	boolean_operator?: 'AND' | 'OR';
+	q?: string;
+	includeOutOfQuota?: boolean;
+}
+
+export interface ICreateQuickAnswerDTO {
+	name: string;
+	message?: string;
+	availableForUsers?: number[];
+	availableInExternalLines?: [];
+}
+
+export interface IRelatedChatItem {
+	chatId: string;
+	createdAt: number;
+	createdBy: number;
+	entityId: string;
+	entityType: 'task';
+	id: string;
+	portal: string;
+}
+
+export interface IUserSettings {
+	id: string;
+	authUserId: number;
+	isInternalMsgSoundEnabled: boolean;
+	isExternalMsgSoundEnabled: boolean;
 }

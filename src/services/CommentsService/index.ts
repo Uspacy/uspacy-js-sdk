@@ -52,10 +52,11 @@ export class CommentsService {
 	/**
 	 * Delete comment
 	 * @param id comment id
+	 * @param body notify params
 	 * @returns
 	 */
-	deleteComment(id: number) {
-		return this.httpClient.client.delete(`${this.namespace}/comments/:id/`, { urlParams: { id } });
+	deleteComment(id: number, body?: Pick<ICreateCommentDto, 'mentioned' | 'notify' | 'root_parent'>) {
+		return this.httpClient.client.delete(`${this.namespace}/comments/:id/`, { urlParams: { id }, data: { ...body } });
 	}
 
 	/**
