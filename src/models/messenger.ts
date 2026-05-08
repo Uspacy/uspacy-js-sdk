@@ -219,6 +219,7 @@ export interface ICreateWidgetData {
 		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
+		showSignature?: boolean;
 	};
 	config?: {
 		crmEntity: 'lead' | 'contact' | 'empty';
