@@ -41,6 +41,7 @@ export interface IAnalyticReport {
 		measure_for: string;
 		additional: {
 			measure_for_currency?: string;
+			measure_for_aggregation?: 'sum' | 'avg';
 			is_view_percent: boolean;
 			is_view_value: boolean;
 		};
