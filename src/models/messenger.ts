@@ -228,6 +228,7 @@ export interface ICreateWidgetData {
 		showForm: boolean;
 		timeShowForm: ETimeFormShow;
 		formWelcomeMessage: string;
+		messageAfterFormSend: string;
 	};
 }
 
