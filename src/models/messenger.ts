@@ -157,6 +157,8 @@ export interface IChat {
 	isInviteChat?: boolean;
 	assigned?: boolean;
 	customer_contact?: ICrmConnectEntity;
+	firstReplyAt?: number;
+	createdAt?: number;
 }
 
 export interface IFetchChatsParams {
