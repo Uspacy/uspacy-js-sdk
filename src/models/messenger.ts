@@ -164,6 +164,10 @@ export interface IChat {
 export interface IFetchChatsParams {
 	lastMessageFrom?: number;
 	lastMessageTo?: number;
+	createAtFrom?: number;
+	createAtTo?: number;
+	firstReplyAtFrom?: number;
+	firstReplyAtTo?: number;
 	externalLineIds?: string[];
 	name?: string;
 	type?: 'EXTERNAL';
