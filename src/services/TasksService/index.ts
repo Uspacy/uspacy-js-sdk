@@ -5,7 +5,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IField, IFields } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
-import { IChecklist, IChecklistItem, ITask, ITasks, ITasksParams } from '../../models/tasks';
+import { IChecklist, IChecklistItem, ITask, ITasks, ITasksParams, taskType } from '../../models/tasks';
 import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
 import { updateTaskStatusActionType } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
@@ -75,71 +75,12 @@ export class TasksService {
 	}
 
 	/**
-	 * Get subtasks list
-	 * @param id parent task/template id
-	 * @param isTemplate template param
-	 * @param params subtasks list filter params
-	 * @returns Array subtasks entity
-	 */
-	getSubtasks(id: string, isTemplate: boolean, params: Partial<ITasksParams>) {
-		return this.httpClient.client.get<IResponseWithMeta<ITasks>>(this.namespace, {
-			params: { [isTemplate ? 'template_id' : 'parent_id']: id, ...params },
-		});
-	}
-
-	/**
-	 * Get task by id
-	 * @param id task id
-	 * @returns task entity
-	 */
-	getTask(id: string, crm_entity_list?: boolean) {
-		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
-			...(crm_entity_list && { params: { crm_entity_list } }),
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Get recurring template by id
-	 * @param id recurring template id
-	 * @returns recurring template entity
-	 */
-	getRecurringTemplate(id: string, crm_entity_list?: boolean) {
-		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/recurring/:id/`, {
-			...(crm_entity_list && { params: { crm_entity_list } }),
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Get one time template by id
-	 * @param id one time template id
-	 * @returns one time template entity
-	 */
-	getOneTimeTemplate(id: string, crm_entity_list?: boolean) {
-		return this.httpClient.client.get<ITask>(`${this.namespaceTemplates}/one_time/:id/`, {
-			...(crm_entity_list && { params: { crm_entity_list } }),
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Get parentTask by id
-	 * @param id parentTask id
-	 * @returns parentTask entity
-	 */
-	getParentTask(id: string) {
-		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
-			urlParams: { id },
-		});
-	}
-
-	/**
 	 * Create task
 	 * @returns task entity
 	 */
-	createTask(body: Partial<ITask>) {
-		return this.httpClient.client.post<ITask>(this.namespace, body);
+	createTask(body: Partial<ITask>, type: taskType) {
+		const isTaskType = type === 'task';
+		return this.httpClient.client.post<ITask>(isTaskType ? this.namespace : `${this.namespaceTemplates}/${type}`, body);
 	}
 
 	/**
@@ -151,61 +92,27 @@ export class TasksService {
 	}
 
 	/**
-	 * Create recurring template
-	 * @returns recurring template entity
-	 */
-	createRecurringTemplate(body: Partial<ITask>) {
-		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/recurring`, body);
-	}
-
-	/**
-	 * Create one time template
-	 * @returns one time template entity
-	 */
-	createOneTimeTemplate(body: Partial<ITask>) {
-		return this.httpClient.client.post<ITask>(`${this.namespaceTemplates}/one_time`, body);
-	}
-
-	/**
 	 * Update task
 	 * @param id task id
+	 * @param body task data
+	 * @param type task type
 	 * @returns task entity
 	 */
-	updateTask(id: string, body: Partial<ITask>) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
+	updateTask(id: string, body: Partial<ITask>, type: taskType) {
+		const isTaskType = type === 'task';
+		return this.httpClient.client.patch<ITask>(isTaskType ? `${this.namespace}/:id/` : `${this.namespaceTemplates}/${type}/:id/`, body, {
 			urlParams: { id },
 		});
 	}
 
 	/**
-	 * Update recurring template
-	 * @param id recurring template id
-	 * @returns recurring template entity
+	 * Update task status
+	 * @param id task id
+	 * @param action status action
+	 * @returns task entity
 	 */
-	updateRecurringTemplate(id: string, body: Partial<ITask>) {
-		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/recurring/:id/`, body, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Update one time template
-	 * @param id one time template id
-	 * @returns one time template entity
-	 */
-	updateOneTimeTemplate(id: string, body: Partial<ITask>) {
-		return this.httpClient.client.patch<ITask>(`${this.namespaceTemplates}/one_time/:id/`, body, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Update subtask
-	 * @param id subtask id
-	 * @returns subtask entity
-	 */
-	updateSubtask(id: string, body: Partial<ITask>) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/`, body, {
+	updateTaskStatus(id: string, action: updateTaskStatusActionType) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/${action}`, undefined, {
 			urlParams: { id },
 		});
 	}
@@ -293,18 +200,6 @@ export class TasksService {
 			);
 		}
 		return this.httpClient.client.post(`${this.namespace}/mass_ready/`, { taskIds, exceptIds, all });
-	}
-
-	/**
-	 * Update task status
-	 * @param id task id
-	 * @param action status action
-	 * @returns task entity
-	 */
-	updateTaskStatus(id: string, action: updateTaskStatusActionType) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/${action}`, undefined, {
-			urlParams: { id },
-		});
 	}
 
 	/**
