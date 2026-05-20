@@ -277,61 +277,6 @@ export class TasksService {
 	}
 
 	/**
-	 * Start task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	startTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/start`, undefined, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Pause task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	pauseTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/stop`, undefined, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Watch task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	watchTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/watch`, undefined, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * Unwatch task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	unwatchTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/unwatch`, undefined, {
-			urlParams: { id },
-		});
-	}
-
-	/**
-	 * complete task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	completeTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/ready`, undefined, {
-			urlParams: { id },
-		});
-	}
-
-	/**
 	 * Mass completion tasks
 	 * @param taskIds tasks ids
 	 * @param exceptIds exception tasks ids
@@ -348,17 +293,6 @@ export class TasksService {
 			);
 		}
 		return this.httpClient.client.post(`${this.namespace}/mass_ready/`, { taskIds, exceptIds, all });
-	}
-
-	/**
-	 * Restart task
-	 * @param id task id
-	 * @returns task entity
-	 */
-	restartTask(id: string) {
-		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/restart`, undefined, {
-			urlParams: { id },
-		});
 	}
 
 	/**
