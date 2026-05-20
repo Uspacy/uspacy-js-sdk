@@ -7,6 +7,7 @@ import { IField, IFields } from '../../models/field';
 import { IResponseWithMeta } from '../../models/response';
 import { IChecklist, IChecklistItem, ITask, ITasks, ITasksParams } from '../../models/tasks';
 import { ITransferOfCasesProgress, ITransferTasksData } from '../../models/transferOfCases';
+import { updateTaskStatusAction } from './dto/create-update-task.dto';
 import { IMassEditingFieldsPayload } from './dto/mass-actions.dto';
 
 /**
@@ -356,6 +357,18 @@ export class TasksService {
 	 */
 	restartTask(id: string) {
 		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/restart`, undefined, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Update task status
+	 * @param id task id
+	 * @param action status action
+	 * @returns task entity
+	 */
+	updateTaskStatus(id: string, action: updateTaskStatusAction) {
+		return this.httpClient.client.patch<ITask>(`${this.namespace}/:id/${action}`, undefined, {
 			urlParams: { id },
 		});
 	}
