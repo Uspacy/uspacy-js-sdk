@@ -75,6 +75,18 @@ export class TasksService {
 	}
 
 	/**
+	 * Get task by id
+	 * @param id task id
+	 * @returns task entity
+	 */
+	getTask(id: string, crm_entity_list?: boolean) {
+		return this.httpClient.client.get<ITask>(`${this.namespace}/:id/`, {
+			...(crm_entity_list && { params: { crm_entity_list } }),
+			urlParams: { id },
+		});
+	}
+
+	/**
 	 * Create task
 	 * @returns task entity
 	 */
