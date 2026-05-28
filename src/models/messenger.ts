@@ -165,6 +165,7 @@ export interface IFetchChatsParams {
 	include?: string;
 	page?: number;
 	list?: number;
+	withoutAnswers?: boolean;
 	// Filter by external statuses (comma-separated active,inactive,undistributed)
 	externalStatuses?: string;
 	// Filter by member ids (comma-separated)
