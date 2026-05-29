@@ -18,6 +18,13 @@ export type ChartVariantType = 'column' | 'bar' | 'area' | 'line_straight' | 'li
 export type MetricType = 'count' | 'amount_of_the_deal';
 export type DayInterval = 'day' | 'month' | 'year';
 
+export interface ITableColumnSettings {
+	column_visibility: Record<string, boolean>;
+	column_ordering: string[];
+	column_sizes: Record<string, number>;
+	sort_model?: Record<string, string>[];
+}
+
 export interface IAnalyticReport {
 	id: string;
 	title: string;
@@ -44,6 +51,7 @@ export interface IAnalyticReport {
 			measure_for_aggregation?: 'sum' | 'avg';
 			is_view_percent: boolean;
 			is_view_value: boolean;
+			table_settings?: Record<string, ITableColumnSettings>;
 		};
 	};
 }
