@@ -22,7 +22,7 @@ export class SettingsService {
 	 */
 	async getPortalSettings() {
 		const domain = await this.tokenService.getDomain();
-		return this.httpClient.client.get(`${this.namespace}/general`, { urlParams: { domain } });
+		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/general`, { urlParams: { domain } });
 	}
 
 	/**
@@ -32,6 +32,6 @@ export class SettingsService {
 	 */
 	async updatePortalSettings(data: Partial<IPortalSettings>) {
 		const domain = await this.tokenService.getDomain();
-		return this.httpClient.client.put(`${this.namespace}/general`, data, { urlParams: { domain } });
+		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/general`, data, { urlParams: { domain } });
 	}
 }
