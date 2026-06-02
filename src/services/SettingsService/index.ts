@@ -22,16 +22,16 @@ export class SettingsService {
 	 */
 	async getPortalSettings() {
 		const domain = await this.tokenService.getDomain();
-		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/general`, { urlParams: { domain } });
+		return this.httpClient.client.get<IPortalSettings>(`${this.namespace}/general`, { params: { domain } });
 	}
 
 	/**
 	 * Update portal settings
-	 * @param data - portal settings to update
+	 * @param data - portal settings payload
 	 * @returns portal settings
 	 */
 	async updatePortalSettings(data: Partial<IPortalSettings>) {
 		const domain = await this.tokenService.getDomain();
-		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/general`, data, { urlParams: { domain } });
+		return this.httpClient.client.patch<IPortalSettings>(`${this.namespace}/general`, data, { params: { domain } });
 	}
 }
