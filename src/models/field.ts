@@ -57,7 +57,8 @@ export type FieldTypes =
 	| 'external_channels'
 	| 'priority'
 	// forms types
-	| 'formTextData';
+	| 'formTextData'
+	| 'widgetTextData';
 
 export interface IField {
 	name: string;
