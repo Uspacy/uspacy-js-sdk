@@ -156,6 +156,29 @@ export interface IChat {
 	isInviteChat?: boolean;
 	assigned?: boolean;
 	customer_contact?: ICrmConnectEntity;
+	firstReplyAt?: number;
+	createdAt?: number;
+}
+
+export interface IFetchChatsParams {
+	lastMessageFrom?: number;
+	lastMessageTo?: number;
+	createdAtFrom?: number;
+	createdAtTo?: number;
+	firstReplyAtFrom?: number;
+	firstReplyAtTo?: number;
+	externalLineIds?: string[];
+	name?: string;
+	type?: 'EXTERNAL';
+	all?: boolean;
+	include?: string;
+	page?: number;
+	list?: number;
+	withoutAnswers?: boolean;
+	// Filter by external statuses (comma-separated active,inactive,undistributed)
+	externalStatuses?: string;
+	// Filter by member ids (comma-separated)
+	members?: string;
 }
 
 export interface IMessagesGroup {
@@ -281,4 +304,11 @@ export interface IRelatedChatItem {
 	entityType: 'task';
 	id: string;
 	portal: string;
+}
+
+export interface IUserSettings {
+	id: string;
+	authUserId: number;
+	isInternalMsgSoundEnabled: boolean;
+	isExternalMsgSoundEnabled: boolean;
 }

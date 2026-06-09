@@ -7,9 +7,11 @@ import {
 	IChat,
 	ICreateQuickAnswerDTO,
 	ICreateWidgetData,
+	IFetchChatsParams,
 	IGetQuickAnswerParams,
 	IQuickAnswer,
 	IRelatedChatItem,
+	IUserSettings,
 } from '../../models/messenger';
 import { ITask } from '../../models/tasks';
 
@@ -25,7 +27,7 @@ export class MessengerService {
 	 * Get chats
 	 * @returns list of chats
 	 */
-	async getChats(props: { type?: 'EXTERNAL'; all?: boolean; include?: string; page?: number; list?: number }) {
+	async getChats(props: IFetchChatsParams) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
 			params: { ...props },
 		});
@@ -205,5 +207,22 @@ export class MessengerService {
 				entityType: 'task',
 			},
 		});
+	}
+
+	/**
+	 * get users settings
+	 * @returns users settings
+	 */
+	getSettings(): Promise<{ data: IUserSettings }> {
+		return this.httpClient.client.get(`${this.namespace}/user-settings`);
+	}
+
+	/**
+	 * update users settings
+	 * @param settings new settings
+	 * @returns updated users settings
+	 */
+	updateSettings(settings: Partial<Omit<IUserSettings, 'authUserId'>>): Promise<{ data: IUserSettings }> {
+		return this.httpClient.client.patch(`${this.namespace}/user-settings`, settings);
 	}
 }

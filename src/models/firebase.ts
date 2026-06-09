@@ -9,6 +9,7 @@ export enum EFirabaseService {
 	TASKS = 'tasks',
 	MARKETING = 'marketing',
 	USERS = 'users',
+	CHAT = 'chat',
 }
 
 export enum EFirabaseDbName {
@@ -23,4 +24,8 @@ export enum EFirabaseDbName {
 	MARKETING_SETTINGS = 'marketing-settings',
 	MARKETING_FILTERS = 'marketing-filters',
 	MARKETING_KANBAN_COLUMN_VISIBILITIES = 'marketing-kanban-column-visibilities',
+	CHAT_REQUEST_JOURNAL_SETTINGS = 'chat-request-journal-settings',
+	CHAT_REQUEST_JOURNAL_FILTERS = 'chat-request-journal-filters',
+	USERS_SETTINGS = 'users-settings',
+	USERS_PRESETS = 'users-presets',
 }
