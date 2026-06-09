@@ -1,20 +1,10 @@
-export interface IFieldSetting {
-	id: string;
-	fieldCode: string;
-	active: boolean;
-	sort: number;
-}
-
-export interface IStageSetting {
-	stageId: number;
-	fields: IFieldSetting[];
-}
-
-export interface IKanbanCardStagesSettings {
-	stages: IStageSetting[];
+export interface IKanbanCardSettingsData {
+	active: string[];
+	order: string[];
+	stagesSettings?: Record<string, { active: string[]; order: string[] }>;
 }
 
 export interface IKanbanCardSettings {
 	id: string;
-	data: Record<string, IKanbanCardStagesSettings>;
+	data: Record<string, IKanbanCardSettingsData>;
 }
