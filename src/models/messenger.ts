@@ -244,6 +244,11 @@ export interface IWidgetSocialItem {
 	canal: string;
 	link: string;
 	active?: boolean;
+	invalidData?: {
+		icon?: boolean;
+		canal?: boolean;
+		link?: boolean;
+	};
 }
 
 export interface ICreateWidgetData {
