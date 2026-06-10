@@ -1,4 +1,5 @@
 import { IFile } from './files';
+import { IFormField, IPredefinedField } from './forms';
 
 export interface IExternalLine {
 	externalId: string;
@@ -16,6 +17,7 @@ export enum MessageType {
 	VOICE = 'VOICE',
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
+	FORM_SUBMISSION = 'FORM_SUBMISSION',
 }
 
 export enum ERelationsEntity {
@@ -63,6 +65,12 @@ export enum EMessageStatus {
 	ERROR = 'error',
 }
 
+export interface IMessageFormData {
+	label: string;
+	type: string;
+	value: unknown;
+}
+
 export interface IMessage {
 	id: string;
 	timestamp: number;
@@ -99,6 +107,7 @@ export interface IMessage {
 			url: string;
 		};
 	};
+	formData?: IMessageFormData[];
 }
 
 export enum ChatType {
@@ -147,11 +156,17 @@ export interface IChat {
 	isInviteChat?: boolean;
 	assigned?: boolean;
 	customer_contact?: ICrmConnectEntity;
+	firstReplyAt?: number;
+	createdAt?: number;
 }
 
 export interface IFetchChatsParams {
 	lastMessageFrom?: number;
 	lastMessageTo?: number;
+	createdAtFrom?: number;
+	createdAtTo?: number;
+	firstReplyAtFrom?: number;
+	firstReplyAtTo?: number;
 	externalLineIds?: string[];
 	name?: string;
 	type?: 'EXTERNAL';
@@ -159,6 +174,7 @@ export interface IFetchChatsParams {
 	include?: string;
 	page?: number;
 	list?: number;
+	withoutAnswers?: boolean;
 	// Filter by external statuses (comma-separated active,inactive,undistributed)
 	externalStatuses?: string;
 	// Filter by member ids (comma-separated)
@@ -206,6 +222,11 @@ export interface IExternalChatsItems {
 	inactive: IChat[];
 }
 
+export enum ETimeFormShow {
+	FIRST_TIME = 'firstTime',
+	AFTER_MESSAGE = 'afterMessage',
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -221,6 +242,16 @@ export interface ICreateWidgetData {
 		iconColor?: string;
 		backgroundColor?: string;
 		operatorAvatar?: string;
+		showSignature?: boolean;
+	};
+	config?: {
+		crmEntity: 'lead' | 'contact' | 'empty';
+		predefinedFields: IPredefinedField[];
+		fields: IFormField[];
+		showForm: boolean;
+		timeShowForm: ETimeFormShow;
+		formWelcomeMessage: string;
+		messageAfterFormSend: string;
 	};
 }
 

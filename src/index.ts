@@ -47,6 +47,7 @@ import { PouchdbService } from './services/PouchdbService';
 import { ProfileService } from './services/ProfileService';
 import { ResourcesService } from './services/ResourcesService';
 import { RolesService } from './services/RolesService';
+import { SettingsService } from './services/SettingsService';
 import { TasksService } from './services/TasksService';
 import { TasksStagesService } from './services/TasksStagesService';
 import { TasksTimerService } from './services/TasksTimerService';
@@ -105,6 +106,7 @@ class Uspacy {
 		public readonly resourcesService: ResourcesService,
 		public readonly pouchdbService: PouchdbService,
 		public readonly marketingService: MarketingService,
+		public readonly settingsService: SettingsService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
