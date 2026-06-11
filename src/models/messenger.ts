@@ -150,6 +150,7 @@ export interface IChat {
 	}[];
 	settings?: {
 		muteUntil?: number;
+		anyoneCanChangeMembers?: boolean;
 	};
 	unreadCount?: number;
 	unreadMentions: string[];
