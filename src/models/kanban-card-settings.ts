@@ -1,7 +1,6 @@
 export interface IKanbanCardSettingsData {
-	active: string[];
-	order: string[];
-	stagesSettings?: Record<string, { active: string[]; order: string[] }>;
+	activeSettings: string[];
+	stagesSettings?: Record<string, { activeSettings: string[] }>;
 }
 
 export interface IKanbanCardSettings {
