@@ -1,6 +1,10 @@
-export interface IKanbanCardSettingsData {
+export interface ISettingsItem {
 	activeSettings: string[];
-	stagesSettings?: Record<string, { activeSettings: string[] }>;
+	activeBottomSettings: string[];
+}
+
+export interface IKanbanCardSettingsData extends ISettingsItem {
+	stagesSettings?: Record<string, ISettingsItem>;
 }
 
 export interface IKanbanCardSettings {
