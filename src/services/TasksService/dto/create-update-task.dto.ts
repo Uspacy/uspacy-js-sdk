@@ -54,3 +54,5 @@ export interface ITaskValues {
 		}[];
 	};
 }
+
+export type updateTaskStatusActionType = 'start' | 'stop' | 'watch' | 'unwatch' | 'ready' | 'restart';
