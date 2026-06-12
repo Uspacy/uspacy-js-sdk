@@ -151,6 +151,9 @@ export interface IChat {
 	settings?: {
 		muteUntil?: number;
 	};
+	generalSettings?: {
+		anyoneCanChangeMembers?: boolean;
+	};
 	unreadCount?: number;
 	unreadMentions: string[];
 	isInviteChat?: boolean;
