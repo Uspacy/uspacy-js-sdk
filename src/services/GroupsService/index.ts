@@ -66,6 +66,7 @@ export class GroupsService {
 		formData.append('themeSettings[icon]', body.themeSettings.icon);
 		formData.append('themeSettings[iconColor]', body.themeSettings.iconColor);
 		formData.append('themeSettings[enablePattern]', body.themeSettings.enablePattern ? '1' : '0');
+		formData.append('settings[letMembersSeeAllTasks]', body.settings.letMembersSeeAllTasks ? '1' : '0');
 		body.moderatorsIds.length > 0
 			? body.moderatorsIds.map((el) => {
 					formData.append('moderatorsIds[]', el);
