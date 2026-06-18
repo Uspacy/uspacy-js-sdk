@@ -12,6 +12,7 @@ export interface IGroup {
 	externalUserIds: string[];
 	enableColorTheme: boolean;
 	themeSettings: IThemeSettings;
+	settings?: IGroupSettings;
 }
 
 export interface IThemeSettings {
@@ -19,4 +20,8 @@ export interface IThemeSettings {
 	iconColor: string;
 	icon: string;
 	enablePattern: boolean;
+}
+
+export interface IGroupSettings {
+	letMembersSeeAllTasks: boolean;
 }
