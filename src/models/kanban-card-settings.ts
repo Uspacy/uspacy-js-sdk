@@ -1,6 +1,7 @@
 export interface ISettingsItem {
 	activeSettings: string[];
 	activeBottomSettings: string[];
+	activeEntitySubSettings?: Record<string, string[]>;
 }
 
 export interface IKanbanCardSettingsData extends ISettingsItem {
