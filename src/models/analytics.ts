@@ -63,7 +63,7 @@ export interface IFunnelConversionStage {
 	count: number;
 	skipped: number | null;
 	avg_time_seconds: number;
-	conversion_to_next_percent: number;
+	conversion_from_previous_percent: number;
 	cumulative_conversion_percent: number;
 	stage_title?: string;
 	stage_code?: string;
