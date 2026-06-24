@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IEntityData } from './crm-entities';
 import { IFile } from './files';
 
@@ -178,6 +179,8 @@ export interface IEmailFilters {
 	openCalendar?: boolean;
 	is_read?: number[];
 	q?: string;
+	contact_name?: string;
+	[key: string]: any;
 }
 
 export interface IEmailFiltersParams {
@@ -187,6 +190,8 @@ export interface IEmailFiltersParams {
 	date?: number[][];
 	is_read?: number[];
 	q?: string;
+	contact_name?: string;
+	[key: string]: any;
 }
 
 export enum ESettingName {
