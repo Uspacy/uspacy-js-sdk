@@ -1,7 +1,14 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IAnalyticReport, IAnalyticReportFilter, IAnalyticReportList, IDashboard } from '../../models/analytics';
+import {
+	IAnalyticReport,
+	IAnalyticReportFilter,
+	IAnalyticReportList,
+	IDashboard,
+	IFunnelConversionParams,
+	IFunnelConversionStage,
+} from '../../models/analytics';
 
 /**
  * Analytics service
@@ -74,6 +81,19 @@ export class AnalyticsService {
 	 */
 	getDashboardsLists() {
 		return this.httpClient.client.get<IDashboard[]>(`${this.namespaceDashboards}`);
+	}
+
+	/**
+	 * Get funnel conversion analytics by stages
+	 * @param params funnel conversion params (entity type, funnel id, excluded stages, smart filters)
+	 * @param signal AbortSignal for cancelling request
+	 * @returns Array of funnel conversion stages
+	 */
+	getFunnelConversion(params: IFunnelConversionParams, signal?: AbortSignal) {
+		return this.httpClient.client.get<IFunnelConversionStage[]>('/crm/v1/analytics/funnels', {
+			params,
+			signal,
+		});
 	}
 
 	/**
