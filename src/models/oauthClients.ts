@@ -1,15 +1,17 @@
+// NOTE: client fields are SNAKE_CASE — the raw shape from auth-service via
+// users-backend (no response camelCase conversion is applied).
 export interface IOAuthClient {
-	clientId: string;
+	client_id: string;
 	name: string;
-	grantTypes: string[];
-	redirectUris: string[] | null;
+	grant_types: string[];
+	redirect_uris: string[] | null;
 	confidential: boolean;
-	userId: number | null;
+	user_id: number | null;
 	domain: string | null;
 	permissions: string[] | null;
 	revoked: boolean;
-	createdAt: string | number;
-	updatedAt: string | number;
+	created_at: string | number;
+	updated_at: string | number;
 }
 
 // The create response additionally includes the one-time plaintext secret.
@@ -32,12 +34,12 @@ export interface IOAuthPermissionGroup {
 	};
 }
 
-// Laravel paginator (flat; camelCased keys), as returned under the response envelope's `data`.
+// Laravel paginator (flat; snake_case keys), as returned under the response envelope's `data`.
 export interface IOAuthClientsPaginator {
-	currentPage: number;
+	current_page: number;
 	data: IOAuthClient[];
-	lastPage: number;
-	perPage: number;
+	last_page: number;
+	per_page: number;
 	total: number;
 	from: number;
 	to: number;
