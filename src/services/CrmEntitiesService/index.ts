@@ -87,11 +87,13 @@ export class CrmEntitiesService {
 	/**
 	 * Get entity fields
 	 * @param code entity code
+	 * @param related for checking sync info in the fields
 	 * @returns entity fields
 	 */
-	getEntityFields(code: string) {
+	getEntityFields(code: string, related = false) {
 		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/:code/fields`, {
 			urlParams: { code },
+			params: { ...(related && { related }) },
 		});
 	}
 
