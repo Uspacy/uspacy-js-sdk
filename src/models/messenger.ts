@@ -161,6 +161,7 @@ export interface IChat {
 	customer_contact?: ICrmConnectEntity;
 	firstReplyAt?: number;
 	createdAt?: number;
+	responder?: number[];
 }
 
 export interface IFetchChatsParams {
@@ -182,6 +183,8 @@ export interface IFetchChatsParams {
 	externalStatuses?: string;
 	// Filter by member ids (comma-separated)
 	members?: string;
+	// Filter by responder ids (comma-separated)
+	responder?: string;
 }
 
 export interface IMessagesGroup {
