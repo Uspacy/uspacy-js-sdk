@@ -98,6 +98,18 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Get entity field by code
+	 * @param entityCode entity code
+	 * @param fieldCode field code
+	 * @returns entity fields
+	 */
+	getEntityFieldByCode(entityCode: string, fieldCode: string) {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/:entityCode/fields/:fieldCode`, {
+			urlParams: { entityCode, fieldCode },
+		});
+	}
+
+	/**
 	 * Update entity field
 	 * @param code entity code
 	 * @param data field data
