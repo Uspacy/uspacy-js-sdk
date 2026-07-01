@@ -14,6 +14,7 @@ export enum TriggerEntities {
 	POSTS = 'posts',
 	EMAIL = 'email',
 	NOTIFICATION = 'notification',
+	DOCUMENT = 'document',
 }
 
 export enum EntityServices {
@@ -23,6 +24,7 @@ export enum EntityServices {
 	NEWSFEED = 'newsfeed',
 	ACTIVITIES = 'activities',
 	EMAIL = 'email',
+	DOCUMENTS = 'documents',
 }
 
 export interface ITrigger {
