@@ -16,6 +16,7 @@ export type FieldTypes =
 	| 'user_id'
 	| 'photo'
 	| 'file'
+	| 'document'
 	| 'address'
 	| 'legal_details'
 	| 'entity_reference'
