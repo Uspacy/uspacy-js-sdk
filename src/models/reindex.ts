@@ -10,7 +10,7 @@ export interface IReindexJob {
 	status: ReindexJobStatus;
 	start_date: string;
 	end_date?: string;
-	reindex_items: IReindexItem[];
+	reindex_items?: IReindexItem[];
 }
 
 export interface IReindexItem {
