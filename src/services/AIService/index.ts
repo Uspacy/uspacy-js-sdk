@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
@@ -59,9 +60,17 @@ export class AIService {
 
 	/**
 	 * Get home data
-	 * @returns home data
+	 * @returns home data (X-Cache-Time header holds the cache generation time)
 	 */
-	async getHomeData(): Promise<{ data: { data: IHomeGeneralData } }> {
+	async getHomeData(): Promise<AxiosResponse<{ data: IHomeGeneralData }>> {
 		return this.httpClient.client.get(`${this.namespace}/main/desktop`);
+	}
+
+	/**
+	 * Regenerate and get fresh home data
+	 * @returns home data (X-Cache-Time header holds the cache generation time)
+	 */
+	async refreshHomeData(): Promise<AxiosResponse<{ data: IHomeGeneralData }>> {
+		return this.httpClient.client.post(`${this.namespace}/main/refresh`);
 	}
 }
