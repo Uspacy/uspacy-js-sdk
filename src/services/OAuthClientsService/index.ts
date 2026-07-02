@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
-import { IApiEnvelope, IOAuthClientsPaginator, IOAuthClientWithSecret, IOAuthPermissionGroup } from '../../models/oauthClients';
+import { IApiEnvelope, IOAuthClient, IOAuthClientsPaginator, IOAuthClientWithSecret, IOAuthPermissionGroup } from '../../models/oauthClients';
 import { IOAuthClientRequest } from './dto/create-oauth-client.dto';
 
 /**
@@ -26,6 +26,14 @@ export class OAuthClientsService {
 	 */
 	createOAuthClient(body: IOAuthClientRequest) {
 		return this.httpClient.client.post<IApiEnvelope<IOAuthClientWithSecret>>(this.namespace, body);
+	}
+
+	/**
+	 * Update an OAuth client (name and/or permissions) by id (client_id).
+	 * The secret is never returned on update.
+	 */
+	updateOAuthClient(id: string, body: Partial<IOAuthClientRequest>) {
+		return this.httpClient.client.patch<IApiEnvelope<IOAuthClient>>(`${this.namespace}/:id`, body, { urlParams: { id } });
 	}
 
 	/**
