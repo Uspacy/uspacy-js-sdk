@@ -52,4 +52,13 @@ export class ReindexService {
 	async retryJob(jobId: number) {
 		return this.httpClient.client.post<{ message: string }>(`${this.namespace}/:jobId/retry`, { urlParams: { jobId } });
 	}
+
+	/**
+	 * Delete a reindex job
+	 * @param jobId the id of the job to delete
+	 * @returns a message indicating the job has been deleted
+	 */
+	async deleteReindexJob(jobId: number) {
+		return this.httpClient.client.delete<{ message: string }>(`${this.namespace}/:jobId`, { urlParams: { jobId } });
+	}
 }
