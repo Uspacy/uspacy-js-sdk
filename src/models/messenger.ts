@@ -180,12 +180,30 @@ export interface IFetchChatsParams {
 	page?: number;
 	list?: number;
 	withoutAnswers?: boolean;
-	// Filter by external statuses (comma-separated active,inactive,undistributed)
+	// Filter by external statuses (comma-separated active,inactive,undistributed).
+	// In cursor mode this must be a single status: 'active' | 'undistributed' | 'inactive'.
 	externalStatuses?: string;
 	// Filter by member ids (comma-separated)
 	members?: string;
 	// Filter by responder ids (comma-separated)
 	responder?: string;
+	// Cursor pagination (external chats). When `cursor` or `limit` is set, the endpoint
+	// returns ICursorPaginatedChats instead of a bare IChat[] — use getExternalChatsPage.
+	cursor?: string;
+	limit?: number;
+}
+
+export type IExternalChatStatus = 'active' | 'undistributed' | 'inactive';
+
+/**
+ * Cursor (keyset) paginated external chats response.
+ * `pinned` is present only on the first page (no `cursor`).
+ */
+export interface ICursorPaginatedChats {
+	pinned?: IChat[];
+	data: IChat[];
+	nextCursor: string | null;
+	hasNext: boolean;
 }
 
 export interface IMessagesGroup {
