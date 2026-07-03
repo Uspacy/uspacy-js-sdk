@@ -1,5 +1,10 @@
-export type ReindexJobStatus = 'pending' | 'running' | 'completed' | 'failed';
-export type ReindexItemStatus = 'pending' | 'running' | 'completed' | 'failed' | 'skipped';
+export enum EReindexStatus {
+	Pending = 'pending',
+	Running = 'running',
+	Completed = 'completed',
+	Failed = 'failed',
+	Skipped = 'skipped',
+}
 
 export interface IReindexJob {
 	id: number;
@@ -7,7 +12,7 @@ export interface IReindexJob {
 	service: string;
 	entity: string;
 	namespace?: string;
-	status: ReindexJobStatus;
+	status: EReindexStatus;
 	start_date: string;
 	end_date?: string;
 	reindex_items?: IReindexItem[];
@@ -19,7 +24,7 @@ export interface IReindexItem {
 	domain: string;
 	service: string;
 	entity: string;
-	status: ReindexItemStatus;
+	status: EReindexStatus;
 	start_date: string;
 	end_date?: string;
 	created_at: string;
