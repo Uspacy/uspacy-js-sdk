@@ -21,13 +21,17 @@ export class AutomationsService {
 	 * @param page page number
 	 * @param list page count
 	 * @param search search query
+	 * @param sortBy field to sort by
+	 * @param sortOrder sort direction
 	 */
-	async getAutomations(page?: number, list?: number, search?: string) {
+	async getAutomations(page?: number, list?: number, search?: string, sortBy?: string, sortOrder?: 'asc' | 'desc') {
 		return this.httpClient.client.get<IResponseWithMeta<IApp[]>>(this.namespace_workers, {
 			params: {
 				page,
 				list,
 				search,
+				sort_by: sortBy,
+				sort_order: sortOrder,
 			},
 		});
 	}
@@ -54,13 +58,17 @@ export class AutomationsService {
 	 * @param page page number
 	 * @param list page count
 	 * @param search search query
+	 * @param sortBy field to sort by
+	 * @param sortOrder sort direction
 	 */
-	async getWorkflows(page?: number, list?: number, search?: string) {
+	async getWorkflows(page?: number, list?: number, search?: string, sortBy?: string, sortOrder?: 'asc' | 'desc') {
 		return this.httpClient.client.get<IWorkflowsResponse>(this.namespace_workflows, {
 			params: {
 				page,
 				list,
 				search,
+				sort_by: sortBy,
+				sort_order: sortOrder,
 			},
 		});
 	}
