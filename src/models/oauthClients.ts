@@ -19,13 +19,26 @@ export interface IOAuthClientWithSecret extends IOAuthClient {
 	secret: string;
 }
 
+export enum EOAuthPermissionSection {
+	CRM = 'crm',
+	TASKS = 'tasks',
+	SMART_OBJECTS = 'smart_objects',
+}
+
+export enum EOAuthPermissionAction {
+	CREATE = 'create',
+	VIEW = 'view',
+	EDIT = 'edit',
+	DELETE = 'delete',
+}
+
 // A permission group for the FE granular selector.
 export interface IOAuthPermissionGroup {
 	key: string; // area.entity, e.g. 'crm.leads'
 	title: string;
 	entity: string; // area.entity
-	section: string; // 'crm' | 'tasks' | 'smart_objects'
-	actions: string[]; // ['create','view','edit','delete']
+	section: EOAuthPermissionSection;
+	actions: EOAuthPermissionAction[];
 	permissionKeys: {
 		create: string;
 		view: string;

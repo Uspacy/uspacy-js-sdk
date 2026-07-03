@@ -16,8 +16,8 @@ export class OAuthClientsService {
 	/**
 	 * Get the workspace's OAuth clients.
 	 */
-	getOAuthClients() {
-		return this.httpClient.client.get<IApiEnvelope<IOAuthClientsPaginator>>(this.namespace);
+	getOAuthClients(page?: number, list?: number) {
+		return this.httpClient.client.get<IApiEnvelope<IOAuthClientsPaginator>>(this.namespace, { params: { page, list } });
 	}
 
 	/**
