@@ -160,6 +160,7 @@ export interface IChat {
 	assigned?: boolean;
 	customer_contact?: ICrmConnectEntity;
 	firstReplyAt?: number;
+	operatorReactionTime?: number;
 	createdAt?: number;
 	responder?: number[];
 }
@@ -171,6 +172,8 @@ export interface IFetchChatsParams {
 	createdAtTo?: number;
 	firstReplyAtFrom?: number;
 	firstReplyAtTo?: number;
+	operatorReactionTimeFrom?: number;
+	operatorReactionTimeTo?: number;
 	externalLineIds?: string[];
 	name?: string;
 	type?: 'EXTERNAL';
