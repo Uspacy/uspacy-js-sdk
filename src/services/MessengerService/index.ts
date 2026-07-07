@@ -43,7 +43,8 @@ export class MessengerService {
 	 */
 	async getExternalChatsPage(props: IFetchChatsParams) {
 		return this.httpClient.client.get<ICursorPaginatedChats>(`${this.namespace}/chats`, {
-			params: { type: 'EXTERNAL', ...props },
+			// `type` set last so a caller-supplied `type` (incl. explicit undefined) can't override it.
+			params: { ...props, type: 'EXTERNAL' },
 		});
 	}
 
