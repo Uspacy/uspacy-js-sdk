@@ -8,4 +8,5 @@ export interface ISender {
 	created_at: number;
 	updated_at: number;
 	domain?: string;
+	domain_id?: number;
 }

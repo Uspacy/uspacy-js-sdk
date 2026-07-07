@@ -233,6 +233,30 @@ export enum ETimeFormShow {
 	AFTER_MESSAGE = 'afterMessage',
 }
 
+export enum WidgetSocialView {
+	VERTICAL = 'vertical',
+	HORIZONTAL = 'horizontal',
+}
+
+export interface IWidgetSocialItem {
+	id?: string;
+	order: number;
+	icon: {
+		type: string;
+		icon?: string;
+		iconColor?: string;
+		backgroundColor?: string;
+	};
+	canal: string;
+	link: string;
+	active?: boolean;
+	invalidData?: {
+		icon?: boolean;
+		canal?: boolean;
+		link?: boolean;
+	};
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -258,6 +282,10 @@ export interface ICreateWidgetData {
 		timeShowForm: ETimeFormShow;
 		formWelcomeMessage: string;
 		messageAfterFormSend: string;
+	};
+	socialSettings?: {
+		view?: WidgetSocialView;
+		items: IWidgetSocialItem[];
 	};
 }
 

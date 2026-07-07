@@ -43,6 +43,7 @@ import { MessengerService } from './services/MessengerService';
 import { MigrationsService } from './services/MigrationsService';
 import { NewsFeedService } from './services/NewsFeedService';
 import { NotificationsService } from './services/NotificationsService';
+import { OAuthClientsService } from './services/OAuthClientsService';
 import { PouchdbService } from './services/PouchdbService';
 import { ProfileService } from './services/ProfileService';
 import { ResourcesService } from './services/ResourcesService';
@@ -73,6 +74,7 @@ class Uspacy {
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
 		public readonly webhooksService: WebhooksService,
+		public readonly oauthClientsService: OAuthClientsService,
 		public readonly rolesService: RolesService,
 		public readonly notificationsService: NotificationsService,
 		public readonly newsFeedService: NewsFeedService,
