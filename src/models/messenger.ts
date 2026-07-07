@@ -185,7 +185,7 @@ export interface IFetchChatsParams {
 	withoutAnswers?: boolean;
 	// Filter by external statuses (comma-separated active,inactive,undistributed).
 	// In cursor mode this must be a single status: 'active' | 'undistributed' | 'inactive'.
-	externalStatuses?: string;
+	externalStatuses?: IExternalChatStatus | string;
 	// Filter by member ids (comma-separated)
 	members?: string;
 	// Filter by responder ids (comma-separated)
