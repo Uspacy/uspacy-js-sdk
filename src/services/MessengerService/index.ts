@@ -7,6 +7,7 @@ import {
 	IChat,
 	ICreateQuickAnswerDTO,
 	ICreateWidgetData,
+	ICursorPaginatedChats,
 	IFetchChatsParams,
 	IGetQuickAnswerParams,
 	IQuickAnswer,
@@ -30,6 +31,20 @@ export class MessengerService {
 	async getChats(props: IFetchChatsParams) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
 			params: { ...props },
+		});
+	}
+
+	/**
+	 * Get a cursor (keyset) paginated page of external chats for one status bucket.
+	 * Hits the same `/chats` endpoint but engages cursor mode (`cursor`/`limit` present)
+	 * and returns ICursorPaginatedChats: `{ pinned?, data, nextCursor, hasNext }`.
+	 * Pass `externalStatuses` as a single status ('active' | 'undistributed' | 'inactive').
+	 * Omit `cursor` for the first page (which also returns the `pinned` block).
+	 */
+	async getExternalChatsPage(props: IFetchChatsParams) {
+		return this.httpClient.client.get<ICursorPaginatedChats>(`${this.namespace}/chats`, {
+			// `type` set last so a caller-supplied `type` (incl. explicit undefined) can't override it.
+			params: { ...props, type: 'EXTERNAL' },
 		});
 	}
 
