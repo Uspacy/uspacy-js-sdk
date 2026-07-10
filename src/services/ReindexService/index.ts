@@ -50,7 +50,7 @@ export class ReindexService {
 	 * @returns a message indicating the job has been retried
 	 */
 	async retryReindexJob(jobId: number) {
-		return this.httpClient.client.post<{ message: string }>(`${this.namespace}/:jobId/retry`, { urlParams: { jobId } });
+		return this.httpClient.client.post<{ message: string }>(`${this.namespace}/:jobId/retry`, undefined, { urlParams: { jobId } });
 	}
 
 	/**
