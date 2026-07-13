@@ -188,6 +188,7 @@ export interface IFetchChatsParams {
 	members?: string;
 	// Filter by responder ids (comma-separated)
 	responder?: string;
+	withoutOperatorReaction?: boolean;
 }
 
 export interface IMessagesGroup {
