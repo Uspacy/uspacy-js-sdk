@@ -194,6 +194,7 @@ export interface IFetchChatsParams {
 	// returns ICursorPaginatedChats instead of a bare IChat[] — use getExternalChatsPage.
 	cursor?: string;
 	limit?: number;
+	withoutOperatorReaction?: boolean;
 }
 
 export type IExternalChatStatus = 'active' | 'undistributed' | 'inactive';
