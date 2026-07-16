@@ -36,6 +36,14 @@ export class EmailService {
 	}
 
 	/**
+	 * Get emails boxes list for settings
+	 * @returns Array with emails boxes list entity
+	 */
+	getSettingsEmailsBoxes() {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/list`);
+	}
+
+	/**
 	 * Get email box entity
 	 * @param id email box id
 	 * @returns Emails box entity
