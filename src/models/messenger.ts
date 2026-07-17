@@ -50,12 +50,16 @@ export enum EMetaEntity {
 	POST = 'post',
 	STORY = 'story',
 	REEL = 'reel',
+	NOTE = 'note',
 }
 
 export enum EMetaType {
 	COMMENT = 'comment',
 	REACTION = 'reaction',
 	DEFAULT = 'default',
+	CREATED = 'created',
+	UPDATED = 'updated',
+	DELETED = 'deleted',
 }
 
 export enum EMessageStatus {
@@ -367,4 +371,12 @@ export interface IUserSettings {
 	authUserId: number;
 	isInternalMsgSoundEnabled: boolean;
 	isExternalMsgSoundEnabled: boolean;
+}
+
+export interface IChatNote {
+	id: string;
+	chatId: string;
+	text: string;
+	authorId: number;
+	createdAt: number;
 }
