@@ -18,6 +18,7 @@ export enum MessageType {
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
 	FORM_SUBMISSION = 'FORM_SUBMISSION',
+	SYSTEM = 'SYSTEM',
 }
 
 export enum ERelationsEntity {
@@ -50,12 +51,16 @@ export enum EMetaEntity {
 	POST = 'post',
 	STORY = 'story',
 	REEL = 'reel',
+	NOTE = 'note',
 }
 
 export enum EMetaType {
 	COMMENT = 'comment',
 	REACTION = 'reaction',
 	DEFAULT = 'default',
+	CREATED = 'created',
+	UPDATED = 'updated',
+	DELETED = 'deleted',
 }
 
 export enum EMessageStatus {
@@ -190,6 +195,7 @@ export interface IFetchChatsParams {
 	members?: string;
 	// Filter by responder ids (comma-separated)
 	responder?: string;
+	withoutOperatorReaction?: boolean;
 	// Cursor pagination (external chats). When `cursor` or `limit` is set, the endpoint
 	// returns ICursorPaginatedChats instead of a bare IChat[] — use getExternalChatsPage.
 	cursor?: string;
@@ -368,4 +374,13 @@ export interface IUserSettings {
 	authUserId: number;
 	isInternalMsgSoundEnabled: boolean;
 	isExternalMsgSoundEnabled: boolean;
+}
+
+export interface IChatNote {
+	id: string;
+	chatId: string;
+	text: string;
+	authorId: number;
+	createdAt: number;
+	messageId?: string;
 }

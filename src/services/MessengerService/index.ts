@@ -5,6 +5,7 @@ import {
 	FetchMessagesRequest,
 	GoToMessageRequest,
 	IChat,
+	IChatNote,
 	ICreateQuickAnswerDTO,
 	ICreateWidgetData,
 	ICursorPaginatedChats,
@@ -240,5 +241,45 @@ export class MessengerService {
 	 */
 	updateSettings(settings: Partial<Omit<IUserSettings, 'authUserId'>>): Promise<{ data: IUserSettings }> {
 		return this.httpClient.client.patch(`${this.namespace}/user-settings`, settings);
+	}
+
+	/**
+	 * get notes for chat
+	 * @param chatId chat id
+	 * @returns list of notes for chat
+	 */
+	getChatNotes(chatId: IChat['id']): Promise<{ data: IChatNote[] }> {
+		return this.httpClient.client.get(`${this.namespace}/notes`, {
+			params: { chatId },
+		});
+	}
+
+	/**
+	 * create note for chat
+	 * @param chatId chat id
+	 * @param text note text
+	 * @returns created note
+	 */
+	createChatNote(chatId: IChat['id'], text: string): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.post(`${this.namespace}/notes`, { chatId, text });
+	}
+
+	/**
+	 * delete note for chat
+	 * @param noteId note id
+	 * @returns deleted note
+	 */
+	deleteChatNote(noteId: IChatNote['id']): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.delete(`${this.namespace}/notes/${noteId}`);
+	}
+
+	/**
+	 * update note for chat
+	 * @param noteId note id
+	 * @param text new note text
+	 * @returns updated note
+	 */
+	updateChatNote(noteId: IChatNote['id'], text: string): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.patch(`${this.namespace}/notes/${noteId}`, { text });
 	}
 }
