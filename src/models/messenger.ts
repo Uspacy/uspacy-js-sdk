@@ -18,6 +18,7 @@ export enum MessageType {
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
 	FORM_SUBMISSION = 'FORM_SUBMISSION',
+	SYSTEM = 'SYSTEM',
 }
 
 export enum ERelationsEntity {
@@ -379,4 +380,5 @@ export interface IChatNote {
 	text: string;
 	authorId: number;
 	createdAt: number;
+	messageId?: string;
 }
