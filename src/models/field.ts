@@ -108,6 +108,7 @@ export interface IFieldValue {
 	color: string;
 	sort: number;
 	selected: boolean;
+	active?: boolean;
 }
 export interface IFields {
 	data: IField[];
