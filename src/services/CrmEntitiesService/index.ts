@@ -171,6 +171,23 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Update entity list value status
+	 * @param code entity code
+	 * @param fieldCode entity field code
+	 * @param valueCode entity list value code
+	 * @param active value status
+	 */
+	updateEntityListValueStatus(code: string, fieldCode: string, valueCode: string, active: boolean) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/:code/lists/:fieldCode/:valueCode`,
+			{ active },
+			{
+				urlParams: { code, fieldCode, valueCode },
+			},
+		);
+	}
+
+	/**
 	 * Create funnel for entity
 	 * @param code entity code
 	 * @param data funnel data
