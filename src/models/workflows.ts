@@ -2,6 +2,7 @@
 import { IField } from './field';
 import { IFile } from './files';
 import { IMeta } from './response';
+import { ISmartFilters } from './smart-filters';
 
 export enum TriggerEntities {
 	LEADS = 'leads',
@@ -36,11 +37,20 @@ export interface ITrigger {
 	allowProcesses?: boolean;
 }
 
+export type ConditionType = 'simple' | 'smart';
+
+export interface IFilterState {
+	smartFilters?: ISmartFilters;
+	[key: string]: unknown;
+}
+
 export interface ICondition {
 	id?: number;
 	field: IField;
 	value: string[] | number[];
 	logic: string;
+	condition_type?: ConditionType;
+	filter_state?: IFilterState;
 }
 
 export enum AutomationActionTypes {
