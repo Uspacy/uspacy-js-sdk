@@ -110,6 +110,7 @@ export interface IMessage {
 			text: string;
 			attachedFiles: { url: string; type: string }[];
 			url: string;
+			entityId?: string;
 		};
 	};
 	formData?: IMessageFormData[];
