@@ -195,6 +195,13 @@ export interface IEmailFiltersParams {
 	[key: string]: any;
 }
 
+export interface IEmailBoxesFiltersParams {
+	search?: string;
+	owner_ids?: number[];
+	available_to_ids?: number[];
+	[key: string]: any;
+}
+
 export enum ESettingName {
 	INCOMING_NEW_ADDRESS = 'incoming_new_address',
 	INCOMING_NEW_ADDRESS_SOURSE = 'incoming_new_address_source',
