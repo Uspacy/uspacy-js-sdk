@@ -13,11 +13,15 @@ declare module 'axios' {
 	}
 }
 
+type LockManagerLike = {
+	request(name: string, callback: () => Promise<void>): Promise<void>;
+};
+
 @injectable()
 export class HttpClient {
 	public client: AxiosInstance;
-	private static isBusy = false;
-	private static readonly MAX_RETRY_CHECK_BUSY = 5;
+	private static refreshing: Promise<void> | null = null;
+	private static readonly REFRESH_LOCK = 'uspacy-token-refresh';
 
 	constructor(
 		private tokenService: TokensService,
@@ -40,7 +44,7 @@ export class HttpClient {
 	private async handleRequest(config: AxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
 		// by default useAuth = true;
 		const useAuth = config.useAuth !== false;
-		await this.resolveBusy();
+		await this.ensureFreshToken();
 		const token = await this.tokenService.getToken();
 		const apiUrlFromLocalStorage = typeof window !== 'undefined' ? JSON.parse(localStorage?.getItem('REACT_APP_FORCE_API_URL')) : null;
 
@@ -84,20 +88,29 @@ export class HttpClient {
 	}
 
 	private handleResponse(response: AxiosResponse): AxiosResponse {
-		HttpClient.isBusy = false;
 		return response;
 	}
 
 	private async handleResponseError(error: AxiosError): Promise<unknown> {
 		if (error.response?.status === 401 && error.config && !error.config._retry) {
 			error.config._retry = true;
+			const usedToken = String(error.config.headers?.Authorization || '').replace('Bearer ', '');
+
 			try {
-				const data = await this.tokenService.refreshToken();
-				await this.tokenService.setToken(data.jwt);
-				error.config.headers.Authorization = `Bearer ${data.jwt}`;
+				await this.withLock(async () => {
+					const current = await this.tokenService.getToken();
+					if (current && current !== usedToken) return;
+					await this.tokenService.refreshToken();
+				});
+
+				const token = await this.tokenService.getToken();
+				error.config.headers.Authorization = `Bearer ${token}`;
 				return this.client(error.config);
 			} catch (_error) {
-				await this.logout();
+				const status = (_error as AxiosError)?.response?.status;
+				if (!this.sessionService.isSetRememberSession() || status === 401) {
+					await this.logout();
+				}
 				throw _error;
 			}
 		}
@@ -113,31 +126,29 @@ export class HttpClient {
 		}
 	}
 
-	private async resolveBusy(): Promise<void> {
-		if (HttpClient.isBusy) {
-			await this.whenWillIdle();
-		} else {
-			HttpClient.isBusy = true;
-			if (await this.tokenService.isExpired()) {
-				try {
-					await this.tokenService.refreshToken();
-				} finally {
-					HttpClient.isBusy = false;
-				}
-			} else {
-				HttpClient.isBusy = false;
-			}
-		}
+	private async ensureFreshToken(): Promise<void> {
+		if (HttpClient.refreshing) return HttpClient.refreshing;
+		if (!(await this.tokenService.isExpired())) return;
+		if (HttpClient.refreshing) return HttpClient.refreshing;
+
+		HttpClient.refreshing = this.withLock(async () => {
+			if (!(await this.tokenService.isExpired())) return;
+			await this.tokenService.refreshToken();
+		})
+			.catch(() => undefined)
+			.finally(() => {
+				HttpClient.refreshing = null;
+			});
+
+		return HttpClient.refreshing;
 	}
 
-	private async whenWillIdle(): Promise<void> {
-		let retries = 0;
-		while (HttpClient.isBusy && retries < HttpClient.MAX_RETRY_CHECK_BUSY) {
-			await new Promise((resolve) => setTimeout(resolve, retries * 500));
-			retries++;
+	private async withLock(run: () => Promise<void>): Promise<void> {
+		const locks = (globalThis.navigator as unknown as { locks?: LockManagerLike })?.locks;
+		if (!locks) {
+			await run();
+			return;
 		}
-		if (HttpClient.isBusy) {
-			throw new Error('Timeout waiting for HttpClient to be idle');
-		}
+		await locks.request(HttpClient.REFRESH_LOCK, run);
 	}
 }
