@@ -267,6 +267,12 @@ export enum WidgetSocialView {
 	HORIZONTAL = 'horizontal',
 }
 
+export enum WidgetPosition {
+	BOTTOM_LEFT = 'bottom-left',
+	BOTTOM_RIGHT = 'bottom-right',
+	BOTTOM_CENTER = 'bottom-center',
+}
+
 export interface IWidgetSocialItem {
 	id?: string;
 	order: number;
@@ -302,6 +308,7 @@ export interface ICreateWidgetData {
 		backgroundColor?: string;
 		operatorAvatar?: string;
 		showSignature?: boolean;
+		position?: WidgetPosition;
 	};
 	config?: {
 		crmEntity: 'lead' | 'contact' | 'empty';
