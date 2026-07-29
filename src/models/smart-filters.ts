@@ -50,6 +50,10 @@ export interface ISmartFiltersItem {
 	currencies?: string[];
 	values: any;
 	condition?: FilterCondition;
+	related?: {
+		entity: string;
+		field: string;
+	};
 }
 
 export interface ISmartFilters {

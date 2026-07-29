@@ -51,6 +51,9 @@ export interface IUser {
 	emailInvitation: boolean;
 	dateOfInvitation: number;
 	external_user: boolean;
+	isOnline: boolean;
+	lastSeenAt: number;
+	status: IUserStatus | null;
 	[key: string]: any;
 }
 
@@ -67,4 +70,26 @@ export interface IUserFilter {
 	table_fields?: string[];
 	sortModel?: { [key: string]: string }[];
 	[key: string]: any;
+}
+
+export interface IOnlineStatus {
+	isOnline: boolean;
+	lastSeenAt: number;
+}
+
+/**
+ * Slack-like custom user status (emoji + title + description + optional expiry).
+ * Separate from presence (isOnline / lastSeenAt). `removeStatusAfter` is a unix
+ * timestamp in seconds; `null` means the status never expires.
+ */
+export interface IUserStatus {
+	emoji: string;
+	title: string | null;
+	description: string | null;
+	removeStatusAfter: number | null;
+	setAt: number | null;
+}
+
+export interface IUserOnlineStatuses {
+	[userId: string]: IOnlineStatus;
 }

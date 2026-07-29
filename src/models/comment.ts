@@ -2,7 +2,7 @@ import { IFile } from './files';
 import { INotify } from './notify';
 import { IMeta } from './response';
 
-export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact';
+export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact' | 'localField';
 export type CommentSortType = 'asc' | 'desc';
 
 export interface IComment {

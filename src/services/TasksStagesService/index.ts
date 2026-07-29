@@ -54,4 +54,23 @@ export class TasksStagesService {
 	deleteTasksStage(id: string) {
 		return this.httpClient.client.delete(`${this.namespace}/:id`, { urlParams: { id } });
 	}
+
+	/**
+	 * Move task from stage to stage
+	 * @param taskId task id
+	 * @param prevTaskId previous task id
+	 * @param stageId stage id
+	 */
+	moveTaskFromStageToStage(taskId: number, prevTaskId: number, stageId: number) {
+		return this.httpClient.client.post(
+			`${this.namespace}/:id/moveTask`,
+			{
+				id: taskId,
+				prev_id: prevTaskId,
+			},
+			{
+				urlParams: { id: stageId },
+			},
+		);
+	}
 }

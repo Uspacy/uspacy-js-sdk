@@ -28,6 +28,7 @@ export interface IFormField {
 	required?: boolean;
 	secondHintText?: string;
 	multiple?: boolean;
+	localFieldCounter?: number;
 }
 
 export interface IFormOther {
