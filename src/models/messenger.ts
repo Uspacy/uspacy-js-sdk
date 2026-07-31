@@ -18,6 +18,7 @@ export enum MessageType {
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
 	FORM_SUBMISSION = 'FORM_SUBMISSION',
+	SYSTEM = 'SYSTEM',
 }
 
 export enum ERelationsEntity {
@@ -50,12 +51,16 @@ export enum EMetaEntity {
 	POST = 'post',
 	STORY = 'story',
 	REEL = 'reel',
+	NOTE = 'note',
 }
 
 export enum EMetaType {
 	COMMENT = 'comment',
 	REACTION = 'reaction',
 	DEFAULT = 'default',
+	CREATED = 'created',
+	UPDATED = 'updated',
+	DELETED = 'deleted',
 }
 
 export enum EMessageStatus {
@@ -105,6 +110,7 @@ export interface IMessage {
 			text: string;
 			attachedFiles: { url: string; type: string }[];
 			url: string;
+			entityId?: string;
 		};
 	};
 	formData?: IMessageFormData[];
@@ -260,6 +266,12 @@ export enum WidgetSocialView {
 	HORIZONTAL = 'horizontal',
 }
 
+export enum WidgetPosition {
+	BOTTOM_LEFT = 'bottom-left',
+	BOTTOM_RIGHT = 'bottom-right',
+	BOTTOM_CENTER = 'bottom-center',
+}
+
 export interface IWidgetSocialItem {
 	id?: string;
 	order: number;
@@ -295,6 +307,7 @@ export interface ICreateWidgetData {
 		backgroundColor?: string;
 		operatorAvatar?: string;
 		showSignature?: boolean;
+		position?: WidgetPosition;
 	};
 	config?: {
 		crmEntity: 'lead' | 'contact' | 'empty';
@@ -367,4 +380,13 @@ export interface IUserSettings {
 	authUserId: number;
 	isInternalMsgSoundEnabled: boolean;
 	isExternalMsgSoundEnabled: boolean;
+}
+
+export interface IChatNote {
+	id: string;
+	chatId: string;
+	text: string;
+	authorId: number;
+	createdAt: number;
+	messageId?: string;
 }
