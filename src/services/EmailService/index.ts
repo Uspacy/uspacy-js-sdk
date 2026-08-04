@@ -6,6 +6,7 @@ import {
 	ICrmSetting,
 	IEmailBox,
 	IEmailBoxes,
+	IEmailBoxesFiltersParams,
 	IEmailFiltersParams,
 	IFolders,
 	ILetter,
@@ -37,10 +38,11 @@ export class EmailService {
 
 	/**
 	 * Get emails boxes list for settings
+	 * @param params filters for emails boxes list
 	 * @returns Array with emails boxes list entity
 	 */
-	getSettingsEmailsBoxes() {
-		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/list`);
+	getSettingsEmailsBoxes(params?: IEmailBoxesFiltersParams) {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/list`, { ...(params && { params }) });
 	}
 
 	/**

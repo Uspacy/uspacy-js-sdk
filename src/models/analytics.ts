@@ -40,6 +40,7 @@ export interface IAnalyticReport {
 		main: {
 			field_code: string;
 			value: string[] | number[] | boolean[] | MoneyFilterType | DateFilterType;
+			ignore_dashboard_filter?: boolean;
 		}[];
 		group_by: string;
 		view_by: {
