@@ -1,4 +1,5 @@
 import { IMeta } from './response';
+import { ConditionType, IFilterState } from './workflows';
 
 export interface IActionEntity {
 	id: number;
@@ -13,6 +14,8 @@ export interface IConditionEntity {
 	type: string;
 	value?: string | number[] | string[];
 	logic: string;
+	condition_type?: ConditionType;
+	filter_state?: IFilterState;
 }
 
 export interface ITriggerEntity {
