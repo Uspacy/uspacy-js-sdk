@@ -76,6 +76,14 @@ export interface IMessageFormData {
 	value: unknown;
 }
 
+export interface IMetaContact {
+	avatarUrl?: string;
+	firstName?: string;
+	lastName?: string;
+	phoneNumber?: string;
+	telegramUserId?: number;
+}
+
 export interface IMessage {
 	id: string;
 	timestamp: number;
@@ -112,6 +120,7 @@ export interface IMessage {
 			url: string;
 			entityId?: string;
 		};
+		contact?: IMetaContact;
 	};
 	formData?: IMessageFormData[];
 }
