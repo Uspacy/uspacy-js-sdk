@@ -339,6 +339,7 @@ export interface ICrmConnectEntity {
 	id: number;
 	owner: number;
 	title: string;
+	kanban_stage_id?: number;
 }
 
 export interface IQuickAnswer {
