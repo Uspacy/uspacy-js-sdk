@@ -16,6 +16,7 @@ export type FieldTypes =
 	| 'user_id'
 	| 'photo'
 	| 'file'
+	| 'document'
 	| 'address'
 	| 'legal_details'
 	| 'entity_reference'
@@ -114,6 +115,7 @@ export interface IFieldValue {
 	color: string;
 	sort: number;
 	selected: boolean;
+	active?: boolean;
 }
 export interface IFields {
 	data: IField[];

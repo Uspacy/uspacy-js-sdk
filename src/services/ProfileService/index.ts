@@ -6,7 +6,8 @@ import { IField } from '../../models/field';
 import { IRequisite, IRequisitesResponse, IRequisiteUpdate, ITemplate, ITemplateResponse, ITemplateUpdate } from '../../models/requisites';
 import { IResponseWithMessage } from '../../models/response';
 import { IPortalSettings } from '../../models/settings';
-import { IOnlineStatus, IUser } from '../../models/user';
+import { IOnlineStatus, IUser, IUserStatus } from '../../models/user';
+import { ISetUserStatusDto } from './dto/set-status.dto';
 
 /**
  * Users service
@@ -239,5 +240,29 @@ export class ProfileService {
 
 	getProfileOnlineStatus() {
 		return this.httpClient.client.get<IOnlineStatus>(`${this.namespace}/online`);
+	}
+
+	/**
+	 * Get the current user's Slack-like custom status
+	 * @returns the active status, or null when there is none
+	 */
+	getStatus() {
+		return this.httpClient.client.get<{ status: IUserStatus | null }>(`${this.namespace}/status`);
+	}
+
+	/**
+	 * Set (create or overwrite) the current user's custom status
+	 * @param body emoji (required) + optional title, description and removeStatusAfter
+	 * @returns the saved status
+	 */
+	setStatus(body: ISetUserStatusDto) {
+		return this.httpClient.client.post<{ status: IUserStatus | null }>(`${this.namespace}/status`, body);
+	}
+
+	/**
+	 * Clear (delete) the current user's custom status
+	 */
+	clearStatus() {
+		return this.httpClient.client.delete<{ status: null }>(`${this.namespace}/status`);
 	}
 }

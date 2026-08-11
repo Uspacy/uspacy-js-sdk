@@ -18,6 +18,7 @@ export enum MessageType {
 	VIDEO = 'VIDEO',
 	GIF = 'GIF',
 	FORM_SUBMISSION = 'FORM_SUBMISSION',
+	SYSTEM = 'SYSTEM',
 }
 
 export enum ERelationsEntity {
@@ -50,12 +51,16 @@ export enum EMetaEntity {
 	POST = 'post',
 	STORY = 'story',
 	REEL = 'reel',
+	NOTE = 'note',
 }
 
 export enum EMetaType {
 	COMMENT = 'comment',
 	REACTION = 'reaction',
 	DEFAULT = 'default',
+	CREATED = 'created',
+	UPDATED = 'updated',
+	DELETED = 'deleted',
 }
 
 export enum EMessageStatus {
@@ -105,6 +110,7 @@ export interface IMessage {
 			text: string;
 			attachedFiles: { url: string; type: string }[];
 			url: string;
+			entityId?: string;
 		};
 	};
 	formData?: IMessageFormData[];
@@ -160,6 +166,7 @@ export interface IChat {
 	assigned?: boolean;
 	customer_contact?: ICrmConnectEntity;
 	firstReplyAt?: number;
+	operatorReactionTime?: number;
 	createdAt?: number;
 	responder?: number[];
 }
@@ -171,6 +178,8 @@ export interface IFetchChatsParams {
 	createdAtTo?: number;
 	firstReplyAtFrom?: number;
 	firstReplyAtTo?: number;
+	operatorReactionTimeFrom?: number;
+	operatorReactionTimeTo?: number;
 	externalLineIds?: string[];
 	name?: string;
 	type?: 'EXTERNAL';
@@ -179,12 +188,31 @@ export interface IFetchChatsParams {
 	page?: number;
 	list?: number;
 	withoutAnswers?: boolean;
-	// Filter by external statuses (comma-separated active,inactive,undistributed)
-	externalStatuses?: string;
+	// Filter by external statuses (comma-separated active,inactive,undistributed).
+	// In cursor mode this must be a single status: 'active' | 'undistributed' | 'inactive'.
+	externalStatuses?: IExternalChatStatus | string;
 	// Filter by member ids (comma-separated)
 	members?: string;
 	// Filter by responder ids (comma-separated)
 	responder?: string;
+	withoutOperatorReaction?: boolean;
+	// Cursor pagination (external chats). When `cursor` or `limit` is set, the endpoint
+	// returns ICursorPaginatedChats instead of a bare IChat[] — use getExternalChatsPage.
+	cursor?: string;
+	limit?: number;
+}
+
+export type IExternalChatStatus = 'active' | 'undistributed' | 'inactive';
+
+/**
+ * Cursor (keyset) paginated external chats response.
+ * `pinned` is present only on the first page (no `cursor`).
+ */
+export interface ICursorPaginatedChats {
+	pinned?: IChat[];
+	data: IChat[];
+	nextCursor: string | null;
+	hasNext: boolean;
 }
 
 export interface IMessagesGroup {
@@ -233,6 +261,36 @@ export enum ETimeFormShow {
 	AFTER_MESSAGE = 'afterMessage',
 }
 
+export enum WidgetSocialView {
+	VERTICAL = 'vertical',
+	HORIZONTAL = 'horizontal',
+}
+
+export enum WidgetPosition {
+	BOTTOM_LEFT = 'bottom-left',
+	BOTTOM_RIGHT = 'bottom-right',
+	BOTTOM_CENTER = 'bottom-center',
+}
+
+export interface IWidgetSocialItem {
+	id?: string;
+	order: number;
+	icon: {
+		type: string;
+		icon?: string;
+		iconColor?: string;
+		backgroundColor?: string;
+	};
+	canal: string;
+	link: string;
+	active?: boolean;
+	invalidData?: {
+		icon?: boolean;
+		canal?: boolean;
+		link?: boolean;
+	};
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -249,6 +307,7 @@ export interface ICreateWidgetData {
 		backgroundColor?: string;
 		operatorAvatar?: string;
 		showSignature?: boolean;
+		position?: WidgetPosition;
 	};
 	config?: {
 		crmEntity: 'lead' | 'contact' | 'empty';
@@ -258,6 +317,10 @@ export interface ICreateWidgetData {
 		timeShowForm: ETimeFormShow;
 		formWelcomeMessage: string;
 		messageAfterFormSend: string;
+	};
+	socialSettings?: {
+		view?: WidgetSocialView;
+		items: IWidgetSocialItem[];
 	};
 }
 
@@ -317,4 +380,13 @@ export interface IUserSettings {
 	authUserId: number;
 	isInternalMsgSoundEnabled: boolean;
 	isExternalMsgSoundEnabled: boolean;
+}
+
+export interface IChatNote {
+	id: string;
+	chatId: string;
+	text: string;
+	authorId: number;
+	createdAt: number;
+	messageId?: string;
 }

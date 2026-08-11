@@ -5,8 +5,10 @@ import {
 	FetchMessagesRequest,
 	GoToMessageRequest,
 	IChat,
+	IChatNote,
 	ICreateQuickAnswerDTO,
 	ICreateWidgetData,
+	ICursorPaginatedChats,
 	IFetchChatsParams,
 	IGetQuickAnswerParams,
 	IQuickAnswer,
@@ -30,6 +32,20 @@ export class MessengerService {
 	async getChats(props: IFetchChatsParams) {
 		return this.httpClient.client.get<IChat[]>(`${this.namespace}/chats`, {
 			params: { ...props },
+		});
+	}
+
+	/**
+	 * Get a cursor (keyset) paginated page of external chats for one status bucket.
+	 * Hits the same `/chats` endpoint but engages cursor mode (`cursor`/`limit` present)
+	 * and returns ICursorPaginatedChats: `{ pinned?, data, nextCursor, hasNext }`.
+	 * Pass `externalStatuses` as a single status ('active' | 'undistributed' | 'inactive').
+	 * Omit `cursor` for the first page (which also returns the `pinned` block).
+	 */
+	async getExternalChatsPage(props: IFetchChatsParams) {
+		return this.httpClient.client.get<ICursorPaginatedChats>(`${this.namespace}/chats`, {
+			// `type` set last so a caller-supplied `type` (incl. explicit undefined) can't override it.
+			params: { ...props, type: 'EXTERNAL' },
 		});
 	}
 
@@ -224,5 +240,45 @@ export class MessengerService {
 	 */
 	updateSettings(settings: Partial<Omit<IUserSettings, 'authUserId'>>): Promise<{ data: IUserSettings }> {
 		return this.httpClient.client.patch(`${this.namespace}/user-settings`, settings);
+	}
+
+	/**
+	 * get notes for chat
+	 * @param chatId chat id
+	 * @returns list of notes for chat
+	 */
+	getChatNotes(chatId: IChat['id']): Promise<{ data: IChatNote[] }> {
+		return this.httpClient.client.get(`${this.namespace}/notes`, {
+			params: { chatId },
+		});
+	}
+
+	/**
+	 * create note for chat
+	 * @param chatId chat id
+	 * @param text note text
+	 * @returns created note
+	 */
+	createChatNote(chatId: IChat['id'], text: string): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.post(`${this.namespace}/notes`, { chatId, text });
+	}
+
+	/**
+	 * delete note for chat
+	 * @param noteId note id
+	 * @returns deleted note
+	 */
+	deleteChatNote(noteId: IChatNote['id']): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.delete(`${this.namespace}/notes/${noteId}`);
+	}
+
+	/**
+	 * update note for chat
+	 * @param noteId note id
+	 * @param text new note text
+	 * @returns updated note
+	 */
+	updateChatNote(noteId: IChatNote['id'], text: string): Promise<{ data: IChatNote }> {
+		return this.httpClient.client.patch(`${this.namespace}/notes/${noteId}`, { text });
 	}
 }
