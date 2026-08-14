@@ -184,11 +184,18 @@ export type ComponentData = {
 	actionType?: string;
 };
 
+export enum DeactivatedReason {
+	TARIFF = 'tariff',
+	RATE_LIMIT = 'ratelimit',
+	OTHER = 'other',
+}
+
 export interface IWorkflow {
 	id?: number;
 	portal_id: number;
 	title: string;
 	active: boolean;
+	deactivatedReason?: DeactivatedReason | null;
 	description: string;
 	automations_data: {
 		trigger: ITrigger;
