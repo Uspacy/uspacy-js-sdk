@@ -693,9 +693,9 @@ export class CrmEntitiesService {
 	 * replicate entity item
 	 * @returns entity item
 	 */
-	replicateEntityItem(body: { code: string; id: number }) {
-		const { code, id } = body;
-		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/replicate`, null, {
+	replicateEntityItem(body: { code: string; id: number; item?: Partial<IEntityMainData> }) {
+		const { code, id, item } = body ?? { item: null };
+		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/replicate`, item, {
 			urlParams: { code, id },
 		});
 	}
