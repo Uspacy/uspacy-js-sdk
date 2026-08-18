@@ -47,6 +47,7 @@
 <a href="services_AutomationsService.AutomationsService.html#deleteWorkflow" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Workflow</span></a>
 <a href="services_AutomationsService.AutomationsService.html#getAutomations" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Automations</span></a>
 <a href="services_AutomationsService.AutomationsService.html#getWorkflows" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Workflows</span></a>
+<a href="services_AutomationsService.AutomationsService.html#lookupContributors" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>lookup<wbr/>Contributors</span></a>
 <a href="services_AutomationsService.AutomationsService.html#toggleAutomation" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Automation</span></a>
 <a href="services_AutomationsService.AutomationsService.html#toggleWorkflow" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Workflow</span></a>
 <a href="services_AutomationsService.AutomationsService.html#updateWorkflow" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Workflow</span></a>
@@ -205,6 +206,23 @@
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_workflows.IWorkflowsResponse.html" class="tsd-signature-type tsd-kind-interface">IWorkflowsResponse</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="lookupContributors" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>lookup<wbr/>Contributors</span><a href="#lookupContributors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="lookupContributors.lookupContributors-1"><span class="tsd-kind-call-signature">lookup<wbr/>Contributors</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">body</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/models_contributors.IContributorsLookupResponse.html" class="tsd-signature-type tsd-kind-type-alias">IContributorsLookupResponse</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#lookupContributors.lookupContributors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get titles of processes and workers by their ids</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">body</span>: <a href="../types/models_contributors.IContributorsLookupRequest.html" class="tsd-signature-type tsd-kind-type-alias">IContributorsLookupRequest</a></h5>
+<div class="tsd-comment tsd-typography"><p>ids grouped by contributor type</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/models_contributors.IContributorsLookupResponse.html" class="tsd-signature-type tsd-kind-type-alias">IContributorsLookupResponse</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="toggleAutomation" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toggle<wbr/>Automation</span><a href="#toggleAutomation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -295,6 +313,7 @@
 <li><a href="#deleteWorkflow" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Workflow</span></a></li>
 <li><a href="#getAutomations" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Automations</span></a></li>
 <li><a href="#getWorkflows" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Workflows</span></a></li>
+<li><a href="#lookupContributors" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>lookup<wbr/>Contributors</span></a></li>
 <li><a href="#toggleAutomation" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Automation</span></a></li>
 <li><a href="#toggleWorkflow" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Workflow</span></a></li>
 <li><a href="#updateWorkflow" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Workflow</span></a></li></ul></div></details></div>
@@ -321,6 +340,7 @@
 <li><a href="../modules/models_automations.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/automations</span></a></li>
 <li><a href="../modules/models_booking.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/booking</span></a></li>
 <li><a href="../modules/models_comment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/comment</span></a></li>
+<li><a href="../modules/models_contributors.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/contributors</span></a></li>
 <li><a href="../modules/models_couchdb.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/couchdb</span></a></li>
 <li><a href="../modules/models_crm_calls.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/crm-<wbr/>calls</span></a></li>
 <li><a href="../modules/models_crm_card_blocks.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>models/crm-<wbr/>card-<wbr/>blocks</span></a></li>
