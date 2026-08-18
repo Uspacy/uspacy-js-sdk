@@ -688,4 +688,15 @@ export class CrmEntitiesService {
 			urlParams: { code, id },
 		});
 	}
+
+	/**
+	 * replicate entity item
+	 * @returns entity item
+	 */
+	replicateEntityItem(body: { code: string; id: number; item?: Partial<IEntityMainData> }) {
+		const { code, id, item } = body ?? { item: null };
+		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/replicate`, item, {
+			urlParams: { code, id },
+		});
+	}
 }
