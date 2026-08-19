@@ -137,7 +137,7 @@ export class EmailService {
 	 * @returns connected crm entities
 	 */
 	getEmailConnectedCrmEntities(id: number) {
-		return this.httpClient.client.get<ILettersCrmEntities>(`${this.namespace}/letters/:id/crm_entities`, { urlParams: { id } });
+		return this.httpClient.client.get<{ crm_entities: ILettersCrmEntities }>(`${this.namespace}/letters/:id/crm_entities`, { urlParams: { id } });
 	}
 
 	/**
