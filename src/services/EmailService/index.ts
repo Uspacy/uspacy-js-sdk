@@ -132,6 +132,15 @@ export class EmailService {
 	}
 
 	/**
+	 * Get email connected crm entities
+	 * @param id email letter id
+	 * @returns connected crm entities
+	 */
+	getEmailConnectedCrmEntities(id: number) {
+		return this.httpClient.client.get<ILettersCrmEntities>(`${this.namespace}/letters/:id/crm_entities`, { urlParams: { id } });
+	}
+
+	/**
 	 * Create email letter
 	 * @param data email letter payload
 	 * @returns create email letter entity

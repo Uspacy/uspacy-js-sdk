@@ -101,6 +101,12 @@ export interface ILetter {
 		deals: ICrmEntity[];
 		leads: ICrmEntity[];
 	};
+	crm_entities_count?: {
+		deals: number;
+		leads: number;
+		contacts: number;
+		companies: number;
+	};
 }
 
 export interface IEmailBox {
