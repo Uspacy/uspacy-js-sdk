@@ -1,10 +1,13 @@
+import { IRelativePeriod } from './relative-period';
 import { IMeta } from './response';
 import { ISmartFilters } from './smart-filters';
 
 export type MoneyFilterType = { from?: number; to?: number; currency?: string };
+
 export type DateFilterType = {
 	namePeriods: string[];
 	certainPeriod: number[];
+	relativePeriod?: IRelativePeriod;
 };
 
 export interface IAnalyticReportFilter {
