@@ -301,6 +301,29 @@ export interface IWidgetSocialItem {
 	};
 }
 
+export enum CreateCrmEntityType {
+	LEAD = 'lead',
+	CONTACT = 'contact',
+	DEAL = 'deal',
+	CONTACT_WITH_DEAL = 'contactWithDeal',
+}
+
+export interface IConnectedCrmEntities {
+	enabled: boolean;
+	createFromUnknown: {
+		enabled: boolean;
+		entityType: CreateCrmEntityType;
+		source: string;
+		responsibleUserId: number;
+	};
+	createFromKnown: {
+		enabled: boolean;
+		entityType: CreateCrmEntityType;
+		source: string;
+		responsibleUserId: number;
+	};
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -327,6 +350,7 @@ export interface ICreateWidgetData {
 		timeShowForm: ETimeFormShow;
 		formWelcomeMessage: string;
 		messageAfterFormSend: string;
+		connectedCrmEntities?: IConnectedCrmEntities;
 	};
 	socialSettings?: {
 		view?: WidgetSocialView;
