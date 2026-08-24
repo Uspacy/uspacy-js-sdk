@@ -64,6 +64,7 @@
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntitiesCurrenciesAmount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>Currencies<wbr/>Amount</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntitiesWithFunnels" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a>
+<a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFieldByCode" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Field<wbr/>By<wbr/>Code</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFields" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityFunnel" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Funnel</span></a>
 <a href="services_CrmEntitiesService.CrmEntitiesService.html#getEntityItem" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Item</span></a>
@@ -566,10 +567,33 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_crm_entities.IEntityMainData.html" class="tsd-signature-type tsd-kind-interface">IEntityMainData</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array crm entities list</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getEntityFieldByCode" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Field<wbr/>By<wbr/>Code</span><a href="#getEntityFieldByCode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getEntityFieldByCode.getEntityFieldByCode-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Field<wbr/>By<wbr/>Code</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">entityCode</span>, <span class="tsd-kind-parameter">fieldCode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFieldByCode.getEntityFieldByCode-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get entity field by code</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">entityCode</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">fieldCode</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>field code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity fields</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEntityFields" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Entity<wbr/>Fields</span><a href="#getEntityFields" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getEntityFields.getEntityFields-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Fields</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFields.getEntityFields-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getEntityFields.getEntityFields-1"><span class="tsd-kind-call-signature">get<wbr/>Entity<wbr/>Fields</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">related</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getEntityFields.getEntityFields-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get entity fields</p>
 </div>
@@ -579,6 +603,11 @@
 <li>
 <h5><span class="tsd-kind-parameter">code</span>: <span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>entity code</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">related</span>: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+<div class="tsd-comment tsd-typography"><p>for checking sync info in the fields</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_field.IField.html" class="tsd-signature-type tsd-kind-interface">IField</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>entity fields</p>
@@ -1246,6 +1275,7 @@
 <li><a href="#getEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities</span></a></li>
 <li><a href="#getEntitiesCurrenciesAmount" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>Currencies<wbr/>Amount</span></a></li>
 <li><a href="#getEntitiesWithFunnels" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entities<wbr/>With<wbr/>Funnels</span></a></li>
+<li><a href="#getEntityFieldByCode" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Field<wbr/>By<wbr/>Code</span></a></li>
 <li><a href="#getEntityFields" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Fields</span></a></li>
 <li><a href="#getEntityFunnel" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Funnel</span></a></li>
 <li><a href="#getEntityItem" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Entity<wbr/>Item</span></a></li>
