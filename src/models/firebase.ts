@@ -10,6 +10,7 @@ export enum EFirabaseService {
 	MARKETING = 'marketing',
 	USERS = 'users',
 	CHAT = 'chat',
+	CONTAINER = 'container',
 }
 
 export enum EFirabaseDbName {
@@ -30,4 +31,5 @@ export enum EFirabaseDbName {
 	CHAT_REQUEST_JOURNAL_FILTERS = 'chat-request-journal-filters',
 	USERS_SETTINGS = 'users-settings',
 	USERS_PRESETS = 'users-presets',
+	CONTAINER_LEFT_MENU = 'container-left-menu',
 }
