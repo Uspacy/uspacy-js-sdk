@@ -351,6 +351,7 @@ export interface ICreateWidgetData {
 		formWelcomeMessage: string;
 		messageAfterFormSend: string;
 		connectedCrmEntities?: IConnectedCrmEntities;
+		disableSendMessageWhileFormNotSuccess?: boolean;
 	};
 	socialSettings?: {
 		view?: WidgetSocialView;
