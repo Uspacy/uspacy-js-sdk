@@ -1,4 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IEntityAmount, IEntityData } from './crm-entities';
+import { IMeta } from './response';
+
+export interface IKanbanBoardStage {
+	data: IEntityData[];
+	meta: IMeta;
+	amount: IEntityAmount | null;
+}
+
+export interface IKanbanBoardResponse {
+	stages: {
+		[stageId: string]: IKanbanBoardStage;
+	};
+}
+
 export interface IColumn {
 	id: string;
 	title: string;
