@@ -1,4 +1,5 @@
 import { IMeta } from './response';
+import { ConditionType, DeactivatedReason, IFilterState } from './workflows';
 
 export interface IActionEntity {
 	id: number;
@@ -13,6 +14,8 @@ export interface IConditionEntity {
 	type: string;
 	value?: string | number[] | string[];
 	logic: string;
+	condition_type?: ConditionType;
+	filter_state?: IFilterState;
 }
 
 export interface ITriggerEntity {
@@ -24,6 +27,7 @@ export interface ITriggerEntity {
 export interface IAutomation {
 	actions: IActionEntity[];
 	active: boolean;
+	deactivatedReason?: DeactivatedReason | null;
 	conditions: IConditionEntity[];
 	created_at: string;
 	description: string;

@@ -1,3 +1,8 @@
+export interface IInstalledApp {
+	code: string;
+	integration_token: string;
+}
+
 export interface IPortalSettings {
 	nameFormat: string;
 	lang: string;
@@ -20,6 +25,6 @@ export interface IPortalSettings {
 	logo: string;
 	thumbnail: string;
 	click2callUrl?: string;
-	installedApps: string[];
+	installedApps: IInstalledApp[];
 	hideFiredEmployees?: boolean;
 }

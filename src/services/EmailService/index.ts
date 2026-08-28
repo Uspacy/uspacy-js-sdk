@@ -6,6 +6,7 @@ import {
 	ICrmSetting,
 	IEmailBox,
 	IEmailBoxes,
+	IEmailBoxesFiltersParams,
 	IEmailFiltersParams,
 	IFolders,
 	ILetter,
@@ -33,6 +34,15 @@ export class EmailService {
 	 */
 	getEmailsBoxes() {
 		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/`);
+	}
+
+	/**
+	 * Get emails boxes list for settings
+	 * @param params filters for emails boxes list
+	 * @returns Array with emails boxes list entity
+	 */
+	getSettingsEmailsBoxes(params?: IEmailBoxesFiltersParams) {
+		return this.httpClient.client.get<IResponseWithMeta<IEmailBoxes>>(`${this.namespace}/emails/list`, { ...(params && { params }) });
 	}
 
 	/**
@@ -119,6 +129,15 @@ export class EmailService {
 	 */
 	getEmailLetter(id: number) {
 		return this.httpClient.client.get<ILetter>(`${this.namespace}/letters/:id`, { urlParams: { id } });
+	}
+
+	/**
+	 * Get email connected crm entities
+	 * @param id email letter id
+	 * @returns connected crm entities
+	 */
+	getEmailConnectedCrmEntities(id: number) {
+		return this.httpClient.client.get<{ crm_entities: ILettersCrmEntities }>(`${this.namespace}/letters/:id/crm_entities`, { urlParams: { id } });
 	}
 
 	/**

@@ -124,6 +124,7 @@ export interface IDocumentTemplateFilters {
 	page?: number;
 	list?: number;
 	binding_entities_template?: { entity_id: number; funnels: number[] }[];
+	binding_entities?: { entity_id: number; funnels: number[] }[];
 	search?: string;
 	is_active?: string[];
 	created_at?: string[];

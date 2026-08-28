@@ -16,6 +16,7 @@ export type FieldTypes =
 	| 'user_id'
 	| 'photo'
 	| 'file'
+	| 'document'
 	| 'address'
 	| 'legal_details'
 	| 'entity_reference'
@@ -73,6 +74,7 @@ export interface IField {
 	sort?: string | number;
 	default_value?: string;
 	values?: IFieldValue[];
+	sync_fields?: ISyncField[];
 	system_field: boolean;
 	entity_reference_id?: number;
 	base_field?: boolean;
@@ -98,7 +100,13 @@ export interface IFieldCreate {
 	sort?: number;
 	default_value?: string;
 	values?: IFieldValue[];
+	sync_fields?: ISyncField[];
 	entity_reference_id?: number;
+}
+
+export interface ISyncField {
+	entity_code: string;
+	field_code: string;
 }
 
 export interface IFieldValue {
@@ -107,6 +115,7 @@ export interface IFieldValue {
 	color: string;
 	sort: number;
 	selected: boolean;
+	active?: boolean;
 }
 export interface IFields {
 	data: IField[];

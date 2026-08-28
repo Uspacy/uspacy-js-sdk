@@ -3,6 +3,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { IApp } from '../../models/app';
 import { IAutomation } from '../../models/automations';
+import { IContributorsLookupRequest, IContributorsLookupResponse } from '../../models/contributors';
 import { IResponseWithMeta } from '../../models/response';
 import { IWorkflow, IWorkflowsResponse } from '../../models/workflows';
 
@@ -51,6 +52,14 @@ export class AutomationsService {
 	 */
 	toggleAutomation(id: number, body: IAutomation) {
 		return this.httpClient.client.patch(`${this.namespace_workers}/:id`, body, { urlParams: { id } });
+	}
+
+	/**
+	 * Get titles of processes and workers by their ids
+	 * @param body ids grouped by contributor type
+	 */
+	lookupContributors(body: IContributorsLookupRequest) {
+		return this.httpClient.client.post<IContributorsLookupResponse>(`${this.namespace}lookup`, body);
 	}
 
 	/**

@@ -100,6 +100,12 @@ export interface ILetter {
 		deals: ICrmEntity[];
 		leads: ICrmEntity[];
 	};
+	crm_entities_count?: {
+		deals: number;
+		leads: number;
+		contacts: number;
+		companies: number;
+	};
 }
 
 export interface IEmailBox {
@@ -191,6 +197,13 @@ export interface IEmailFiltersParams {
 	is_read?: number[];
 	q?: string;
 	contact_name?: string;
+	[key: string]: any;
+}
+
+export interface IEmailBoxesFiltersParams {
+	search?: string;
+	owner_ids?: number[];
+	available_to_ids?: number[];
 	[key: string]: any;
 }
 

@@ -89,11 +89,25 @@ export class CrmEntitiesService {
 	/**
 	 * Get entity fields
 	 * @param code entity code
+	 * @param related for checking sync info in the fields
 	 * @returns entity fields
 	 */
-	getEntityFields(code: string) {
+	getEntityFields(code: string, related = false) {
 		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/:code/fields`, {
 			urlParams: { code },
+			params: { ...(related && { related }) },
+		});
+	}
+
+	/**
+	 * Get entity field by code
+	 * @param entityCode entity code
+	 * @param fieldCode field code
+	 * @returns entity fields
+	 */
+	getEntityFieldByCode(entityCode: string, fieldCode: string) {
+		return this.httpClient.client.get<IResponseWithMeta<IField>>(`${this.namespace}/:entityCode/fields/:fieldCode`, {
+			urlParams: { entityCode, fieldCode },
 		});
 	}
 
@@ -154,6 +168,23 @@ export class CrmEntitiesService {
 		return this.httpClient.client.delete(`${this.namespace}/:code/fields/:fieldCode`, {
 			urlParams: { code, fieldCode },
 		});
+	}
+
+	/**
+	 * Update entity list value status
+	 * @param code entity code
+	 * @param fieldCode entity field code
+	 * @param valueCode entity list value code
+	 * @param active value status
+	 */
+	updateEntityListValueStatus(code: string, fieldCode: string, valueCode: string, active: boolean) {
+		return this.httpClient.client.patch(
+			`${this.namespace}/:code/lists/:fieldCode/:valueCode`,
+			{ active },
+			{
+				urlParams: { code, fieldCode, valueCode },
+			},
+		);
 	}
 
 	/**
@@ -687,6 +718,17 @@ export class CrmEntitiesService {
 		const formData = new FormData();
 		formData.append('crm_avatar', file ? file : '');
 		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/upload_avatar/`, formData, {
+			urlParams: { code, id },
+		});
+	}
+
+	/**
+	 * replicate entity item
+	 * @returns entity item
+	 */
+	replicateEntityItem(body: { code: string; id: number; item?: Partial<IEntityMainData> }) {
+		const { code, id, item } = body ?? { item: null };
+		return this.httpClient.client.post<IEntityData>(`${this.namespace}/:code/:id/replicate`, item, {
 			urlParams: { code, id },
 		});
 	}

@@ -3,6 +3,7 @@ import { IComment } from './comment';
 import { ITask as IActivity } from './crm-tasks';
 import { IFile } from './files';
 import { IGroup } from './groups';
+import { IReminder } from './reminders';
 import { ISmartFilters } from './smart-filters';
 import { ITaskTimerList } from './timer';
 
@@ -110,6 +111,7 @@ export interface ITask {
 	subtasksInfo?: ISubTasksInfo;
 	checklists?: IChecklist[];
 	tableName?: string;
+	reminders?: IReminder[];
 	[key: string]: any;
 }
 
