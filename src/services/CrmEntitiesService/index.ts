@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { IEntityCardResponse } from '../../models/crm-card';
 import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
@@ -19,6 +20,7 @@ import { ITransferEntitiesData, ITransferOfCasesProgress } from '../../models/tr
 export class CrmEntitiesService {
 	private namespace = '/crm/v1/entities';
 	private kanbanNamespace = '/gateway/v1/kanban';
+	private cardNamespace = '/gateway/v1';
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
 	private namespaceTransferEntities = '/crm/v1/transfers';
@@ -548,6 +550,22 @@ export class CrmEntitiesService {
 			signal,
 			params,
 			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get entity card in a single batch request: the entity itself + first page of every timeline source.
+	 * Replaces the entity request and the per-source timeline requests on the first card render.
+	 * Pagination (pages 2+) stays on the per-source endpoints.
+	 * @param code entity code
+	 * @param id entity item id
+	 * @param signal AbortSignal for cancelling request
+	 * @returns entity and dictionary of timeline sources keyed by activity type, each with { data, meta } or { data, links }
+	 */
+	getEntityCard(code: string, id: number | string, signal?: AbortSignal) {
+		return this.httpClient.client.get<IEntityCardResponse>(`${this.cardNamespace}/:code/:id`, {
+			signal,
+			urlParams: { code, id },
 		});
 	}
 
