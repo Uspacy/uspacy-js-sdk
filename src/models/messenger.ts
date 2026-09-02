@@ -379,6 +379,8 @@ export interface IQuickAnswer {
 	updatedAt: number;
 	id: string;
 	isOutOfQuota?: boolean;
+	type?: 'messenger' | 'mail';
+	mailTheme?: string;
 }
 
 export interface IGetQuickAnswerParams {
