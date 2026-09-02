@@ -375,6 +375,8 @@ export interface ICreateQuickAnswerDTO {
 	message?: string;
 	availableForUsers?: number[];
 	availableInExternalLines?: [];
+	type?: 'messenger' | 'mail';
+	mailTheme?: string;
 }
 
 export interface IRelatedChatItem {
