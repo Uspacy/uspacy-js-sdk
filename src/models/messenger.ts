@@ -381,6 +381,7 @@ export interface IQuickAnswer {
 	isOutOfQuota?: boolean;
 	type?: 'messenger' | 'mail';
 	mailTheme?: string;
+	attachmentFiles?: IFile[];
 }
 
 export interface IGetQuickAnswerParams {
@@ -403,6 +404,7 @@ export interface ICreateQuickAnswerDTO {
 	availableInExternalLines?: [];
 	type?: 'messenger' | 'mail';
 	mailTheme?: string;
+	attachmentFiles?: IFile[];
 }
 
 export interface IRelatedChatItem {
