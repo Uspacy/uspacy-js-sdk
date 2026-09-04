@@ -1,9 +1,11 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { IEntityCardResponse } from '../../models/crm-card';
 import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
+import { IKanbanBoardResponse } from '../../models/crm-kanban';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
@@ -17,6 +19,8 @@ import { ITransferEntitiesData, ITransferOfCasesProgress } from '../../models/tr
 @injectable()
 export class CrmEntitiesService {
 	private namespace = '/crm/v1/entities';
+	private kanbanNamespace = '/gateway/v1/kanban';
+	private cardNamespace = '/gateway/v1';
 	private entityNamespace = '/crm/v1/entity';
 	private reasonsNamespace = '/crm/v1/reasons';
 	private namespaceTransferEntities = '/crm/v1/transfers';
@@ -503,6 +507,39 @@ export class CrmEntitiesService {
 		return this.httpClient.client.get(`${this.namespace}/:code/kanban/stage/:stageId`, {
 			params,
 			urlParams: { code, stageId },
+		});
+	}
+
+	/**
+	 * Get kanban board in a single batch request: first page of cards for the passed stages + per-stage amount.
+	 * Replaces the N per-stage card requests (+ N amount requests) on the first board render.
+	 * Pagination (pages 2+) and single-column amount recalculation stay on the per-stage endpoints.
+	 * @param code entity code
+	 * @param params batch board params (stage_ids[], table_fields[], kanban_fields[], filters, per-stage sort_by, with_amount, amount_currency, list)
+	 * @param signal AbortSignal for cancelling request
+	 * @returns dictionary of stages keyed by stage id, each with { data, meta, amount }
+	 */
+	getKanbanBoard(code: string, params: object, signal?: AbortSignal) {
+		return this.httpClient.client.get<IKanbanBoardResponse>(`${this.kanbanNamespace}/:code/board`, {
+			signal,
+			params,
+			urlParams: { code },
+		});
+	}
+
+	/**
+	 * Get entity card in a single batch request: the entity itself + first page of every timeline source.
+	 * Replaces the entity request and the per-source timeline requests on the first card render.
+	 * Pagination (pages 2+) stays on the per-source endpoints.
+	 * @param code entity code
+	 * @param id entity item id
+	 * @param signal AbortSignal for cancelling request
+	 * @returns entity and dictionary of timeline sources keyed by activity type, each with { data, meta } or { data, links }
+	 */
+	getEntityCard(code: string, id: number | string, signal?: AbortSignal) {
+		return this.httpClient.client.get<IEntityCardResponse>(`${this.cardNamespace}/:code/:id`, {
+			signal,
+			urlParams: { code, id },
 		});
 	}
 
