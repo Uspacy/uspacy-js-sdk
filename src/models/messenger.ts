@@ -341,6 +341,11 @@ export interface ICrmConnectEntity {
 	kanban_stage_id?: number;
 }
 
+export enum EQuickAnswerType {
+	MESSENGER = 'messenger',
+	MAIL = 'mail',
+}
+
 export interface IQuickAnswer {
 	name: string;
 	message: string;
@@ -353,7 +358,7 @@ export interface IQuickAnswer {
 	updatedAt: number;
 	id: string;
 	isOutOfQuota?: boolean;
-	type?: 'messenger' | 'mail';
+	type?: EQuickAnswerType;
 	mailTheme?: string;
 	attachmentFiles?: IFile[];
 }
@@ -369,6 +374,7 @@ export interface IGetQuickAnswerParams {
 	boolean_operator?: 'AND' | 'OR';
 	q?: string;
 	includeOutOfQuota?: boolean;
+	type?: EQuickAnswerType;
 }
 
 export interface ICreateQuickAnswerDTO {
