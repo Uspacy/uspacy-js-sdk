@@ -31,5 +31,5 @@ export enum EFirabaseDbName {
 	CHAT_REQUEST_JOURNAL_FILTERS = 'chat-request-journal-filters',
 	USERS_SETTINGS = 'users-settings',
 	USERS_PRESETS = 'users-presets',
-	CONTAINER_LEFT_MENU = 'container-left-menu',
+	CONTAINER_NAV_MENU = 'container-nav-menu',
 }
