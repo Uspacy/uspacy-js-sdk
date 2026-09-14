@@ -103,7 +103,7 @@ export interface IForm {
 	name: string;
 	active: boolean;
 	config: {
-		crmEntity: 'lead' | 'contact';
+		crmEntity: 'lead' | 'contact' | string;
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
