@@ -212,6 +212,7 @@ export interface IExecutionNodeDetail {
 	action_response?: Record<string, unknown> | Record<string, unknown>[] | null;
 	error_message?: string | null;
 	retry_count?: number;
+	pause_skipped_by?: number | null;
 	worker?: IExecutionNodeWorker | null;
 	process?: IExecutionNodeProcess | null;
 }
