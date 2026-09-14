@@ -20,6 +20,8 @@ export interface IExecutionEntity {
 	type: string;
 	id: number;
 	title?: string;
+	entity_type?: string;
+	entity_id?: number;
 }
 
 export interface IExecutionTimestamps {
