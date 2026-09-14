@@ -2,7 +2,13 @@ import { ISmartFilters } from './smart-filters';
 
 export type ExecutionHistoryType = 'workers' | 'processes';
 
-export type ExecutionStatus = 'completed' | 'active' | 'pending' | 'canceled' | 'failed';
+export enum ExecutionStatuses {
+	COMPLETED = 'completed',
+	IN_PROGRESS = 'active',
+	WAITING = 'pending',
+	CANCELED = 'canceled',
+	ERROR = 'failed',
+}
 
 export interface IExecutionTrigger {
 	service: string;
@@ -32,7 +38,7 @@ export interface IExecutionHistoryItem {
 	automation_id: number;
 	portal_id: number;
 	title: string;
-	status: ExecutionStatus;
+	status: ExecutionStatuses;
 	created_by: number;
 	entity: IExecutionEntity;
 	trigger: IExecutionTrigger;
@@ -61,7 +67,7 @@ export interface IExecutionHistoryParams {
 	page?: number;
 	list?: number;
 	search?: string;
-	status?: ExecutionStatus[];
+	status?: ExecutionStatuses[];
 	created_by?: number[];
 	trigger_entity?: string[];
 	automation_id?: number[];
@@ -153,7 +159,7 @@ export interface IExecutionDetail {
 	portal_id?: number;
 	canceled_by?: number;
 	title: string;
-	status: ExecutionStatus;
+	status: ExecutionStatuses;
 	created_by?: number;
 	entity?: IExecutionEntity;
 	trigger?: IExecutionTrigger;
@@ -164,7 +170,7 @@ export interface IExecutionDetail {
 	nodes: IExecutionNode[];
 }
 
-export interface IExecutionNodeRoute {
+export interface IExecutionActionRoute {
 	method?: string;
 	route?: string;
 	routes?: string[];
@@ -202,7 +208,7 @@ export interface IExecutionNodeDetail {
 	created_at?: number;
 	action_order?: number;
 	action_request?: Record<string, unknown> | string | null;
-	action_route?: IExecutionNodeRoute | string | null;
+	action_route?: IExecutionActionRoute | string | null;
 	action_response?: Record<string, unknown> | Record<string, unknown>[] | null;
 	error_message?: string | null;
 	retry_count?: number;
