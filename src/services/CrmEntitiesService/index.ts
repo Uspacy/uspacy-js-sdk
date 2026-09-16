@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { getMassActionsData } from '../../helpers';
 import { IEntityCardResponse } from '../../models/crm-card';
 import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
@@ -429,7 +430,7 @@ export class CrmEntitiesService {
 	 * @param params query params if editing all entity items
 	 */
 	massEntityItemsDeletion(code: string, { entityIds, exceptIds, all, params }: IMassActions) {
-		const data = { all, entity_ids: entityIds, except_ids: exceptIds };
+		const data = getMassActionsData({ entityIds, exceptIds, all });
 
 		const suffix = typeof params === 'string' ? `/?${params}` : '';
 
@@ -452,9 +453,7 @@ export class CrmEntitiesService {
 	 */
 	massEntityItemsEditing(code: string, { entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
 		const data = {
-			all,
-			entity_ids: entityIds,
-			except_ids: exceptIds,
+			...getMassActionsData({ entityIds, exceptIds, all }),
 			payload,
 			settings,
 		};
