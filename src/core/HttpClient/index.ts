@@ -10,6 +10,7 @@ declare module 'axios' {
 		urlParams?: Record<string, string | number>;
 		_retry?: boolean;
 		useAuth?: boolean;
+		authToken?: string;
 	}
 }
 
@@ -48,7 +49,9 @@ export class HttpClient {
 		const token = await this.tokenService.getToken();
 		const apiUrlFromLocalStorage = typeof window !== 'undefined' ? JSON.parse(localStorage?.getItem('REACT_APP_FORCE_API_URL')) : null;
 
-		if (useAuth) {
+		if (config.authToken) {
+			config.headers = { ...config.headers, Authorization: `Bearer ${config.authToken}` };
+		} else if (useAuth) {
 			if (token) {
 				if (!config.headers?.Authorization) {
 					config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
@@ -92,7 +95,7 @@ export class HttpClient {
 	}
 
 	private async handleResponseError(error: AxiosError): Promise<unknown> {
-		if (error.response?.status === 401 && error.config && !error.config._retry) {
+		if (error.response?.status === 401 && error.config && !error.config._retry && !error.config.authToken) {
 			error.config._retry = true;
 			const usedToken = String(error.config.headers?.Authorization || '').replace('Bearer ', '');
 
