@@ -235,6 +235,16 @@ export interface ILettersCrmEntities {
 	deals?: IEntityData[];
 }
 
+export interface ILetterEntityRelation {
+	id: number;
+	letter_id: number;
+	entity_type: 'task';
+	entity_id: number;
+	title: string | null;
+	created_by: number;
+	created_at: number;
+}
+
 export enum EMailTone {
 	Neutral = 'Neutral',
 	Friendly = 'Friendly',
