@@ -1,1 +1,1 @@
-export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact' | 'localField';
+export type EntityType = 'post' | 'task' | 'comment' | 'lead' | 'deal' | 'company' | 'contact' | 'localField' | string;
