@@ -18,11 +18,22 @@ type LockManagerLike = {
 	request(name: string, callback: () => Promise<void>): Promise<void>;
 };
 
+/**
+ * refresh_token answered 401/403: auth-service rejected the refresh token or the session
+ * (expired or invalid token, "The number of users in the tariff is exceeded!", ...), so the session can't continue
+ */
+const isSessionRejected = (error: unknown) => [401, 403].includes((error as AxiosError)?.response?.status);
+
 @injectable()
 export class HttpClient {
 	public client: AxiosInstance;
 	private static refreshing: Promise<void> | null = null;
+	private static refreshFailures = 0;
+	private static refreshPausedUntil = 0;
+	private static lastRefreshError: unknown = null;
 	private static readonly REFRESH_LOCK = 'uspacy-token-refresh';
+	private static readonly REFRESH_RETRY_DELAY = 2000;
+	private static readonly REFRESH_RETRY_MAX_DELAY = 60000;
 
 	constructor(
 		private tokenService: TokensService,
@@ -45,7 +56,13 @@ export class HttpClient {
 	private async handleRequest(config: AxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
 		// by default useAuth = true;
 		const useAuth = config.useAuth !== false;
-		await this.ensureFreshToken();
+		try {
+			await this.ensureFreshToken();
+		} catch (error) {
+			// Don't send the expired session token after a failed refresh (a 401/403 has already logged out).
+			// A refresh refused without a request (no remember-me session) is left to the 401 handling, as before
+			if (useAuth && !config.authToken && axios.isAxiosError(error)) throw error;
+		}
 		const token = await this.tokenService.getToken();
 		const apiUrlFromLocalStorage = typeof window !== 'undefined' ? JSON.parse(localStorage?.getItem('REACT_APP_FORCE_API_URL')) : null;
 
@@ -95,23 +112,24 @@ export class HttpClient {
 	}
 
 	private async handleResponseError(error: AxiosError): Promise<unknown> {
-		if (error.response?.status === 401 && error.config && !error.config._retry && !error.config.authToken) {
+		// handleRequest rethrows refresh errors: a 401 of refresh_token itself must not start another refresh
+		const isRefreshRequest = !!error.config?.url?.includes('/auth/refresh_token');
+		if (error.response?.status === 401 && error.config && !error.config._retry && !error.config.authToken && !isRefreshRequest) {
 			error.config._retry = true;
 			const usedToken = String(error.config.headers?.Authorization || '').replace('Bearer ', '');
 
 			try {
-				await this.withLock(async () => {
+				await this.refreshSession(async () => {
 					const current = await this.tokenService.getToken();
-					if (current && current !== usedToken) return;
-					await this.tokenService.refreshToken();
+					return !current || current === usedToken;
 				});
 
 				const token = await this.tokenService.getToken();
 				error.config.headers.Authorization = `Bearer ${token}`;
 				return this.client(error.config);
 			} catch (_error) {
-				const status = (_error as AxiosError)?.response?.status;
-				if (!this.sessionService.isSetRememberSession() || status === 401) {
+				// a 401/403 of the refresh has already logged out in refreshSession
+				if (!isSessionRejected(_error) && !this.sessionService.isSetRememberSession()) {
 					await this.logout();
 				}
 				throw _error;
@@ -130,18 +148,37 @@ export class HttpClient {
 	}
 
 	private async ensureFreshToken(): Promise<void> {
+		if (!HttpClient.refreshing && !(await this.tokenService.isExpired())) return;
+		await this.refreshSession(() => this.tokenService.isExpired());
+	}
+
+	/**
+	 * One refresh at a time for all requests (and all tabs, through the lock). A 401/403 ends the session.
+	 * Any other failure (5xx, network error, timeout) pauses refreshing for 2s, 4s, ... up to 60s instead of retrying on every request
+	 */
+	private refreshSession(isNeeded: () => Promise<boolean>): Promise<void> {
 		if (HttpClient.refreshing) return HttpClient.refreshing;
-		if (!(await this.tokenService.isExpired())) return;
-		if (HttpClient.refreshing) return HttpClient.refreshing;
+		if (Date.now() < HttpClient.refreshPausedUntil) return Promise.reject(HttpClient.lastRefreshError);
 
 		HttpClient.refreshing = this.withLock(async () => {
-			if (!(await this.tokenService.isExpired())) return;
-			await this.tokenService.refreshToken();
-		})
-			.catch(() => undefined)
-			.finally(() => {
-				HttpClient.refreshing = null;
-			});
+			try {
+				if (await isNeeded()) await this.tokenService.refreshToken();
+				HttpClient.refreshFailures = 0;
+			} catch (error) {
+				if (isSessionRejected(error)) {
+					// still inside the lock, so other tabs waiting for it find the session already ended
+					await this.logout();
+				} else if (axios.isAxiosError(error)) {
+					const delay = Math.min(HttpClient.REFRESH_RETRY_DELAY * 2 ** HttpClient.refreshFailures, HttpClient.REFRESH_RETRY_MAX_DELAY);
+					HttpClient.refreshFailures++;
+					HttpClient.refreshPausedUntil = Date.now() + delay;
+					HttpClient.lastRefreshError = error;
+				}
+				throw error;
+			}
+		}).finally(() => {
+			HttpClient.refreshing = null;
+		});
 
 		return HttpClient.refreshing;
 	}
