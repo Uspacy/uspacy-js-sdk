@@ -22,7 +22,10 @@ type LockManagerLike = {
  * refresh_token answered 401/403: auth-service rejected the refresh token or the session
  * (expired or invalid token, "The number of users in the tariff is exceeded!", ...), so the session can't continue
  */
-const isSessionRejected = (error: unknown) => [401, 403].includes((error as AxiosError)?.response?.status);
+const isSessionRejected = (error: unknown) => {
+	const status = (error as AxiosError)?.response?.status;
+	return status === 401 || status === 403;
+};
 
 @injectable()
 export class HttpClient {
