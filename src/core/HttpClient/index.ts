@@ -59,12 +59,16 @@ export class HttpClient {
 	private async handleRequest(config: AxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
 		// by default useAuth = true;
 		const useAuth = config.useAuth !== false;
-		try {
-			await this.ensureFreshToken();
-		} catch (error) {
-			// Don't send the expired session token after a failed refresh (a 401/403 has already logged out).
-			// A refresh refused without a request (no remember-me session) is left to the 401 handling, as before
-			if (useAuth && !config.authToken && axios.isAxiosError(error)) throw error;
+		// Only a request that sends the session token refreshes it. Others (public endpoints, an explicit authToken)
+		// can't end the session or wait for a pause because of it
+		if (useAuth && !config.authToken) {
+			try {
+				await this.ensureFreshToken();
+			} catch (error) {
+				// Don't send the expired session token after a failed refresh (a 401/403 has already logged out).
+				// A refresh refused without a request (no remember-me session) is left to the 401 handling, as before
+				if (axios.isAxiosError(error)) throw error;
+			}
 		}
 		const token = await this.tokenService.getToken();
 		const apiUrlFromLocalStorage = typeof window !== 'undefined' ? JSON.parse(localStorage?.getItem('REACT_APP_FORCE_API_URL')) : null;

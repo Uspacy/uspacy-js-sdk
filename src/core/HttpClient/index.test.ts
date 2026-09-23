@@ -6,6 +6,7 @@ import type { ISessionStorage } from '../../models/session-storage';
 import type { IStorageService } from '../../models/storage-service';
 
 const REFRESH_URL = '/auth/v1/auth/refresh_token';
+const SIGN_IN_URL = '/auth/v1/auth/sign_in/';
 const API_URL = '/crm/v1/entities/deals';
 const PUBLIC_URL = '/announce';
 const TARIFF_ERROR = { errors: { text: ['The number of users in the tariff is exceeded!'] }, status: true };
@@ -22,6 +23,7 @@ interface ISdk {
 	SessionService: typeof import('../SessionService').SessionService;
 	SessionStorage: typeof import('../SessionStorage').SessionStorage;
 	TokensService: typeof import('../TokensService').TokensService;
+	AuthService: typeof import('../../services/AuthService').AuthService;
 }
 
 let tokenId = 0;
@@ -78,6 +80,7 @@ const loadSdk = () => {
 			SessionService: require('../SessionService').SessionService,
 			SessionStorage: require('../SessionStorage').SessionStorage,
 			TokensService: require('../TokensService').TokensService,
+			AuthService: require('../../services/AuthService').AuthService,
 		};
 	});
 	return sdk;
@@ -98,6 +101,7 @@ const setup = async ({ rememberSession = true, tokenExpired = true, apiAcceptsTo
 		refreshCalls: 0,
 		refreshGate: Promise.resolve(),
 		apiAuthorizations: [] as string[],
+		signInAuthorizations: [] as string[],
 	};
 
 	const reply = (config: InternalAxiosRequestConfig, status: number, data: unknown): Promise<AxiosResponse> => {
@@ -114,6 +118,11 @@ const setup = async ({ rememberSession = true, tokenExpired = true, apiAcceptsTo
 			const next = server.refreshReplies.shift() ?? 200;
 			if (next === 'network') throw new AxiosError('Network Error', AxiosError.ERR_NETWORK, config, {});
 			if (next !== 200) return reply(config, next, { 401: UNAUTHORIZED, 403: TARIFF_ERROR }[next] ?? { message: 'Server Error' });
+			server.validJwt = createJwt(nowInSeconds() + DAY);
+			return reply(config, 200, { jwt: server.validJwt, refreshToken: createJwt(nowInSeconds() + 14 * DAY), expiresInSeconds: DAY });
+		}
+		if (config.url === SIGN_IN_URL) {
+			server.signInAuthorizations.push(String(config.headers?.Authorization ?? ''));
 			server.validJwt = createJwt(nowInSeconds() + DAY);
 			return reply(config, 200, { jwt: server.validJwt, refreshToken: createJwt(nowInSeconds() + 14 * DAY), expiresInSeconds: DAY });
 		}
@@ -153,6 +162,8 @@ const setup = async ({ rememberSession = true, tokenExpired = true, apiAcceptsTo
 		tokensService,
 		initialJwt,
 		request: (url = API_URL, config: AxiosRequestConfig = {}) => httpClient.client.get(url, config),
+		signIn: () =>
+			new sdk.AuthService(tokensService, httpClient, sessionService).login({ email: 'user@example.test', password: 'secret', remember: true }),
 		// the app stores a new remember-me session, with an access token that has already expired
 		storeExpiredSession: async () => {
 			await tokensService.setToken(createJwt(nowInSeconds() - 60));
@@ -264,14 +275,33 @@ describe('HttpClient token refresh', () => {
 			await expect(ctx.request()).resolves.toMatchObject({ status: 200 });
 			expect(ctx.server.refreshCalls).toBe(4);
 		});
+	});
 
-		it('does not block requests that do not use the session token', async () => {
+	describe('requests that do not send the session token do not refresh it', () => {
+		it.each<[string, AxiosRequestConfig]>([
+			['useAuth: false', { useAuth: false }],
+			['an explicit authToken', { authToken: 'app-token' }],
+		])('%s: goes out without refreshing the expired session, so it cannot end it', async (_, config) => {
 			const ctx = await setup();
-			ctx.server.refreshReplies.push(503);
+			ctx.server.refreshReplies.push(401); // a refresh would log the session out
+			const logout = jest.spyOn(ctx.session, 'removeRememberSession');
 
-			await expect(ctx.request(PUBLIC_URL, { useAuth: false })).resolves.toMatchObject({ status: 200 });
-			expect(ctx.server.refreshCalls).toBe(1);
-			expect(ctx.session.isSetRememberSession()).toBe(true);
+			await expect(ctx.request(PUBLIC_URL, config)).resolves.toMatchObject({ status: 200 });
+			expect(ctx.server.refreshCalls).toBe(0);
+			expect(logout).not.toHaveBeenCalled();
+			expect(await ctx.tokensService.getToken()).toBe(ctx.initialJwt);
+		});
+
+		it('AuthService.login() signs in over a stale stored session without refreshing it', async () => {
+			const ctx = await setup(); // an expired remember-me session is still stored
+			ctx.server.refreshReplies.push(401); // its refresh would log out and reload the page
+			const logout = jest.spyOn(ctx.session, 'removeRememberSession');
+
+			await expect(ctx.signIn()).resolves.toMatchObject({ status: 200 });
+			expect(ctx.server.signInAuthorizations).toEqual(['']);
+			expect(ctx.server.refreshCalls).toBe(0);
+			expect(logout).not.toHaveBeenCalled();
+			expect(await ctx.tokensService.getToken()).toBe(ctx.server.validJwt);
 		});
 	});
 
