@@ -37,11 +37,12 @@ export class AuthService {
 	 */
 	async login({ email, password, code, remember }: ILoginDto) {
 		try {
-			const result = await this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/sign_in/`, {
-				email,
-				password,
-				code,
-			});
+			// A public endpoint: a stale stored session must not be refreshed (or logged out) on the way
+			const result = await this.httpClient.client.post<IResponseJwt>(
+				`${this.namespace}/auth/sign_in/`,
+				{ email, password, code },
+				{ useAuth: false },
+			);
 			if (remember) {
 				this.sessionService.setRememberSession();
 			}
@@ -60,7 +61,7 @@ export class AuthService {
 	 * @returns new jwt tokens
 	 */
 	confirmEmail(body: { email: string; token: string }) {
-		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/confirm_email/`, body);
+		return this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/confirm_email/`, body, { useAuth: false });
 	}
 
 	/**
@@ -97,14 +98,14 @@ export class AuthService {
 	 * @param email user email
 	 */
 	forgotPassword(email: string) {
-		return this.httpClient.client.post(`${this.namespace}/users/forgot_password/`, { email });
+		return this.httpClient.client.post(`${this.namespace}/users/forgot_password/`, { email }, { useAuth: false });
 	}
 
 	/**
 	 * Rest password
 	 */
 	resetPassword(body: IResetPassordDto) {
-		return this.httpClient.client.post(`${this.namespace}/users/reset_password/`, body);
+		return this.httpClient.client.post(`${this.namespace}/users/reset_password/`, body, { useAuth: false });
 	}
 
 	/**
@@ -137,14 +138,14 @@ export class AuthService {
 	 * @param domain portal name
 	 */
 	checkPortalByDomain(domain: string) {
-		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/portals/`, { params: { domain } });
+		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/portals/`, { params: { domain }, useAuth: false });
 	}
 
 	/**
 	 * Create portal
 	 */
 	createPortal(body: ICreatePortalDto) {
-		return this.httpClient.client.post<IPortal>(`${this.namespace}/portals/`, body);
+		return this.httpClient.client.post<IPortal>(`${this.namespace}/portals/`, body, { useAuth: false });
 	}
 
 	/**
