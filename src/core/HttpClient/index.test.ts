@@ -153,6 +153,12 @@ const setup = async ({ rememberSession = true, tokenExpired = true, apiAcceptsTo
 		tokensService,
 		initialJwt,
 		request: (url = API_URL, config: AxiosRequestConfig = {}) => httpClient.client.get(url, config),
+		// the app stores a new remember-me session, with an access token that has already expired
+		storeExpiredSession: async () => {
+			await tokensService.setToken(createJwt(nowInSeconds() - 60));
+			await tokensService.setRefreshToken(createJwt(nowInSeconds() + 14 * DAY));
+			session.setRememberSession();
+		},
 		advance: (ms: number) => {
 			clock.now += ms;
 		},
@@ -240,6 +246,23 @@ describe('HttpClient token refresh', () => {
 			await expect(ctx.request()).resolves.toMatchObject({ status: 200 });
 			expect(ctx.server.refreshCalls).toBe(3);
 			expect(ctx.server.apiAuthorizations).toEqual([`Bearer ${ctx.server.validJwt}`]);
+		});
+
+		it('clears the backoff on logout, so the next session starts with a 2s pause again', async () => {
+			const ctx = await setup();
+			ctx.server.refreshReplies.push(503, 403, 503);
+
+			await expect(ctx.request()).rejects.toMatchObject({ response: { status: 503 } });
+			ctx.advance(2000);
+			await expect(ctx.request()).rejects.toMatchObject({ response: { status: 403 } });
+			await ctx.expectLoggedOut();
+
+			// without the reset, this first failure of the new session would pause refreshing for 4s
+			await ctx.storeExpiredSession();
+			await expect(ctx.request()).rejects.toMatchObject({ response: { status: 503 } });
+			ctx.advance(2000);
+			await expect(ctx.request()).resolves.toMatchObject({ status: 200 });
+			expect(ctx.server.refreshCalls).toBe(4);
 		});
 
 		it('does not block requests that do not use the session token', async () => {

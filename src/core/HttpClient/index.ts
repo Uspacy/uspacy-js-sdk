@@ -139,6 +139,10 @@ export class HttpClient {
 	}
 
 	private async logout(): Promise<void> {
+		// the session is over: the next one starts without its refresh backoff
+		HttpClient.refreshFailures = 0;
+		HttpClient.refreshPausedUntil = 0;
+		HttpClient.lastRefreshError = null;
 		await this.tokenService.removeToken();
 		await this.tokenService.removeRefreshToken();
 		this.sessionService.removeRememberSession();
