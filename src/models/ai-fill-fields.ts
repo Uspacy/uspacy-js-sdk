@@ -17,9 +17,12 @@ export interface ICallFillFieldsParams {
 	 * The open record's CRM entity type (e.g. `leads`, `deals`, `contacts`, `companies`, or a custom entity name).
 	 */
 	entityType: string;
+	/**
+	 * id of the open record
+	 */
 	entityId: number;
 	/**
-	 * ISO 8601 call start time, in the call's location. Used to resolve relative dates mentioned in the call.
+	 * Call start time as RFC 3339 with offset (e.g. `2026-09-21T10:15:00+03:00`); without it, date fields are not suggested.
 	 */
 	callStartedAt?: string;
 	/**
@@ -109,7 +112,7 @@ export interface ICallFillFieldsResponse {
 
 /**
  * Error body returned by the fill-fields endpoint. `code` and `request_id` are absent for
- * failures raised outside the handler (e.g. `AuthorizeJWT`'s 403), which `resolveCallFillFieldsErrorCode` covers.
+ * failures raised outside the handler (e.g. the gateway/auth middleware's 403), which `resolveCallFillFieldsErrorCode` covers.
  */
 export interface ICallFillFieldsErrorResponse {
 	code?: CallFillFieldsErrorCode;
