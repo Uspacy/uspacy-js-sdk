@@ -15,6 +15,7 @@ export interface ICallFillFieldsParams {
 	text: string;
 	/**
 	 * The open record's CRM entity type (e.g. `leads`, `deals`, `contacts`, `companies`, or a custom entity name).
+	 * Must match `^[a-z0-9_]{1,64}$`; anything else is rejected as `invalid_input`.
 	 */
 	entityType: string;
 	/**
@@ -26,7 +27,8 @@ export interface ICallFillFieldsParams {
 	 */
 	callStartedAt?: string;
 	/**
-	 * IANA time zone name for the call, used together with `callStartedAt`.
+	 * An IANA time-zone name for the call, used together with `callStartedAt`. When omitted, the
+	 * offset of `callStartedAt` is used.
 	 */
 	timeZone?: string;
 }
@@ -40,7 +42,7 @@ export interface ICallFillFieldsContactEntry {
 }
 
 /**
- * A single messenger (social) suggestion.
+ * A single messenger (social) suggestion. Messenger entries never carry `id` or `main`.
  */
 export interface ICallFillFieldsMessengerEntry {
 	name: string;
@@ -113,14 +115,28 @@ export interface ICallFillFieldsResponse {
 /**
  * Error body returned by the fill-fields endpoint. `code` and `request_id` are absent for
  * failures raised outside the handler (e.g. the gateway/auth middleware's 403), which `resolveCallFillFieldsErrorCode` covers.
+ * `error` is absent too when the body isn't JSON at all: gin's crash handler returns a 500 with
+ * an empty body, and a proxy-generated 413/504 body is plain text.
  */
 export interface ICallFillFieldsErrorResponse {
 	code?: CallFillFieldsErrorCode;
-	error: string;
+	error?: string;
 	request_id?: string;
 }
 
-const CALL_FILL_FIELDS_ERROR_CODES: CallFillFieldsErrorCode[] = ['invalid_input', 'no_access', 'not_found', 'too_large', 'unavailable', 'timed_out'];
+/**
+ * Membership map for every `CallFillFieldsErrorCode`, keyed by the code itself. Typing it as
+ * `Record<CallFillFieldsErrorCode, true>` makes tsc reject the object if a code is missing or
+ * misspelled, so a code added to the union without being added here fails to compile.
+ */
+const CALL_FILL_FIELDS_ERROR_CODES: Record<CallFillFieldsErrorCode, true> = {
+	invalid_input: true,
+	no_access: true,
+	not_found: true,
+	too_large: true,
+	unavailable: true,
+	timed_out: true,
+};
 
 const CALL_FILL_FIELDS_STATUS_CODES: Partial<Record<number, CallFillFieldsErrorCode>> = {
 	400: 'invalid_input',
@@ -135,8 +151,10 @@ const CALL_FILL_FIELDS_STATUS_CODES: Partial<Record<number, CallFillFieldsErrorC
  *
  * Uses `error.response.data.code` when the backend already classified the failure. Otherwise it
  * falls back to the HTTP status (400 invalid_input, 403 no_access, 404 not_found, 413 too_large,
- * 504 timed_out), then to a client-side timeout (`error.code === 'ECONNABORTED'`), and finally to
- * `unavailable`, which also covers a missing response (network error, CORS, a proxy failure, etc).
+ * 504 timed_out), then to a client-side timeout (`error.code === 'ECONNABORTED'` or `'ETIMEDOUT'`),
+ * and finally to `unavailable`, which also covers a missing response (network error, CORS, a
+ * proxy failure, etc). Both timeout codes are checked: axios raises `ETIMEDOUT` instead of
+ * `ECONNABORTED` when `transitional.clarifyTimeoutError` is set, and always from the fetch adapter.
  *
  * @param error the AxiosError raised by getCallFillFields
  * @returns `invalid_input`, `no_access`, `not_found`, `too_large`, `timed_out` or `unavailable`
@@ -144,7 +162,7 @@ const CALL_FILL_FIELDS_STATUS_CODES: Partial<Record<number, CallFillFieldsErrorC
 export const resolveCallFillFieldsErrorCode = (error: AxiosError<ICallFillFieldsErrorResponse>): CallFillFieldsErrorCode => {
 	const code = error.response?.data?.code;
 
-	if (code && CALL_FILL_FIELDS_ERROR_CODES.includes(code)) {
+	if (code && Object.prototype.hasOwnProperty.call(CALL_FILL_FIELDS_ERROR_CODES, code)) {
 		return code;
 	}
 
@@ -155,7 +173,7 @@ export const resolveCallFillFieldsErrorCode = (error: AxiosError<ICallFillFields
 		return statusCode;
 	}
 
-	if (error.code === 'ECONNABORTED') {
+	if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
 		return 'timed_out';
 	}
 

@@ -79,7 +79,7 @@ export class AIService {
 	}
 
 	/**
-	 * Get AI suggestions for the fields of a CRM record from a call transcript (the call's "Заповнення полів" action)
+	 * Get AI suggestions for the fields of a CRM record from a call transcript (the call's "Fill fields" action)
 	 * @param text the call transcript exactly as stored on the call (a formatted dialog)
 	 * @param entityType the open record's CRM entity type (e.g. `leads`, `deals`, `contacts`, `companies`, or a custom entity name)
 	 * @param entityId id of the open record
