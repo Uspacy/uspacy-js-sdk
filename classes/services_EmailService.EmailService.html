@@ -43,6 +43,8 @@
 <div class="tsd-index-list"><a href="services_EmailService.EmailService.html#connectEmailBox" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-2048"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)"></path></g></svg><span>connect<wbr/>Email<wbr/>Box</span></a>
 <a href="services_EmailService.EmailService.html#createEmailLetter" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Email<wbr/>Letter</span></a>
 <a href="services_EmailService.EmailService.html#createEmailSignature" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Email<wbr/>Signature</span></a>
+<a href="services_EmailService.EmailService.html#createLetterRelation" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Letter<wbr/>Relation</span></a>
+<a href="services_EmailService.EmailService.html#deleteLetterRelation" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Letter<wbr/>Relation</span></a>
 <a href="services_EmailService.EmailService.html#getEmailBox" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Box</span></a>
 <a href="services_EmailService.EmailService.html#getEmailConnectedCrmEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Connected<wbr/>Crm<wbr/>Entities</span></a>
 <a href="services_EmailService.EmailService.html#getEmailFolders" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Folders</span></a>
@@ -51,7 +53,9 @@
 <a href="services_EmailService.EmailService.html#getEmailSignatures" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Signatures</span></a>
 <a href="services_EmailService.EmailService.html#getEmailsBoxes" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Emails<wbr/>Boxes</span></a>
 <a href="services_EmailService.EmailService.html#getIntgrWithCrmSettings" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Intgr<wbr/>With<wbr/>Crm<wbr/>Settings</span></a>
+<a href="services_EmailService.EmailService.html#getLetterRelations" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Letter<wbr/>Relations</span></a>
 <a href="services_EmailService.EmailService.html#getSettingsEmailsBoxes" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Settings<wbr/>Emails<wbr/>Boxes</span></a>
+<a href="services_EmailService.EmailService.html#getTaskLetters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Task<wbr/>Letters</span></a>
 <a href="services_EmailService.EmailService.html#moveLetters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>move<wbr/>Letters</span></a>
 <a href="services_EmailService.EmailService.html#patchLetterCrmEntities" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>patch<wbr/>Letter<wbr/>Crm<wbr/>Entities</span></a>
 <a href="services_EmailService.EmailService.html#readEmailLetters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>read<wbr/>Email<wbr/>Letters</span></a>
@@ -146,6 +150,45 @@
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_email.ISignature.html" class="tsd-signature-type tsd-kind-interface">ISignature</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Email signature entity</p>
 
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="createLetterRelation" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>create<wbr/>Letter<wbr/>Relation</span><a href="#createLetterRelation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="createLetterRelation.createLetterRelation-1"><span class="tsd-kind-call-signature">create<wbr/>Letter<wbr/>Relation</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">__namedParameters</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_email.ILetterEntityRelation.html" class="tsd-signature-type tsd-kind-interface">ILetterEntityRelation</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#createLetterRelation.createLetterRelation-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Create letter relation</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">__namedParameters</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">entityId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">letterId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">entity<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">letter<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_email.ILetterEntityRelation.html" class="tsd-signature-type tsd-kind-interface">ILetterEntityRelation</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>created relation</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deleteLetterRelation" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>delete<wbr/>Letter<wbr/>Relation</span><a href="#deleteLetterRelation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deleteLetterRelation.deleteLetterRelation-1"><span class="tsd-kind-call-signature">delete<wbr/>Letter<wbr/>Relation</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">__namedParameters</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#deleteLetterRelation.deleteLetterRelation-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Delete letter relation</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">__namedParameters</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">letterId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">relationId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">letter<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">relation<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getEmailBox" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Email<wbr/>Box</span><a href="#getEmailBox" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
@@ -271,6 +314,27 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_email.ICrmSetting.html" class="tsd-signature-type tsd-kind-interface">ICrmSetting</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>settings data</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getLetterRelations" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Letter<wbr/>Relations</span><a href="#getLetterRelations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getLetterRelations.getLetterRelations-1"><span class="tsd-kind-call-signature">get<wbr/>Letter<wbr/>Relations</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">letterId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_email.ILetterEntityRelation.html" class="tsd-signature-type tsd-kind-interface">ILetterEntityRelation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getLetterRelations.getLetterRelations-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get letter relations</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">letterId</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">letterId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<div class="tsd-comment tsd-typography"><p>letter id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">letter<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_email.ILetterEntityRelation.html" class="tsd-signature-type tsd-kind-interface">ILetterEntityRelation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>list of related entities</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getSettingsEmailsBoxes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Settings<wbr/>Emails<wbr/>Boxes</span><a href="#getSettingsEmailsBoxes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -287,6 +351,27 @@
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_response.IResponseWithMeta.html" class="tsd-signature-type tsd-kind-interface">IResponseWithMeta</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/models_email.IEmailBoxes.html" class="tsd-signature-type tsd-kind-interface">IEmailBoxes</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Array with emails boxes list entity</p>
+
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getTaskLetters" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Task<wbr/>Letters</span><a href="#getTaskLetters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getTaskLetters.getTaskLetters-1"><span class="tsd-kind-call-signature">get<wbr/>Task<wbr/>Letters</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">entityId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_email.ILetter.html" class="tsd-signature-type tsd-kind-interface">ILetter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#getTaskLetters.getTaskLetters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get task letters</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">entityId</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">entityId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<div class="tsd-comment tsd-typography"><p>task id</p>
+</div>
+<div class="tsd-comment tsd-typography"></div>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">entity<wbr/>Id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/models_email.ILetter.html" class="tsd-signature-type tsd-kind-interface">ILetter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>list of related letters</p>
 
 <div class="tsd-comment tsd-typography"></div></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="moveLetters" class="tsd-anchor"></a>
@@ -644,6 +729,8 @@
 <li><a href="#connectEmailBox" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>connect<wbr/>Email<wbr/>Box</span></a></li>
 <li><a href="#createEmailLetter" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Email<wbr/>Letter</span></a></li>
 <li><a href="#createEmailSignature" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Email<wbr/>Signature</span></a></li>
+<li><a href="#createLetterRelation" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Letter<wbr/>Relation</span></a></li>
+<li><a href="#deleteLetterRelation" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Letter<wbr/>Relation</span></a></li>
 <li><a href="#getEmailBox" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Box</span></a></li>
 <li><a href="#getEmailConnectedCrmEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Connected<wbr/>Crm<wbr/>Entities</span></a></li>
 <li><a href="#getEmailFolders" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Folders</span></a></li>
@@ -652,7 +739,9 @@
 <li><a href="#getEmailSignatures" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Email<wbr/>Signatures</span></a></li>
 <li><a href="#getEmailsBoxes" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Emails<wbr/>Boxes</span></a></li>
 <li><a href="#getIntgrWithCrmSettings" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Intgr<wbr/>With<wbr/>Crm<wbr/>Settings</span></a></li>
+<li><a href="#getLetterRelations" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Letter<wbr/>Relations</span></a></li>
 <li><a href="#getSettingsEmailsBoxes" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Settings<wbr/>Emails<wbr/>Boxes</span></a></li>
+<li><a href="#getTaskLetters" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Task<wbr/>Letters</span></a></li>
 <li><a href="#moveLetters" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>move<wbr/>Letters</span></a></li>
 <li><a href="#patchLetterCrmEntities" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>patch<wbr/>Letter<wbr/>Crm<wbr/>Entities</span></a></li>
 <li><a href="#readEmailLetters" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>read<wbr/>Email<wbr/>Letters</span></a></li>
