@@ -55,6 +55,15 @@ export class AutomationsService {
 	}
 
 	/**
+	 * Change automation active status
+	 * @param id automation id
+	 * @param active active status
+	 */
+	changeAutomationActive(id: number, active: boolean) {
+		return this.httpClient.client.patch(`${this.namespace_workers}/:id/active`, { active }, { urlParams: { id } });
+	}
+
+	/**
 	 * Get titles of processes and workers by their ids
 	 * @param body ids grouped by contributor type
 	 */
@@ -113,5 +122,14 @@ export class AutomationsService {
 	 */
 	toggleWorkflow(id: number, body: IAutomation) {
 		return this.httpClient.client.patch(`${this.namespace_workflows}/:id`, body, { urlParams: { id } });
+	}
+
+	/**
+	 * Change workflow active status
+	 * @param id workflow id
+	 * @param active active status
+	 */
+	changeWorkflowActive(id: number, active: boolean) {
+		return this.httpClient.client.patch(`${this.namespace_workflows}/:id/active`, { active }, { urlParams: { id } });
 	}
 }
