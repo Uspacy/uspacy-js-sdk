@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { getMassActionsData } from '../../helpers';
 import { IEntityData } from '../../models/crm-entities';
 import { IProductFilters } from '../../models/crm-filters';
 import { IMassActions } from '../../models/crm-mass-actions';
@@ -82,7 +83,7 @@ export class CrmProductsService {
 	massProductsDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
 		const suffix = typeof params === 'string' ? `/?${params}` : '';
 		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${suffix}`, {
-			data: { all, entity_ids: entityIds, except_ids: exceptIds },
+			data: getMassActionsData({ entityIds, exceptIds, all }),
 		});
 	}
 
