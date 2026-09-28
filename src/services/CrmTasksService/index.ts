@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
+import { getMassActionsData } from '../../helpers';
 import { IMassActions } from '../../models/crm-mass-actions';
 import { ITask, ITasks } from '../../models/crm-tasks';
 import {
@@ -105,7 +106,7 @@ export class CrmTasksService {
 	 * @param params query params if editing all tasks
 	 */
 	massTasksDeletion({ entityIds, exceptIds, all, params }: IMassActions) {
-		const data = { all, entity_ids: entityIds, except_ids: exceptIds };
+		const data = getMassActionsData({ entityIds, exceptIds, all });
 		const suffix = typeof params === 'string' ? `/?${params}` : '';
 		return this.httpClient.client.delete(`${this.namespace}/mass_deletion${suffix}`, {
 			data,
@@ -124,9 +125,7 @@ export class CrmTasksService {
 	 */
 	massTasksEditing({ entityIds, exceptIds, all, params, payload, settings }: IMassActions) {
 		const data = {
-			all,
-			id: entityIds,
-			except_ids: exceptIds,
+			...getMassActionsData({ entityIds, exceptIds, all }, 'id'),
 			payload,
 			settings,
 		};
@@ -142,11 +141,7 @@ export class CrmTasksService {
 	 * @param params query params if editing all tasks
 	 */
 	massTasksReopen({ entityIds, exceptIds, all, params }: IMassActions) {
-		const data = {
-			all,
-			id: entityIds,
-			except_ids: exceptIds,
-		};
+		const data = getMassActionsData({ entityIds, exceptIds, all }, 'id');
 		const suffix = typeof params === 'string' ? `/?${params}` : '';
 		return this.httpClient.client.patch(`${this.namespace}/mass_reopen${suffix}`, data);
 	}
