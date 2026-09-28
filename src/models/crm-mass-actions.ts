@@ -3,7 +3,7 @@
 import { IUser } from './user';
 
 export interface IMassActions {
-	entityIds: number[];
+	entityIds?: number[];
 	exceptIds: number[];
 	all: boolean;
 	params?: string | { [key: string]: any };

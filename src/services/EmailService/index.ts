@@ -10,12 +10,14 @@ import {
 	IEmailFiltersParams,
 	IFolders,
 	ILetter,
+	ILetterEntityRelation,
 	ILetters,
 	ILettersCrmEntities,
 	ISignature,
 	IThreads,
 } from '../../models/email';
 import { IResponseWithMeta } from '../../models/response';
+import { ITask } from '../../models/tasks';
 import { ICreateLetterPayload } from './create-email.dto';
 import { ISignaturePayload } from './signature.dto';
 
@@ -290,5 +292,52 @@ export class EmailService {
 	 */
 	removeEmailSignature(id: number) {
 		return this.httpClient.client.delete<IResponseWithMeta<ISignature>>(`${this.namespace}/signatures/:id`, { urlParams: { id } });
+	}
+
+	/**
+	 * Get letter relations
+	 * @param letterId letter id
+	 * @returns list of related entities
+	 */
+	getLetterRelations({ letterId }: { letterId: ILetter['id'] }) {
+		return this.httpClient.client.get<{ data: ILetterEntityRelation[] }>(`${this.namespace}/letters/:letterId/entity_relations`, {
+			urlParams: { letterId },
+		});
+	}
+
+	/**
+	 * Get task letters
+	 * @param entityId task id
+	 * @returns list of related letters
+	 */
+	getTaskLetters({ entityId }: { entityId: ITask['id'] }) {
+		return this.httpClient.client.get<{ data: ILetter[] }>(`${this.namespace}/letters/by_entity`, {
+			params: { entity_type: 'task', entity_id: entityId },
+		});
+	}
+
+	/**
+	 * Create letter relation
+	 * @param letterId letter id
+	 * @param entityId task id
+	 * @returns created relation
+	 */
+	createLetterRelation({ letterId, entityId }: { letterId: ILetter['id']; entityId: ITask['id'] }) {
+		return this.httpClient.client.post<ILetterEntityRelation>(
+			`${this.namespace}/letters/:letterId/entity_relations`,
+			{ entity_type: 'task', entity_id: +entityId },
+			{ urlParams: { letterId } },
+		);
+	}
+
+	/**
+	 * Delete letter relation
+	 * @param letterId letter id
+	 * @param relationId relation id
+	 */
+	deleteLetterRelation({ letterId, relationId }: { letterId: ILetter['id']; relationId: ILetterEntityRelation['id'] }) {
+		return this.httpClient.client.delete(`${this.namespace}/letters/:letterId/entity_relations/:relationId`, {
+			urlParams: { letterId, relationId },
+		});
 	}
 }

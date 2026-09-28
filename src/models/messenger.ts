@@ -326,6 +326,7 @@ export interface ICreateWidgetData {
 		timeShowForm: ETimeFormShow;
 		formWelcomeMessage: string;
 		messageAfterFormSend: string;
+		disableSendMessageWhileFormNotSuccess?: boolean;
 	};
 	socialSettings?: {
 		view?: WidgetSocialView;
