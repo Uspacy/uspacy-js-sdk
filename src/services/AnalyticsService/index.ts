@@ -8,6 +8,9 @@ import {
 	IDashboard,
 	IFunnelConversionParams,
 	IFunnelConversionStage,
+	IGoal,
+	IGoalFilter,
+	IGoalList,
 } from '../../models/analytics';
 
 /**
@@ -18,6 +21,7 @@ export class AnalyticsService {
 	private namespace = 'analytics-backend/v1';
 	private namespaceReports = `${this.namespace}/reports/`;
 	private namespaceDashboards = `${this.namespace}/dashboards/`;
+	private namespaceGoals = `${this.namespace}/goals/`;
 	constructor(private readonly httpClient: HttpClient) {}
 
 	/**
@@ -71,6 +75,63 @@ export class AnalyticsService {
 	 */
 	deleteReport(id: string) {
 		return this.httpClient.client.delete<IAnalyticReport>(`${this.namespaceReports}:id`, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Get goals with filters
+	 * @param params goal list filter params
+	 * @param signal AbortSignal for cancelling request
+	 * @returns Array goal list
+	 */
+	getGoalsList(params: IGoalFilter, signal?: AbortSignal) {
+		return this.httpClient.client.get<IGoalList>(`${this.namespaceGoals}`, {
+			params,
+			signal,
+		});
+	}
+
+	/**
+	 * Get goal
+	 * @param id goal id
+	 * @param signal AbortSignal for cancelling request
+	 * @returns goal
+	 */
+	getGoal(id: string, signal?: AbortSignal) {
+		return this.httpClient.client.get<IGoal>(`${this.namespaceGoals}:id`, {
+			urlParams: { id },
+			signal,
+		});
+	}
+
+	/**
+	 * Create goal
+	 * @param data goal data without id
+	 * @returns goal
+	 * */
+	createGoal(data: Partial<IGoal>) {
+		return this.httpClient.client.post<IGoal>(`${this.namespaceGoals}`, data);
+	}
+
+	/**
+	 * Update goal
+	 * @param id goal id
+	 * @param data goal data
+	 * @returns goal
+	 */
+	updateGoal(id: string, data: Partial<IGoal>) {
+		return this.httpClient.client.patch<IGoal>(`${this.namespaceGoals}:id`, data, {
+			urlParams: { id },
+		});
+	}
+
+	/**
+	 * Delete goal
+	 * @param id goal id
+	 */
+	deleteGoal(id: string) {
+		return this.httpClient.client.delete<IGoal>(`${this.namespaceGoals}:id`, {
 			urlParams: { id },
 		});
 	}
