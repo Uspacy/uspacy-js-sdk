@@ -98,6 +98,13 @@ export interface IPredefinedField {
 	multiple?: boolean;
 }
 
+export interface IFormQueryParam {
+	fieldCode: string;
+	queryParamName: string;
+	isPredefined?: boolean;
+	fieldItemName?: string;
+}
+
 export interface IForm {
 	id?: string;
 	name: string;
@@ -109,6 +116,7 @@ export interface IForm {
 		other: IFormOther[];
 		after?: IFormAfterSubmit;
 		design?: IFormDesign;
+		queryParams?: IFormQueryParam[];
 	};
 	creared_at?: number;
 	updated_at?: number;
