@@ -98,6 +98,19 @@ export interface IPredefinedField {
 	multiple?: boolean;
 }
 
+export enum EFormLanguageMode {
+	// the language of the portal (space) the form was configured in
+	SPACE = 'space',
+	// the language of the visitor's browser
+	BROWSER = 'browser',
+}
+
+export interface IFormLanguage {
+	mode: EFormLanguageMode;
+	// portal language code, used when mode is `space`
+	lng?: string;
+}
+
 export interface IForm {
 	id?: string;
 	name: string;
@@ -109,6 +122,7 @@ export interface IForm {
 		other: IFormOther[];
 		after?: IFormAfterSubmit;
 		design?: IFormDesign;
+		language?: IFormLanguage;
 	};
 	creared_at?: number;
 	updated_at?: number;
