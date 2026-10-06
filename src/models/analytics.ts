@@ -62,8 +62,8 @@ export interface IAnalyticReport {
 	};
 }
 
-export type GoalPeriodicity = 'weekday' | 'month' | 'quarter';
-export type GoalTrack = 'money' | 'count';
+export type GoalPeriodicity = 'weekday' | 'month' | 'quarter' | 'year';
+export type GoalTrack = 'money' | 'count' | 'conversion';
 export type GoalDirection = 'positive' | 'negative';
 export type GoalChartType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'gauge' | 'numeric';
 
