@@ -62,6 +62,51 @@ export interface IAnalyticReport {
 	};
 }
 
+export type GoalPeriodicity = 'weekday' | 'month' | 'quarter';
+export type GoalTrack = 'money' | 'count';
+export type GoalDirection = 'positive' | 'negative';
+export type GoalChartType = 'column' | 'bar' | 'area' | 'line_straight' | 'line_smooth' | 'gauge' | 'numeric';
+
+export interface IGoalSettings {
+	responsible_ids: number[];
+	department_ids: number[];
+	periodicity: GoalPeriodicity;
+	start_date: number;
+	end_date: number;
+	track: GoalTrack;
+	direction: GoalDirection;
+	value: number | null;
+	is_per_period: boolean;
+	period_values: number[];
+}
+
+export interface IGoal {
+	id: string;
+	title: string;
+	description: string;
+	entity_table_name: string;
+	chart_type: GoalChartType;
+	dashboards?: string[];
+	owner_id: number;
+	created_at: number;
+	updated_at?: number;
+	updated_by?: number;
+	filter: IAnalyticReport['filter'];
+	goal: IGoalSettings;
+}
+
+export interface IGoalFilter extends IAnalyticReportFilter {
+	updated_by?: number[];
+	dashboard_id?: string;
+	sort?: string;
+	order?: string;
+}
+
+export interface IGoalList {
+	meta: IMeta;
+	data: IGoal[];
+}
+
 export interface IFunnelConversionStage {
 	stage_id: number;
 	count: number;
@@ -101,8 +146,10 @@ export interface IDashboard {
 		y?: number;
 		w?: number;
 		h?: number;
-		report_id: string;
+		report_id?: string;
 		report?: IAnalyticReport;
+		goal_id?: string;
+		goal?: IGoal;
 		minW?: number;
 		maxW?: number;
 		minH?: number;
