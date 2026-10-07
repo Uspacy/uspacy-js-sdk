@@ -216,6 +216,23 @@ export class CrmEntitiesService {
 	}
 
 	/**
+	 * Replicate funnel for entity
+	 * @param code entity code
+	 * @param funnelId funnel id
+	 * @param name title for the funnel copy
+	 * @returns full copy of the entity funnel
+	 * */
+	replicateEntityFunnel(code: string, funnelId: number, name?: string) {
+		return this.httpClient.client.post<IFunnel>(
+			`${this.namespace}/:code/funnel/:funnelId/replicate`,
+			{ ...(!!name && { name }) },
+			{
+				urlParams: { code, funnelId },
+			},
+		);
+	}
+
+	/**
 	 * Delete funnel for entity
 	 * @param code entity code
 	 * @param funnelId funnel id

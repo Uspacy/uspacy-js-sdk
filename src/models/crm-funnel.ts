@@ -8,5 +8,6 @@ export interface IFunnel {
 	active: boolean;
 	stages: IStage[];
 	tariff_limited: boolean;
+	currency?: string;
 	permissions?: { create?: TypePermission; view?: TypePermission; edit?: TypePermission; delete?: TypePermission };
 }
