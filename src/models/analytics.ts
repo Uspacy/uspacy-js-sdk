@@ -56,6 +56,7 @@ export interface IAnalyticReport {
 			measure_for_aggregation?: 'sum' | 'avg';
 			is_view_percent: boolean;
 			is_view_value: boolean;
+			is_colored?: boolean;
 			table_settings?: Record<string, ITableColumnSettings>;
 			excluded_stage_ids?: number[];
 		};
