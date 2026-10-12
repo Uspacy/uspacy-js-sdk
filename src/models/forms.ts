@@ -105,6 +105,9 @@ export interface IFormQueryParam {
 	queryParamName: string;
 	isPredefined?: boolean;
 	fieldItemName?: string;
+	// type and multiple of a hidden field: it is not in the form or predefinedFields, the public form prepares the value by them
+	fieldType?: FieldTypes;
+	multiple?: boolean;
 }
 
 export enum EFormLanguageMode {
