@@ -61,7 +61,9 @@ export type FieldTypes =
 	| 'formTextData'
 	| 'widgetTextData';
 
-export type FieldAccessLevel = 'view' | 'edit' | 'delete';
+export type FieldAccessLevel = 'view' | 'edit' | 'full';
+
+export type FieldAccessAction = 'view' | 'edit' | 'delete';
 
 export interface IFieldAccessFunnel {
 	stage_id: number[];
