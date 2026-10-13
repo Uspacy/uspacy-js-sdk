@@ -61,6 +61,19 @@ export type FieldTypes =
 	| 'formTextData'
 	| 'widgetTextData';
 
+export type FieldAccessLevel = 'view' | 'edit' | 'delete';
+
+export interface IFieldAccessFunnel {
+	stage_id: number[];
+	level: FieldAccessLevel[];
+}
+
+export interface IFieldAccess {
+	enabled: boolean;
+	level?: FieldAccessLevel[];
+	funnels?: IFieldAccessFunnel[];
+}
+
 export interface IField {
 	name: string;
 	code: string;
@@ -86,6 +99,7 @@ export interface IField {
 		type: 'funnel' | 'stage';
 	}[];
 	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
+	access?: IFieldAccess;
 }
 export interface IFieldCreate {
 	name: string;
@@ -102,6 +116,7 @@ export interface IFieldCreate {
 	values?: IFieldValue[];
 	sync_fields?: ISyncField[];
 	entity_reference_id?: number;
+	access?: IFieldAccess;
 }
 
 export interface ISyncField {
