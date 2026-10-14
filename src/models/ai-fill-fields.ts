@@ -153,27 +153,28 @@ const CALL_FILL_FIELDS_STATUS_CODES: Partial<Record<number, CallFillFieldsErrorC
  * falls back to the HTTP status (400 invalid_input, 403 no_access, 404 not_found, 413 too_large,
  * 504 timed_out), then to a client-side timeout (`error.code === 'ECONNABORTED'` or `'ETIMEDOUT'`),
  * and finally to `unavailable`, which also covers a missing response (network error, CORS, a
- * proxy failure, etc). Both timeout codes are checked: axios raises `ETIMEDOUT` instead of
- * `ECONNABORTED` when `transitional.clarifyTimeoutError` is set, and always from the fetch adapter.
+ * proxy failure, etc) and a rejection that isn't an AxiosError at all (even null). Both timeout
+ * codes are checked: axios raises `ETIMEDOUT` instead of `ECONNABORTED` when
+ * `transitional.clarifyTimeoutError` is set, and always from the fetch adapter.
  *
  * @param error the AxiosError raised by getCallFillFields
  * @returns `invalid_input`, `no_access`, `not_found`, `too_large`, `timed_out` or `unavailable`
  */
 export const resolveCallFillFieldsErrorCode = (error: AxiosError<ICallFillFieldsErrorResponse>): CallFillFieldsErrorCode => {
-	const code = error.response?.data?.code;
+	const code = error?.response?.data?.code;
 
 	if (code && Object.prototype.hasOwnProperty.call(CALL_FILL_FIELDS_ERROR_CODES, code)) {
 		return code;
 	}
 
-	const status = error.response?.status;
+	const status = error?.response?.status;
 	const statusCode = status ? CALL_FILL_FIELDS_STATUS_CODES[status] : undefined;
 
 	if (statusCode) {
 		return statusCode;
 	}
 
-	if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
+	if (error?.code === 'ECONNABORTED' || error?.code === 'ETIMEDOUT') {
 		return 'timed_out';
 	}
 
