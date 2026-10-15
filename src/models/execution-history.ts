@@ -51,10 +51,9 @@ export interface IExecutionHistoryItem {
 export interface IExecutionHistoryMeta {
 	currentPage: number;
 	from: number;
-	lastPage: number;
 	perPage: number;
 	to: number;
-	total: number;
+	hasMore: boolean;
 }
 
 export interface IExecutionHistoryResponse {
@@ -63,6 +62,14 @@ export interface IExecutionHistoryResponse {
 	error: string | null;
 	meta: IExecutionHistoryMeta;
 	data: IExecutionHistoryItem[];
+}
+
+export interface IExecutionHistoryCountResponse {
+	status: boolean;
+	data: {
+		count: number;
+	};
+	meta: null;
 }
 
 export interface IExecutionHistoryParams {
@@ -214,7 +221,9 @@ export interface IExecutionNodeDetail {
 	action_response?: Record<string, unknown> | Record<string, unknown>[] | null;
 	error_message?: string | null;
 	retry_count?: number;
+	canceled_by?: number | null;
 	pause_skipped_by?: number | null;
+	retried_by?: number | null;
 	worker?: IExecutionNodeWorker | null;
 	process?: IExecutionNodeProcess | null;
 }
@@ -226,6 +235,12 @@ export interface IExecutionRequest {
 
 export interface IExecutionHistoryRequest extends IExecutionRequest {
 	params?: IExecutionHistoryParams;
+}
+
+export type IExecutionHistoryCountParams = Omit<IExecutionHistoryParams, 'page' | 'list' | 'sort_by' | 'sort_order'>;
+
+export interface IExecutionHistoryCountRequest extends IExecutionRequest {
+	params?: IExecutionHistoryCountParams;
 }
 
 export interface IExecutionDetailRequest extends IExecutionRequest {

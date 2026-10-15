@@ -28,6 +28,8 @@ export interface IFormField {
 	required?: boolean;
 	secondHintText?: string;
 	multiple?: boolean;
+	// widget only: multiplicity is disabled in the widget form, the entity field stays multiple
+	disableMultiple?: boolean;
 	localFieldCounter?: number;
 }
 
