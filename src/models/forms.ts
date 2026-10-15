@@ -28,6 +28,8 @@ export interface IFormField {
 	required?: boolean;
 	secondHintText?: string;
 	multiple?: boolean;
+	// widget only: multiplicity is disabled in the widget form, the entity field stays multiple
+	disableMultiple?: boolean;
 	localFieldCounter?: number;
 }
 
@@ -103,7 +105,7 @@ export interface IForm {
 	name: string;
 	active: boolean;
 	config: {
-		crmEntity: 'lead' | 'contact';
+		crmEntity: 'lead' | 'contact' | string;
 		predefinedFields: IPredefinedField[];
 		fields: IFormField[];
 		other: IFormOther[];
