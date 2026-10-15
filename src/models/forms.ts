@@ -100,6 +100,16 @@ export interface IPredefinedField {
 	multiple?: boolean;
 }
 
+export interface IFormQueryParam {
+	fieldCode: string;
+	queryParamName: string;
+	isPredefined?: boolean;
+	fieldItemName?: string;
+	// type and multiple of a hidden field: it is not in the form or predefinedFields, the public form prepares the value by them
+	fieldType?: FieldTypes;
+	multiple?: boolean;
+}
+
 export enum EFormLanguageMode {
 	// the language of the portal (space) the form was configured in
 	SPACE = 'space',
@@ -124,6 +134,7 @@ export interface IForm {
 		other: IFormOther[];
 		after?: IFormAfterSubmit;
 		design?: IFormDesign;
+		queryParams?: IFormQueryParam[];
 		language?: IFormLanguage;
 	};
 	creared_at?: number;
