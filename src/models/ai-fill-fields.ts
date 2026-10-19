@@ -59,8 +59,9 @@ export interface ICallFillFieldsMoney {
 
 /**
  * A suggested value for one field of `entity_data`. The shape depends on the field's kind:
- * text/address/link/list/label as a string, integer/float/datetime as a number, boolean as a
- * boolean (never multi-value), phone/email as `ICallFillFieldsContactEntry`, money as
+ * text/address/link/list/label as a string, textarea (such as comments) as one string (never
+ * multi-value), integer/float/datetime as a number, boolean as a boolean (never multi-value),
+ * phone/email as `ICallFillFieldsContactEntry`, money as
  * `ICallFillFieldsMoney`, and messengers as `ICallFillFieldsMessengerEntry` — each singular for a
  * single-value field, or as an array when the field is multi-value.
  */
