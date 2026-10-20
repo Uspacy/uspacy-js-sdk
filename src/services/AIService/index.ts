@@ -3,6 +3,7 @@ import { injectable } from 'tsyringe';
 
 import { HttpClient } from '../../core/HttpClient';
 import { ICallFillFieldsParams, ICallFillFieldsResponse } from '../../models/ai-fill-fields';
+import { ITaskChecklistAIParams, ITaskChecklistAISuggestion, ITaskDescriptionAIParams } from '../../models/ai-tasks';
 import { EMailTone } from '../../models/email';
 import { IHomeGeneralData } from '../../models/home';
 
@@ -107,5 +108,28 @@ export class AIService {
 			},
 			{ timeout: FILL_FIELDS_TIMEOUT_MS },
 		);
+	}
+
+	/**
+	 * Rewrite a task description with AI (the AI menu of the task editor)
+	 * @param action `fix`, `improve`, `shorten` or `continue`
+	 * @param title task title, used as context; `continue` works from the title alone when the body is empty
+	 * @param body task description as editor HTML
+	 * @returns the complete new description as editor HTML; mentions, images, embeds and links come back unchanged
+	 */
+	async rewriteTaskDescription({ action, title, body }: ITaskDescriptionAIParams): Promise<{ data: { body: string } }> {
+		return this.httpClient.client.post(`${this.namespace}/tasks/description/${action}`, { title, body });
+	}
+
+	/**
+	 * Suggest checklist items for a task with AI
+	 * @param title task title
+	 * @param body task description as editor HTML
+	 * @param items current items of the checklist being regenerated; empty for a new checklist
+	 * @returns the existing items first, in their order and with their ids, each `unchanged` or `updated`, then the `new` items;
+	 * existing items are never dropped
+	 */
+	async suggestTaskChecklist({ title, body, items = [] }: ITaskChecklistAIParams): Promise<{ data: { items: ITaskChecklistAISuggestion[] } }> {
+		return this.httpClient.client.post(`${this.namespace}/tasks/checklist`, { title, body, items });
 	}
 }
