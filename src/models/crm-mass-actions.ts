@@ -12,3 +12,8 @@ export interface IMassActions {
 	profile?: IUser;
 	admin?: boolean;
 }
+
+export interface IMassRelatedActions extends IMassActions {
+	relatedEntityType: string;
+	relatedEntityId: number;
+}
