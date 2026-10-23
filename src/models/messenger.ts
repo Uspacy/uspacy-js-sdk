@@ -324,6 +324,19 @@ export interface IConnectedCrmEntities {
 	};
 }
 
+export type WidgetDistributionMethod = 'all' | 'sequential';
+
+export interface IWidgetAccessMember {
+	id: number;
+	authUserId: number;
+}
+
+export interface IWidgetAccessSettings {
+	allUsers: boolean;
+	distributionMethod: WidgetDistributionMethod;
+	members: IWidgetAccessMember[];
+}
+
 export interface ICreateWidgetData {
 	id?: string;
 	name: string;
@@ -357,6 +370,7 @@ export interface ICreateWidgetData {
 		view?: WidgetSocialView;
 		items: IWidgetSocialItem[];
 	};
+	accessSettings?: IWidgetAccessSettings;
 }
 
 export interface ICrmConnectEntity {
