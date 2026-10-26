@@ -6,7 +6,7 @@ No backend, database or Docker here: the SDK is a webpack-built library publishe
 ## Setup
 
 ```sh
-nvm use                                 # Node 18 (.nvmrc), same as the publish workflows
+nvm use                                 # Node 22.23.4 (.nvmrc)
 export NPM_AUTH_TOKEN=<github token>   # REQUIRED: .npmrc interpolates it; yarn install fails without it
                                         # ("Failed to replace env in config"). Any value works for a plain install.
 yarn install --frozen-lockfile          # Yarn 1 (yarn.lock); `prepare` installs the husky pre-commit hook
