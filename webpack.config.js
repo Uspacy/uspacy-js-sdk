@@ -3,15 +3,11 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const PATHS = {
-	source: path.resolve(__dirname, 'src'),
-};
-
 module.exports = (_, argv) => {
 	const isDev = argv.mode === 'development';
 	return {
 		entry: {
-			index: path.resolve(PATHS.source, 'index.ts'),
+			index: path.resolve(__dirname, 'src', 'index.ts'),
 		},
 		output: {
 			filename: '[name].js',

@@ -23,10 +23,11 @@ Run before every commit; all must exit 0:
 
 ```sh
 yarn eslint src      # NOT `yarn eslint .` — after a build it lints lib/*.d.ts and reports ~9000 false errors
-npx tsc --noEmit     # typecheck (no script for it)
+yarn typecheck       # tsc --noEmit
 yarn build           # catches webpack/declaration-emit failures
 ```
 
+- `yarn eslint:fix` autofixes `src` (formatting, import order).
 - `yarn eslint` runs with `--max-warnings=0`: warnings (unsorted imports, unused vars, `console`) fail it.
 - The husky pre-commit hook runs the same eslint on staged `*.{ts,js}` via lint-staged.
 - There is no test suite. Do not add test tooling unless the developer asks for it.

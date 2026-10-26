@@ -62,7 +62,8 @@
     "emitDeclarations:watch": "yarn emitDeclarations -- --watch",
     "eslint": "eslint --max-warnings=0",
     "format": "prettier --write \"src/**/*.ts\"",
-    "eslint:fix": "yarn eslint . --fix",
+    "eslint:fix": "yarn eslint src --fix",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install"
   },
   "browserslist": {
