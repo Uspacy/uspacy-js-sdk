@@ -6,13 +6,14 @@ No backend, database or Docker here: the SDK is a webpack-built library publishe
 ## Setup
 
 ```sh
-nvm use                                 # Node 22.23.4 (.nvmrc)
 export NPM_AUTH_TOKEN=<github token>   # REQUIRED: .npmrc interpolates it; yarn install fails without it
                                         # ("Failed to replace env in config"). Any value works for a plain install.
 yarn install --frozen-lockfile          # Yarn 1 (yarn.lock); `prepare` installs the husky pre-commit hook
 yarn build                              # webpack -> lib/index.js, then postbuild emits .d.ts into lib/
 ```
 
+- Node: the version in the GitHub Actions variable `CORE_TAG` (22.23.4 as of 2026-10). CI reads it; there is
+  no `.nvmrc` on purpose, so match it locally by hand.
 - `yarn start:dev` — webpack watch + declarations watch, for linking into a consumer app.
 - `yarn build:docs` — TypeDoc into `docs/` (deployed to GitHub Pages from `main` by CI).
 - `lib/`, `docs/`, `.env` are gitignored — never commit build output.
@@ -35,7 +36,7 @@ yarn build           # catches webpack/declaration-emit failures
 
 ## Conventions
 
-- **Versioning.** Every PR to `main` bumps the patch `version` in `package.json` (0.0.287 -> 0.0.288);
+- **Versioning.** Every PR to `main` bumps the patch `version` in `package.json` (0.0.288 -> 0.0.289);
   the `check-version` workflow fails otherwise, and merging to `main` auto-publishes.
 - **`stage` branch** publishes with the `alpha` dist-tag. Merge into `stage` only when the developer says so.
   Alpha versions use the format `0.0.999-alpha.N` and go up by one: `0.0.999-alpha.235` -> `0.0.999-alpha.236`.
