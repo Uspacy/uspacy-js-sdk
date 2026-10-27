@@ -13,9 +13,22 @@ yarn build                              # webpack -> lib/index.js, then postbuil
 ```
 
 - Node: the version in the GitHub Actions variable `CORE_TAG` (22.23.4 as of 2026-10); no `.nvmrc` on purpose.
-- `yarn start:dev` — webpack watch + declarations watch, for linking into a consumer app.
+- `yarn start:dev` — webpack watch + declarations watch into `lib/`.
 - `yarn build:docs` — TypeDoc into `docs/` (deployed to GitHub Pages from `main` by CI).
 - `lib/`, `docs/`, `.env` are gitignored — never commit build output.
+
+Trying a change inside a consumer app (`crm-frontend`, `tasks-frontend`, ...) before publishing — copy the build in,
+do not `yarn link` (it resolves the SDK's deps from this repo and misses nested copies — two SDK builds side by side):
+
+```sh
+yarn build
+rsync -a --delete lib/ ../<app>/node_modules/@uspacy/sdk/lib/
+# also into nested copies, e.g. ../<app>/node_modules/@uspacy/common/node_modules/@uspacy/sdk/lib/
+rm -rf ../<app>/node_modules/.cache   # webpack's cache keys node_modules by package version and won't see the copy
+```
+
+Then restart the app's dev server. Restore the original packages afterwards (~30s; also clears the stale cache):
+`cd ../<app> && rm -rf node_modules/@uspacy/sdk node_modules/@uspacy/common/node_modules/@uspacy/sdk node_modules/.cache && yarn install --check-files --frozen-lockfile`.
 
 ## Verification
 
