@@ -12,8 +12,7 @@ yarn install --frozen-lockfile          # Yarn 1 (yarn.lock); `prepare` installs
 yarn build                              # webpack -> lib/index.js, then postbuild emits .d.ts into lib/
 ```
 
-- Node: the version in the GitHub Actions variable `CORE_TAG` (22.23.4 as of 2026-10). CI reads it; there is
-  no `.nvmrc` on purpose, so match it locally by hand.
+- Node: the version in the GitHub Actions variable `CORE_TAG` (22.23.4 as of 2026-10); no `.nvmrc` on purpose.
 - `yarn start:dev` — webpack watch + declarations watch, for linking into a consumer app.
 - `yarn build:docs` — TypeDoc into `docs/` (deployed to GitHub Pages from `main` by CI).
 - `lib/`, `docs/`, `.env` are gitignored — never commit build output.
@@ -79,6 +78,7 @@ yarn build           # catches webpack/declaration-emit failures
     passed to `createInstance` are ignored. This is intentional; do not "fix" it.
   - `strictNullChecks` is off, so tsc will not catch null/undefined bugs.
 - **Never commit or push without the developer's explicit confirmation** — ask every time, even after earlier approvals.
+- **Never force-push** (`--force`, `--force-with-lease`, `+refspec`). If a push is rejected, stop and ask the developer.
 - **Git naming.** Branches: `feat/<ticket>_<short_name>` or `fix/<ticket>_<short_name>`, where `<ticket>`
   is the Uspacy task number. PR title: `[<ticket>]: <short summary of the PR>`; take the number from the
   branch name, and if it is not there, ask the developer. Commit message: a short description of what this
