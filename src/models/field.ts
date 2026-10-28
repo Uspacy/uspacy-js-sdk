@@ -76,6 +76,22 @@ export interface IFieldAccess {
 	funnels?: IFieldAccessFunnel[];
 }
 
+export interface IFieldPermissionAction {
+	all: boolean;
+	roles: number[];
+	users: number[];
+}
+
+export interface IFieldPermissions {
+	view: IFieldPermissionAction;
+	edit: IFieldPermissionAction;
+}
+
+export interface IUserFieldAccess {
+	view: boolean;
+	edit: boolean;
+}
+
 export interface IField {
 	name: string;
 	code: string;
@@ -101,7 +117,8 @@ export interface IField {
 		type: 'funnel' | 'stage';
 	}[];
 	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
-	access?: IFieldAccess;
+	permissions?: IFieldPermissions | null;
+	access?: IFieldAccess | IUserFieldAccess;
 }
 export interface IFieldCreate {
 	name: string;

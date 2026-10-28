@@ -8,6 +8,8 @@ import {
 	IExecutionActionResult,
 	IExecutionDetail,
 	IExecutionDetailRequest,
+	IExecutionHistoryCountRequest,
+	IExecutionHistoryCountResponse,
 	IExecutionHistoryRequest,
 	IExecutionHistoryResponse,
 	IExecutionNodeDetail,
@@ -36,6 +38,20 @@ export class AutomationsService {
 	 */
 	getExecutionHistory({ type, params, signal }: IExecutionHistoryRequest) {
 		return this.httpClient.client.get<IExecutionHistoryResponse>(this.namespace_history, { params, signal, urlParams: { type } });
+	}
+
+	/**
+	 * Get execution history total count of workers or processes
+	 * @param type workers or processes
+	 * @param params filters
+	 * @param signal AbortSignal for cancelling request
+	 */
+	getExecutionHistoryCount({ type, params, signal }: IExecutionHistoryCountRequest) {
+		return this.httpClient.client.get<IExecutionHistoryCountResponse>(`${this.namespace_history}/count`, {
+			params,
+			signal,
+			urlParams: { type },
+		});
 	}
 
 	/**

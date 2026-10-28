@@ -28,6 +28,8 @@ export interface IFormField {
 	required?: boolean;
 	secondHintText?: string;
 	multiple?: boolean;
+	// widget only: multiplicity is disabled in the widget form, the entity field stays multiple
+	disableMultiple?: boolean;
 	localFieldCounter?: number;
 }
 
@@ -98,6 +100,29 @@ export interface IPredefinedField {
 	multiple?: boolean;
 }
 
+export interface IFormQueryParam {
+	fieldCode: string;
+	queryParamName: string;
+	isPredefined?: boolean;
+	fieldItemName?: string;
+	// type and multiple of a hidden field: it is not in the form or predefinedFields, the public form prepares the value by them
+	fieldType?: FieldTypes;
+	multiple?: boolean;
+}
+
+export enum EFormLanguageMode {
+	// the language of the portal (space) the form was configured in
+	SPACE = 'space',
+	// the language of the visitor's browser
+	BROWSER = 'browser',
+}
+
+export interface IFormLanguage {
+	mode: EFormLanguageMode;
+	// portal language code, used when mode is `space`
+	lng?: string;
+}
+
 export interface IForm {
 	id?: string;
 	name: string;
@@ -109,6 +134,8 @@ export interface IForm {
 		other: IFormOther[];
 		after?: IFormAfterSubmit;
 		design?: IFormDesign;
+		queryParams?: IFormQueryParam[];
+		language?: IFormLanguage;
 	};
 	creared_at?: number;
 	updated_at?: number;

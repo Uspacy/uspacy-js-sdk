@@ -7,7 +7,7 @@ import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../mode
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IKanbanBoardResponse } from '../../models/crm-kanban';
-import { IMassActions } from '../../models/crm-mass-actions';
+import { IMassActions, IMassRelatedActions } from '../../models/crm-mass-actions';
 import { IReason, IReasonsCreate, IStage } from '../../models/crm-stages';
 import { IDependenciesList } from '../../models/dependencies-list';
 import { IField } from '../../models/field';
@@ -213,6 +213,23 @@ export class CrmEntitiesService {
 		return this.httpClient.client.patch<IFunnel>(`${this.namespace}/:code/funnel/:funnelId`, data, {
 			urlParams: { code, funnelId },
 		});
+	}
+
+	/**
+	 * Replicate funnel for entity
+	 * @param code entity code
+	 * @param funnelId funnel id
+	 * @param name title for the funnel copy
+	 * @returns full copy of the entity funnel
+	 * */
+	replicateEntityFunnel(code: string, funnelId: number, name?: string) {
+		return this.httpClient.client.post<IFunnel>(
+			`${this.namespace}/:code/funnel/:funnelId/replicate`,
+			{ ...(!!name && { name }) },
+			{
+				urlParams: { code, funnelId },
+			},
+		);
 	}
 
 	/**
@@ -437,6 +454,28 @@ export class CrmEntitiesService {
 		return this.httpClient.client.delete(`${this.namespace}/:code/mass_deletion${suffix}`, {
 			data,
 			urlParams: { code },
+			params: typeof params === 'object' ? params : undefined,
+		});
+	}
+
+	/**
+	 * Mass deleting entity items related to the entity item
+	 * @param code related entity code
+	 * @param relatedEntityType entity code of the card the items are related to
+	 * @param relatedEntityId entity item id of the card the items are related to
+	 * @param entityIds entity items ids to delete
+	 * @param exceptIds entity items ids to exclude from deleting
+	 * @param all should delete all related entity items
+	 * @param params query params if deleting all related entity items
+	 */
+	massRelatedEntityItemsDeletion(code: string, { relatedEntityType, relatedEntityId, entityIds, exceptIds, all, params }: IMassRelatedActions) {
+		const data = getMassActionsData({ entityIds, exceptIds, all });
+
+		const suffix = typeof params === 'string' ? `/?${params}` : '';
+
+		return this.httpClient.client.delete(`${this.namespace}/:relatedEntityType/:relatedEntityId/related/:code/mass_deletion${suffix}`, {
+			data,
+			urlParams: { code, relatedEntityType, relatedEntityId },
 			params: typeof params === 'object' ? params : undefined,
 		});
 	}
