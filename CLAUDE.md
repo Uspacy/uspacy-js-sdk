@@ -1,10 +1,8 @@
 # CLAUDE.md
-
 `@uspacy/sdk` — TypeScript client for the Uspacy REST API, consumed by every Uspacy frontend.
 No backend, database or Docker here: the SDK is a webpack-built library published to GitHub Packages.
 
 ## Setup
-
 ```sh
 export NPM_AUTH_TOKEN=<github token>   # REQUIRED: .npmrc interpolates it; yarn install fails without it
                                         # ("Failed to replace env in config"). Any value works for a plain install.
@@ -31,7 +29,6 @@ Then restart the app's dev server. Restore the original packages afterwards (~30
 `cd ../<app> && rm -rf node_modules/@uspacy/sdk node_modules/@uspacy/common/node_modules/@uspacy/sdk node_modules/.cache && yarn install --check-files --frozen-lockfile`.
 
 ## Verification
-
 Run before every commit; all must exit 0:
 
 ```sh
@@ -47,7 +44,6 @@ yarn build           # catches webpack/declaration-emit failures
 - CI on PRs to `main` only checks that the `package.json` version is not already published.
 
 ## Conventions
-
 - **Versioning.** Every PR to `main` bumps the patch `version` in `package.json` (0.0.288 -> 0.0.289);
   the `check-version` workflow fails otherwise, and merging to `main` auto-publishes.
 - **`stage` branch** publishes with the `alpha` dist-tag. Merge into `stage` only when the developer says so.
@@ -90,6 +86,8 @@ yarn build           # catches webpack/declaration-emit failures
   - `ConfigService.config` spreads defaults **after** the user config, so `appPrefix` / `couchDbUrl`
     passed to `createInstance` are ignored. This is intentional; do not "fix" it.
   - `strictNullChecks` is off, so tsc will not catch null/undefined bugs.
+- **`main` changes only through a PR** — never merge or push into `main` locally. Rollback = a PR that reverts the
+  original one (GitHub "Revert" button); it bumps the version like any other PR.
 - **Never commit or push without the developer's explicit confirmation** — ask every time, even after earlier approvals.
 - **Never force-push** (`--force`, `--force-with-lease`, `+refspec`). If a push is rejected, stop and ask the developer.
 - **Always commit the normal way.** Never skip or disable git hooks: no `--no-verify` / `-n` (incl. combined flags like
