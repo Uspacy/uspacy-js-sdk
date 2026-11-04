@@ -347,6 +347,12 @@ export enum EQuickAnswerType {
 	MAIL = 'mail',
 }
 
+export enum EQuickAnswerMessageFormat {
+	MARKDOWN = 'markdown',
+	HTML = 'html',
+	HTML_TEMPLATE = 'html_template',
+}
+
 export interface IQuickAnswer {
 	name: string;
 	message: string;
@@ -362,6 +368,7 @@ export interface IQuickAnswer {
 	type?: EQuickAnswerType;
 	mailTheme?: string;
 	attachmentFiles?: IFile[];
+	messageFormat?: EQuickAnswerMessageFormat;
 }
 
 export interface IGetQuickAnswerParams {
@@ -386,6 +393,7 @@ export interface ICreateQuickAnswerDTO {
 	type?: 'messenger' | 'mail';
 	mailTheme?: string;
 	attachmentFiles?: IFile[];
+	messageFormat?: EQuickAnswerMessageFormat;
 }
 
 export interface IRelatedChatItem {
