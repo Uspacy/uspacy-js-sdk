@@ -19,6 +19,8 @@ export interface IPortalSubscription {
 	first_payment_date: number;
 	created_at: number;
 	new_customer: boolean;
+	churn_date?: number;
+	region?: string;
 }
 
 export interface IBill {
