@@ -1,4 +1,5 @@
 import { IDependenciesList } from './dependencies-list';
+import { ISmartFilters } from './smart-filters';
 
 export type FieldTypes =
 	| 'string'
@@ -119,6 +120,7 @@ export interface IField {
 	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
 	permissions?: IFieldPermissions | null;
 	access?: IFieldAccess | IUserFieldAccess;
+	filters?: ISmartFilters;
 }
 export interface IFieldCreate {
 	name: string;
