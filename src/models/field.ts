@@ -1,5 +1,5 @@
+import { IFilter } from './crm-filters';
 import { IDependenciesList } from './dependencies-list';
-import { ISmartFilters } from './smart-filters';
 
 export type FieldTypes =
 	| 'string'
@@ -120,7 +120,7 @@ export interface IField {
 	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
 	permissions?: IFieldPermissions | null;
 	access?: IFieldAccess | IUserFieldAccess;
-	filters?: ISmartFilters;
+	filters?: IFilter;
 }
 export interface IFieldCreate {
 	name: string;
