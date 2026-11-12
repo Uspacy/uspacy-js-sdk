@@ -1,3 +1,4 @@
+import { IFilter } from './crm-filters';
 import { IDependenciesList } from './dependencies-list';
 
 export type FieldTypes =
@@ -119,6 +120,7 @@ export interface IField {
 	dependency?: Omit<IDependenciesList, 'name' | 'child_field_code' | 'active'>;
 	permissions?: IFieldPermissions | null;
 	access?: IFieldAccess | IUserFieldAccess;
+	filters?: IFilter;
 }
 export interface IFieldCreate {
 	name: string;
