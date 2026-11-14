@@ -30,7 +30,7 @@ export class AnnouncersService {
 	/**
 	 * Get all published announces, the newest first
 	 */
-	async getAnnounces(populate: string[], locale: string, apiPoint: string) {
+	async getAnnounces(populate: string[], locale: string | undefined, apiPoint: string) {
 		return this.httpClient.client.get<ResponseApiList>(this.listNamespace, {
 			baseURL: apiPoint,
 			params: {
