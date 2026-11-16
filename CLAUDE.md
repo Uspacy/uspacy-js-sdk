@@ -1,24 +1,34 @@
 # CLAUDE.md
-
 `@uspacy/sdk` — TypeScript client for the Uspacy REST API, consumed by every Uspacy frontend.
 No backend, database or Docker here: the SDK is a webpack-built library published to GitHub Packages.
 
 ## Setup
-
 ```sh
-nvm use                                 # Node 22.23.4 (.nvmrc)
 export NPM_AUTH_TOKEN=<github token>   # REQUIRED: .npmrc interpolates it; yarn install fails without it
                                         # ("Failed to replace env in config"). Any value works for a plain install.
 yarn install --frozen-lockfile          # Yarn 1 (yarn.lock); `prepare` installs the husky pre-commit hook
 yarn build                              # webpack -> lib/index.js, then postbuild emits .d.ts into lib/
 ```
 
-- `yarn start:dev` — webpack watch + declarations watch, for linking into a consumer app.
+- Node: the version in the GitHub Actions variable `CORE_TAG` (22.23.4 as of 2026-10); no `.nvmrc` on purpose.
+- `yarn start:dev` — webpack watch + declarations watch into `lib/`.
 - `yarn build:docs` — TypeDoc into `docs/` (deployed to GitHub Pages from `main` by CI).
 - `lib/`, `docs/`, `.env` are gitignored — never commit build output.
 
-## Verification
+Trying a change inside a consumer app (`crm-frontend`, `tasks-frontend`, ...) before publishing — copy the build in,
+do not `yarn link` (it resolves the SDK's deps from this repo and misses nested copies — two SDK builds side by side):
 
+```sh
+yarn build
+rsync -a --delete lib/ ../<app>/node_modules/@uspacy/sdk/lib/
+# also into nested copies, e.g. ../<app>/node_modules/@uspacy/common/node_modules/@uspacy/sdk/lib/
+rm -rf ../<app>/node_modules/.cache   # webpack's cache keys node_modules by package version and won't see the copy
+```
+
+Then restart the app's dev server. Restore the original packages afterwards (~30s; also clears the stale cache):
+`cd ../<app> && rm -rf node_modules/@uspacy/sdk node_modules/@uspacy/common/node_modules/@uspacy/sdk node_modules/.cache && yarn install --check-files --frozen-lockfile`.
+
+## Verification
 Run before every commit; all must exit 0:
 
 ```sh
@@ -34,8 +44,7 @@ yarn build           # catches webpack/declaration-emit failures
 - CI on PRs to `main` only checks that the `package.json` version is not already published.
 
 ## Conventions
-
-- **Versioning.** Every PR to `main` bumps the patch `version` in `package.json` (0.0.287 -> 0.0.288);
+- **Versioning.** Every PR to `main` bumps the patch `version` in `package.json` (0.0.288 -> 0.0.289);
   the `check-version` workflow fails otherwise, and merging to `main` auto-publishes.
 - **`stage` branch** publishes with the `alpha` dist-tag. Merge into `stage` only when the developer says so.
   Alpha versions use the format `0.0.999-alpha.N` and go up by one: `0.0.999-alpha.235` -> `0.0.999-alpha.236`.
@@ -77,7 +86,12 @@ yarn build           # catches webpack/declaration-emit failures
   - `ConfigService.config` spreads defaults **after** the user config, so `appPrefix` / `couchDbUrl`
     passed to `createInstance` are ignored. This is intentional; do not "fix" it.
   - `strictNullChecks` is off, so tsc will not catch null/undefined bugs.
+- **`main` changes only through a PR** — never merge or push into `main` locally. Rollback = a PR that reverts the
+  original one (GitHub "Revert" button); it bumps the version like any other PR.
 - **Never commit or push without the developer's explicit confirmation** — ask every time, even after earlier approvals.
+- **Never force-push** (`--force`, `--force-with-lease`, `+refspec`). If a push is rejected, stop and ask the developer.
+- **Always commit the normal way.** Never skip or disable git hooks: no `--no-verify` / `-n` (incl. combined flags like
+  `-nm`), `HUSKY=0`, `-c core.hooksPath=...` or similar. If a hook fails, fix the cause; if you cannot, stop and ask.
 - **Git naming.** Branches: `feat/<ticket>_<short_name>` or `fix/<ticket>_<short_name>`, where `<ticket>`
   is the Uspacy task number. PR title: `[<ticket>]: <short summary of the PR>`; take the number from the
   branch name, and if it is not there, ask the developer. Commit message: a short description of what this
