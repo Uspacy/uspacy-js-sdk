@@ -96,3 +96,18 @@ export interface IAnnouncePopup {
 	startDate?: string;
 	endDate?: string;
 }
+
+export interface IAnnounce {
+	id: number;
+	documentId: string;
+	/**
+	 * Who sees the announce: `key:value` rules split by `;` that must all hold, values split by `,` of which any may match,
+	 * e.g. `region:ua,pl; role:ADMIN`. Keys are domain, region, role and tariff. Empty means everyone
+	 */
+	targeting?: string | null;
+	publishedAt: string;
+	banner: IAnnounceBanner | null;
+	widgets: IAnnounceWidget[];
+	notifications: IAnnounceNotification[];
+	popup: IAnnouncePopup[];
+}
