@@ -39,6 +39,7 @@ import { GroupsService } from './services/GroupsService';
 import { HistoryService } from './services/HistoryService';
 import { InvatesService } from './services/InvatesService';
 import { MarketingService } from './services/MarketingService';
+import { MentionsService } from './services/MentionsService';
 import { MessengerService } from './services/MessengerService';
 import { MigrationsService } from './services/MigrationsService';
 import { NewsFeedService } from './services/NewsFeedService';
@@ -111,6 +112,7 @@ class Uspacy {
 		public readonly marketingService: MarketingService,
 		public readonly settingsService: SettingsService,
 		public readonly reindexService: ReindexService,
+		public readonly mentionsService: MentionsService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
