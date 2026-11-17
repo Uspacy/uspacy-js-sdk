@@ -6,6 +6,7 @@ import {
 	DiskSortKey,
 	Disposition,
 	FolderDestination,
+	IAccessPeople,
 	IAccessState,
 	IAccessUpdate,
 	IDiskListing,
@@ -321,6 +322,13 @@ export class DiskService {
 		return this.httpClient.client.get<IAccessState>(`${this.namespace}${path}/access`, { params });
 	}
 
+	/** «Список користувачів»: every person who can reach the object, whatever way they reach it. */
+	accessPeople(type: ShareableType, id: ShareableId, params: IPageParams & { q?: string } = {}) {
+		const { path, params: key } = accessRoute(type, id);
+
+		return this.httpClient.client.get<IAccessPeople>(`${this.namespace}${path}/access/people`, { params: { ...key, ...params } });
+	}
+
 	/** «Зберегти»: the panel's whole new state in one transaction; what is left out is removed. */
 	saveAccess(type: ShareableType, id: ShareableId, update: IAccessUpdate) {
 		const { path, params } = accessRoute(type, id);
@@ -346,8 +354,9 @@ export class DiskService {
 	 * The picker's «Додати»: ticked files, ticked folders with everything in them,
 	 * and a «Вибрати всі» — as the files they amount to, in one request.
 	 */
-	resolvePicker(selection: ISelection) {
-		return this.httpClient.client.post<{ files: IFile[]; truncated: boolean }>(`${this.namespace}/disk/picker/resolve`, { selection });
+	/** Everything picked — ticked files and folders, and each «Вибрати всі» — as files, in one request. */
+	resolvePicker(selections: ISelection[]) {
+		return this.httpClient.client.post<{ files: IFile[]; truncated: boolean }>(`${this.namespace}/disk/picker/resolve`, { selections });
 	}
 
 	/** Disk files onto an entity as second records over the same content; the originals stay where they are. */
