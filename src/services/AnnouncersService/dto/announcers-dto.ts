@@ -1,4 +1,4 @@
-import { IAnnounceBanner, IAnnounceNotification, IAnnouncePopup, IAnnounceWidget } from '../../../models/announcers';
+import { IAnnounce, IAnnounceBanner, IAnnounceNotification, IAnnouncePopup, IAnnounceWidget } from '../../../models/announcers';
 
 export interface ResponseApiItem {
 	id?: number;
@@ -18,6 +18,11 @@ export interface ResponseApi {
 			total: number;
 		};
 	};
+}
+
+export interface ResponseApiList {
+	data: IAnnounce[];
+	meta: ResponseApi['meta'];
 }
 
 export interface IAdminUrlParams {
