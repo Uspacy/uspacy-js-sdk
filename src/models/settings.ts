@@ -25,6 +25,7 @@ export interface IPortalSettings {
 	logo: string;
 	thumbnail: string;
 	click2callUrl?: string;
+	click2callEnabled?: boolean | null;
 	installedApps: IInstalledApp[];
 	hideFiredEmployees?: boolean;
 }
