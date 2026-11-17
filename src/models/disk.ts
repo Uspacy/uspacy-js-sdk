@@ -1,11 +1,9 @@
 /**
  * The shapes the Disk API actually answers with.
  *
- * Taken from the backend's resources rather than from the specification, because
- * the two have drifted before and the resource is what arrives. Keys are
- * camelCase on the wire: the authenticated API converts at the boundary
- * (`ConvertResponseToCamelCase`), and the public link page is written camelCased
- * by hand because that stack deliberately runs no converters.
+ * Keys are snake_case on the wire in both directions, as the backend writes
+ * them: the Disk's routes run no case converter, and neither does this client.
+ * The contract is docs/backend-final.uk.md.
  *
  * @see files-backend app/Http/Resources/
  */
@@ -89,7 +87,23 @@ export const isRootSection = (section: DiskSection): section is RootSection => s
  * comes to believe it filed something in the company drive that went into a
  * personal one.
  */
-export type FolderDestination = { parentId: number } | { section: RootSection };
+export type FolderDestination = { parent_id: number } | { section: RootSection };
+
+/**
+ * A module thing's own place an upload can land in: the «Завдання» folder of a
+ * group's disk. Files only — such a place has no folders of its own — and the
+ * file is the entity's, under that source (docs/backend-final.uk.md, п. 11).
+ */
+export interface IEntityDestination {
+	entity_type: string;
+	entity_id: string;
+	source: string;
+}
+
+/** Everywhere an upload can land. */
+export type UploadDestination = FolderDestination | IEntityDestination;
+
+export const isEntityDestination = (destination: UploadDestination): destination is IEntityDestination => 'entity_id' in destination;
 
 /**
  * A module drive as the place something is moved to.
@@ -101,13 +115,13 @@ export type FolderDestination = { parentId: number } | { section: RootSection };
  * `FolderDestination`: only a move can name it, and a backend that cannot file
  * an object under a module answers with a refusal the dialog shows.
  */
-export type ModuleDestination = { section: typeof MODULES_SECTION; entityType: string };
+export type ModuleDestination = { section: typeof MODULES_SECTION; entity_type: string };
 
 /** Everywhere a move can end. */
 export type MoveDestination = FolderDestination | ModuleDestination;
 
 export const isModuleDestination = (destination: MoveDestination): destination is ModuleDestination =>
-	'entityType' in destination && destination.section === MODULES_SECTION;
+	'entity_type' in destination && destination.section === MODULES_SECTION;
 
 /** Whether two destinations name the same place. */
 export const sameDestination = (one: MoveDestination | null, other: MoveDestination | null): boolean => {
@@ -115,12 +129,12 @@ export const sameDestination = (one: MoveDestination | null, other: MoveDestinat
 		return false;
 	}
 
-	if ('parentId' in one || 'parentId' in other) {
-		return 'parentId' in one && 'parentId' in other && one.parentId === other.parentId;
+	if ('parent_id' in one || 'parent_id' in other) {
+		return 'parent_id' in one && 'parent_id' in other && one.parent_id === other.parent_id;
 	}
 
 	if (isModuleDestination(one) || isModuleDestination(other)) {
-		return isModuleDestination(one) && isModuleDestination(other) && one.entityType === other.entityType;
+		return isModuleDestination(one) && isModuleDestination(other) && one.entity_type === other.entity_type;
 	}
 
 	return one.section === other.section;
@@ -165,28 +179,44 @@ export const DEFAULT_SORT: ISortState = { sort: 'name', order: 'asc' };
 export interface IAccessSummary {
 	code: string;
 	label: string;
+	/**
+	 * Whether somebody other than the owner reaches the object through a grant
+	 * or through the entity it hangs off — the design's «shared» mark on a
+	 * folder's tile. The server's call, like the rest of the summary: a company
+	 * drive's folder is everybody's by the drive's own rule and is not marked,
+	 * a folder somebody shared out of it is.
+	 */
 	shared?: boolean;
 }
 
+/**
+ * Where an object lives: the folder it is in, or its drive when it sits at the
+ * top of one — the details panel's «Розташування».
+ *
+ * `label` is the folder's or the drive's name as the server would print it;
+ * `folderId` is null at a drive's root. Sent by the server because neither a
+ * file nor a folder carries its parent, and a drive's name is not something
+ * this side may derive from a section code (CON-8).
+ */
 export interface IObjectLocation {
 	label: string;
 	section: DiskSection;
-	folderId: number | null;
+	folder_id: number | null;
 }
 
 export interface IFolder {
 	id: number;
 	name: string;
 	section: DiskSection;
-	ownerId: number | null;
-	creatorId: number | null;
-	createdAt: string | null;
-	updatedAt: string | null;
+	owner_id: number | null;
+	creator_id: number | null;
+	created_at: string | null;
+	updated_at: string | null;
 	/**
 	 * How many things are directly inside — "184 елементи" under a folder card.
 	 *
 	 * Optional because `FolderResource` does not send it yet (see
-	 * docs/backend-requests.md). The card draws the line when the number is
+	 * docs/backend-final.uk.md). The card draws the line when the number is
 	 * there and leaves it out when it is not, rather than counting the loaded
 	 * page: that would be a different number for every folder with more than a
 	 * page of children, and wrong in the direction that looks right.
@@ -194,14 +224,30 @@ export interface IFolder {
 	 * Items, not files: the design's word is «елементи», and a folder holding
 	 * four subfolders and nothing else is not empty.
 	 */
-	fileCount?: number | null;
+	file_count?: number | null;
 	/**
 	 * Who can reach the folder — the «ДОСТУП» column. Absent on the live
-	 * listings, which carry no such field yet (docs/backend-requests.md); the
+	 * listings, which carry no such field yet (docs/backend-final.uk.md); the
 	 * column is drawn only for a listing that sends it on at least one row.
 	 */
 	access?: IAccessSummary | null;
+	/** The folder or drive this one sits in. Absent until the listing sends it; see IObjectLocation. */
 	place?: IObjectLocation | null;
+	/** Who last changed the folder or what is in it — «Ким змінено». */
+	modified_by?: number | null;
+	/** Bytes in the subtree, trash excluded — «Розмір папки», and the Storage tab's size column. */
+	size?: number | null;
+	/** True when the drive's own rule is switched off for this folder — see IAccessState. */
+	restricted?: boolean;
+	/** What this viewer may do with the folder; the menus offer only that. */
+	permissions?: IRowPermissions | null;
+	/** Whether the picker lets this viewer attach it. */
+	attachable?: boolean;
+	/** When this viewer last opened the folder, ISO — «Останні». */
+	last_opened_at?: string | null;
+	/** «Доступні мені»: when the grant that brought it here was made, and by whom. */
+	shared_at?: string | null;
+	shared_by?: number | null;
 }
 
 /**
@@ -213,7 +259,7 @@ export interface IFolder {
  */
 export interface IFile {
 	id: number;
-	entityType: string | null;
+	entity_type: string | null;
 	/**
 	 * A string, and not a number, because `files.entity_id` is a varchar(255).
 	 *
@@ -224,26 +270,56 @@ export interface IFile {
 	 * for. See AttachFileRequest, which validates it as a string for the same
 	 * reason and says so.
 	 */
-	entityId: string | null;
-	uploadId: string | null;
-	ownerId: number | null;
-	creatorId: number | null;
-	originalFilename: string;
+	entity_id: string | null;
+	upload_id: string | null;
+	owner_id: number | null;
+	creator_id: number | null;
+	original_filename: string;
 	/**
 	 * Unix seconds, not an ISO string like a folder's `updatedAt`. The backend
 	 * writes `time()` and serialises the column untouched. Read it through
 	 * fromUnixSeconds().
 	 */
-	lastModified: number | null;
+	last_modified: number | null;
 	size: number;
 	url: string;
 	width: number | null;
 	height: number | null;
 	/** Who can reach the file — the «ДОСТУП» column. Absent until the listing sends it; see IFolder.access. */
 	access?: IAccessSummary | null;
+	/** The folder or drive the file sits in. Absent until the listing sends it; see IObjectLocation. */
 	place?: IObjectLocation | null;
-	createdAt?: string | null;
-	lastOpenedAt?: string | null;
+	/** When the record was created, ISO — the panel's «Створено». The live resource carries only `lastModified`. */
+	created_at?: string | null;
+	/** When this viewer last opened the file, ISO — the panel's «Відкрито». Null when they never have. */
+	last_opened_at?: string | null;
+	/** Who last replaced, renamed or moved the file — «Ким змінено». */
+	modified_by?: number | null;
+	/** A signed, short-lived preview for the grid's tile; null until generated, and for types with none. */
+	thumbnail_url?: string | null;
+	/** The thing the file hangs off, named by its owning service — the entity chip. */
+	entity?: IEntityRef | null;
+	restricted?: boolean;
+	permissions?: IRowPermissions | null;
+	attachable?: boolean;
+	shared_at?: string | null;
+	shared_by?: number | null;
+}
+
+/** What this viewer may do with one object, resolved by the server with the listing. */
+export interface IRowPermissions {
+	verbs: ShareVerb[];
+	can_share: boolean;
+}
+
+/** The thing a file hangs off, as its owning service names it. */
+export interface IEntityRef {
+	type: string;
+	id: string;
+	name: string;
+	name_resolved: boolean;
+	/** A glyph token owned by the design: task, chat, mail, lead, deal… Unknown tokens draw a generic mark. */
+	icon: string | null;
 }
 
 /** Just enough of an ancestor to draw the path bar. */
@@ -267,9 +343,9 @@ export interface IBreadcrumb {
  */
 export interface IListingMeta {
 	page: number;
-	perPage: number;
+	per_page: number;
 	total: number;
-	lastPage: number;
+	last_page: number;
 	[key: string]: unknown;
 }
 
@@ -307,19 +383,6 @@ export interface IEmptyState {
 	glyphs?: string[] | null;
 }
 
-/**
- * Every id a listing holds, across all of its pages.
- *
- * What "Вибрати всі 156" selects, and the only thing that endpoint returns —
- * see DiskService.listingIds on why ids rather than rows. Two arrays rather
- * than one list of keys, because the server speaks in tables and the client is
- * the thing that knows a selection is keyed by `file-7` / `folder-3`.
- */
-export interface IListingIds {
-	folders: number[];
-	files: number[];
-}
-
 export interface IDiskListing {
 	section: DiskSection;
 	folder: IFolder | null;
@@ -334,12 +397,12 @@ export interface IDiskListing {
 	 * one, which is the one place in the Disk where a partial path would read as
 	 * a complete one.
 	 */
-	breadcrumbsTruncated: boolean;
+	breadcrumbs_truncated: boolean;
 	folders: IFolder[];
 	files: IFile[];
 	meta: IListingMeta;
 	/** Null when the listing has rows. See IEmptyState. */
-	emptyState: IEmptyState | null;
+	empty_state: IEmptyState | null;
 }
 
 /**
@@ -370,14 +433,16 @@ export interface IDiskListing {
  */
 export interface IModuleNode {
 	/** The address, never the title. Rendering this shows a service identifier. */
-	entityType: string;
+	entity_type: string;
 	/** Null on a drive; the entity's own id one level down. Opaque, and a string. */
-	entityId: string | null;
+	entity_id: string | null;
 	name: string;
 	/** False when `name` is the identifier because nobody could resolve one. */
-	nameResolved: boolean;
+	name_resolved: boolean;
 	/** Files under this node *this viewer may see*, which is not the total. */
-	fileCount: number;
+	file_count: number;
+	/** The glyph token the design owns — `task`, `chat`, `deal`… See ModuleGlyph. */
+	icon?: string | null;
 	/**
 	 * The drives this one groups, when it groups any — the second level the
 	 * sidebar draws under "Центр комунікацій".
@@ -387,7 +452,7 @@ export interface IModuleNode {
 	 * same thing to a reader and the server says neither today: `/disk/modules/
 	 * drives` answers one flat list. Which drives group which is the owning
 	 * service's knowledge, not this repository's (CON-8), so it arrives here as
-	 * data or not at all — see docs/backend-requests.md.
+	 * data or not at all — see docs/backend-final.uk.md.
 	 *
 	 * A child is a drive in its own right, addressed by its own `entityType`
 	 * exactly like its parent. The nesting is presentation; it buys the UI no
@@ -400,20 +465,23 @@ export interface IModuleNode {
 	 *
 	 * The owning service's word, like `name`, and not derivable from the
 	 * children's names. Absent wherever the server has none, which is every
-	 * drive the live endpoint describes today (docs/backend-requests.md); the
+	 * drive the live endpoint describes today (docs/backend-final.uk.md); the
 	 * option then falls back to the level's own name.
 	 */
-	entitiesName?: string | null;
+	entities_name?: string | null;
 	/**
 	 * When this entity's files were last touched, ISO, as the design's date
 	 * column shows it. Absent where the projection does not carry it.
 	 */
-	modifiedAt?: string | null;
+	modified_at?: string | null;
 	/** Who touched them last. Absent for the same reason. */
-	ownerId?: number | null;
+	owner_id?: number | null;
 	/** How the platform opens this thing. Absent where nobody said. See IModuleDrawer. */
 	drawer?: IModuleDrawer | null;
+	/** Who can reach the entity's files — its participants — and so whether its tile carries the «shared» mark. */
 	access?: IAccessSummary | null;
+	/** What the viewer may do with the entity: open it always; share it only with `can_share`. */
+	permissions?: IRowPermissions | null;
 }
 
 /**
@@ -434,7 +502,7 @@ export interface IModuleDrawer {
 	// The multi-drawer service that opens the entity; the union the store's drawers slice declares
 	service: 'task' | 'crm' | 'messenger';
 	/** The owning service's name for this kind of thing, e.g. `tasks`, `deals`. */
-	entityCode: string;
+	entity_code: string;
 }
 
 export interface IModuleListing {
@@ -444,7 +512,7 @@ export interface IModuleListing {
 	entries: IModuleNode[];
 	meta: IListingMeta;
 	/** Null when the listing has rows. See IEmptyState. */
-	emptyState: IEmptyState | null;
+	empty_state: IEmptyState | null;
 	/**
 	 * A degradation, not an emptiness — and the distinction is the whole reason
 	 * this is a separate field rather than folded into `emptyState`.
@@ -483,7 +551,13 @@ export interface IFilePage {
  */
 export type Disposition = 'inline' | 'attachment';
 
-export type ShareableType = 'file' | 'folder' | 'drive';
+export type ShareableType = 'file' | 'folder' | 'drive' | 'entity';
+
+/** A module's thing, shared as the folder it is drawn as: addressed by its type and id, never in a path. */
+export interface IEntityKey {
+	entity_type: string;
+	entity_id: string;
+}
 
 /**
  * What names the thing being shared: a file's or a folder's id, or — for a
@@ -491,114 +565,170 @@ export type ShareableType = 'file' | 'folder' | 'drive';
  * design's «Надати доступ» on «Мій диск» shares the caller's own personal
  * drive, which the section says completely.
  */
-export type ShareableId = number | RootSection;
-
-/**
- * Who a grant can name, as the design's panel offers them.
- *
- * `user` and `department` are stored by the backend today. `role` and
- * `everyone` are drawn by the design as ordinary choices, so the panel offers
- * them as such and sends them like any other grant; a backend that cannot
- * honour one answers `grantee_type_unsupported`, and the panel shows that
- * sentence rather than hiding the choice in advance.
- */
-export type GranteeType = 'user' | 'department' | 'role' | 'everyone';
-
-/** The level a stored grant carries on the wire. */
-export type SharePermission = 'view' | 'edit';
+export type ShareableId = number | RootSection | IEntityKey;
 
 /**
  * The four things the design's "Доступ" list lets a grant allow.
  *
- * "Повний доступ" is not a fifth verb: it is all four together.
+ * "Повний доступ" is not a fifth verb: it is all four together, and it is also
+ * what lets the holder manage the object's access.
  */
 export type ShareVerb = 'view' | 'create' | 'edit' | 'delete';
 
 export const SHARE_VERBS: ShareVerb[] = ['view', 'create', 'edit', 'delete'];
 
 /**
- * The single level a set of verbs amounts to.
+ * What a grant can allow on a kind of object.
  *
- * The wire still carries one level, so the set is sent beside it rather than
- * instead of it: anything that changes the object is `edit`, and looking alone
- * is `view`.
+ * - `view` — see it, open it, download it;
+ * - `create` — add files and folders inside; a folder's, a drive's and a module
+ *   thing's, never a file's, which has no inside;
+ * - `edit` — change it: rename it, replace it, move it;
+ * - `delete` — delete it.
+ *
+ * «Повний доступ» is every verb the object can have, and also the right to
+ * manage its access.
  */
-export const levelOf = (verbs: ShareVerb[]): SharePermission => (verbs.some((verb) => verb !== 'view') ? 'edit' : 'view');
+export const verbsFor = (type: ShareableType): ShareVerb[] => (type === 'file' ? ['view', 'edit', 'delete'] : [...SHARE_VERBS]);
 
-/** The verbs a stored grant allows: its own list if it has one, otherwise what its level means. */
-export const verbsOf = (share: { permission: SharePermission; permissions?: ShareVerb[] | null }): ShareVerb[] => {
-	if (Array.isArray(share.permissions) && share.permissions.length > 0) {
-		return SHARE_VERBS.filter((verb) => (share.permissions as ShareVerb[]).includes(verb));
-	}
+/** Who a grant can name under «Вибрати користувачів». «Усі в Просторі» is a mode, not a grantee. */
+export type GranteeType = 'user' | 'department' | 'role';
 
-	return share.permission === 'edit' ? [...SHARE_VERBS] : ['view'];
-};
+/**
+ * The three cards of the sharing panel.
+ *
+ * - `private` — «Лише ви»: the drive's own rule is switched off and nobody is granted anything.
+ * - `chosen` — «Вибрати користувачів»: the rule is off and `grants` say who may do what.
+ * - `space` — «Усі в Просторі»: everybody in the space may do `space_permissions`.
+ */
+export type AccessMode = 'private' | 'chosen' | 'space';
 
-export interface IShare {
-	id: number;
-	shareableType: ShareableType;
-	shareableId: ShareableId;
-	granteeType: GranteeType;
-	granteeId: number;
-	permission: SharePermission;
-	/** The exact verbs, when the backend stores them; absent, `permission` is all there is. */
-	permissions?: ShareVerb[] | null;
-	createdBy: number;
-	createdAt: string | null;
-	updatedAt: string | null;
+export interface IGrant {
+	grantee_type: GranteeType;
+	grantee_id: number;
+	/** The person's, department's or role's name; sent by the server, ignored on the way in. */
+	grantee_label?: string;
+	permissions: ShareVerb[];
 }
 
 /**
- * The response to creating an external link.
+ * One external link, with its own term and switch. `url` arrives every time.
  *
- * `url` arrives exactly once. The backend stores only a digest of the token, so
- * there is no endpoint that can produce this URL again — the dialog that shows
- * it is the only chance the user gets, and the UI has to say so.
+ * A link has no access level of its own: whoever holds it may look at the file
+ * or folder and download it — the one level there is.
  */
 export interface IExternalLink {
+	id: number;
 	url: string;
-	/** Null is "no term": the design lets a link stand until it is turned off or deleted. */
-	expiresAt: string | null;
-	/**
-	 * The link's own identifier. An object can carry several links, and this is
-	 * what addresses one of them. Absent from a backend that still keeps one
-	 * link per object and answers with the address alone.
-	 */
-	id?: number;
-	/** Whether the link works. Absent means it does; a link past its term does not, whatever this says. */
+	/** Null is "no term": the link stands until it is switched off or deleted. */
+	expires_at: string | null;
+	active: boolean;
+}
+
+/** What a link is created with, or what a saved panel says about one. */
+export interface IExternalLinkPayload {
+	expires_at?: string | null;
 	active?: boolean;
-	/** What the link's holder may do, when the backend stores it. */
-	permissions?: ShareVerb[] | null;
+}
+
+/** A link as the panel saves it: which one, and everything it should now say. */
+export type IExternalLinkSettings = { id: number } & Required<IExternalLinkPayload>;
+
+/**
+ * Everything the sharing panel shows, read in one request and saved in one.
+ *
+ * Saving is a replacement: grants and links that are not in the body are gone
+ * afterwards. That is what makes «Зберегти» one request and one transaction,
+ * whatever the user changed.
+ */
+export interface IAccessState {
+	mode: AccessMode;
+	grants: IGrant[];
+	/** What everybody may do under `space`; null in the other modes. */
+	space_permissions: ShareVerb[] | null;
+	external_links: IExternalLink[];
+	/** Access that reaches the object from a folder above it or from its drive, said in a sentence. */
+	inherited?: { label: string; from: IObjectLocation } | null;
+}
+
+/** The body of a save: the state without what only the server can say. */
+export interface IAccessUpdate {
+	mode: AccessMode;
+	grants: Pick<IGrant, 'grantee_type' | 'grantee_id' | 'permissions'>[];
+	space_permissions: ShareVerb[] | null;
+	external_links: IExternalLinkSettings[];
+}
+
+// ------------------------------------------------------------ mass actions
+
+/**
+ * The listing a «Вибрати всі N» was made in, so the server can find the
+ * objects itself: a drive and folder, a search, a module drive or entity, the
+ * trash — and the filter row's parameters, as the listing sent them.
+ */
+export interface ISelectionScope {
+	section?: DiskSection;
+	folder_id?: number | null;
+	entity_type?: string;
+	entity_id?: string;
+	source?: string;
+	trash?: boolean;
+	q?: string;
+	[filter: string]: string | number | boolean | null | undefined;
 }
 
 /**
- * What may be asked for when minting a link: when it stops working.
+ * Which objects a mass action is about — as CRM's mass actions take them.
  *
- * `expiresAt`, an ISO timestamp, and nothing else — StoreExternalLinkRequest
- * validates exactly one field. This said `expiresInDays` and `cta` until the
- * link UI was built, and neither exists on the backend: the first would have
- * been dropped and every link given the default term while the user believed
- * they had chosen one.
- *
- * Optional, and bounded by the backend rather than here: it must be after now
- * and within the configured maximum (90 days as shipped), and a value outside
- * that is refused with a sentence naming the limit — not clamped. Sending
- * nothing is legitimate and gets the default term (30 days as shipped), never
- * "no expiry": an external link that does not end is not a thing this product
- * creates.
+ * Either the ids that were ticked, or the whole listing a «Вибрати всі» was made
+ * in, minus what was unticked afterwards. A folder stands for its subtree.
  */
-export interface IExternalLinkPayload {
-	/** An ISO timestamp, or null to take a term away again. Left out, the term is not touched. */
-	expiresAt?: string | null;
-	/** What the link's holder may do, as the design's "Доступ" field picks it. */
-	permissions?: ShareVerb[];
-	/** The design's «Активувати» switch. */
-	active?: boolean;
+export type ISelection =
+	| { all: false; folder_ids: number[]; file_ids: number[] }
+	| { all: true; scope: ISelectionScope; except_folder_ids: number[]; except_file_ids: number[] };
+
+/** One object a mass action could not act on, and why, in the refusal's own terms. */
+export interface IMassFailure {
+	type: 'folder' | 'file';
+	id: number;
+	name: string;
+	code: string;
+	message: string;
+	suggestion?: string;
 }
 
-export interface IStorageTotals {
-	size: number;
-	[key: string]: unknown;
+/**
+ * The answer to a mass action: what was done, what was not and why, and how
+ * to take it back. A refusal on one object does not stop the others.
+ */
+export interface IMassResult {
+	done: { folders: number[]; files: number[] };
+	failed: IMassFailure[];
+	/** Hand to `undo` while the notice is up; null when there is nothing to take back. */
+	undo_token: string | null;
+}
+
+/** «Створити нову папку» over a selection: the folder is made and everything moved into it, at once. */
+export interface INewFolderDestination {
+	new_folder: { name: string } & FolderDestination;
+}
+
+export type IMassMoveDestination = MoveDestination | INewFolderDestination;
+
+export interface IMassMoveResult extends IMassResult {
+	/** The folder «Створити нову папку» made; absent for an ordinary move. */
+	folder?: IFolder;
+}
+
+/** What a reversible single action answers with: the token its notice's «Скасувати» sends back. */
+export interface IUndoable {
+	undo_token: string | null;
+}
+
+/** One folder of a tree made in one request, by the path it was asked for under. */
+export interface IFolderTreeEntry {
+	path: string;
+	folder: IFolder;
 }
 
 /**
@@ -614,9 +744,9 @@ export interface IStorageTotals {
 export interface IEntitySource {
 	code: string;
 	name: string;
-	fileCount: number;
-	ownerId: number | null;
-	createdAt: string | null;
-	updatedAt: string | null;
+	file_count: number;
+	owner_id: number | null;
+	created_at: string | null;
+	updated_at: string | null;
 	access?: IAccessSummary | null;
 }
