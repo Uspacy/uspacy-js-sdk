@@ -187,6 +187,16 @@ export interface IAccessSummary {
 	 * a folder somebody shared out of it is.
 	 */
 	shared?: boolean;
+	/** The first few people with access, for the chip's avatars — «Марта +13». */
+	user_ids?: number[];
+	/** How many people have access in all, through any grant, the drive's rule or the entity. */
+	people_count?: number;
+}
+
+/** «Список користувачів»: everybody who can reach an object, a page at a time. */
+export interface IAccessPeople {
+	user_ids: number[];
+	meta: IListingMeta;
 }
 
 /**
@@ -202,6 +212,10 @@ export interface IObjectLocation {
 	label: string;
 	section: DiskSection;
 	folder_id: number | null;
+	/** In a module: the drive, so the chip opens it… */
+	entity_type?: string | null;
+	/** …and the entity, when the place is one. */
+	entity_id?: string | null;
 }
 
 export interface IFolder {
@@ -295,6 +309,8 @@ export interface IFile {
 	last_opened_at?: string | null;
 	/** Who last replaced, renamed or moved the file — «Ким змінено». */
 	modified_by?: number | null;
+	/** Pages in a document — the viewer's «із N»; null where the type has none or it is not known yet. */
+	page_count?: number | null;
 	/** A signed, short-lived preview for the grid's tile; null until generated, and for types with none. */
 	thumbnail_url?: string | null;
 	/** The thing the file hangs off, named by its owning service — the entity chip. */
@@ -482,6 +498,17 @@ export interface IModuleNode {
 	access?: IAccessSummary | null;
 	/** What the viewer may do with the entity: open it always; share it only with `can_share`. */
 	permissions?: IRowPermissions | null;
+	/** For «Про папку»: the bytes of its files the viewer sees. */
+	size?: number;
+	/** For «Розташування»: the module drive it is in. */
+	place?: IObjectLocation | null;
+	/** Who added or changed its newest file. */
+	modified_by?: number | null;
+	/** When the viewer last opened it on the Disk. */
+	last_opened_at?: string | null;
+	/** Who added its first file, and when. */
+	creator_id?: number | null;
+	created_at?: string | null;
 }
 
 /**
@@ -673,6 +700,8 @@ export interface ISelectionScope {
 	entity_id?: string;
 	source?: string;
 	trash?: boolean;
+	/** With `entity_type`: the drive's things as the rows — the «Відображати: Завдання» level — not its files. */
+	entities?: boolean;
 	q?: string;
 	[filter: string]: string | number | boolean | null | undefined;
 }
@@ -684,13 +713,27 @@ export interface ISelectionScope {
  * in, minus what was unticked afterwards. A folder stands for its subtree.
  */
 export type ISelection =
-	| { all: false; folder_ids: number[]; file_ids: number[] }
-	| { all: true; scope: ISelectionScope; except_folder_ids: number[]; except_file_ids: number[] };
+	| {
+			all: false;
+			folder_ids: number[];
+			file_ids: number[];
+			/** A module drive's things, ticked as rows — their files, for «Надати доступ» and «Завантажити». */
+			entity_keys?: IEntityKey[];
+	  }
+	| {
+			all: true;
+			scope: ISelectionScope;
+			except_folder_ids: number[];
+			except_file_ids: number[];
+			/** With `scope.entities`: the things unticked after «Вибрати всі». */
+			except_entity_keys?: IEntityKey[];
+	  };
 
 /** One object a mass action could not act on, and why, in the refusal's own terms. */
 export interface IMassFailure {
-	type: 'folder' | 'file';
-	id: number;
+	type: 'folder' | 'file' | 'entity';
+	/** A folder's or a file's id; for a module's thing, `tasks:5062`. */
+	id: number | string;
 	name: string;
 	code: string;
 	message: string;
@@ -702,7 +745,7 @@ export interface IMassFailure {
  * to take it back. A refusal on one object does not stop the others.
  */
 export interface IMassResult {
-	done: { folders: number[]; files: number[] };
+	done: { folders: number[]; files: number[]; entities?: IEntityKey[] };
 	failed: IMassFailure[];
 	/** Hand to `undo` while the notice is up; null when there is nothing to take back. */
 	undo_token: string | null;
