@@ -33,6 +33,7 @@ import { CrmProductsUnitService } from './services/CrmProductsUnitService';
 import { CrmRequisitesService } from './services/CrmRequisitesService';
 import { CrmTasksService } from './services/CrmTasksService';
 import { DepartmentsService } from './services/DepartmentsService';
+import { DiskService } from './services/DiskService';
 import { EmailService } from './services/EmailService';
 import { FilesService } from './services/FilesService';
 import { GroupsService } from './services/GroupsService';
@@ -75,6 +76,7 @@ class Uspacy {
 		public readonly tasksTimerService: TasksTimerService,
 		public readonly groupsService: GroupsService,
 		public readonly filesService: FilesService,
+		public readonly diskService: DiskService,
 		public readonly webhooksService: WebhooksService,
 		public readonly oauthClientsService: OAuthClientsService,
 		public readonly rolesService: RolesService,
