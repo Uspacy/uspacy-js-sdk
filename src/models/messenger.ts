@@ -52,6 +52,7 @@ export enum EMetaEntity {
 	STORY = 'story',
 	REEL = 'reel',
 	NOTE = 'note',
+	MEMBER = 'member',
 }
 
 export enum EMetaType {
@@ -61,6 +62,9 @@ export enum EMetaType {
 	CREATED = 'created',
 	UPDATED = 'updated',
 	DELETED = 'deleted',
+	ADDED = 'added',
+	REMOVED = 'removed',
+	LEFT = 'left',
 }
 
 export enum EMessageStatus {
