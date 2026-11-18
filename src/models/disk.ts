@@ -51,7 +51,8 @@ export const RECENT_SECTION = 'recent';
  * route at all. Neither failure arrives with a deploy; both arrive the day
  * somebody names a smart object badly, in production, to one customer.
  *
- * So the drive travels as `?type=`, mirroring ListModuleEntitiesRequest exactly.
+ * So the drive travels in the query: `?type=` in the page's own address, and
+ * `entity_type` in the API's (docs/backend-final.uk.md, п. 10).
  */
 export const MODULES_SECTION = 'modules';
 
@@ -229,9 +230,9 @@ export interface IFolder {
 	/**
 	 * How many things are directly inside — "184 елементи" under a folder card.
 	 *
-	 * Optional because `FolderResource` does not send it yet (see
-	 * docs/backend-final.uk.md). The card draws the line when the number is
-	 * there and leaves it out when it is not, rather than counting the loaded
+	 * Sent with every folder (docs/backend-final.uk.md, п. 3). Optional only so a
+	 * response without it still renders: the card draws the line when the number
+	 * is there and leaves it out when it is not, rather than counting the loaded
 	 * page: that would be a different number for every folder with more than a
 	 * page of children, and wrong in the direction that looks right.
 	 *
@@ -240,12 +241,12 @@ export interface IFolder {
 	 */
 	file_count?: number | null;
 	/**
-	 * Who can reach the folder — the «ДОСТУП» column. Absent on the live
-	 * listings, which carry no such field yet (docs/backend-final.uk.md); the
-	 * column is drawn only for a listing that sends it on at least one row.
+	 * Who can reach the folder — the «ДОСТУП» column (docs/backend-final.uk.md,
+	 * п. 3.3). The column is drawn only for a listing that sends it on at least
+	 * one row.
 	 */
 	access?: IAccessSummary | null;
-	/** The folder or drive this one sits in. Absent until the listing sends it; see IObjectLocation. */
+	/** The folder or drive this one sits in (п. 3.4); see IObjectLocation. */
 	place?: IObjectLocation | null;
 	/** Who last changed the folder or what is in it — «Ким змінено». */
 	modified_by?: number | null;
@@ -299,9 +300,9 @@ export interface IFile {
 	url: string;
 	width: number | null;
 	height: number | null;
-	/** Who can reach the file — the «ДОСТУП» column. Absent until the listing sends it; see IFolder.access. */
+	/** Who can reach the file — the «ДОСТУП» column (п. 3.3); see IFolder.access. */
 	access?: IAccessSummary | null;
-	/** The folder or drive the file sits in. Absent until the listing sends it; see IObjectLocation. */
+	/** The folder or drive the file sits in (п. 3.4); see IObjectLocation. */
 	place?: IObjectLocation | null;
 	/** When the record was created, ISO — the panel's «Створено». The live resource carries only `lastModified`. */
 	created_at?: string | null;
@@ -345,12 +346,12 @@ export interface IBreadcrumb {
 }
 
 /**
- * The window a listing came from: Laravel's paginator, camelCased at the API
- * boundary, the same four fields the trash answers with.
+ * The window a listing came from — the same four fields the trash answers
+ * with, snake_case like every other key.
  *
- * `perPage` is the size the *server* used, which is not always the size that
+ * `per_page` is the size the *server* used, which is not always the size that
  * was asked for — it clamps to 200 rather than refusing — so a pager must
- * compute its range from this and never from the number it sent. `lastPage` is
+ * compute its range from this and never from the number it sent. `last_page` is
  * how a client knows the forward arrow has somewhere to go without fetching
  * the next page to find out.
  *
@@ -699,7 +700,6 @@ export interface ISelectionScope {
 	entity_type?: string;
 	entity_id?: string;
 	source?: string;
-	trash?: boolean;
 	/** With `entity_type`: the drive's things as the rows — the «Відображати: Завдання» level — not its files. */
 	entities?: boolean;
 	q?: string;

@@ -179,8 +179,12 @@ export class DiskService {
 		return this.httpClient.client.patch<IFolder>(`${this.namespace}/folders/${folderId}`, { name });
 	}
 
-	moveFolder(folderId: number, destination: MoveDestination) {
-		return this.httpClient.client.post<{ folder: IFolder } & IUndoable>(`${this.namespace}/folders/${folderId}/move`, destination);
+	/** `name`: the server's suggestion, taken after a `folder_name_conflict` — the folder moves under it. */
+	moveFolder(folderId: number, destination: MoveDestination, name?: string) {
+		return this.httpClient.client.post<{ folder: IFolder } & IUndoable>(`${this.namespace}/folders/${folderId}/move`, {
+			...destination,
+			...(name && { name }),
+		});
 	}
 
 	/** Recursive; the files are second records over the same content, so a copy costs no quota. */
@@ -208,6 +212,15 @@ export class DiskService {
 	}
 
 	// ------------------------------------------------------------------ files
+
+	/**
+	 * Where a folder is for the person asking: their own drive, the company's,
+	 * or «Доступні мені». A link to a folder carries no section — the owner's
+	 * `personal` is somebody else's own drive — so the page asks this first.
+	 */
+	locateFolder(folderId: number) {
+		return this.httpClient.client.get<{ section: DiskSection; folder_id: number }>(`${this.namespace}/disk/folders/${folderId}/locate`);
+	}
 
 	getFile(fileId: number) {
 		return this.httpClient.client.get<IFile>(`${this.namespace}/files/${fileId}`);
@@ -243,8 +256,12 @@ export class DiskService {
 		return this.httpClient.client.patch<IFile>(`${this.namespace}/files/${fileId}/name`, { name });
 	}
 
-	moveFile(fileId: number, destination: MoveDestination) {
-		return this.httpClient.client.post<{ file: IFile } & IUndoable>(`${this.namespace}/files/${fileId}/move`, destination);
+	/** `name`: the server's suggestion, taken after a `file_name_conflict` — the file moves under it. */
+	moveFile(fileId: number, destination: MoveDestination, name?: string) {
+		return this.httpClient.client.post<{ file: IFile } & IUndoable>(`${this.namespace}/files/${fileId}/move`, {
+			...destination,
+			...(name && { name }),
+		});
 	}
 
 	/**
@@ -288,14 +305,6 @@ export class DiskService {
 	 */
 	massMove(selection: ISelection, destination: IMassMoveDestination) {
 		return this.httpClient.client.post<IMassMoveResult>(`${this.namespace}/disk/mass_move`, { selection, destination });
-	}
-
-	/** Copies of a selection; without a destination, each beside its original as «… (копія)». */
-	massCopy(selection: ISelection, destination?: FolderDestination) {
-		return this.httpClient.client.post<IMassResult>(
-			`${this.namespace}/disk/mass_copy`,
-			destination === undefined ? { selection } : { selection, destination },
-		);
 	}
 
 	/** «Надати доступ» over a selection: the grants are added to each object, others left alone. */
