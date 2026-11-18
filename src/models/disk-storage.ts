@@ -6,23 +6,15 @@
  * arrived together in the backend's last two phases (6 and 7) and are easier to
  * check against those phases as one file.
  *
- * Taken from the controllers rather than the specification, for the reason
- * `disk.ts` gives: the controller is what arrives. They write snake_case keys
- * and `ConvertResponseToCamelCase` — in the `api` group every `files/v1` route
- * runs under — rewrites every key on the way out, recursively and keys only, so
- * `used_bytes` arrives as `usedBytes` while a *value* such as
- * `restored_to_section_root` or `module:deal` arrives untouched. The backend's
- * own feature tests read the camelCase paths (`quota.quotaBytes`,
- * `notice.code`), which is the check that this is true rather than assumed.
- *
- * @see files-backend app/Http/Controllers/V1/TrashController.php
- * @see files-backend app/Http/Controllers/V1/StorageStatsController.php
+ * snake_case both ways, as in `disk.ts`: the Disk routes run without the case
+ * conversion middleware, so a key is spelled here as the server writes it.
+ * The contract is docs/backend-final.uk.md (пп. 12, 13).
  */
 
 import { DiskSection, IAccessSummary, IBreadcrumb, IEmptyState, IEntityRef, IFile, IFolder, IMassResult } from './disk';
 
 /**
- * The page window every Phase 7 listing answers with.
+ * The page window the trash and the storage listings answer with.
  *
  * Four fields, all always present — unlike `IListingMeta`, which the older
  * listings fill from a paginator and which therefore carries an index
@@ -56,12 +48,10 @@ export type INotice = IEmptyState;
  * act, and restoring the folder brings the subtree back, so the listing shows
  * the folder and not the ten thousand things inside it (TrashListing).
  *
- * Note what is **not** here: when an object was deleted. FileResource and
- * FolderResource carry no `deletedAt`, and the trash serialises through them,
- * so there is no date to show and no way to say how long something has left
- * before the nightly sweep removes it. The ordering is the backend's — most
- * recently deleted first — and the screen says so instead of drawing a column
- * it has no data for.
+ * Each row carries when it was deleted (ITrashMark: `deleted_at`), and the
+ * listing says how long rows are kept (`retention_days`): the «Дата видалення»
+ * column and the notice over the table. Most recently deleted first unless
+ * sorted (docs/backend-final.uk.md, п. 12).
  */
 export interface ITrashListing {
 	folders: ITrashedFolder[];
@@ -86,9 +76,8 @@ export type ITrashEntity = IEntityRef;
 /**
  * What the trash says about a row beyond what the object itself carries.
  *
- * Both optional, because neither is served yet (docs/backend-final.uk.md): the
- * live trash serialises through the ordinary resources, and a response without
- * these still renders — with an em dash in each of the two columns.
+ * Sent on every trash row (docs/backend-final.uk.md, п. 12). Optional only so a
+ * row without them still renders — with an em dash in each of the two columns.
  */
 export interface ITrashMark {
 	/** When the object was deleted, ISO. The «ДАТА ВИДАЛЕННЯ» column. */
@@ -103,10 +92,9 @@ export type ITrashedFile = IFile & ITrashMark;
 /**
  * What a request for the trash may carry.
  *
- * The page window is served. `search` and the filter row's parameters are not
- * (ListTrashRequest takes neither): the design draws the Disk's search and
- * filter bar over the trash, so they are sent, the live backend drops them in
- * silence, and docs/backend-final.uk.md asks for them.
+ * The page window, the search (`q`) and the filter row's parameters — the
+ * same vocabulary as every listing (docs/backend-final.uk.md, пп. 4, 12). A
+ * parameter the server does not know is a 422, not a silent drop.
  */
 export interface ITrashParams {
 	page?: number;
@@ -188,25 +176,16 @@ export interface ITrashSweep {
  * one would be wrong for exactly the rows that matter.
  *
  * `kind` and `value` are what the key means, said by the server so that nobody
- * has to parse it. `kind` is the backend's UsageScopeKind (`total`, `section`,
- * `module`, `user` today) and is typed as a string rather than that union on
- * purpose: nothing on this side branches on it, and a kind added later must not
- * fail to render.
+ * has to parse it. `kind` is `section`, `module` or `trash` (docs/backend-final.uk.md,
+ * п. 15) and is typed as a string rather than that union on purpose: a kind
+ * added later must not fail to render. The whole space is no scope at all — a
+ * `segment` of null.
  */
 export interface IUsageScope {
 	key: string;
 	kind: string;
 	value: string;
 }
-
-/**
- * The key that names the space as a whole.
- *
- * The one key this application ever writes rather than receives, and only to
- * recognise it in a URL — it is `SpaceUsage::SCOPE_TOTAL`, the address of the
- * headline figure, and not a module, a section or a person.
- */
-export const SPACE_SCOPE_KEY = 'total';
 
 /**
  * Where the space stands against its limit, as one word.
@@ -296,8 +275,6 @@ export interface IStorageLocation {
 	scope: IUsageScope;
 	label: string;
 	label_resolved: boolean;
-	/** The module's entity type, for the chip's glyph; null on a structural drive. */
-	entity_type: string | null;
 	/** The place's glyph token, as on a module drive. */
 	icon?: string | null;
 }
