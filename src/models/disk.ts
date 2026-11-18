@@ -51,8 +51,9 @@ export const RECENT_SECTION = 'recent';
  * route at all. Neither failure arrives with a deploy; both arrive the day
  * somebody names a smart object badly, in production, to one customer.
  *
- * So the drive travels in the query: `?type=` in the page's own address, and
- * `entity_type` in the API's (docs/backend-final.uk.md, п. 10).
+ * So the drive travels in the query: `?module=` in the page's own address —
+ * not `?type=`, which is the filter row's «Тип файла» — and `entity_type` in
+ * the API's (docs/backend-final.uk.md, п. 10).
  */
 export const MODULES_SECTION = 'modules';
 
@@ -310,8 +311,6 @@ export interface IFile {
 	last_opened_at?: string | null;
 	/** Who last replaced, renamed or moved the file — «Ким змінено». */
 	modified_by?: number | null;
-	/** Pages in a document — the viewer's «із N»; null where the type has none or it is not known yet. */
-	page_count?: number | null;
 	/** A signed, short-lived preview for the grid's tile; null until generated, and for types with none. */
 	thumbnail_url?: string | null;
 	/** The thing the file hangs off, named by its owning service — the entity chip. */
