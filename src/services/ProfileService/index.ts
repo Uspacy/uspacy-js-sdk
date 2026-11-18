@@ -38,10 +38,11 @@ export class ProfileService {
 
 	/**
 	 * Disable 2fa
+	 * @param code current code from the authenticator app
 	 * @returns user portal settings
 	 */
-	disable2Fa() {
-		return this.httpClient.client.patch<IResponseWithMessage>(`${this.namespace}/twofa_disable/`);
+	disable2Fa(code: string) {
+		return this.httpClient.client.patch<IResponseWithMessage>(`${this.namespace}/twofa_disable/`, { code });
 	}
 
 	/**
