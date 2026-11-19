@@ -24,6 +24,10 @@ export class TokensService {
 	 * Share of the access token's lifetime after which it is refreshed
 	 */
 	private static readonly REFRESH_AT = 0.8;
+	/**
+	 * Seconds an access token is used before an early refresh
+	 */
+	private static readonly MIN_REFRESH_AGE = 60;
 	private storageService: StorageService;
 	constructor(
 		private sessionService: SessionService,
@@ -225,14 +229,15 @@ export class TokensService {
 	}
 
 	/**
-	 * The access token is in the last 20% of its lifetime (or past it): time to refresh it
+	 * The access token is in the last 20% of its lifetime and at least a minute old, or expired: time to refresh it.
+	 * The minute keeps a token that the server shortened to its session's end from being refreshed on every request.
 	 */
 	async isExpiring(ratio = TokensService.REFRESH_AT): Promise<boolean> {
 		try {
 			const jwt = await this.decodeToken();
 			const now = Date.now() / 1000;
-			if (!jwt.iat || jwt.iat >= jwt.exp) return jwt.exp < Math.floor(now);
-			return now >= jwt.iat + (jwt.exp - jwt.iat) * ratio;
+			if (!jwt.iat || jwt.iat >= jwt.exp || jwt.exp <= now) return jwt.exp < Math.floor(now);
+			return now >= jwt.iat + (jwt.exp - jwt.iat) * ratio && now - jwt.iat >= TokensService.MIN_REFRESH_AGE;
 		} catch (_) {
 			return false;
 		}

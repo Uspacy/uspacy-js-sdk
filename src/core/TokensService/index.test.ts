@@ -219,6 +219,15 @@ describe('HttpClient', () => {
 		expect(sentTo(REFRESH_URL)).toHaveLength(0);
 	});
 
+	test('a token the server cut short to its session end is not refreshed again within its first minute', async () => {
+		const iat = nowSeconds() - 30;
+		const { httpClient, sentTo } = setup({ token: jwt({ iat, exp: iat + 35, domain: HOST, sid: 'sid-1', typ: 'access' }) });
+
+		await httpClient.client.get(API_URL);
+
+		expect(sentTo(REFRESH_URL)).toHaveLength(0);
+	});
+
 	test('after a failed early refresh the next attempt waits a minute', async () => {
 		const { httpClient, sentTo, reply } = setup({ token: accessToken({ age: Math.ceil(TTL * 0.85) }) });
 		reply(REFRESH_URL, { status: 503 }, { status: 200, data: { jwt: accessToken(), expireInSeconds: TTL } });
