@@ -10,12 +10,12 @@ import {
 	IAccessState,
 	IAccessUpdate,
 	IDiskListing,
-	IEntitySource,
+	IEntityRootListing,
 	IExternalLink,
 	IExternalLinkPayload,
 	IFile,
-	IFilePage,
 	IFolder,
+	IFolderLocation,
 	IFolderTreeEntry,
 	IGrant,
 	IMassMoveDestination,
@@ -45,12 +45,12 @@ import {
 /**
  * A page window and an ordering, in the backend's own names.
  *
- * `per_page` is clamped to 200 by the server rather than refused: a client
+ * `list` is clamped to 200 by the server rather than refused: a client
  * asking for more is asking for as much as possible.
  */
 export interface IPageParams {
 	page?: number;
-	per_page?: number;
+	list?: number;
 	sort?: DiskSortKey;
 	order?: SortOrder;
 }
@@ -143,9 +143,9 @@ export class DiskService {
 	}
 
 	/** Where an entity's files come from, as folders: a group's «Стрічка новин» and «Завдання». */
-	moduleEntitySources(entityType: string, entityId: string) {
-		return this.httpClient.client.get<{ sources: IEntitySource[] }>(`${this.namespace}/disk/${MODULES_SECTION}/sources`, {
-			params: { entity_type: entityType, entity_id: entityId },
+	moduleEntitySources(entityType: string, entityId: string, params: IListingParams = {}) {
+		return this.httpClient.client.get<IEntityRootListing>(`${this.namespace}/disk/${MODULES_SECTION}/sources`, {
+			params: { ...params, entity_type: entityType, entity_id: entityId },
 		});
 	}
 
@@ -219,7 +219,7 @@ export class DiskService {
 	 * `personal` is somebody else's own drive — so the page asks this first.
 	 */
 	locateFolder(folderId: number) {
-		return this.httpClient.client.get<{ section: DiskSection; folder_id: number }>(`${this.namespace}/disk/folders/${folderId}/locate`);
+		return this.httpClient.client.get<IFolderLocation>(`${this.namespace}/disk/folders/${folderId}/locate`);
 	}
 
 	getFile(fileId: number) {
@@ -354,16 +354,11 @@ export class DiskService {
 
 	// ------------------------------------------------------- picker and attach
 
-	/** Search across every drive the picker can reach. */
-	picker(params: IPageParams & { q?: string } = {}) {
-		return this.httpClient.client.get<IFilePage>(`${this.namespace}/disk/picker`, { params });
-	}
-
 	/**
-	 * The picker's «Додати»: ticked files, ticked folders with everything in them,
-	 * and a «Вибрати всі» — as the files they amount to, in one request.
+	 * The picker's «Додати»: the ticked files and each «Вибрати всі», as the
+	 * files they amount to, in one request. Files only — a folder is opened in
+	 * the picker, never picked, and a place's folders are not unfolded (п. 14.1).
 	 */
-	/** Everything picked — ticked files and folders, and each «Вибрати всі» — as files, in one request. */
 	resolvePicker(selections: ISelection[]) {
 		return this.httpClient.client.post<{ files: IFile[]; truncated: boolean }>(`${this.namespace}/disk/picker/resolve`, { selections });
 	}

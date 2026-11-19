@@ -23,7 +23,7 @@ import { DiskSection, IAccessSummary, IBreadcrumb, IEmptyState, IEntityRef, IFil
  */
 export interface IPageMeta {
 	page: number;
-	per_page: number;
+	list: number;
 	total: number;
 	last_page: number;
 }
@@ -98,7 +98,7 @@ export type ITrashedFile = IFile & ITrashMark;
  */
 export interface ITrashParams {
 	page?: number;
-	per_page?: number;
+	list?: number;
 	q?: string;
 	type?: string;
 	owner_id?: string;
@@ -310,7 +310,7 @@ export interface IStorageItems {
 export interface IStorageItemsParams {
 	scope?: string;
 	page?: number;
-	per_page?: number;
+	list?: number;
 	sort?: string;
 	order?: 'asc' | 'desc';
 	q?: string;
