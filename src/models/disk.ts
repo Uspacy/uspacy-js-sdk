@@ -3,6 +3,7 @@
  *
  * Keys are snake_case on the wire in both directions, as the backend writes
  * them: the Disk's routes run no case converter, and neither does this client.
+ * Every date is a unix time in seconds, as CRM sends it; null is "none".
  * The contract is docs/backend-final.uk.md.
  *
  * @see files-backend app/Http/Resources/
@@ -245,8 +246,8 @@ export interface IFolder {
 	section: DiskSection;
 	owner_id: number | null;
 	creator_id: number | null;
-	created_at: string | null;
-	updated_at: string | null;
+	created_at: number | null;
+	updated_at: number | null;
 	/**
 	 * How many things are directly inside — "184 елементи" under a folder card.
 	 *
@@ -276,12 +277,10 @@ export interface IFolder {
 	restricted?: boolean;
 	/** What this viewer may do with the folder; the menus offer only that. */
 	permissions?: IRowPermissions | null;
-	/** Whether the picker lets this viewer attach it. */
-	attachable?: boolean;
-	/** When this viewer last opened the folder, ISO — «Останні». */
-	last_opened_at?: string | null;
+	/** When this viewer last opened the folder — «Останні». */
+	last_opened_at?: number | null;
 	/** «Доступні мені»: when the grant that brought it here was made, and by whom. */
-	shared_at?: string | null;
+	shared_at?: number | null;
 	shared_by?: number | null;
 }
 
@@ -310,11 +309,7 @@ export interface IFile {
 	owner_id: number | null;
 	creator_id: number | null;
 	original_filename: string;
-	/**
-	 * Unix seconds, not an ISO string like a folder's `updatedAt`. The backend
-	 * writes `time()` and serialises the column untouched. Read it through
-	 * fromUnixSeconds().
-	 */
+	/** When the file's content last changed. */
 	last_modified: number | null;
 	size: number;
 	url: string;
@@ -324,10 +319,10 @@ export interface IFile {
 	access?: IAccessSummary | null;
 	/** The folder or drive the file sits in (п. 3.4); see IObjectLocation. */
 	place?: IObjectLocation | null;
-	/** When the record was created, ISO — the panel's «Створено». The live resource carries only `lastModified`. */
-	created_at?: string | null;
-	/** When this viewer last opened the file, ISO — the panel's «Відкрито». Null when they never have. */
-	last_opened_at?: string | null;
+	/** When the record was created — the panel's «Створено». */
+	created_at?: number | null;
+	/** When this viewer last opened the file — the panel's «Відкрито». Null when they never have. */
+	last_opened_at?: number | null;
 	/** Who last replaced, renamed or moved the file — «Ким змінено». */
 	modified_by?: number | null;
 	/** A signed, short-lived preview for the grid's tile; null until generated, and for types with none. */
@@ -337,7 +332,7 @@ export interface IFile {
 	restricted?: boolean;
 	permissions?: IRowPermissions | null;
 	attachable?: boolean;
-	shared_at?: string | null;
+	shared_at?: number | null;
 	shared_by?: number | null;
 }
 
@@ -511,10 +506,10 @@ export interface IModuleNode {
 	 */
 	entities_name?: string | null;
 	/**
-	 * When this entity's files were last touched, ISO, as the design's date
-	 * column shows it. Absent where the projection does not carry it.
+	 * When this entity's files were last touched, as the design's date column
+	 * shows it. Absent where the projection does not carry it.
 	 */
-	modified_at?: string | null;
+	modified_at?: number | null;
 	/** Who touched them last. Absent for the same reason. */
 	owner_id?: number | null;
 	/** How the platform opens this thing. Absent where nobody said. See IModuleDrawer. */
@@ -537,10 +532,10 @@ export interface IModuleNode {
 	/** Who added or changed its newest file. */
 	modified_by?: number | null;
 	/** When the viewer last opened it on the Disk. */
-	last_opened_at?: string | null;
+	last_opened_at?: number | null;
 	/** Who added its first file, and when. */
 	creator_id?: number | null;
-	created_at?: string | null;
+	created_at?: number | null;
 }
 
 /**
@@ -667,13 +662,13 @@ export interface IExternalLink {
 	id: number;
 	url: string;
 	/** Null is "no term": the link stands until it is switched off or deleted. */
-	expires_at: string | null;
+	expires_at: number | null;
 	active: boolean;
 }
 
 /** What a link is created with, or what a saved panel says about one. */
 export interface IExternalLinkPayload {
-	expires_at?: string | null;
+	expires_at?: number | null;
 	active?: boolean;
 }
 
@@ -721,7 +716,7 @@ export interface ISelectionScope {
 	/** With `entity_type`: the drive's things as the rows — the «Відображати: Завдання» level — not its files. */
 	entities?: boolean;
 	q?: string;
-	[filter: string]: string | number | boolean | null | undefined;
+	[filter: string]: string | number | number[] | boolean | null | undefined;
 }
 
 /**
@@ -807,8 +802,8 @@ export interface IEntitySource {
 	name: string;
 	file_count: number;
 	owner_id: number | null;
-	created_at: string | null;
-	updated_at: string | null;
+	created_at: number | null;
+	updated_at: number | null;
 	access?: IAccessSummary | null;
 }
 

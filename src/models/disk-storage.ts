@@ -11,7 +11,7 @@
  * The contract is docs/backend-final.uk.md (пп. 12, 13).
  */
 
-import { DiskSection, IAccessSummary, IBreadcrumb, IEmptyState, IEntityRef, IFile, IFolder, IMassResult } from './disk';
+import { DiskSection, IAccessSummary, IBreadcrumb, IEmptyState, IEntityRef, IFile, IFolder, IMassResult, IObjectLocation } from './disk';
 
 /**
  * The page window the trash and the storage listings answer with.
@@ -80,8 +80,8 @@ export type ITrashEntity = IEntityRef;
  * row without them still renders — with an em dash in each of the two columns.
  */
 export interface ITrashMark {
-	/** When the object was deleted, ISO. The «ДАТА ВИДАЛЕННЯ» column. */
-	deleted_at?: string | null;
+	/** When the object was deleted. The «ДАТА ВИДАЛЕННЯ» column. */
+	deleted_at?: number | null;
 	entity?: ITrashEntity | null;
 }
 
@@ -103,10 +103,8 @@ export interface ITrashParams {
 	type?: string;
 	owner_id?: string;
 	access?: string;
-	modified_from?: string;
-	modified_to?: string;
-	created_from?: string;
-	created_to?: string;
+	updated_at_period?: [number, number];
+	created_at_period?: [number, number];
 }
 
 /**
@@ -127,23 +125,17 @@ export interface IRestoreOutcome {
 	type?: 'folder' | 'file';
 	id?: number;
 	folder_id: number | null;
-	/**
-	 * The drive the object is in now, which is what the restore notice's
-	 * «Перейти» opens. Optional: a file carries no section and the live
-	 * response does not say — see docs/backend-final.uk.md.
-	 */
+	/** The drive the object is in now. */
 	section?: DiskSection | null;
+	/**
+	 * Where it is now, as «Розташування» says it (п. 3.4) — what the restore
+	 * notice's «Перейти» opens. A drive's section and a folder id cannot name a
+	 * group's root or a module drive; a place can.
+	 */
+	place?: IObjectLocation | null;
 	relocated: boolean;
 	/** `restored_to_section_root` and its sentence when relocated; null otherwise. */
 	notice: INotice | null;
-}
-
-export interface IFileRestore extends IRestoreOutcome {
-	file: IFile;
-}
-
-export interface IFolderRestore extends IRestoreOutcome {
-	folder: IFolder;
 }
 
 /** Restoring a selection from the trash: the mass result, and where each object came back to. */
@@ -314,5 +306,5 @@ export interface IStorageItemsParams {
 	sort?: string;
 	order?: 'asc' | 'desc';
 	q?: string;
-	[filter: string]: string | number | undefined;
+	[filter: string]: string | number | number[] | undefined;
 }

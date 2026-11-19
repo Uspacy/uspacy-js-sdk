@@ -55,8 +55,8 @@ export interface IPageParams {
 	order?: SortOrder;
 }
 
-/** A listing's parameters: the window, plus the filter row's (see useDiskFilters). */
-export type IListingParams = IPageParams & { [filter: string]: string | number | undefined };
+/** A listing's parameters: the window, plus the filter row's (see useDiskFilters); a period is a `[from, to]` pair of unix seconds. */
+export type IListingParams = IPageParams & { [filter: string]: string | number | number[] | undefined };
 
 /**
  * Creating a folder: a name, and exactly one destination.
