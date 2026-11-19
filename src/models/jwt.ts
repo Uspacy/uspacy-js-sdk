@@ -9,6 +9,12 @@ export type AvailableConfigs = Available | string;
 export interface IJwt {
 	id: number;
 	exp: number;
+	iat?: number;
+	/**
+	 * id of the server-side session (tokens of servers with sessions)
+	 */
+	sid?: string;
+	typ?: 'access' | 'refresh';
 	authUserId: number;
 	email: string;
 	firstName: string;
@@ -26,6 +32,11 @@ export interface IJwt {
 		delete: string[];
 		export: string[];
 	};
+	isEmailVerified?: boolean;
+	/**
+	 * Unix time by which the user has to set up 2FA
+	 */
+	twofaSetupDeadline?: number;
 }
 
 /**
