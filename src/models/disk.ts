@@ -47,7 +47,7 @@ export const RECENT_SECTION = 'recent';
  * a free string with no whitelist (CON-8) — it is whatever a customer once named
  * a smart object, in whatever alphabet, possibly containing a slash. In a path
  * it would decide which route matched: a type called `folders` would collide
- * with `/disk/:section/folders/:folderId`, and a type with a slash would not
+ * with `/drive/:section/folders/:folderId`, and a type with a slash would not
  * route at all. Neither failure arrives with a deploy; both arrive the day
  * somebody names a smart object badly, in production, to one customer.
  *
@@ -89,11 +89,26 @@ export const isRootSection = (section: DiskSection): section is RootSection => s
  * comes to believe it filed something in the company drive that went into a
  * personal one.
  */
-export type FolderDestination = { parent_id: number } | { section: RootSection };
+export type FolderDestination = { parent_id: number } | { section: RootSection } | IEntityRoot;
 
 /**
- * A module thing's own place an upload can land in: the «Завдання» folder of a
- * group's disk. Files only — such a place has no folders of its own — and the
+ * The root of a group's disk, as a place: what «Нова папка» and «Новий файл»
+ * at the top of a group put things into (docs/backend-final.uk.md, п. 11). A
+ * group's own folders are ordinary folders under it, named by `parent_id` as
+ * any folder is. Groups are the one module whose entities have a root of
+ * their own; any other `entity_type` here is refused.
+ */
+export interface IEntityRoot {
+	entity_type: string;
+	entity_id: string;
+}
+
+export const isEntityRoot = (destination: FolderDestination | MoveDestination): destination is IEntityRoot =>
+	'entity_id' in destination && !('source' in destination);
+
+/**
+ * A module thing's source an upload can land in: the «Завдання» folder of a
+ * group's disk. Files only — a source has no folders of its own — and the
  * file is the entity's, under that source (docs/backend-final.uk.md, п. 11).
  */
 export interface IEntityDestination {
@@ -105,7 +120,7 @@ export interface IEntityDestination {
 /** Everywhere an upload can land. */
 export type UploadDestination = FolderDestination | IEntityDestination;
 
-export const isEntityDestination = (destination: UploadDestination): destination is IEntityDestination => 'entity_id' in destination;
+export const isEntityDestination = (destination: UploadDestination): destination is IEntityDestination => 'source' in destination;
 
 /**
  * A module drive as the place something is moved to.
@@ -123,7 +138,7 @@ export type ModuleDestination = { section: typeof MODULES_SECTION; entity_type: 
 export type MoveDestination = FolderDestination | ModuleDestination;
 
 export const isModuleDestination = (destination: MoveDestination): destination is ModuleDestination =>
-	'entity_type' in destination && destination.section === MODULES_SECTION;
+	'section' in destination && 'entity_type' in destination && destination.section === MODULES_SECTION;
 
 /** Whether two destinations name the same place. */
 export const sameDestination = (one: MoveDestination | null, other: MoveDestination | null): boolean => {
@@ -133,6 +148,10 @@ export const sameDestination = (one: MoveDestination | null, other: MoveDestinat
 
 	if ('parent_id' in one || 'parent_id' in other) {
 		return 'parent_id' in one && 'parent_id' in other && one.parent_id === other.parent_id;
+	}
+
+	if (isEntityRoot(one) || isEntityRoot(other)) {
+		return isEntityRoot(one) && isEntityRoot(other) && one.entity_type === other.entity_type && one.entity_id === other.entity_id;
 	}
 
 	if (isModuleDestination(one) || isModuleDestination(other)) {
@@ -336,19 +355,23 @@ export interface IEntityRef {
 	name_resolved: boolean;
 	/** A glyph token owned by the design: task, chat, mail, lead, deal… Unknown tokens draw a generic mark. */
 	icon: string | null;
+	/** Where the thing has a page of its own rather than a drawer — a group — its root-relative address. See IModuleNode.page_url. */
+	page_url?: string | null;
 }
 
 /** Just enough of an ancestor to draw the path bar. */
 export interface IBreadcrumb {
 	id: number;
 	name: string;
+	/** What the viewer may do in this folder — which entries its right-click menu offers. */
+	permissions?: IRowPermissions | null;
 }
 
 /**
  * The window a listing came from — the same four fields the trash answers
  * with, snake_case like every other key.
  *
- * `per_page` is the size the *server* used, which is not always the size that
+ * `list` is the size the *server* used, which is not always the size that
  * was asked for — it clamps to 200 rather than refusing — so a pager must
  * compute its range from this and never from the number it sent. `last_page` is
  * how a client knows the forward arrow has somewhere to go without fetching
@@ -359,9 +382,11 @@ export interface IBreadcrumb {
  */
 export interface IListingMeta {
 	page: number;
-	per_page: number;
+	list: number;
 	total: number;
 	last_page: number;
+	/** How many of `total` are files: what the picker's «Вибрати всі N» counts. Sent by the listings that mix folders and files. */
+	files_total?: number;
 	[key: string]: unknown;
 }
 
@@ -494,6 +519,13 @@ export interface IModuleNode {
 	owner_id?: number | null;
 	/** How the platform opens this thing. Absent where nobody said. See IModuleDrawer. */
 	drawer?: IModuleDrawer | null;
+	/**
+	 * Where the thing opens when it is a page rather than a drawer — a group,
+	 * `/company/groups/31`. Root-relative, the product's own address, said by
+	 * the server like `drawer`, so no list of entity types lives here (CON-8).
+	 * A thing with neither is a label only.
+	 */
+	page_url?: string | null;
 	/** Who can reach the entity's files — its participants — and so whether its tile carries the «shared» mark. */
 	access?: IAccessSummary | null;
 	/** What the viewer may do with the entity: open it always; share it only with `can_share`. */
@@ -556,19 +588,6 @@ export interface IModuleListing {
 	 * rendering it put an object into JSX, and React throws on that.
 	 */
 	notice: IEmptyState | null;
-}
-
-/**
- * A page of files and nothing else — what the picker answers with.
- *
- * Deliberately not `IDiskListing` with the other fields made optional. The
- * picker names no place, so it has no section, no folder and no trail; typing
- * those as "sometimes there" would invite a caller to check for them, and the
- * check would never once succeed. See DiskService.picker.
- */
-export interface IFilePage {
-	files: IFile[];
-	meta: IListingMeta;
 }
 
 /**
@@ -791,4 +810,30 @@ export interface IEntitySource {
 	created_at: string | null;
 	updated_at: string | null;
 	access?: IAccessSummary | null;
+}
+
+/**
+ * Where a folder is for the viewer (`…/locate`, п. 2.5): the drive, and for a
+ * group's folder the group it is in, so a link opens it inside that group.
+ */
+export interface IFolderLocation {
+	section: DiskSection;
+	folder_id: number;
+	entity_type?: string | null;
+	entity_id?: string | null;
+}
+
+/**
+ * The top of a group's disk (п. 11): its sources — «Стрічка новин»,
+ * «Завдання» — and, after them, the group's own folders and files, one page
+ * of them at a time. `permissions` is what the viewer may do at the root:
+ * `create` is what «Додати» there needs.
+ */
+export interface IEntityRootListing {
+	sources: IEntitySource[];
+	folders: IFolder[];
+	files: IFile[];
+	meta: IListingMeta;
+	permissions?: IRowPermissions | null;
+	empty_state?: IEmptyState | null;
 }
