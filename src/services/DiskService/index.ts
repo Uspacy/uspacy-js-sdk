@@ -183,9 +183,9 @@ export class DiskService {
 		return this.httpClient.client.post<{ folder: IFolder } & IUndoable>(`${this.namespace}/folders/${folderId}/move`, destination);
 	}
 
-	/** Recursive; the files are second records over the same content, so a copy costs no quota. */
-	copyFolder(folderId: number, destination: FolderDestination) {
-		return this.httpClient.client.post<IFolder>(`${this.namespace}/folders/${folderId}/copy`, destination);
+	/** With its subtree, beside the original or in the copier's «Мій диск» — the server picks (п. 6.5). */
+	copyFolder(folderId: number) {
+		return this.httpClient.client.post<IFolder>(`${this.namespace}/folders/${folderId}/copy`, {});
 	}
 
 	/** Into the trash, with the subtree. */
@@ -255,9 +255,9 @@ export class DiskService {
 		return this.httpClient.client.post<{ file: IFile } & IUndoable>(`${this.namespace}/files/${fileId}/move`, destination);
 	}
 
-	/** Beside the original, in one request: the server names it «… (копія)» (п. 6.5). */
-	copyFile(fileId: number, destination: FolderDestination) {
-		return this.httpClient.client.post<IFile>(`${this.namespace}/files/${fileId}/copy`, destination);
+	/** Beside the original or in the copier's «Мій диск» — the server picks and names it «… (копія)» (п. 6.5). */
+	copyFile(fileId: number) {
+		return this.httpClient.client.post<IFile>(`${this.namespace}/files/${fileId}/copy`, {});
 	}
 
 	deleteFile(fileId: number) {

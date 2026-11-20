@@ -204,25 +204,13 @@ export interface IRowRef {
  */
 export type AccessCode = 'space' | 'private' | 'role' | 'structure' | 'users' | 'participants';
 
-/**
- * A position in a department (spec п. 8.1): the people of that department —
- * its members and its head — whose profile names this position. Positions are
- * free text on a person's profile, so the text itself is the address.
- */
-export interface IPositionRef {
-	department_id: number;
-	position: string;
-}
-
 /** The «Доступ» column's account of a row; its words are built from the code and the ids (useAccessLabel). */
 export interface IAccessSummary {
 	code: AccessCode;
 	/** With `role`: the roles chosen. */
 	role_ids?: number[];
-	/** With `structure`: the departments chosen whole. */
+	/** With `structure`: the departments chosen. */
 	department_ids?: number[];
-	/** With `structure`: the positions chosen. */
-	positions?: IPositionRef[];
 	/**
 	 * Whether somebody other than the owner reaches the object through a grant
 	 * or through the entity it hangs off — the design's «shared» mark on a
@@ -274,6 +262,8 @@ export interface IFolder {
 	modified_by?: number | null;
 	/** Bytes in the subtree, trash excluded — «Розмір папки», and the Storage tab's size column. */
 	size?: number | null;
+	/** Direct children of both kinds, trash excluded: 0 draws the empty folder's tile in the grid. */
+	file_count?: number;
 	/** True when the drive's own rule is switched off for this folder — see IAccessState. */
 	restricted?: boolean;
 	/** What this viewer may do with the folder; the menus offer only that. */
@@ -531,8 +521,7 @@ export const verbsFor = (type: ShareableType): ShareVerb[] => (type === 'file' ?
  *
  * - `private` — «Лише ви»: the drive's own rule is off and nobody else is chosen;
  * - `role` — «За роллю»: the people with the roles in `role_ids`;
- * - `structure` — «За організаційною структурою»: whole departments
- *   (`department_ids`) and positions in them (`positions`);
+ * - `structure` — «За організаційною структурою»: departments (`department_ids`);
  * - `users` — «Окремі користувачі»: the people in `user_ids`;
  * - `space` — «Усі в Просторі»: everybody in the space.
  */
@@ -546,8 +535,8 @@ export const CHOOSE_MODES: ChooseMode[] = ['role', 'structure', 'users'];
 export const isChooseMode = (mode: AccessMode | null | undefined): mode is ChooseMode => CHOOSE_MODES.includes(mode as ChooseMode);
 
 /**
- * Who is chosen and what they may do — the same in a read, in a save and in a
- * mass «Надати доступ». Only the mode's own lists are filled; the others are
+ * Who is chosen and what they may do — the same in a read and in a save.
+ * Only the mode's own lists are filled; the others are
  * empty. `permissions` is the one «Доступ» for everybody chosen, or for the
  * whole space; empty under «Лише ви».
  */
@@ -555,13 +544,12 @@ export interface IAccessSettings {
 	mode: AccessMode;
 	role_ids: number[];
 	department_ids: number[];
-	positions: IPositionRef[];
 	user_ids: number[];
 	permissions: ShareVerb[];
 }
 
 /** Nobody chosen, nothing allowed: the lists a mode leaves empty, to spread a mode's own over. */
-export const NO_ONE: Omit<IAccessSettings, 'mode' | 'permissions'> = { role_ids: [], department_ids: [], positions: [], user_ids: [] };
+export const NO_ONE: Omit<IAccessSettings, 'mode' | 'permissions'> = { role_ids: [], department_ids: [], user_ids: [] };
 
 /**
  * One external link, with its own term and switch. `url` arrives every time.
