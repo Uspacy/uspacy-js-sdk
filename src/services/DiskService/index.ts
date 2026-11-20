@@ -6,9 +6,10 @@ import {
 	DiskSortKey,
 	Disposition,
 	FolderDestination,
-	IAccessPeople,
+	IAccessSettings,
 	IAccessState,
 	IAccessUpdate,
+	IArchiveJob,
 	IDiskListing,
 	IEntityRootListing,
 	IExternalLink,
@@ -17,7 +18,6 @@ import {
 	IFolder,
 	IFolderLocation,
 	IFolderTreeEntry,
-	IGrant,
 	IMassMoveDestination,
 	IMassMoveResult,
 	IMassResult,
@@ -25,7 +25,6 @@ import {
 	ISelection,
 	IUndoable,
 	MODULES_SECTION,
-	MoveDestination,
 	ShareableId,
 	ShareableType,
 	SortOrder,
@@ -179,20 +178,18 @@ export class DiskService {
 		return this.httpClient.client.patch<IFolder>(`${this.namespace}/folders/${folderId}`, { name });
 	}
 
-	/** `name`: the server's suggestion, taken after a `folder_name_conflict` — the folder moves under it. */
-	moveFolder(folderId: number, destination: MoveDestination, name?: string) {
-		return this.httpClient.client.post<{ folder: IFolder } & IUndoable>(`${this.namespace}/folders/${folderId}/move`, {
-			...destination,
-			...(name && { name }),
-		});
+	/**
+	 * A namesake where it lands is no obstacle — another folder with its own id.
+	 * `new_folder`: «Створити нову папку» in the move dialog — the folder is made and this one moved
+	 * into it in one transaction, and the undo takes both back (п. 6.1).
+	 */
+	moveFolder(folderId: number, destination: IMassMoveDestination) {
+		return this.httpClient.client.post<{ folder: IFolder } & IUndoable>(`${this.namespace}/folders/${folderId}/move`, destination);
 	}
 
 	/** Recursive; the files are second records over the same content, so a copy costs no quota. */
-	copyFolder(folderId: number, destination: FolderDestination, name?: string) {
-		return this.httpClient.client.post<IFolder>(
-			`${this.namespace}/folders/${folderId}/copy`,
-			name === undefined ? destination : { ...destination, name },
-		);
+	copyFolder(folderId: number, destination: FolderDestination) {
+		return this.httpClient.client.post<IFolder>(`${this.namespace}/folders/${folderId}/copy`, destination);
 	}
 
 	/** Into the trash, with the subtree. */
@@ -205,10 +202,11 @@ export class DiskService {
 	 *
 	 * A path of its own rather than a flag on the soft delete: an unknown flag
 	 * would be dropped and the folder soft deleted while the dialog said it was
-	 * gone for good, which is the one lie the user cannot check.
+	 * gone for good, which is the one lie the user cannot check. Nothing to take
+	 * back: the answer is a 204 and the folder is gone (п. 7.2).
 	 */
 	deleteFolderPermanently(folderId: number) {
-		return this.httpClient.client.delete<IUndoable>(`${this.namespace}/folders/${folderId}/permanent`);
+		return this.httpClient.client.delete<void>(`${this.namespace}/folders/${folderId}/permanent`);
 	}
 
 	// ------------------------------------------------------------------ files
@@ -256,23 +254,14 @@ export class DiskService {
 		return this.httpClient.client.patch<IFile>(`${this.namespace}/files/${fileId}/name`, { name });
 	}
 
-	/** `name`: the server's suggestion, taken after a `file_name_conflict` — the file moves under it. */
-	moveFile(fileId: number, destination: MoveDestination, name?: string) {
-		return this.httpClient.client.post<{ file: IFile } & IUndoable>(`${this.namespace}/files/${fileId}/move`, {
-			...destination,
-			...(name && { name }),
-		});
+	/** As moveFolder: a namesake is no obstacle, and `new_folder` makes the folder with the move. */
+	moveFile(fileId: number, destination: IMassMoveDestination) {
+		return this.httpClient.client.post<{ file: IFile } & IUndoable>(`${this.namespace}/files/${fileId}/move`, destination);
 	}
 
-	/**
-	 * Without a name, a copy beside the original is made as «… (копія)» in one
-	 * request; a name is sent only after the user accepted a suggestion.
-	 */
-	copyFile(fileId: number, destination: FolderDestination, name?: string) {
-		return this.httpClient.client.post<IFile>(
-			`${this.namespace}/files/${fileId}/copy`,
-			name === undefined ? destination : { ...destination, name },
-		);
+	/** Beside the original, in one request: the server names it «… (копія)» (п. 6.5). */
+	copyFile(fileId: number, destination: FolderDestination) {
+		return this.httpClient.client.post<IFile>(`${this.namespace}/files/${fileId}/copy`, destination);
 	}
 
 	deleteFile(fileId: number) {
@@ -281,7 +270,7 @@ export class DiskService {
 
 	/** See deleteFolderPermanently on why this is a path of its own. */
 	deleteFilePermanently(fileId: number) {
-		return this.httpClient.client.delete<IUndoable>(`${this.namespace}/files/${fileId}/permanent`);
+		return this.httpClient.client.delete<void>(`${this.namespace}/files/${fileId}/permanent`);
 	}
 
 	/**
@@ -307,35 +296,37 @@ export class DiskService {
 		return this.httpClient.client.post<IMassMoveResult>(`${this.namespace}/disk/mass_move`, { selection, destination });
 	}
 
-	/** «Надати доступ» over a selection: the grants are added to each object, others left alone. */
-	massAccess(selection: ISelection, grants: Pick<IGrant, 'grantee_type' | 'grantee_id' | 'permissions'>[]) {
-		return this.httpClient.client.post<IMassResult>(`${this.namespace}/disk/mass_access`, { selection, grants });
+	/** «Надати доступ» over a selection: every object gets these settings, as its own panel's «Зберегти» would give it (п. 5.3). */
+	massAccess(selection: ISelection, access: IAccessSettings) {
+		return this.httpClient.client.post<IMassResult>(`${this.namespace}/disk/mass_access`, { selection, access });
 	}
 
-	/** «Завантажити» over a selection, or on one folder: a signed address of one archive. */
+	/**
+	 * «Завантажити» over a selection, or on one folder: starts the archive, as
+	 * CRM's export starts a file (п. 5.3). One file in the selection answers
+	 * `done` at once, with that file's own address.
+	 */
 	archive(selection: ISelection) {
-		return this.httpClient.client.post<{ url: string }>(`${this.namespace}/disk/archive`, { selection });
+		return this.httpClient.client.post<IArchiveJob>(`${this.namespace}/disk/archive`, { selection });
 	}
 
-	/** Takes back what the notice's token names: a move, a delete, a permanent delete. */
+	/** How far an archive has got; its signed address once it is `done`. */
+	archiveJob(jobId: string) {
+		return this.httpClient.client.get<IArchiveJob>(`${this.namespace}/disk/archive/${encodeURIComponent(jobId)}`);
+	}
+
+	/** Takes back what the notice's token names: a move, or a delete to the trash. */
 	undo(token: string) {
 		return this.httpClient.client.post<void>(`${this.namespace}/disk/undo/${encodeURIComponent(token)}`);
 	}
 
 	// ------------------------------------------------------------------ access
 
-	/** Everything the sharing panel shows: its mode, the grants, the external links. */
+	/** Everything the sharing panel shows: its mode, who is chosen, what they may do, the external links. */
 	access(type: ShareableType, id: ShareableId) {
 		const { path, params } = accessRoute(type, id);
 
 		return this.httpClient.client.get<IAccessState>(`${this.namespace}${path}/access`, { params });
-	}
-
-	/** «Список користувачів»: every person who can reach the object, whatever way they reach it. */
-	accessPeople(type: ShareableType, id: ShareableId, params: IPageParams & { q?: string } = {}) {
-		const { path, params: key } = accessRoute(type, id);
-
-		return this.httpClient.client.get<IAccessPeople>(`${this.namespace}${path}/access/people`, { params: { ...key, ...params } });
 	}
 
 	/** «Зберегти»: the panel's whole new state in one transaction; what is left out is removed. */
@@ -353,15 +344,6 @@ export class DiskService {
 	}
 
 	// ------------------------------------------------------- picker and attach
-
-	/**
-	 * The picker's «Додати»: the ticked files and each «Вибрати всі», as the
-	 * files they amount to, in one request. Files only — a folder is opened in
-	 * the picker, never picked, and a place's folders are not unfolded (п. 14.1).
-	 */
-	resolvePicker(selections: ISelection[]) {
-		return this.httpClient.client.post<{ files: IFile[]; truncated: boolean }>(`${this.namespace}/disk/picker/resolve`, { selections });
-	}
 
 	/** Disk files onto an entity as second records over the same content; the originals stay where they are. */
 	massAttach(fileIds: number[], entityType: string, entityId: string) {
@@ -390,15 +372,12 @@ export class DiskService {
 		return this.httpClient.client.get<ITrashListing>(`${this.namespace}/disk/trash/folders/${folderId}`, { params });
 	}
 
-	/** «Відновити» over one row or many; `name` only for one, after a name conflict. */
-	restoreFromTrash(selection: ISelection, name?: string) {
-		return this.httpClient.client.post<IMassRestoreResult>(
-			`${this.namespace}/disk/trash/mass_restore`,
-			name === undefined ? { selection } : { selection, name },
-		);
+	/** «Відновити» over one row or many, each under its own name (п. 12). */
+	restoreFromTrash(selection: ISelection) {
+		return this.httpClient.client.post<IMassRestoreResult>(`${this.namespace}/disk/trash/mass_restore`, { selection });
 	}
 
-	/** «Видалити остаточно» over one row or many. */
+	/** «Видалити остаточно» over one row or many — final, nothing to take back (п. 12). */
 	purgeFromTrash(selection: ISelection) {
 		return this.httpClient.client.post<IMassResult>(`${this.namespace}/disk/trash/mass_deletion`, { selection });
 	}
