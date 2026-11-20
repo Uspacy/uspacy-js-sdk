@@ -77,3 +77,41 @@ export interface ICountry {
 	title: string;
 	code: string;
 }
+
+export interface IStrapiTariffCell {
+	id: number;
+	title: string | null;
+	dot: boolean | null;
+}
+
+export interface IStrapiTariffPrice {
+	id: number;
+	name: string;
+	subcategory: boolean | null;
+	shortTitle: boolean | null;
+	soon: boolean | null;
+	innerHtml: boolean | null;
+	free: IStrapiTariffCell;
+	standart: IStrapiTariffCell;
+	professional: IStrapiTariffCell;
+}
+
+export interface IStrapiTariffCategory {
+	id: number;
+	title: string;
+	prices: IStrapiTariffPrice[];
+}
+
+export interface IStrapiTariffsData {
+	id: number;
+	documentId: string;
+	locale: string;
+	updatedAt: string;
+	tariffs: IStrapiTariffCategory[];
+	tariffsDifference: IStrapiTariffCategory[];
+}
+
+export interface IStrapiTariffsResponse {
+	data: IStrapiTariffsData;
+	meta: object;
+}
