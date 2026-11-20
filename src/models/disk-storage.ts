@@ -189,21 +189,26 @@ export const QUOTA_CTA = {
 
 /**
  * The space's figures and level, for every member, in one request: the
- * sidebar's «12,6 ГБ із 50 ГБ», its bar and «Вільно 37,4 ГБ», the notice over
- * the listing and the buttons under it.
+ * sidebar's «12,6 ГБ із 50 ГБ» and the buttons under the notice. What follows
+ * from the two numbers — «Вільно 37,4 ГБ» and the bar — is worked out here
+ * (`availableBytes`, `usedFraction`), and the notice's words come from the
+ * level (spec п. 13.3).
  */
 export interface IQuota {
 	level: QuotaLevel;
 	used_bytes: number;
 	/** Null when the space has no limit set. */
 	quota_bytes: number | null;
-	available_bytes: number | null;
-	/** 0..1, for the bar. */
-	used_fraction: number | null;
-	/** The notice's sentence; null at `ok`. */
-	message: string | null;
 	ctas: string[];
 }
+
+/** «Вільно 37,4 ГБ»: what the limit leaves, never below nothing; null with no limit. */
+export const availableBytes = (quota: Pick<IQuota, 'used_bytes' | 'quota_bytes'>): number | null =>
+	quota.quota_bytes === null ? null : Math.max(quota.quota_bytes - quota.used_bytes, 0);
+
+/** The bar, 0..1 and past 1 when over the limit; null with no limit to measure against. */
+export const usedFraction = (quota: Pick<IQuota, 'used_bytes' | 'quota_bytes'>): number | null =>
+	quota.quota_bytes === null || quota.quota_bytes <= 0 ? null : quota.used_bytes / quota.quota_bytes;
 
 // ---------------------------------------------------------------- storage tab
 
@@ -250,8 +255,6 @@ export interface IStorageLocation {
 	scope: IUsageScope;
 	label: string;
 	label_resolved: boolean;
-	/** The place's glyph token, as on a module drive. */
-	icon?: string | null;
 }
 
 export type { IAccessSummary };
