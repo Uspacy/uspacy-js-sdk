@@ -11,7 +11,7 @@
  * The contract is docs/backend-final.uk.md (пп. 12, 13).
  */
 
-import { DiskSection, IAccessSummary, IBreadcrumb, IEmptyState, IEntityRef, IFile, IFolder, IMassResult, IObjectLocation } from './disk';
+import { DiskSection, IAccessSummary, IBreadcrumb, IEntityRef, IFile, IFolder, IMassResult, IObjectLocation } from './disk';
 
 /**
  * The page window the trash and the storage listings answer with.
@@ -27,17 +27,6 @@ export interface IPageMeta {
 	total: number;
 	last_page: number;
 }
-
-/**
- * A short, already translated sentence with the code it was chosen by.
- *
- * The same `{code, message}` shape as `IEmptyState`, and named apart only
- * because "notice" is not an emptiness — a restore that landed somewhere other
- * than where it was left has succeeded. Aliased rather than redeclared so the
- * two cannot drift, which is the property the backend builds both with one
- * function to keep.
- */
-export type INotice = IEmptyState;
 
 // ------------------------------------------------------------------ trash
 
@@ -59,8 +48,6 @@ export interface ITrashListing {
 	meta: IPageMeta;
 	/** How long the trash keeps a row before destroying it — the notice over the table. */
 	retention_days?: number;
-	/** Null while anything is in the trash; `trash_empty` and a sentence otherwise. */
-	empty_state: IEmptyState | null;
 	/**
 	 * Present on the contents of one trashed folder and absent on the trash
 	 * itself: the folder being looked into, and the trashed folders above it up
@@ -113,7 +100,7 @@ export interface ITrashParams {
  * `relocated` is the field that answers PRD Feature 10's sixth criterion. When
  * the folder the object was deleted from has itself gone, the object comes back
  * at the top of its drive instead, the request still succeeds, and this is
- * `true` with a `notice` saying so. A client that read only the 200 would tell
+ * `true`, and the screen says so. A client that read only the 200 would tell
  * the user their file was restored and send them to look for it in a folder
  * that no longer exists.
  *
@@ -134,8 +121,6 @@ export interface IRestoreOutcome {
 	 */
 	place?: IObjectLocation | null;
 	relocated: boolean;
-	/** `restored_to_section_root` and its sentence when relocated; null otherwise. */
-	notice: INotice | null;
 }
 
 /** Restoring a selection from the trash: the mass result, and where each object came back to. */
@@ -194,7 +179,7 @@ export type QuotaLevel = 'not_initialised' | 'ok' | 'warning' | 'exhausted';
 /**
  * The two ways out the backend names, as the codes it sends.
  *
- * Both the quota (`ctas`) and a refused upload (`cta` in the 413 body) carry
+ * Both the quota (`ctas`) and a refused upload (`ctas` in the 413 body) carry
  * these, and mapping them to destinations is this application's job.
  */
 export const QUOTA_CTA = {
@@ -258,8 +243,6 @@ export interface IStorageUsage {
 	/** Null while the space has no quota: the bar then has no remainder to draw. */
 	quota_bytes: number | null;
 	segments: IStorageUsageSegment[];
-	/** `storage_empty` and the server's two sentences when nothing is stored at all. */
-	empty_state: IEmptyState | null;
 }
 
 /** Where an item of the storage-wide listing lives: the segment it is counted in. */
@@ -275,7 +258,6 @@ export type { IAccessSummary };
 
 interface IStorageItemFields {
 	location: IStorageLocation;
-	access: IAccessSummary | null;
 }
 
 export type IStorageFolder = IFolder & IStorageItemFields;
@@ -289,7 +271,6 @@ export interface IStorageItems {
 	folders: IStorageFolder[];
 	files: IStorageFile[];
 	meta: IPageMeta;
-	empty_state: IEmptyState | null;
 }
 
 /**

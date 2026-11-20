@@ -178,7 +178,7 @@ export const sameDestination = (one: MoveDestination | null, other: MoveDestinat
  * client never has to know which sort applies to which half of a listing it is
  * showing as one list.
  */
-export type DiskSortKey = 'name' | 'type' | 'size' | 'date' | 'owner';
+export type DiskSortKey = 'name' | 'type' | 'size' | 'date' | 'created_at' | 'owner';
 
 export type SortOrder = 'asc' | 'desc';
 
@@ -188,7 +188,8 @@ export interface ISortState {
 }
 
 /** What the backend defaults to when a listing names no ordering. */
-export const DEFAULT_SORT: ISortState = { sort: 'name', order: 'asc' };
+/** Newest first, folders still ahead of files. */
+export const DEFAULT_SORT: ISortState = { sort: 'date', order: 'desc' };
 
 /**
  * Who can reach an object, as the server's own sentence — «Усі в Просторі»,
@@ -198,9 +199,31 @@ export const DEFAULT_SORT: ISortState = { sort: 'name', order: 'asc' };
  * it; `label` arrives translated and is rendered as it is, so a kind of
  * access added later appears under its own name.
  */
+/**
+ * Who reaches a row, by the widest of what lets them: the whole space,
+ * departments, roles, chosen people, the thing's participants, or the owner alone.
+ */
+export type AccessCode = 'space' | 'private' | 'role' | 'structure' | 'users' | 'participants';
+
+/**
+ * A position in a department (spec п. 8.1): the people of that department —
+ * its members and its head — whose profile names this position. Positions are
+ * free text on a person's profile, so the text itself is the address.
+ */
+export interface IPositionRef {
+	department_id: number;
+	position: string;
+}
+
+/** The «Доступ» column's account of a row; its words are built from the code and the ids (useAccessLabel). */
 export interface IAccessSummary {
-	code: string;
-	label: string;
+	code: AccessCode;
+	/** With `role`: the roles chosen. */
+	role_ids?: number[];
+	/** With `structure`: the departments chosen whole. */
+	department_ids?: number[];
+	/** With `structure`: the positions chosen. */
+	positions?: IPositionRef[];
 	/**
 	 * Whether somebody other than the owner reaches the object through a grant
 	 * or through the entity it hangs off — the design's «shared» mark on a
@@ -209,16 +232,6 @@ export interface IAccessSummary {
 	 * a folder somebody shared out of it is.
 	 */
 	shared?: boolean;
-	/** The first few people with access, for the chip's avatars — «Марта +13». */
-	user_ids?: number[];
-	/** How many people have access in all, through any grant, the drive's rule or the entity. */
-	people_count?: number;
-}
-
-/** «Список користувачів»: everybody who can reach an object, a page at a time. */
-export interface IAccessPeople {
-	user_ids: number[];
-	meta: IListingMeta;
 }
 
 /**
@@ -249,19 +262,6 @@ export interface IFolder {
 	created_at: number | null;
 	updated_at: number | null;
 	/**
-	 * How many things are directly inside — "184 елементи" under a folder card.
-	 *
-	 * Sent with every folder (docs/backend-final.uk.md, п. 3). Optional only so a
-	 * response without it still renders: the card draws the line when the number
-	 * is there and leaves it out when it is not, rather than counting the loaded
-	 * page: that would be a different number for every folder with more than a
-	 * page of children, and wrong in the direction that looks right.
-	 *
-	 * Items, not files: the design's word is «елементи», and a folder holding
-	 * four subfolders and nothing else is not empty.
-	 */
-	file_count?: number | null;
-	/**
 	 * Who can reach the folder — the «ДОСТУП» column (docs/backend-final.uk.md,
 	 * п. 3.3). The column is drawn only for a listing that sends it on at least
 	 * one row.
@@ -269,6 +269,8 @@ export interface IFolder {
 	access?: IAccessSummary | null;
 	/** The folder or drive this one sits in (п. 3.4); see IObjectLocation. */
 	place?: IObjectLocation | null;
+	/** The module thing the folder belongs to: its group, or a module drive (`id: null`). Null for a folder of no module. */
+	entity?: IEntityRef | null;
 	/** Who last changed the folder or what is in it — «Ким змінено». */
 	modified_by?: number | null;
 	/** Bytes in the subtree, trash excluded — «Розмір папки», and the Storage tab's size column. */
@@ -293,18 +295,6 @@ export interface IFolder {
  */
 export interface IFile {
 	id: number;
-	entity_type: string | null;
-	/**
-	 * A string, and not a number, because `files.entity_id` is a varchar(255).
-	 *
-	 * It was a bigint until 2023, when it was widened so that a file could hang
-	 * off a chat message — whose ids are not numbers. Typing it as a number here
-	 * described the column as it stopped being three years ago, and the values
-	 * that do not survive the round trip are exactly the ones the widening was
-	 * for. See AttachFileRequest, which validates it as a string for the same
-	 * reason and says so.
-	 */
-	entity_id: string | null;
 	upload_id: string | null;
 	owner_id: number | null;
 	creator_id: number | null;
@@ -327,8 +317,8 @@ export interface IFile {
 	modified_by?: number | null;
 	/** A signed, short-lived preview for the grid's tile; null until generated, and for types with none. */
 	thumbnail_url?: string | null;
-	/** The thing the file hangs off, named by its owning service — the entity chip. */
-	entity?: IEntityRef | null;
+	/** The module thing the file hangs off — the entity chip. Null for a file of no module. */
+	entity: IEntityRef | null;
 	restricted?: boolean;
 	permissions?: IRowPermissions | null;
 	attachable?: boolean;
@@ -336,22 +326,22 @@ export interface IFile {
 	shared_by?: number | null;
 }
 
-/** What this viewer may do with one object, resolved by the server with the listing. */
+/** What this viewer may do with one object, resolved by the server with the listing. `full` is what lets its access be managed. */
 export interface IRowPermissions {
 	verbs: ShareVerb[];
-	can_share: boolean;
 }
 
 /** The thing a file hangs off, as its owning service names it. */
 export interface IEntityRef {
-	type: string;
-	id: string;
-	name: string;
-	name_resolved: boolean;
-	/** A glyph token owned by the design: task, chat, mail, lead, deal… Unknown tokens draw a generic mark. */
-	icon: string | null;
-	/** Where the thing has a page of its own rather than a drawer — a group — its root-relative address. See IModuleNode.page_url. */
-	page_url?: string | null;
+	/**
+	 * The thing in its owning service — a string, a chat message's id is not a
+	 * number; null for an object in a module drive without a thing of its own.
+	 */
+	id: string | null;
+	/** Which kind of thing: `tasks`, `leads`, `chat`, `groups`, a smart object's table… — the drive itself when `id` is null. */
+	entity_code: string;
+	/** Its name from the owning service; the drive's when `id` is null. */
+	title: string;
 }
 
 /** Just enough of an ancestor to draw the path bar. */
@@ -380,43 +370,7 @@ export interface IListingMeta {
 	list: number;
 	total: number;
 	last_page: number;
-	/** How many of `total` are files: what the picker's «Вибрати всі N» counts. Sent by the listings that mix folders and files. */
-	files_total?: number;
 	[key: string]: unknown;
-}
-
-/**
- * Why a listing is empty, said by the server.
- *
- * `code` is the branchable part and `message` is already translated in the
- * space's language — the same division as a refusal. Rendering the message and
- * keeping the code is what lets an empty search say "nothing matched" and an
- * empty folder say "nothing here yet" without this application deciding which
- * emptiness it is looking at.
- */
-export interface IEmptyState {
-	code: string;
-	message: string;
-	/**
-	 * The second line, when the place can say something more useful than the
-	 * title — «Тут з'являтимуться файли, які додані до завдань.»
-	 *
-	 * It is the server's for the CON-8 reason: the sentence names the module,
-	 * and a sentence per module written here would be the whitelist. Absent, the
-	 * empty state falls back to describing its own buttons, which is what a
-	 * drive that can be uploaded to has to say instead.
-	 */
-	hint?: string | null;
-	/**
-	 * The glyphs to draw in the illustration, in the order the design places
-	 * them: lower left first, then upper right.
-	 *
-	 * Tokens, not entity types — `folder`, `task`, `mail` — so that two modules
-	 * may share one and a module nobody has drawn for simply has none. An
-	 * unknown token draws nothing rather than a placeholder, which is what keeps
-	 * a module invented after this shipped from arriving with a broken picture.
-	 */
-	glyphs?: string[] | null;
 }
 
 export interface IDiskListing {
@@ -437,8 +391,12 @@ export interface IDiskListing {
 	folders: IFolder[];
 	files: IFile[];
 	meta: IListingMeta;
-	/** Null when the listing has rows. See IEmptyState. */
-	empty_state: IEmptyState | null;
+	/**
+	 * The thing whose files these are — `GET /disk/modules` with `entity_id`
+	 * (п. 10.3): its name for the path, «Про папку» and what the viewer may do
+	 * with it, whatever page of the drive's things it is on.
+	 */
+	entity?: IModuleNode | null;
 }
 
 /**
@@ -512,18 +470,9 @@ export interface IModuleNode {
 	modified_at?: number | null;
 	/** Who touched them last. Absent for the same reason. */
 	owner_id?: number | null;
-	/** How the platform opens this thing. Absent where nobody said. See IModuleDrawer. */
-	drawer?: IModuleDrawer | null;
-	/**
-	 * Where the thing opens when it is a page rather than a drawer — a group,
-	 * `/company/groups/31`. Root-relative, the product's own address, said by
-	 * the server like `drawer`, so no list of entity types lives here (CON-8).
-	 * A thing with neither is a label only.
-	 */
-	page_url?: string | null;
 	/** Who can reach the entity's files — its participants — and so whether its tile carries the «shared» mark. */
 	access?: IAccessSummary | null;
-	/** What the viewer may do with the entity: open it always; share it only with `can_share`. */
+	/** What the viewer may do with the entity: open it always; share it only with `full`. */
 	permissions?: IRowPermissions | null;
 	/** For «Про папку»: the bytes of its files the viewer sees. */
 	size?: number;
@@ -538,51 +487,12 @@ export interface IModuleNode {
 	created_at?: number | null;
 }
 
-/**
- * Which service owns a module, and under what code, so the platform's drawer
- * can open one of its things.
- *
- * It is a field on the response rather than a map here, and that is the whole
- * point: `service` has three values and `entityCode` is the owning service's
- * own vocabulary, so pairing either with an entity type is knowledge only the
- * backend has. A `switch (entityType)` in a component would open a smart object
- * created next year into nothing at all, and would do it silently.
- *
- * `service` is the drawer's own union rather than a free string, because the
- * drawer is the consumer and accepts exactly those three. A fourth would be a
- * change in the platform, not in a customer's data.
- */
-export interface IModuleDrawer {
-	// The multi-drawer service that opens the entity; the union the store's drawers slice declares
-	service: 'task' | 'crm' | 'messenger';
-	/** The owning service's name for this kind of thing, e.g. `tasks`, `deals`. */
-	entity_code: string;
-}
-
 export interface IModuleListing {
 	section: DiskSection;
 	/** Null at the top, where the entries are drives; the opened drive one level in. */
 	drive: IModuleNode | null;
 	entries: IModuleNode[];
 	meta: IListingMeta;
-	/** Null when the listing has rows. See IEmptyState. */
-	empty_state: IEmptyState | null;
-	/**
-	 * A degradation, not an emptiness — and the distinction is the whole reason
-	 * this is a separate field rather than folded into `emptyState`.
-	 *
-	 * It says the page is complete and its entries are right, but that none of
-	 * them could be named. A populated drive that reported itself as empty would
-	 * be the worse lie, so a client must render both, and must not treat the
-	 * presence of one as the absence of the other.
-	 *
-	 * Same `{code, message}` shape as `emptyState`, deliberately: the backend
-	 * builds both with one function precisely so the two cannot drift, and giving
-	 * them different types here would undo that at the boundary. It was typed
-	 * `string | null` until F4, which was not a narrowing but a different type —
-	 * rendering it put an object into JSX, and React throws on that.
-	 */
-	notice: IEmptyState | null;
 }
 
 /**
@@ -609,48 +519,60 @@ export interface IEntityKey {
 export type ShareableId = number | RootSection | IEntityKey;
 
 /**
- * The four things the design's "Доступ" list lets a grant allow.
- *
- * "Повний доступ" is not a fifth verb: it is all four together, and it is also
- * what lets the holder manage the object's access.
- */
-export type ShareVerb = 'view' | 'create' | 'edit' | 'delete';
-
-export const SHARE_VERBS: ShareVerb[] = ['view', 'create', 'edit', 'delete'];
-
-/**
- * What a grant can allow on a kind of object.
+ * The five rows of the design's "Доступ" list.
  *
  * - `view` — see it, open it, download it;
  * - `create` — add files and folders inside; a folder's, a drive's and a module
  *   thing's, never a file's, which has no inside;
  * - `edit` — change it: rename it, replace it, move it;
- * - `delete` — delete it.
- *
- * «Повний доступ» is every verb the object can have, and also the right to
- * manage its access.
+ * - `delete` — delete it;
+ * - `full` — «Повний доступ»: every other verb the object has, and the right to
+ *   manage its access. Granted on its own: the other four together are not it.
  */
-export const verbsFor = (type: ShareableType): ShareVerb[] => (type === 'file' ? ['view', 'edit', 'delete'] : [...SHARE_VERBS]);
+export type ShareVerb = 'view' | 'create' | 'edit' | 'delete' | 'full';
 
-/** Who a grant can name under «Вибрати користувачів». «Усі в Просторі» is a mode, not a grantee. */
-export type GranteeType = 'user' | 'department' | 'role';
+export const SHARE_VERBS: ShareVerb[] = ['view', 'create', 'edit', 'delete', 'full'];
+
+/** What «Доступ» can allow on a kind of object: everything but `create` on a file, which has no inside. */
+export const verbsFor = (type: ShareableType): ShareVerb[] => (type === 'file' ? SHARE_VERBS.filter((verb) => verb !== 'create') : [...SHARE_VERBS]);
 
 /**
- * The three cards of the sharing panel.
+ * The sharing panel's card, and under «Вибрати користувачів» the way people
+ * are chosen (spec п. 8.1) — the same words as `IAccessSummary.code`:
  *
- * - `private` — «Лише ви»: the drive's own rule is switched off and nobody is granted anything.
- * - `chosen` — «Вибрати користувачів»: the rule is off and `grants` say who may do what.
- * - `space` — «Усі в Просторі»: everybody in the space may do `space_permissions`.
+ * - `private` — «Лише ви»: the drive's own rule is off and nobody else is chosen;
+ * - `role` — «За роллю»: the people with the roles in `role_ids`;
+ * - `structure` — «За організаційною структурою»: whole departments
+ *   (`department_ids`) and positions in them (`positions`);
+ * - `users` — «Окремі користувачі»: the people in `user_ids`;
+ * - `space` — «Усі в Просторі»: everybody in the space.
  */
-export type AccessMode = 'private' | 'chosen' | 'space';
+export type AccessMode = 'private' | 'role' | 'structure' | 'users' | 'space';
 
-export interface IGrant {
-	grantee_type: GranteeType;
-	grantee_id: number;
-	/** The person's, department's or role's name; sent by the server, ignored on the way in. */
-	grantee_label?: string;
+/** The three ways «Вибір користувачів» offers. */
+export type ChooseMode = Extract<AccessMode, 'role' | 'structure' | 'users'>;
+
+export const CHOOSE_MODES: ChooseMode[] = ['role', 'structure', 'users'];
+
+export const isChooseMode = (mode: AccessMode | null | undefined): mode is ChooseMode => CHOOSE_MODES.includes(mode as ChooseMode);
+
+/**
+ * Who is chosen and what they may do — the same in a read, in a save and in a
+ * mass «Надати доступ». Only the mode's own lists are filled; the others are
+ * empty. `permissions` is the one «Доступ» for everybody chosen, or for the
+ * whole space; empty under «Лише ви».
+ */
+export interface IAccessSettings {
+	mode: AccessMode;
+	role_ids: number[];
+	department_ids: number[];
+	positions: IPositionRef[];
+	user_ids: number[];
 	permissions: ShareVerb[];
 }
+
+/** Nobody chosen, nothing allowed: the lists a mode leaves empty, to spread a mode's own over. */
+export const NO_ONE: Omit<IAccessSettings, 'mode' | 'permissions'> = { role_ids: [], department_ids: [], positions: [], user_ids: [] };
 
 /**
  * One external link, with its own term and switch. `url` arrives every time.
@@ -678,26 +600,34 @@ export type IExternalLinkSettings = { id: number } & Required<IExternalLinkPaylo
 /**
  * Everything the sharing panel shows, read in one request and saved in one.
  *
- * Saving is a replacement: grants and links that are not in the body are gone
- * afterwards. That is what makes «Зберегти» one request and one transaction,
- * whatever the user changed.
+ * Saving is a replacement: who is chosen, what they may do and the links not
+ * in the body are gone afterwards. That is what makes «Зберегти» one request
+ * and one transaction, whatever the user changed. Names are not sent: the
+ * panel takes them from the platform's lists of roles, departments and people.
  */
-export interface IAccessState {
-	mode: AccessMode;
-	grants: IGrant[];
-	/** What everybody may do under `space`; null in the other modes. */
-	space_permissions: ShareVerb[] | null;
+export interface IAccessState extends IAccessSettings {
+	/** Whose object it is — named under «Лише ви» when the viewer may not choose it. */
+	owner_id: number | null;
+	/** Whether the viewer may choose «Лише ви»: the owner and an admin may, a holder of `full` may not. */
+	can_make_private: boolean;
 	external_links: IExternalLink[];
 	/** Access that reaches the object from a folder above it or from its drive, said in a sentence. */
 	inherited?: { label: string; from: IObjectLocation } | null;
 }
 
-/** The body of a save: the state without what only the server can say. */
-export interface IAccessUpdate {
-	mode: AccessMode;
-	grants: Pick<IGrant, 'grantee_type' | 'grantee_id' | 'permissions'>[];
-	space_permissions: ShareVerb[] | null;
+/** The body of a save: the settings and every link as it should now stand. */
+export interface IAccessUpdate extends IAccessSettings {
 	external_links: IExternalLinkSettings[];
+}
+
+/** «Завантажити» over a selection: the archive is built in the background, and its job is polled until it is ready. */
+export interface IArchiveJob {
+	id: string;
+	status: 'running' | 'done' | 'failed';
+	/** 0–100. */
+	progress: number;
+	/** The signed address of the finished archive; null until `done`. */
+	url: string | null;
 }
 
 // ------------------------------------------------------------ mass actions
@@ -750,7 +680,6 @@ export interface IMassFailure {
 	name: string;
 	code: string;
 	message: string;
-	suggestion?: string;
 }
 
 /**
@@ -825,10 +754,11 @@ export interface IFolderLocation {
  * `create` is what «Додати» there needs.
  */
 export interface IEntityRootListing {
+	/** The group itself (п. 11): its name for the path, «Про папку», its rights. */
+	group?: IModuleNode | null;
 	sources: IEntitySource[];
 	folders: IFolder[];
 	files: IFile[];
 	meta: IListingMeta;
 	permissions?: IRowPermissions | null;
-	empty_state?: IEmptyState | null;
 }
