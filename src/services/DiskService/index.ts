@@ -6,6 +6,7 @@ import {
 	DiskSortKey,
 	Disposition,
 	FolderDestination,
+	FolderOrder,
 	IAccessSettings,
 	IAccessState,
 	IAccessUpdate,
@@ -52,6 +53,8 @@ export interface IPageParams {
 	list?: number;
 	sort?: DiskSortKey;
 	order?: SortOrder;
+	/** «Папки» in the sort menu; sent only as `mixed`. */
+	folders?: FolderOrder;
 }
 
 /** A listing's parameters: the window, plus the filter row's (see useDiskFilters); a period is a `[from, to]` pair of unix seconds. */
@@ -99,19 +102,14 @@ export class DiskService {
 
 	// ---------------------------------------------------------------- listing
 
+	/** A section's top; with `q` or a filter — a search through the whole section (п. 2.2). */
 	listSection(section: DiskSection, params: IListingParams = {}) {
 		return this.httpClient.client.get<IDiskListing>(`${this.namespace}/disk/${encodeURIComponent(section)}`, { params });
 	}
 
+	/** A folder; with `q` or a filter — a search through it and its subfolders (п. 2.2). */
 	listFolder(section: DiskSection, folderId: number, params: IListingParams = {}) {
 		return this.httpClient.client.get<IDiskListing>(`${this.namespace}/disk/${encodeURIComponent(section)}/folders/${folderId}`, { params });
-	}
-
-	/** Matches anywhere in the drive, at any depth. */
-	search(section: DiskSection, query: string, params: IListingParams = {}) {
-		return this.httpClient.client.get<IDiskListing>(`${this.namespace}/disk/${encodeURIComponent(section)}/search`, {
-			params: { ...params, q: query },
-		});
 	}
 
 	// ---------------------------------------------------------------- modules
@@ -166,9 +164,7 @@ export class DiskService {
 	/**
 	 * A dropped folder's whole tree, made in one request before its files go up.
 	 *
-	 * Parents precede their children in `paths`, and the server makes all of
-	 * them in one transaction; a taken name at the top is one
-	 * `folder_name_conflict` for the whole request, with a suggestion.
+	 * Parents precede their children in `paths`; one transaction; same names are allowed (п. 6.3).
 	 */
 	createFolderTree(destination: FolderDestination, paths: string[]) {
 		return this.httpClient.client.post<{ folders: IFolderTreeEntry[] }>(`${this.namespace}/folders/tree`, { ...destination, paths });
@@ -296,7 +292,10 @@ export class DiskService {
 		return this.httpClient.client.post<IMassMoveResult>(`${this.namespace}/disk/mass_move`, { selection, destination });
 	}
 
-	/** «Надати доступ» over a selection: every object gets these settings, as its own panel's «Зберегти» would give it (п. 5.3). */
+	/**
+	 * «Надати доступ» over a selection.
+	 * TODO: off for now — not in the selection bar or in docs/backend-final.uk.md; kept to bring back.
+	 */
 	massAccess(selection: ISelection, access: IAccessSettings) {
 		return this.httpClient.client.post<IMassResult>(`${this.namespace}/disk/mass_access`, { selection, access });
 	}

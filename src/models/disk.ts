@@ -163,22 +163,10 @@ export const sameDestination = (one: MoveDestination | null, other: MoveDestinat
 };
 
 /**
- * The orderings the backend can actually produce.
- *
- * Five, not three, and the values are the `DiskSort` enum's cases verbatim —
- * anything else is refused by `Rule::enum` rather than ignored, so a typo here
- * is a 422 rather than an unsorted listing.
- *
- * `type` and `owner` are real and are not offered by the table yet: sorting by a
- * column that is not on screen is a control whose effect the user cannot see.
- * They arrive with the columns.
- *
- * Two of these mean nothing to a folder — a folder has no extension and no size
- * — and the backend orders folders by name for both rather than refusing, so a
- * client never has to know which sort applies to which half of a listing it is
- * showing as one list.
+ * Sort keys (п. 4): the sort menu and the table headers share them. `date` is the
+ * section's date (change / share / view); `size` of a folder is its subtree's.
  */
-export type DiskSortKey = 'name' | 'type' | 'size' | 'date' | 'created_at' | 'owner';
+export type DiskSortKey = 'name' | 'date' | 'created_at' | 'size';
 
 export type SortOrder = 'asc' | 'desc';
 
@@ -190,6 +178,17 @@ export interface ISortState {
 /** What the backend defaults to when a listing names no ordering. */
 /** Newest first, folders still ahead of files. */
 export const DEFAULT_SORT: ISortState = { sort: 'date', order: 'desc' };
+
+/** The sort menu's «Папки»: folders before files (default) or mixed with them. */
+export type FolderOrder = 'first' | 'mixed';
+
+export const DEFAULT_FOLDER_ORDER: FolderOrder = 'first';
+
+/** A row of a page in display order (`sequence`, п. 2.2). */
+export interface IRowRef {
+	type: 'folder' | 'file';
+	id: number;
+}
 
 /**
  * Who can reach an object, as the server's own sentence — «Усі в Просторі»,
@@ -390,6 +389,8 @@ export interface IDiskListing {
 	breadcrumbs_truncated: boolean;
 	folders: IFolder[];
 	files: IFile[];
+	/** The page's rows in display order; absent means folders then files. */
+	sequence?: IRowRef[];
 	meta: IListingMeta;
 	/**
 	 * The thing whose files these are — `GET /disk/modules` with `entity_id`
@@ -435,8 +436,6 @@ export interface IModuleNode {
 	name_resolved: boolean;
 	/** Files under this node *this viewer may see*, which is not the total. */
 	file_count: number;
-	/** The glyph token the design owns — `task`, `chat`, `deal`… See ModuleGlyph. */
-	icon?: string | null;
 	/**
 	 * The drives this one groups, when it groups any — the second level the
 	 * sidebar draws under "Центр комунікацій".
@@ -453,16 +452,6 @@ export interface IModuleNode {
 	 * new vocabulary.
 	 */
 	children?: IModuleNode[];
-	/**
-	 * What the things in this drive are called, in the plural — «Чати та листи»
-	 * under "Центр комунікацій" — for the "Відображати:" option that shows them.
-	 *
-	 * The owning service's word, like `name`, and not derivable from the
-	 * children's names. Absent wherever the server has none, which is every
-	 * drive the live endpoint describes today (docs/backend-final.uk.md); the
-	 * option then falls back to the level's own name.
-	 */
-	entities_name?: string | null;
 	/**
 	 * When this entity's files were last touched, as the design's date column
 	 * shows it. Absent where the projection does not carry it.
@@ -759,6 +748,8 @@ export interface IEntityRootListing {
 	sources: IEntitySource[];
 	folders: IFolder[];
 	files: IFile[];
+	/** The root's own rows in display order; the sources always come first. */
+	sequence?: IRowRef[];
 	meta: IListingMeta;
 	permissions?: IRowPermissions | null;
 }
