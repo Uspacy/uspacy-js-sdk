@@ -4,10 +4,12 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { SessionService } from '../../core/SessionService';
 import { TokensService } from '../../core/TokensService';
+import { I2FaSetup } from '../../models/2fa';
 import { IResponseJwt } from '../../models/jwt';
 import { IAfterOauthResponse } from '../../models/oauthIntegrations';
 import { IPortal } from '../../models/portal';
 import { IResponseWithMessage } from '../../models/response';
+import { IAuthSession, SESSION_HEADER } from '../../models/session';
 import { IBill, ICountry, IDiscountCoupon, IPortalSubscription, IStripeRedirect, ITariff, IVatInfo } from '../../models/tariffs';
 import { IUser } from '../../models/user';
 import { ICreatePortalDto } from './dto/create-portal.dto';
@@ -35,23 +37,128 @@ export class AuthService {
 	 * Login user by email and password
 	 * @returns jwt tokens
 	 */
-	async login({ email, password, code, remember }: ILoginDto) {
+	async login({ email, password, code, remember, client, transport }: ILoginDto) {
 		try {
-			const result = await this.httpClient.client.post<IResponseJwt>(`${this.namespace}/auth/sign_in/`, {
-				email,
-				password,
-				code,
-			});
+			const result = await this.httpClient.client.post<IResponseJwt>(
+				`${this.namespace}/auth/sign_in/`,
+				{
+					email,
+					password,
+					code,
+					...(typeof remember === 'boolean' && { rememberMe: remember }),
+					...(client && { client }),
+					...(transport && { transport }),
+				},
+				transport === 'cookie' ? { headers: { [SESSION_HEADER]: 'cookie' }, withCredentials: true } : undefined,
+			);
 			if (remember) {
 				this.sessionService.setRememberSession();
 			}
-			const setTokenPromise = this.tokenService.setToken(result.data.jwt);
-			const setRefreshTokenPromise = this.tokenService.setRefreshToken(result.data.refreshToken);
-			await Promise.all([setTokenPromise, setRefreshTokenPromise]);
+			await this.storeTokens(result.data);
 			return result;
 		} catch (err) {
 			return err;
 		}
+	}
+
+	/**
+	 * Keeps the tokens of a sign-in. Without a refresh token in the body (cookie transport) the cookie holds it,
+	 * and a stored one from an earlier session is removed; a handoff answer has no tokens to keep.
+	 */
+	private async storeTokens(data: Partial<IResponseJwt>) {
+		if (!data?.jwt) return;
+		if (data.refreshToken) {
+			await Promise.all([this.tokenService.setToken(data.jwt), this.tokenService.setRefreshToken(data.refreshToken)]);
+			return;
+		}
+		await this.tokenService.removeRefreshToken();
+		await this.tokenService.setToken(data.jwt);
+	}
+
+	/**
+	 * Sign out: ends the session on the server (best effort: an older server or a network error doesn't stop it),
+	 * then removes the local tokens and the "remember me" flag
+	 */
+	async logout() {
+		await this.tokenService.revokeSession();
+		await Promise.all([this.tokenService.removeToken(), this.tokenService.removeRefreshToken()]);
+		this.sessionService.removeRememberSession();
+	}
+
+	/**
+	 * Exchange the one-time code from the `#uspacy_handoff=` fragment after a sign-in with `transport: 'handoff'`.
+	 * Call it on the portal page: the server sets the session cookie, and the access token is stored
+	 * @param code handoff code
+	 */
+	exchangeHandoffCode(code: string) {
+		return this.tokenService.exchangeHandoffCode(code);
+	}
+
+	/**
+	 * Signed-in sessions of the current user on this portal
+	 */
+	getSessions() {
+		return this.httpClient.client.get<{ data: IAuthSession[] }>(`${this.namespace}/auth/sessions`);
+	}
+
+	/**
+	 * Sign out one session of the current user
+	 * @param id session id
+	 */
+	revokeSession(id: IAuthSession['id']) {
+		return this.httpClient.client.delete<IResponseWithMessage>(`${this.namespace}/auth/sessions/:id`, { urlParams: { id } });
+	}
+
+	/**
+	 * Sign out every other session of the current user on this portal (app installs keep working)
+	 */
+	revokeOtherSessions() {
+		return this.httpClient.client.post<IResponseWithMessage>(`${this.namespace}/auth/sessions/revoke_others`);
+	}
+
+	/**
+	 * Send a new email confirmation link. The answer is the same whether or not the address is registered
+	 * @param email user email
+	 */
+	resendConfirmation(email: string) {
+		return this.httpClient.client.post<IResponseWithMessage>(`${this.namespace}/auth/resend_confirmation`, { email }, { useAuth: false });
+	}
+
+	/**
+	 * Mandatory 2FA setup at sign-in: a new secret and its QR code
+	 * @param setupToken `setupToken` from the sign-in answer with `twofaSetupRequired`
+	 */
+	startTwofaSetup(setupToken: string) {
+		return this.httpClient.client.post<I2FaSetup>(`${this.namespace}/auth/2fa/setup`, { setupToken }, { useAuth: false });
+	}
+
+	/**
+	 * Mandatory 2FA setup at sign-in: a code from the authenticator app turns 2FA on and signs in
+	 * (the tokens are stored as by `login`)
+	 * @param setupToken `setupToken` from the sign-in answer with `twofaSetupRequired`
+	 * @param code code from the authenticator app
+	 */
+	async confirmTwofaSetup(
+		setupToken: string,
+		code: string,
+		{ remember, client, transport }: Pick<ILoginDto, 'remember' | 'client' | 'transport'> = {},
+	) {
+		const result = await this.httpClient.client.post<IResponseJwt>(
+			`${this.namespace}/auth/2fa/setup/confirm`,
+			{
+				setupToken,
+				code,
+				...(typeof remember === 'boolean' && { rememberMe: remember }),
+				...(client && { client }),
+				...(transport && { transport }),
+			},
+			{ useAuth: false, ...(transport === 'cookie' && { headers: { [SESSION_HEADER]: 'cookie' }, withCredentials: true }) },
+		);
+		if (remember) {
+			this.sessionService.setRememberSession();
+		}
+		await this.storeTokens(result.data);
+		return result;
 	}
 
 	/**
@@ -109,6 +216,7 @@ export class AuthService {
 
 	/**
 	 * Change password by user id
+	 * @deprecated the server no longer has this endpoint; use `changeMyPassword`
 	 * @param password user password
 	 */
 	changePassword(userId: number, password: string) {
@@ -119,9 +227,14 @@ export class AuthService {
 	 * Change self password
 	 * @param oldPassword old user password
 	 * @param newPassword new user password
+	 * @param logoutOtherSessions sign out the user's other sessions; the server does it when this is not sent
 	 */
-	changeMyPassword(oldPassword: string, newPassword: string) {
-		return this.httpClient.client.post(`${this.namespace}/users/me/reset_password/`, { oldPassword, newPassword });
+	changeMyPassword(oldPassword: string, newPassword: string, logoutOtherSessions?: boolean) {
+		return this.httpClient.client.patch(`${this.namespace}/users/change_password`, {
+			oldPassword,
+			newPassword,
+			...(typeof logoutOtherSessions === 'boolean' && { logoutOtherSessions }),
+		});
 	}
 
 	/**

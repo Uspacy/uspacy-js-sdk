@@ -22,6 +22,9 @@ type LockManagerLike = {
 export class HttpClient {
 	public client: AxiosInstance;
 	private static refreshing: Promise<void> | null = null;
+	private static nextRefreshAttempt = 0;
+	private static readonly REFRESH_RETRY_DELAY = 60 * 1000;
+	// @uspacy/core takes the same lock, so the two never refresh at once
 	private static readonly REFRESH_LOCK = 'uspacy-token-refresh';
 
 	constructor(
@@ -111,7 +114,7 @@ export class HttpClient {
 				return this.client(error.config);
 			} catch (_error) {
 				const status = (_error as AxiosError)?.response?.status;
-				if (!this.sessionService.isSetRememberSession() || status === 401) {
+				if (!(await this.tokenService.canRefresh()) || status === 401) {
 					await this.logout();
 				}
 				throw _error;
@@ -129,16 +132,26 @@ export class HttpClient {
 		}
 	}
 
+	/**
+	 * Refreshes the access token in the last 20% of its lifetime, before requests start failing.
+	 * After a failed attempt the next one waits a minute, unless the token has expired by then.
+	 */
 	private async ensureFreshToken(): Promise<void> {
 		if (HttpClient.refreshing) return HttpClient.refreshing;
-		if (!(await this.tokenService.isExpired())) return;
+		if (!(await this.tokenService.needsRefresh())) return;
+		if (Date.now() < HttpClient.nextRefreshAttempt && !(await this.tokenService.isExpired())) return;
 		if (HttpClient.refreshing) return HttpClient.refreshing;
 
 		HttpClient.refreshing = this.withLock(async () => {
-			if (!(await this.tokenService.isExpired())) return;
+			if (!(await this.tokenService.needsRefresh())) return;
 			await this.tokenService.refreshToken();
 		})
-			.catch(() => undefined)
+			.then(() => {
+				HttpClient.nextRefreshAttempt = 0;
+			})
+			.catch(() => {
+				HttpClient.nextRefreshAttempt = Date.now() + HttpClient.REFRESH_RETRY_DELAY;
+			})
 			.finally(() => {
 				HttpClient.refreshing = null;
 			});

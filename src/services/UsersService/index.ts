@@ -177,16 +177,13 @@ export class UsersService {
 	/**
 	 * disable 2fa by user id
 	 * @param id user id
+	 * @param code the acting admin's current 2FA code, needed to reset an Owner's or Admin's 2FA when 2FA is mandatory
 	 * @returns user portal settings
 	 */
-	disable2Fa(id: IUser['id']) {
-		return this.httpClient.client.patch<IResponseWithMessage>(
-			`${this.namespace}/:id/twofa_disable`,
-			{},
-			{
-				urlParams: { id },
-			},
-		);
+	disable2Fa(id: IUser['id'], code?: string) {
+		return this.httpClient.client.patch<IResponseWithMessage>(`${this.namespace}/:id/twofa_disable`, code ? { code } : {}, {
+			urlParams: { id },
+		});
 	}
 
 	/**
