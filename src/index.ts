@@ -51,6 +51,7 @@ import { ProfileService } from './services/ProfileService';
 import { ReindexService } from './services/ReindexService';
 import { ResourcesService } from './services/ResourcesService';
 import { RolesService } from './services/RolesService';
+import { SecuritySettingsService } from './services/SecuritySettingsService';
 import { SettingsService } from './services/SettingsService';
 import { TasksService } from './services/TasksService';
 import { TasksStagesService } from './services/TasksStagesService';
@@ -115,6 +116,7 @@ class Uspacy {
 		public readonly settingsService: SettingsService,
 		public readonly reindexService: ReindexService,
 		public readonly mentionsService: MentionsService,
+		public readonly securitySettingsService: SecuritySettingsService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
