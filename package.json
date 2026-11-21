@@ -21,6 +21,7 @@
     "rfdc": "^1.4.1"
   },
   "devDependencies": {
+    "@types/jest": "29.5.3",
     "@types/node": "20.5.0",
     "@types/pouchdb": "^6.4.2",
     "@typescript-eslint/eslint-plugin": "6.4.0",
@@ -62,6 +63,7 @@
     "postbuild": "yarn emitDeclarations",
     "emitDeclarations": "tsc --project ./tsconfig.declarations.json",
     "emitDeclarations:watch": "yarn emitDeclarations -- --watch",
+    "test": "jest",
     "eslint": "eslint --max-warnings=0",
     "format": "prettier --write \"src/**/*.ts\"",
     "eslint:fix": "yarn eslint src --fix",
