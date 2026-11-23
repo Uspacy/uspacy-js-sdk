@@ -9,11 +9,20 @@ import { IJwt } from '../../models/jwt';
 const SESSION_RENEW_MARGIN = 10 * 60 * 1000;
 // Every Firestore access asks for a session, so a failed exchange is not repeated for this long
 const SESSION_RETRY_DELAY = 60 * 1000;
+// Firebase takes a custom token for an hour after it is issued; it is shared a bit less, so it never expires on the way
+const CUSTOM_TOKEN_SHARE_TIME = 50 * 60 * 1000;
 
 interface IFirebaseSession {
 	pending?: Promise<void>;
 	retryAt: number;
 	renewTimer?: ReturnType<typeof setTimeout>;
+}
+
+interface ISharedCustomToken {
+	// portal and user the token is for
+	owner: string;
+	requestedAt: number;
+	response: Promise<IFirebaseCustomToken>;
 }
 
 type SignInWithCustomToken<A> = (auth: A, customToken: string) => Promise<unknown>;
@@ -25,6 +34,8 @@ type SignInWithCustomToken<A> = (auth: A, customToken: string) => Promise<unknow
 export class FirebaseService {
 	private namespace = '/settings-backend/v1/firebase';
 	private sessions = new Map<IFirebaseAuth, IFirebaseSession>();
+	// Every microfrontend has its own Firebase app; one custom token signs them all in
+	private sharedCustomToken?: ISharedCustomToken;
 
 	constructor(
 		private httpClient: HttpClient,
@@ -69,6 +80,7 @@ export class FirebaseService {
 		const auths = [...this.sessions.keys()];
 		this.sessions.forEach((session) => clearTimeout(session.renewTimer));
 		this.sessions.clear();
+		this.sharedCustomToken = undefined;
 		const results = await Promise.allSettled(auths.map((auth) => auth.signOut()));
 		const failed = results.find((result): result is PromiseRejectedResult => result.status === 'rejected');
 		if (failed) throw failed.reason;
@@ -84,15 +96,9 @@ export class FirebaseService {
 			const { domain, id } = decodedToken || (await this.tokensService.decodeToken());
 			let sessionEnd = await this.getSessionEnd(auth, domain, id).catch(() => 0);
 			if (sessionEnd - SESSION_RENEW_MARGIN <= Date.now()) {
-				const { data } = await this.getCustomToken();
-				if (this.isDropped(auth, session)) return;
-				await signInWithCustomToken(auth, data.token);
-				// The sign-out may have landed before this sign-in, which would outlive the logout in the browser
-				if (this.isDropped(auth, session)) {
-					await auth.signOut();
-					return;
-				}
-				sessionEnd = data.sessionExp * 1000;
+				const sessionExp = await this.signIn(auth, signInWithCustomToken, session, `${domain}:${id}`);
+				if (sessionExp === undefined) return;
+				sessionEnd = sessionExp * 1000;
 			}
 
 			session.retryAt = 0;
@@ -104,6 +110,46 @@ export class FirebaseService {
 			// eslint-disable-next-line no-console
 			console.error(e, 'firebase session error');
 		}
+	}
+
+	// Resolves to the session end, or to undefined when signOut() dropped the session meanwhile
+	private async signIn<A extends IFirebaseAuth>(
+		auth: A,
+		signInWithCustomToken: SignInWithCustomToken<A>,
+		session: IFirebaseSession,
+		owner: string,
+		fresh = false,
+	): Promise<number | undefined> {
+		const { response, shared } = this.requestCustomToken(owner, fresh);
+		const { token, sessionExp } = await response;
+		if (this.isDropped(auth, session)) return undefined;
+		try {
+			await signInWithCustomToken(auth, token);
+		} catch (e) {
+			// Firebase may take a custom token only once, and another app has signed in with it already
+			if (shared) return this.signIn(auth, signInWithCustomToken, session, owner, true);
+			throw e;
+		}
+		// The sign-out may have landed before this sign-in, which would outlive the logout in the browser
+		if (this.isDropped(auth, session)) {
+			await auth.signOut();
+			return undefined;
+		}
+		return sessionExp;
+	}
+
+	private requestCustomToken(owner: string, fresh: boolean) {
+		const cached = this.sharedCustomToken;
+		if (!fresh && cached?.owner === owner && Date.now() - cached.requestedAt < CUSTOM_TOKEN_SHARE_TIME) {
+			return { response: cached.response, shared: true };
+		}
+
+		const request: ISharedCustomToken = { owner, requestedAt: Date.now(), response: this.getCustomToken().then(({ data }) => data) };
+		this.sharedCustomToken = request;
+		request.response.catch(() => {
+			if (this.sharedCustomToken === request) this.sharedCustomToken = undefined;
+		});
+		return { response: request.response, shared: false };
 	}
 
 	// signOut() dropped the session while it was being started
