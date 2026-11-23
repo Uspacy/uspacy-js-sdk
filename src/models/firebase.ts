@@ -33,3 +33,16 @@ export enum EFirabaseDbName {
 	USERS_PRESETS = 'users-presets',
 	CONTAINER_NAV_MENU = 'container-nav-menu',
 }
+
+export interface IFirebaseCustomToken {
+	token: string;
+	// unix seconds
+	sessionExp: number;
+}
+
+// The part of the firebase/auth Auth the SDK uses: the SDK takes the app's own instance and does not bundle firebase
+export interface IFirebaseAuth {
+	readonly currentUser: { getIdTokenResult(): Promise<{ claims: Record<string, unknown> }> } | null;
+	authStateReady(): Promise<void>;
+	signOut(): Promise<void>;
+}
