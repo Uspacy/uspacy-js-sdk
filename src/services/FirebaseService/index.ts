@@ -62,13 +62,16 @@ export class FirebaseService {
 	}
 
 	/**
-	 * Stop the renewals and sign out every Firebase app that asked for a session
+	 * Stop the renewals and sign out every Firebase app that asked for a session.
+	 * Settles once every app is done; rejects with the first failure.
 	 */
 	async signOut() {
 		const auths = [...this.sessions.keys()];
 		this.sessions.forEach((session) => clearTimeout(session.renewTimer));
 		this.sessions.clear();
-		await Promise.all(auths.map((auth) => auth.signOut()));
+		const results = await Promise.allSettled(auths.map((auth) => auth.signOut()));
+		const failed = results.find((result): result is PromiseRejectedResult => result.status === 'rejected');
+		if (failed) throw failed.reason;
 	}
 
 	private async startSession<A extends IFirebaseAuth>(
@@ -82,20 +85,30 @@ export class FirebaseService {
 			let sessionEnd = await this.getSessionEnd(auth, domain, id).catch(() => 0);
 			if (sessionEnd - SESSION_RENEW_MARGIN <= Date.now()) {
 				const { data } = await this.getCustomToken();
+				if (this.isDropped(auth, session)) return;
 				await signInWithCustomToken(auth, data.token);
+				// The sign-out may have landed before this sign-in, which would outlive the logout in the browser
+				if (this.isDropped(auth, session)) {
+					await auth.signOut();
+					return;
+				}
 				sessionEnd = data.sessionExp * 1000;
 			}
 
 			session.retryAt = 0;
 			clearTimeout(session.renewTimer);
-			// signOut() dropped the session meanwhile
-			if (this.sessions.get(auth) !== session) return;
+			if (this.isDropped(auth, session)) return;
 			session.renewTimer = setTimeout(() => this.ensureSession(auth, signInWithCustomToken), sessionEnd - SESSION_RENEW_MARGIN - Date.now());
 		} catch (e) {
 			session.retryAt = Date.now() + SESSION_RETRY_DELAY;
 			// eslint-disable-next-line no-console
 			console.error(e, 'firebase session error');
 		}
+	}
+
+	// signOut() dropped the session while it was being started
+	private isDropped(auth: IFirebaseAuth, session: IFirebaseSession) {
+		return this.sessions.get(auth) !== session;
 	}
 
 	private async getSessionEnd(auth: IFirebaseAuth, domain: string, id: number) {
