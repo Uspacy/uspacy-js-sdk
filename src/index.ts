@@ -36,6 +36,7 @@ import { DepartmentsService } from './services/DepartmentsService';
 import { DiskService } from './services/DiskService';
 import { EmailService } from './services/EmailService';
 import { FilesService } from './services/FilesService';
+import { FirebaseService } from './services/FirebaseService';
 import { GroupsService } from './services/GroupsService';
 import { HistoryService } from './services/HistoryService';
 import { InvatesService } from './services/InvatesService';
@@ -117,6 +118,7 @@ class Uspacy {
 		public readonly reindexService: ReindexService,
 		public readonly mentionsService: MentionsService,
 		public readonly securitySettingsService: SecuritySettingsService,
+		public readonly firebaseService: FirebaseService,
 	) {}
 
 	static createInstance(config?: Omit<IConfig, 'couchDbUrl'>) {
