@@ -33,6 +33,7 @@
 <a href="models_announcers.IAnnounce.html#notifications" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>notifications</span></a>
 <a href="models_announcers.IAnnounce.html#popup" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>popup</span></a>
 <a href="models_announcers.IAnnounce.html#publishedAt" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>published<wbr/>At</span></a>
+<a href="models_announcers.IAnnounce.html#targeted" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>targeted?</span></a>
 <a href="models_announcers.IAnnounce.html#targeting" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>targeting?</span></a>
 <a href="models_announcers.IAnnounce.html#widgets" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>widgets</span></a>
 </div></section></div></details></section></section>
@@ -56,11 +57,18 @@
 <section class="tsd-panel tsd-member"><a id="publishedAt" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>published<wbr/>At</span><a href="#publishedAt" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">published<wbr/>At</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div></section>
+<section class="tsd-panel tsd-member"><a id="targeted" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>targeted</span><a href="#targeted" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">targeted</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>Whether the announce has an audience at all, also when the cut <code>domain:</code> rules were all its targeting</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></section>
 <section class="tsd-panel tsd-member"><a id="targeting" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>targeting</span><a href="#targeting" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">targeting</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Who sees the announce: <code>key:value</code> rules split by <code>;</code> that must all hold, values split by <code>,</code> of which any may match,
-e.g. <code>region:ua,pl; role:ADMIN</code>. Keys are domain, region, role and tariff. Empty means everyone</p>
+e.g. <code>region:ua,pl; role:ADMIN</code>. Keys are domain, region, role and tariff. Empty means everyone.
+Comes without its <code>domain:</code> rules: admin-panel cuts them and leaves out announces aimed at other portals</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></section>
 <section class="tsd-panel tsd-member"><a id="widgets" class="tsd-anchor"></a>
@@ -91,6 +99,7 @@ e.g. <code>region:ua,pl; role:ADMIN</code>. Keys are domain, region, role and ta
 <li><a href="#notifications" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>notifications</span></a></li>
 <li><a href="#popup" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>popup</span></a></li>
 <li><a href="#publishedAt" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>published<wbr/>At</span></a></li>
+<li><a href="#targeted" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>targeted</span></a></li>
 <li><a href="#targeting" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>targeting</span></a></li>
 <li><a href="#widgets" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>widgets</span></a></li></ul></div></details></div>
 <div class="site-menu">
