@@ -21,14 +21,12 @@
     "rfdc": "^1.4.1"
   },
   "devDependencies": {
-    "@types/jest": "29.5.3",
     "@types/node": "20.5.0",
     "@types/pouchdb": "^6.4.2",
     "@typescript-eslint/eslint-plugin": "6.4.0",
     "@typescript-eslint/parser": "6.4.0",
     "buffer": "6.0.3",
     "concurrently": "^8.2.1",
-    "cross-env": "7.0.3",
     "date-fns": "2.30.0",
     "dotenv": "16.3.1",
     "dotenv-webpack": "8.0.1",
@@ -41,7 +39,6 @@
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-webpack-plugin": "4.0.1",
-    "html-webpack-plugin": "5.5.3",
     "husky": "8.0.0",
     "pouchdb": "^9.0.0",
     "pouchdb-adapter-indexeddb": "^9.0.0",
@@ -53,23 +50,20 @@
     "typedoc": "0.24.8",
     "typescript": "5.1.6",
     "webpack": "5.88.2",
-    "webpack-cli": "5.1.4",
-    "webpack-dev-server": "4.15.1"
+    "webpack-cli": "5.1.4"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
     "build:docs": "typedoc",
     "start:dev": "concurrently \"webpack --watch --mode development\" \"yarn emitDeclarations:watch\"",
-    "start:demo": "cross-env NODE_ENV=demo webpack serve --mode development",
     "build": "webpack --mode production --progress",
     "postbuild": "yarn emitDeclarations",
     "emitDeclarations": "tsc --project ./tsconfig.declarations.json",
     "emitDeclarations:watch": "yarn emitDeclarations -- --watch",
-    "test": "jest",
-    "test:ci": "cross-env CI=true yarn test",
     "eslint": "eslint --max-warnings=0",
     "format": "prettier --write \"src/**/*.ts\"",
-    "eslint:fix": "yarn eslint . --fix",
+    "eslint:fix": "yarn eslint src --fix",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install"
   },
   "browserslist": {
