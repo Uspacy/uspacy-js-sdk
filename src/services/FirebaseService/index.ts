@@ -32,7 +32,7 @@ type SignInWithCustomToken<A> = (auth: A, customToken: string) => Promise<unknow
  */
 @injectable()
 export class FirebaseService {
-	private namespace = '/settings-backend/v1/firebase';
+	private namespace = '/auth/v1/firebase';
 	private sessions = new Map<IFirebaseAuth, IFirebaseSession>();
 	// Every microfrontend has its own Firebase app; one custom token signs them all in
 	private sharedCustomToken?: ISharedCustomToken;
