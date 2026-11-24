@@ -29,13 +29,15 @@ export class AnnouncersService {
 
 	/**
 	 * Get all published announces, the newest first
+	 * @param domain the current portal, e.g. acme.uspacy.ua: announces aimed only at other portals are left out
 	 */
-	async getAnnounces(populate: string[], locale: string | undefined, apiPoint: string) {
+	async getAnnounces(populate: string[], locale: string | undefined, apiPoint: string, domain?: string) {
 		return this.httpClient.client.get<ResponseApiList>(this.listNamespace, {
 			baseURL: apiPoint,
 			params: {
 				populate,
 				locale,
+				domain,
 				sort: 'publishedAt:desc',
 				pagination: { pageSize: 100 },
 			},
