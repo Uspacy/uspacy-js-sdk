@@ -29,4 +29,6 @@ export interface IAdminUrlParams {
 	apiPoint?: string;
 	locale?: string;
 	populateParams: string[];
+	/** The current portal, e.g. acme.uspacy.ua */
+	domain?: string;
 }
