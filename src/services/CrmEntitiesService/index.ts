@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 import { HttpClient } from '../../core/HttpClient';
 import { getMassActionsData } from '../../helpers';
 import { IEntityCardResponse } from '../../models/crm-card';
-import { IEntity, IEntityAmount, IEntityData, IEntityMainData } from '../../models/crm-entities';
+import { IEntity, IEntityAmount, IEntityData, IEntityItemUpdatePayload, IEntityMainData, IEntityMoveStage } from '../../models/crm-entities';
 import { IFilterCurrenciesAmount } from '../../models/crm-filters';
 import { IFunnel } from '../../models/crm-funnel';
 import { IKanbanBoardResponse } from '../../models/crm-kanban';
@@ -421,9 +421,34 @@ export class CrmEntitiesService {
 	 * @param data entity item data
 	 * @returns entity item
 	 */
-	updateEntityItem(code: string, id: number, data: Partial<IEntityData>) {
+	updateEntityItem(code: string, id: number, data: IEntityItemUpdatePayload) {
 		return this.httpClient.client.patch<IEntityData>(`${this.namespace}/:code/:id`, data, {
 			urlParams: { code, id },
+		});
+	}
+
+	/**
+	 * Move entity item to stage (optionally with fail/success reason) and update its fields in one PATCH request
+	 * @param code entity code
+	 * @param id entity item id
+	 * @param stageId target stage id
+	 * @param fields other fields to update in the same request (e.g. required fields of the stage)
+	 * @param moveStage reason id / reason comment
+	 * @returns entity item
+	 */
+	updateEntityItemWithMove(code: string, id: number, stageId: number, fields: Partial<IEntityData> = {}, moveStage?: IEntityMoveStage) {
+		const reasonId = moveStage?.reason_id;
+		const reasonComment = moveStage?.reason_comment?.trim();
+		const hasMoveStage = !!reasonId || !!reasonComment;
+		return this.updateEntityItem(code, id, {
+			...fields,
+			kanban_stage_id: stageId,
+			...(hasMoveStage && {
+				move_stage: {
+					...(!!reasonId && { reason_id: reasonId }),
+					...(!!reasonComment && { reason_comment: reasonComment }),
+				},
+			}),
 		});
 	}
 
@@ -537,6 +562,7 @@ export class CrmEntitiesService {
 	 * @param stageId stage id
 	 * @param reasonId reason id
 	 * @returns entity item
+	 * @deprecated use updateEntityItemWithMove (PATCH entity with kanban_stage_id and move_stage)
 	 */
 	moveEntityItemFromStageToStage(code: string, entityId: number, stageId: number, reasonId: number | null) {
 		return this.httpClient.client.post(
