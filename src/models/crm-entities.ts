@@ -41,6 +41,20 @@ export interface IEntityData {
 	[key: string]: any;
 }
 
+export interface IEntityMoveStage {
+	reason_id?: number | null;
+	reason_comment?: string;
+}
+
+/**
+ * Body of PATCH /crm/v1/entities/:code/:id.
+ * Stage change (and fail/success reason) is sent in the same request as other field changes.
+ */
+export interface IEntityItemUpdatePayload extends Partial<IEntityData> {
+	kanban_stage_id?: number;
+	move_stage?: IEntityMoveStage;
+}
+
 export interface IEntity {
 	data: IEntityData[];
 	meta: IMeta;

@@ -186,6 +186,7 @@ export class CrmLeadsService {
 	 * @param stageId stage id
 	 * @param reasonId reason id
 	 * @returns lead entity
+	 * @deprecated use crmEntitiesService.updateEntityItemWithMove
 	 */
 	moveLeadFromStageToStage(entityId: number, stageId: number, reasonId: number | null) {
 		return this.httpClient.client.post(
