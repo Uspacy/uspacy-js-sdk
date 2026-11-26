@@ -32,6 +32,9 @@ export interface INotificationMessage {
 		action: NotificationAction;
 		show: boolean;
 		old_entity?: any;
+		have_access?: number[];
+		had_access?: number[];
+		silent?: boolean;
 	};
 	metadata?: any[];
 }
