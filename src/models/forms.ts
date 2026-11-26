@@ -123,6 +123,32 @@ export interface IFormLanguage {
 	lng?: string;
 }
 
+export interface IFormRecaptchaSettings {
+	enabled: boolean;
+	siteKey?: string;
+	// returned only to the form owner, never written to the public form files
+	secretKey?: string;
+}
+
+export interface IFormHoneypotSettings {
+	enabled: boolean;
+	// submits faster than this (seconds, 1..60, default 3) are dropped as bots
+	minFillSeconds?: number;
+}
+
+export interface IFormEmailDomainsSettings {
+	enabled: boolean;
+	mode?: 'block';
+	// lowercase domains; a domain also blocks its subdomains
+	blocked?: string[];
+}
+
+export interface IFormSpamProtection {
+	recaptcha?: IFormRecaptchaSettings;
+	honeypot?: IFormHoneypotSettings;
+	emailDomains?: IFormEmailDomainsSettings;
+}
+
 export interface IForm {
 	id?: string;
 	name: string;
@@ -136,6 +162,7 @@ export interface IForm {
 		design?: IFormDesign;
 		queryParams?: IFormQueryParam[];
 		language?: IFormLanguage;
+		spamProtection?: IFormSpamProtection;
 	};
 	creared_at?: number;
 	updated_at?: number;
