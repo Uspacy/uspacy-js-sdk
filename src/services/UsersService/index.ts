@@ -180,9 +180,13 @@ export class UsersService {
 	 * @returns user portal settings
 	 */
 	disable2Fa(id: IUser['id']) {
-		return this.httpClient.client.get<IResponseWithMessage>(`${this.namespace}/:id/twofa_disable`, {
-			urlParams: { id },
-		});
+		return this.httpClient.client.patch<IResponseWithMessage>(
+			`${this.namespace}/:id/twofa_disable`,
+			{},
+			{
+				urlParams: { id },
+			},
+		);
 	}
 
 	/**

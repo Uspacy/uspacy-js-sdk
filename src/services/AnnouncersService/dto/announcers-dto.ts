@@ -1,4 +1,4 @@
-import { IAnnounceBanner, IAnnounceNotification, IAnnouncePopup, IAnnounceWidget } from '../../../models/announcers';
+import { IAnnounce, IAnnounceBanner, IAnnounceNotification, IAnnouncePopup, IAnnounceWidget } from '../../../models/announcers';
 
 export interface ResponseApiItem {
 	id?: number;
@@ -20,8 +20,15 @@ export interface ResponseApi {
 	};
 }
 
+export interface ResponseApiList {
+	data: IAnnounce[];
+	meta: ResponseApi['meta'];
+}
+
 export interface IAdminUrlParams {
 	apiPoint?: string;
 	locale?: string;
 	populateParams: string[];
+	/** The current portal, e.g. acme.uspacy.ua */
+	domain?: string;
 }

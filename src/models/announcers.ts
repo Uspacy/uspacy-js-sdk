@@ -96,3 +96,21 @@ export interface IAnnouncePopup {
 	startDate?: string;
 	endDate?: string;
 }
+
+export interface IAnnounce {
+	id: number;
+	documentId: string;
+	/**
+	 * Who sees the announce: `key:value` rules split by `;` that must all hold, values split by `,` of which any may match,
+	 * e.g. `region:ua,pl; role:ADMIN`. Keys are domain, region, role and tariff. Empty means everyone.
+	 * Comes without its `domain:` rules: admin-panel cuts them and leaves out announces aimed at other portals
+	 */
+	targeting?: string | null;
+	/** Whether the announce has an audience at all, also when the cut `domain:` rules were all its targeting */
+	targeted?: boolean;
+	publishedAt: string;
+	banner: IAnnounceBanner | null;
+	widgets: IAnnounceWidget[];
+	notifications: IAnnounceNotification[];
+	popup: IAnnouncePopup[];
+}
