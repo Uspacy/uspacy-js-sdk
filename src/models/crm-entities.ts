@@ -52,7 +52,8 @@ export interface IEntityMoveStage {
  */
 export interface IEntityItemUpdatePayload extends Partial<IEntityData> {
 	kanban_stage_id?: number;
-	move_stage?: IEntityMoveStage;
+	kanban_reason_id?: number;
+	kanban_reason_comment?: string;
 }
 
 export interface IEntity {
