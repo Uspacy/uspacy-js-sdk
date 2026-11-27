@@ -439,16 +439,11 @@ export class CrmEntitiesService {
 	updateEntityItemWithMove(code: string, id: number, stageId: number, fields: Partial<IEntityData> = {}, moveStage?: IEntityMoveStage) {
 		const reasonId = moveStage?.reason_id;
 		const reasonComment = moveStage?.reason_comment?.trim();
-		const hasMoveStage = !!reasonId || !!reasonComment;
 		return this.updateEntityItem(code, id, {
 			...fields,
 			kanban_stage_id: stageId,
-			...(hasMoveStage && {
-				move_stage: {
-					...(!!reasonId && { reason_id: reasonId }),
-					...(!!reasonComment && { reason_comment: reasonComment }),
-				},
-			}),
+			...(!!reasonId && { kanban_reason_id: reasonId }),
+			...(!!reasonComment && { kanban_reason_comment: reasonComment }),
 		});
 	}
 
@@ -536,7 +531,7 @@ export class CrmEntitiesService {
 	 * @param stageId stage id
 	 * @param reasonId reason id
 	 * @returns entity item
-	 * @deprecated use updateEntityItemWithMove (PATCH entity with kanban_stage_id and move_stage)
+	 * @deprecated use updateEntityItemWithMove (PATCH entity with kanban_stage_id, kanban_reason_id and kanban_reason_comment)
 	 */
 	moveEntityItemFromStageToStage(code: string, entityId: number, stageId: number, reasonId: number | null) {
 		return this.httpClient.client.post(
